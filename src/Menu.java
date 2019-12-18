@@ -31,7 +31,7 @@ public class Menu {
 
     static void mainMenu() {
 
-        
+
 
     }
 }
