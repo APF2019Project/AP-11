@@ -184,22 +184,22 @@ public class Account {
         return false;
     }
 
-
-    static Account getAccountByUserAndPass(String username, String password) {
-        if (accountExists(username)) {
-            for (Account accountIterator : accounts) {
-                if (accountIterator.getUsername().equals(username) && accountIterator.getPassword().equals(password)) {
-                    return accountIterator;
-                }
-            }
-            System.out.println("Wrong password passed to the function getAccountByUserAndPass. returning null.");
-            return null;
-        } else {
-            System.out.println("dear programmer, you passed a not existing username to the" +
-                    " function getAccountByUserAndPass. returning null.");
-            return null;
-        }
-    }
+//
+//    static Account getAccountByUserAndPass(String username, String password) {
+//        if (accountExists(username)) {
+//            for (Account accountIterator : accounts) {
+//                if (accountIterator.getUsername().equals(username) && accountIterator.getPassword().equals(password)) {
+//                    return accountIterator;
+//                }
+//            }
+//            System.out.println("Wrong password passed to the function getAccountByUserAndPass. returning null.");
+//            return null;
+//        } else {
+//            System.out.println("dear programmer, you passed a not existing username to the" +
+//                    " function getAccountByUserAndPass. returning null.");
+//            return null;
+//        }
+//    }
 
     static Account getAccountByUsername(String username) {
         if (accountExists(username)) {
@@ -334,7 +334,7 @@ public class Account {
         }
     }
 
-    
+
     static void showAccount() {
         System.out.println("*** show account ***");
         System.out.println("you are logged in as:");
