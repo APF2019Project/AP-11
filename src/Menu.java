@@ -11,7 +11,7 @@ public class Menu {
 
         switch (command) {
             case "Create account":
-                Account.createAccount();
+                Account.createAccount(true);
                 break;
             case "Login":
                 Account.login(true);

@@ -120,23 +120,30 @@ public class Account {
 
     // Methods:
 
-    static void createAccount() {
+    static void createAccount(boolean calledFromLoginMenu) {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("***Creating an account***");
+        System.out.println("*** Creating an account ***");
         String username;
         String password;
-        System.out.println("enter username");
+        System.out.println("Enter username");
         username = scanner.nextLine();
         if (!accountExists(username)) {
             System.out.println("Enter password:");
             password = scanner.nextLine();
             accounts.add(new Account(username, password));
             System.out.println("account created");
-            System.out.println("going back to login menu:");
-            Menu.loginMenu();
+            if (calledFromLoginMenu) {
+                System.out.println("going back to login menu:");
+                Menu.loginMenu();
+            } else {
+                playingAccount = getAccountByUsername(username);
+                System.out.println("now, you are logged in as: " + username);
+                System.out.println("going to your profile menu:");
+                profile();
+            }
         } else {
             System.out.println("this username is already taken.\n Try again:");
-            createAccount();
+            createAccount(calledFromLoginMenu);
         }
     }
 
@@ -240,7 +247,7 @@ public class Account {
                 Account.renameAccount();
                 break;
             case "Create":
-
+                createAccount(false);
                 break;
             case "Show":
                 Account.showAccount();
@@ -285,8 +292,47 @@ public class Account {
     }
 
     static void renameAccount() {
-        
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("*** Renaming account ***");
+        System.out.println("Enter you password:");
+        String input = scanner.nextLine();
+        if (playingAccount.getPassword().equals(input)) {
+            System.out.println("Enter your new username");
+            String newUsername = scanner.nextLine();
+            if (accountExists(newUsername)) {
+                System.out.println("This username is already taken.\nTry again:");
+                renameAccount();
+            } else {
+                System.out.println("Are you sure you want to change your username?");
+                String isSure = scanner.nextLine();
+                if (isSure.equals("yes")) {
+                    playingAccount.setUsername(newUsername);
+                    System.out.println("your username changed. going back to profile menu:");
+                    profile();
+                } else if (isSure.equals("no")) {
+                    System.out.println("your username is safe. going back to profile menu:");
+                    profile();
+                } else {
+                    System.out.println("invalid answer.\nTry again:");
+                    renameAccount();
+                }
+            }
+        } else {
+            System.out.println("Wrong password!\nTry again:");
+            renameAccount();
+        }
     }
+
+    static void showAccount() {
+        System.out.println("*** show account ***");
+        System.out.println("you are logged in as:");
+        System.out.println(playingAccount.getUsername());
+        System.out.println("going back to profile menu:");
+        profile();
+    }
+
+
+
 
 }
 
