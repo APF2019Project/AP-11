@@ -22,6 +22,9 @@ public class Menu {
             case "Exit":
                 System.out.println("FINISHED");
                 break;
+            case "Help":
+                loginMenuHelp();
+                break;
             default:
                 System.out.println("invalid command in Login Menu\nTry again:");
                 loginMenu();
@@ -49,12 +52,27 @@ public class Menu {
                 System.out.println("going to login menu:");
                 loginMenu();
                 break;
+            case "Help":
+                mainMenuHelp();
+                break;
             default:
                 System.out.println("invalid command in main menu.\nTry again:");
                 mainMenu();
                 break;
         }
+    }
 
+    static void loginMenuHelp() {
+        System.out.println("*** Login Menu Help ***");
+        System.out.println("Login Menu commands are:");
+        System.out.println("Create account, Login, Leaderboard, Exit and Help");
+        loginMenu();
+    }
 
+    static void mainMenuHelp() {
+        System.out.println("*** Main Menu Help ***");
+        System.out.println("Main Menu commands are:");
+        System.out.println("Play, Profile, Shop, Exit and Help");
+        mainMenu();
     }
 }

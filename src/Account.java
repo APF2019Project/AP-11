@@ -117,7 +117,6 @@ public class Account {
     }
 
 
-
     // Methods:
 
     static void createAccount(boolean calledFromLoginMenu) {
@@ -240,13 +239,15 @@ public class Account {
                 System.out.println("logging in with another account:");
                 login(false);
                 break;
-            case "delete":
+            case "Change password":
+                Account.changePassword();
+            case "Delete account":
                 Account.deleteAccount();
                 break;
             case "Rename":
                 Account.renameAccount();
                 break;
-            case "Create":
+            case "Create account":
                 createAccount(false);
                 break;
             case "Show":
@@ -255,6 +256,9 @@ public class Account {
             case "Exit":
                 System.out.println("going back to main menu");
                 Menu.mainMenu();
+                break;
+            case "Help":
+                profileMenuHelp();
                 break;
             default:
                 System.out.println("invalid command in profile menu.\nTry again:");
@@ -332,6 +336,32 @@ public class Account {
     }
 
 
+    static void changePassword() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("*** change password ***");
+        System.out.println("Enter you old password:");
+        String oldPass = scanner.nextLine();
+        if (playingAccount.getPassword().equals(oldPass)) {
+            System.out.println("Enter your new password:");
+            String newPass = scanner.nextLine();
+            playingAccount.setPassword(newPass);
+            System.out.println("your password changed. going back to profile menu:");
+            profile();
+        } else {
+            System.out.println("Wrong password!\nTry again:");
+            changePassword();
+        }
+    }
+
+    static void profileMenuHelp() {
+        System.out.println("*** Profile Menu Help ***");
+        System.out.println("Profile Menu commands are:");
+        System.out.println("Change (logging in with another account)");
+        System.out.println("Delete account, Change password, Rename (change your username)");
+        System.out.println("Create account (and login with that), Show (show your current logged in account)");
+        System.out.println("Exit and Help");
+        profile();
+    }
 
 
 }
