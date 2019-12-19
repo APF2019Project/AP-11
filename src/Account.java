@@ -254,8 +254,38 @@ public class Account {
                 profile();
                 break;
         }
+    }
 
+    static void deleteAccount() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("*** DELETE ACCOUNT ***");
+        System.out.println("Enter your password:");
+        String command = scanner.nextLine();
+        if (playingAccount.getPassword().equals(command)) {
+            System.out.println("Are you sure you want delete your account?");
+            String isSure = scanner.nextLine();
+            if (isSure.equals("yes")) {
+                accounts.remove(playingAccount);
+                playingAccount = null;
+                System.out.println("account deleted. going to login menu:");
+                Menu.loginMenu();
+            } else if (isSure.equals("no")) {
+                System.out.println("your account is safe. going back to profile menu:");
+                profile();
+            } else {
+                System.out.println("invalid answer. Try again:");
+                deleteAccount();
+            }
 
+        } else {
+            System.out.println("Wrong password!\nTry again:");
+            deleteAccount();
+        }
+
+    }
+
+    static void renameAccount() {
+        
     }
 
 }
