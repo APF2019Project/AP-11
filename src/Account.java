@@ -217,7 +217,8 @@ public class Account {
     }
 
 
-    
+
+
     static void leaderboard() {
         System.out.println("***Leaderboard***");
         ArrayList<Account> sortedAccounts = new ArrayList<>(accounts);
@@ -228,6 +229,7 @@ public class Account {
         System.out.println("going back to login menu:");
         Menu.loginMenu();
     }
+
 
     static void profile() {
         Scanner scanner = new Scanner(System.in);
@@ -270,6 +272,7 @@ public class Account {
         }
     }
 
+
     static void deleteAccount() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("*** DELETE ACCOUNT ***");
@@ -297,6 +300,7 @@ public class Account {
         }
 
     }
+
 
     static void renameAccount() {
         Scanner scanner = new Scanner(System.in);
@@ -330,6 +334,7 @@ public class Account {
         }
     }
 
+    
     static void showAccount() {
         System.out.println("*** show account ***");
         System.out.println("you are logged in as:");
