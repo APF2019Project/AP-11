@@ -45,6 +45,10 @@ public class Menu {
             case "Shop":
                 Shop.shop();
                 break;
+            case "Exit":
+                System.out.println("going to login menu:");
+                loginMenu();
+                break;
             default:
                 System.out.println("invalid command in main menu.\nTry again:");
                 mainMenu();
