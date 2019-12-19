@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="37ad81d8-0eb8-4acc-896a-8976797cefea" name="Default Changelist" comment="" />
+    <list default="true" id="37ad81d8-0eb8-4acc-896a-8976797cefea" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Shop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Shop.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -68,6 +72,10 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
+    <state x="320" y="114" key="#Plugins" timestamp="1576762365208">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="320" y="114" key="#Plugins/0.0.1440.900@0.0.1440.900" timestamp="1576762365208" />
     <state x="184" y="111" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1576660295311">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
@@ -96,5 +104,9 @@
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state x="380" y="281" key="com.intellij.ide.util.TipDialog/0.0.1440.900@0.0.1440.900" timestamp="1576669007857" />
+    <state x="385" y="196" width="670" height="676" key="search.everywhere.popup" timestamp="1576762348382">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="385" y="196" width="670" height="676" key="search.everywhere.popup/0.0.1440.900@0.0.1440.900" timestamp="1576762348382" />
   </component>
 </project>
