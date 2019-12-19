@@ -241,6 +241,7 @@ public class Account {
                 break;
             case "Change password":
                 Account.changePassword();
+                break;
             case "Delete account":
                 Account.deleteAccount();
                 break;
@@ -362,7 +363,6 @@ public class Account {
         System.out.println("Exit and Help");
         profile();
     }
-
 
 }
 
