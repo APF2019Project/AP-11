@@ -1,3 +1,4 @@
+import java.sql.Struct;
 import java.util.*;
 
 // All of the outputs that are starting with $$$ are being told to the programmer
@@ -131,6 +132,7 @@ public class Account {
             password = scanner.nextLine();
             accounts.add(new Account(username, password));
             System.out.println("account created");
+            System.out.println("going back to login menu:");
             Menu.loginMenu();
         } else {
             System.out.println("this username is already taken.\n Try again:");
@@ -138,7 +140,7 @@ public class Account {
         }
     }
 
-    static void login() {
+    static void login(boolean calledFromLoginMenu) {
         System.out.println("***LOGIN***");
         String username;
         String password;
@@ -150,18 +152,21 @@ public class Account {
             password = scanner.nextLine();
             if (getAccountByUsername(username).getPassword().equals(password)) {
                 playingAccount = getAccountByUsername(username);
-                System.out.println("loged in");
-                Menu.mainMenu();
+                if (calledFromLoginMenu) {
+                    System.out.println("logged in, going to main menu:");
+                    Menu.mainMenu();
+                } else {
+                    System.out.println("logged in, going back to profile menu:");
+                    profile();
+                }
             } else {
                 System.out.println("Wrong password. Try again:");
-                login();
+                login(calledFromLoginMenu);
             }
         } else {
             System.out.println("username doesn't exist.\nTry again:");
-            login();
+            login(calledFromLoginMenu);
         }
-
-
     }
 
     static boolean accountExists(String username) {
@@ -206,12 +211,51 @@ public class Account {
     }
 
     static void leaderboard() {
+        System.out.println("***Leaderboard***");
         ArrayList<Account> sortedAccounts = new ArrayList<>(accounts);
         sortedAccounts.sort(new sortAccountsByKilledZombies());
         for (Account accountIterator : sortedAccounts) {
             System.out.println(accountIterator.getUsername() + " " + "Killed zombies: " + accountIterator.getKilledZombies());
         }
+        System.out.println("going back to login menu:");
         Menu.loginMenu();
+    }
+
+    static void profile() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("***PROFILE***");
+        System.out.println("you are logged in as: " + playingAccount.getUsername());
+        System.out.println("enter command:");
+        String command = scanner.nextLine();
+
+        switch (command) {
+            case "Change":
+                System.out.println("logging in with another account:");
+                login(false);
+                break;
+            case "delete":
+                Account.deleteAccount();
+                break;
+            case "Rename":
+                Account.renameAccount();
+                break;
+            case "Create":
+
+                break;
+            case "Show":
+                Account.showAccount();
+                break;
+            case "Exit":
+                System.out.println("going back to main menu");
+                Menu.mainMenu();
+                break;
+            default:
+                System.out.println("invalid command in profile menu.\nTry again:");
+                profile();
+                break;
+        }
+
+
     }
 
 }

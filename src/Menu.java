@@ -14,7 +14,7 @@ public class Menu {
                 Account.createAccount();
                 break;
             case "Login":
-                Account.login();
+                Account.login(true);
                 break;
             case "Leaderboard":
                 Account.leaderboard();
@@ -23,14 +23,33 @@ public class Menu {
                 System.out.println("FINISHED");
                 break;
             default:
-                System.out.println("invalid command in Login Menu");
+                System.out.println("invalid command in Login Menu\nTry again:");
                 loginMenu();
                 break;
         }
     }
 
     static void mainMenu() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("*** MAIN MENU ***\nEnter command:");
+        String command;
+        command = scanner.nextLine();
 
+        switch (command) {
+            case "Play":
+                Play.Play();
+                break;
+            case "Profile":
+                Account.profile();
+                break;
+            case "Shop":
+                Shop.shop();
+                break;
+            default:
+                System.out.println("invalid command in main menu.\nTry again:");
+                mainMenu();
+                break;
+        }
 
 
     }
