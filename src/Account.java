@@ -216,6 +216,8 @@ public class Account {
         }
     }
 
+
+    
     static void leaderboard() {
         System.out.println("***Leaderboard***");
         ArrayList<Account> sortedAccounts = new ArrayList<>(accounts);

@@ -33,7 +33,6 @@ public class Menu {
     }
 
 
-    
     static void mainMenu() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("*** MAIN MENU ***\nEnter command:");
