@@ -5,4 +5,5 @@ test.py
 test2
 
 .idea/*
-PvZ.iml
+PvZ.iml/*
+.DS_Store/*
