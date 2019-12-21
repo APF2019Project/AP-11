@@ -11,7 +11,10 @@ public class Account {
     private int money;
     private int killedZombies;
     private int killedPlants;
-    
+
+
+
+
     private Plant[] plantsDeck = new Plant[7];
     private ArrayList<Zombie> zombiesDeck = new ArrayList<>();
     private ArrayList<Plant> plantsCollection = new ArrayList<>();
@@ -21,6 +24,9 @@ public class Account {
 
     private static Account playingAccount;
 
+
+
+    
     public Account(String username, String password) {
         this.username = username;
         this.password = password;
