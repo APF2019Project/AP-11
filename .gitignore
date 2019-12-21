@@ -1,8 +1,6 @@
 .idea
 *.xml
 /.idea
-test.py
-test2
 
 .idea/*
 PvZ.iml/*
