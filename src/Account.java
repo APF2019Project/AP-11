@@ -121,7 +121,7 @@ public class Account {
 
     static void createAccount(boolean calledFromLoginMenu) {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("--- Creating an account ---");
+        System.out.println("--- Create account ---");
         String username;
         String password;
         System.out.println("Enter username");
@@ -143,6 +143,7 @@ public class Account {
             createAccount(calledFromLoginMenu);
         }
     }
+
 
     static void login(boolean calledFromLoginMenu) {
         System.out.println("--- LOGIN ---");
@@ -171,6 +172,7 @@ public class Account {
             login(calledFromLoginMenu);
         }
     }
+
 
     static boolean accountExists(String username) {
         for (Account accountIterator : accounts) {
@@ -236,7 +238,7 @@ public class Account {
             String command = scanner.nextLine();
             switch (command) {
                 case "Change":
-                    System.out.println("logging in with another account:");
+                    System.out.println("Logging in with another account:");
                     login(false);
                     break;
                 case "Change password":
@@ -255,7 +257,7 @@ public class Account {
                     Account.showAccount();
                     break;
                 case "Exit":
-                    System.out.println("going back to --> Main Menu");
+                    System.out.println("Going back to --> Main Menu");
                     whileTrue = false;
                     break;
                 case "Help":
@@ -285,7 +287,7 @@ public class Account {
             } else if (isSure.equals("no")) {
                 System.out.println("Your account is safe. going back to --> Profile Menu:");
             } else {
-                System.out.println("invalid answer. Try again:");
+                System.out.println("Invalid answer. Try again:");
                 deleteAccount();
             }
         } else {
@@ -311,11 +313,11 @@ public class Account {
                 String isSure = scanner.nextLine();
                 if (isSure.equals("yes")) {
                     playingAccount.setUsername(newUsername);
-                    System.out.println("Your username changed. going back to --> Profile Menu:");
+                    System.out.println("Your username changed. Going back to --> Profile Menu:");
                 } else if (isSure.equals("no")) {
-                    System.out.println("Your username is safe. going back to --> Profile Menu:");
+                    System.out.println("Your username is safe. Going back to --> Profile Menu:");
                 } else {
-                    System.out.println("invalid answer.\nTry again:");
+                    System.out.println("Invalid answer.\nTry again:");
                     renameAccount();
                 }
             }
@@ -327,10 +329,10 @@ public class Account {
 
 
     static void showAccount() {
-        System.out.println("*** show account ***");
-        System.out.println("you are logged in as:");
+        System.out.println("--- Show account ---");
+        System.out.print("You are logged in as: ");
         System.out.println(playingAccount.getUsername());
-        System.out.println("going back to profile menu:");
+        System.out.println("Going back to --> Profile Menu:");
     }
 
 
@@ -343,12 +345,13 @@ public class Account {
             System.out.println("Enter your new password:");
             String newPass = scanner.nextLine();
             playingAccount.setPassword(newPass);
-            System.out.println("Your password changed. going back to --> Profile Menu:");
+            System.out.println("Your password changed. Going back to --> Profile Menu:");
         } else {
             System.out.println("Wrong password!\nTry again:");
             changePassword();
         }
     }
+
 
     static void profileMenuHelp() {
         System.out.println("--- Profile Menu Help ---");

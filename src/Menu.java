@@ -8,7 +8,7 @@ public class Menu {
         String command;
         boolean whileTrue = true;
         while(whileTrue) {
-            System.out.println("--- LOGIN MENU ---\nEnter command:");
+            System.out.println("____ LOGIN MENU ____\nEnter command:");
             command = scanner.nextLine();
             switch (command) {
                 case "Create account":
@@ -21,14 +21,14 @@ public class Menu {
                     Account.leaderboard();
                     break;
                 case "Exit":
-                    System.out.println("--END GAME--");
+                    System.out.println("___^^___ END GAME ___^^___");
                     whileTrue = false;
                     break;
                 case "Help":
                     loginMenuHelp();
                     break;
                 default:
-                    System.out.println("invalid command in Login Menu\nTry again:");
+                    System.out.println("Invalid command in Login Menu,\nTry again:");
                     break;
             }
         }
@@ -40,11 +40,11 @@ public class Menu {
         String command;
         boolean whileTrue = true;
         while(whileTrue) {
-            System.out.println("--- MAIN MENU ---\nEnter command:");
+            System.out.println("____ MAIN MENU ____\nEnter command:");
             command = scanner.nextLine();
             switch (command) {
                 case "Play":
-                    Play.Play();
+                    Play.goPlay();
                     break;
                 case "Profile":
                     Account.profile();
@@ -53,14 +53,14 @@ public class Menu {
                     Shop.shop();
                     break;
                 case "Exit":
-                    System.out.println("going back to -->  Login Menu:");
+                    System.out.println("Going back to -->  Login Menu:");
                     whileTrue = false;
                     break;
                 case "Help":
                     mainMenuHelp();
                     break;
                 default:
-                    System.out.println("invalid command in main menu.\nTry again:");
+                    System.out.println("Invalid command in Main Menu.\nTry again:");
                     break;
             }
         }
