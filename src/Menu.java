@@ -7,28 +7,30 @@ public class Menu {
         Scanner scanner = new Scanner(System.in);
         String command;
         System.out.println("***LOGIN MENU***\nEnter command:");
-        command = scanner.nextLine();
-
-        switch (command) {
-            case "Create account":
-                Account.createAccount(true);
-                break;
-            case "Login":
-                Account.login(true);
-                break;
-            case "Leaderboard":
-                Account.leaderboard();
-                break;
-            case "Exit":
-                System.out.println("FINISHED");
-                break;
-            case "Help":
-                loginMenuHelp();
-                break;
-            default:
-                System.out.println("invalid command in Login Menu\nTry again:");
-                loginMenu();
-                break;
+        boolean flag = true;
+        while(flag) {
+            command = scanner.nextLine();
+            switch (command) {
+                case "Create account":
+                    Account.createAccount(true);
+                    break;
+                case "Login":
+                    Account.login(true);
+                    break;
+                case "Leaderboard":
+                    Account.leaderboard();
+                    break;
+                case "Exit":
+                    System.out.println("FINISHED");
+                    flag = false;
+                    break;
+                case "Help":
+                    loginMenuHelp();
+                    break;
+                default:
+                    System.out.println("invalid command in Login Menu\nTry again:");
+                    break;
+            }
         }
     }
 
