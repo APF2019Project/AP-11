@@ -6,5 +6,6 @@ test2
 
 .idea/*
 PvZ.iml/*
-.DS_Store/*
+.DS_Store
 target
+
