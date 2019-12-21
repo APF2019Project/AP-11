@@ -121,7 +121,7 @@ public class Account {
 
     static void createAccount(boolean calledFromLoginMenu) {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("*** Creating an account ***");
+        System.out.println("--- Creating an account ---");
         String username;
         String password;
         System.out.println("Enter username");
@@ -130,27 +130,25 @@ public class Account {
             System.out.println("Enter password:");
             password = scanner.nextLine();
             accounts.add(new Account(username, password));
-            System.out.println("account created");
+            System.out.println("Account created.");
             if (calledFromLoginMenu) {
-                System.out.println("going back to login menu:");
-                return;
+                System.out.println("Going back to --> Login Menu:");
             } else {
                 playingAccount = getAccountByUsername(username);
-                System.out.println("now, you are logged in as: " + username);
-                System.out.println("going to your profile menu:");
-                profile();
+                System.out.println("Now, you are logged in as: " + username);
+                System.out.println("Going to --> your Profile Menu:");
             }
         } else {
-            System.out.println("this username is already taken.\n Try again:");
+            System.out.println("This username is already taken.\n Try again:");
             createAccount(calledFromLoginMenu);
         }
     }
 
     static void login(boolean calledFromLoginMenu) {
-        System.out.println("***LOGIN***");
+        System.out.println("--- LOGIN ---");
         String username;
         String password;
-        System.out.println("enter username");
+        System.out.println("Enter username:");
         Scanner scanner = new Scanner(System.in);
         username = scanner.nextLine();
         if (accountExists(username)) {
@@ -159,18 +157,17 @@ public class Account {
             if (getAccountByUsername(username).getPassword().equals(password)) {
                 playingAccount = getAccountByUsername(username);
                 if (calledFromLoginMenu) {
-                    System.out.println("logged in, going to main menu:");
+                    System.out.println("Logged in, going to --> Main Menu:");
                     Menu.mainMenu();
                 } else {
-                    System.out.println("logged in, going back to profile menu:");
-                    profile();
+                    System.out.println("Logged in, going back to --> Profile Menu:");
                 }
             } else {
                 System.out.println("Wrong password. Try again:");
                 login(calledFromLoginMenu);
             }
         } else {
-            System.out.println("username doesn't exist.\nTry again:");
+            System.out.println("Username doesn't exist!\nTry again:");
             login(calledFromLoginMenu);
         }
     }
@@ -192,14 +189,15 @@ public class Account {
                     return accountIterator;
                 }
             }
-            System.out.println("Wrong password passed to the function getAccountByUserAndPass. returning null.");
+            System.out.println("$$$ Wrong password passed to the function getAccountByUserAndPass. returning null.");
             return null;
         } else {
-            System.out.println("dear programmer, you passed a not existing username to the" +
+            System.out.println("$$$ dear programmer, you passed a not existing username to the" +
                     " function getAccountByUserAndPass. returning null.");
             return null;
         }
     }
+
 
     static Account getAccountByUsername(String username) {
         if (accountExists(username)) {
@@ -217,65 +215,63 @@ public class Account {
     }
 
 
-
-
     static void leaderboard() {
-        System.out.println("***Leaderboard***");
+        System.out.println("--- Leaderboard ---");
         ArrayList<Account> sortedAccounts = new ArrayList<>(accounts);
         sortedAccounts.sort(new sortAccountsByKilledZombies());
         for (Account accountIterator : sortedAccounts) {
             System.out.println(accountIterator.getUsername() + " " + "Killed zombies: " + accountIterator.getKilledZombies());
         }
-        System.out.println("going back to login menu:");
-        return;
+        System.out.println("Going back to --> Login Menu:");
     }
 
 
     static void profile() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("***PROFILE***");
-        System.out.println("you are logged in as: " + playingAccount.getUsername());
-        System.out.println("enter command:");
-        String command = scanner.nextLine();
-
-        switch (command) {
-            case "Change":
-                System.out.println("logging in with another account:");
-                login(false);
-                break;
-            case "Change password":
-                Account.changePassword();
-                break;
-            case "Delete account":
-                Account.deleteAccount();
-                break;
-            case "Rename":
-                Account.renameAccount();
-                break;
-            case "Create account":
-                createAccount(false);
-                break;
-            case "Show":
-                Account.showAccount();
-                break;
-            case "Exit":
-                System.out.println("going back to main menu");
-                Menu.mainMenu();
-                break;
-            case "Help":
-                profileMenuHelp();
-                break;
-            default:
-                System.out.println("invalid command in profile menu.\nTry again:");
-                profile();
-                break;
+        boolean whileTrue = true;
+        while (whileTrue) {
+            System.out.println("--- PROFILE MENU ---");
+            System.out.println("You are logged in as: " + playingAccount.getUsername());
+            System.out.println("Enter command:");
+            String command = scanner.nextLine();
+            switch (command) {
+                case "Change":
+                    System.out.println("logging in with another account:");
+                    login(false);
+                    break;
+                case "Change password":
+                    Account.changePassword();
+                    break;
+                case "Delete account":
+                    Account.deleteAccount();
+                    break;
+                case "Rename":
+                    Account.renameAccount();
+                    break;
+                case "Create account":
+                    createAccount(false);
+                    break;
+                case "Show":
+                    Account.showAccount();
+                    break;
+                case "Exit":
+                    System.out.println("going back to --> Main Menu");
+                    whileTrue = false;
+                    break;
+                case "Help":
+                    profileMenuHelp();
+                    break;
+                default:
+                    System.out.println("Invalid command in profile Menu.\nTry again:");
+                    break;
+            }
         }
     }
 
 
     static void deleteAccount() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("*** DELETE ACCOUNT ***");
+        System.out.println("--- DELETE ACCOUNT ---");
         System.out.println("Enter your password:");
         String command = scanner.nextLine();
         if (playingAccount.getPassword().equals(command)) {
@@ -284,28 +280,25 @@ public class Account {
             if (isSure.equals("yes")) {
                 accounts.remove(playingAccount);
                 playingAccount = null;
-                System.out.println("account deleted. going to login menu:");
+                System.out.println("Account deleted. going to --> Login Menu:");
                 Menu.loginMenu();
             } else if (isSure.equals("no")) {
-                System.out.println("your account is safe. going back to profile menu:");
-                profile();
+                System.out.println("Your account is safe. going back to --> Profile Menu:");
             } else {
                 System.out.println("invalid answer. Try again:");
                 deleteAccount();
             }
-
         } else {
             System.out.println("Wrong password!\nTry again:");
             deleteAccount();
         }
-
     }
 
 
     static void renameAccount() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("*** Renaming account ***");
-        System.out.println("Enter you password:");
+        System.out.println("--- Rename account ---");
+        System.out.println("Enter your password:");
         String input = scanner.nextLine();
         if (playingAccount.getPassword().equals(input)) {
             System.out.println("Enter your new username");
@@ -318,11 +311,9 @@ public class Account {
                 String isSure = scanner.nextLine();
                 if (isSure.equals("yes")) {
                     playingAccount.setUsername(newUsername);
-                    System.out.println("your username changed. going back to profile menu:");
-                    profile();
+                    System.out.println("Your username changed. going back to --> Profile Menu:");
                 } else if (isSure.equals("no")) {
-                    System.out.println("your username is safe. going back to profile menu:");
-                    profile();
+                    System.out.println("Your username is safe. going back to --> Profile Menu:");
                 } else {
                     System.out.println("invalid answer.\nTry again:");
                     renameAccount();
@@ -340,21 +331,19 @@ public class Account {
         System.out.println("you are logged in as:");
         System.out.println(playingAccount.getUsername());
         System.out.println("going back to profile menu:");
-        profile();
     }
 
 
     static void changePassword() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("*** change password ***");
+        System.out.println("--- change password ---");
         System.out.println("Enter you old password:");
         String oldPass = scanner.nextLine();
         if (playingAccount.getPassword().equals(oldPass)) {
             System.out.println("Enter your new password:");
             String newPass = scanner.nextLine();
             playingAccount.setPassword(newPass);
-            System.out.println("your password changed. going back to profile menu:");
-            profile();
+            System.out.println("Your password changed. going back to --> Profile Menu:");
         } else {
             System.out.println("Wrong password!\nTry again:");
             changePassword();
@@ -362,13 +351,12 @@ public class Account {
     }
 
     static void profileMenuHelp() {
-        System.out.println("*** Profile Menu Help ***");
+        System.out.println("--- Profile Menu Help ---");
         System.out.println("Profile Menu commands are:");
         System.out.println("Change (logging in with another account)");
         System.out.println("Delete account, Change password, Rename (change your username)");
         System.out.println("Create account (and login with that), Show (show your current logged in account)");
         System.out.println("Exit and Help");
-        profile();
     }
 
 }

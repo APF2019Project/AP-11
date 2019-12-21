@@ -8,7 +8,7 @@ public class Menu {
         String command;
         boolean whileTrue = true;
         while(whileTrue) {
-            System.out.println("***LOGIN MENU***\nEnter command:");
+            System.out.println("--- LOGIN MENU ---\nEnter command:");
             command = scanner.nextLine();
             switch (command) {
                 case "Create account":
@@ -21,7 +21,7 @@ public class Menu {
                     Account.leaderboard();
                     break;
                 case "Exit":
-                    System.out.println("FINISHED");
+                    System.out.println("--END GAME--");
                     whileTrue = false;
                     break;
                 case "Help":
@@ -37,11 +37,11 @@ public class Menu {
 
     static void mainMenu() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("*** MAIN MENU ***\nEnter command:");
         String command;
-        command = scanner.nextLine();
         boolean whileTrue = true;
         while(whileTrue) {
+            System.out.println("--- MAIN MENU ---\nEnter command:");
+            command = scanner.nextLine();
             switch (command) {
                 case "Play":
                     Play.Play();
@@ -53,7 +53,7 @@ public class Menu {
                     Shop.shop();
                     break;
                 case "Exit":
-                    System.out.println("going to login menu:");
+                    System.out.println("going back to -->  Login Menu:");
                     whileTrue = false;
                     break;
                 case "Help":
@@ -67,15 +67,14 @@ public class Menu {
     }
 
     static void loginMenuHelp() {
-        System.out.println("*** Login Menu Help ***");
+        System.out.println("--- Login Menu Help ---");
         System.out.println("Login Menu commands are:");
         System.out.println("Create account, Login, Leaderboard, Exit and Help");
     }
 
     static void mainMenuHelp() {
-        System.out.println("*** Main Menu Help ***");
+        System.out.println("--- Main Menu Help ---");
         System.out.println("Main Menu commands are:");
         System.out.println("Play, Profile, Shop, Exit and Help");
-        mainMenu();
     }
 }
