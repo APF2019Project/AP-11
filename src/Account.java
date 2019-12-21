@@ -11,11 +11,6 @@ public class Account {
     private int money;
     private int killedZombies;
     private int killedPlants;
-
-
-
-
-
     
     private Plant[] plantsDeck = new Plant[7];
     private ArrayList<Zombie> zombiesDeck = new ArrayList<>();
