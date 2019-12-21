@@ -133,7 +133,7 @@ public class Account {
             System.out.println("account created");
             if (calledFromLoginMenu) {
                 System.out.println("going back to login menu:");
-                Menu.loginMenu();
+                return;
             } else {
                 playingAccount = getAccountByUsername(username);
                 System.out.println("now, you are logged in as: " + username);
@@ -227,7 +227,7 @@ public class Account {
             System.out.println(accountIterator.getUsername() + " " + "Killed zombies: " + accountIterator.getKilledZombies());
         }
         System.out.println("going back to login menu:");
-        Menu.loginMenu();
+        return;
     }
 
 

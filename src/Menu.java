@@ -2,13 +2,13 @@ import java.beans.beancontext.BeanContextServiceRevokedEvent;
 import java.util.Scanner;
 
 public class Menu {
-    
+
     static void loginMenu() {
         Scanner scanner = new Scanner(System.in);
         String command;
-        System.out.println("***LOGIN MENU***\nEnter command:");
-        boolean flag = true;
-        while(flag) {
+        boolean whileTrue = true;
+        while(whileTrue) {
+            System.out.println("***LOGIN MENU***\nEnter command:");
             command = scanner.nextLine();
             switch (command) {
                 case "Create account":
@@ -22,7 +22,7 @@ public class Menu {
                     break;
                 case "Exit":
                     System.out.println("FINISHED");
-                    flag = false;
+                    whileTrue = false;
                     break;
                 case "Help":
                     loginMenuHelp();
@@ -40,28 +40,29 @@ public class Menu {
         System.out.println("*** MAIN MENU ***\nEnter command:");
         String command;
         command = scanner.nextLine();
-
-        switch (command) {
-            case "Play":
-                Play.Play();
-                break;
-            case "Profile":
-                Account.profile();
-                break;
-            case "Shop":
-                Shop.shop();
-                break;
-            case "Exit":
-                System.out.println("going to login menu:");
-                loginMenu();
-                break;
-            case "Help":
-                mainMenuHelp();
-                break;
-            default:
-                System.out.println("invalid command in main menu.\nTry again:");
-                mainMenu();
-                break;
+        boolean whileTrue = true;
+        while(whileTrue) {
+            switch (command) {
+                case "Play":
+                    Play.Play();
+                    break;
+                case "Profile":
+                    Account.profile();
+                    break;
+                case "Shop":
+                    Shop.shop();
+                    break;
+                case "Exit":
+                    System.out.println("going to login menu:");
+                    whileTrue = false;
+                    break;
+                case "Help":
+                    mainMenuHelp();
+                    break;
+                default:
+                    System.out.println("invalid command in main menu.\nTry again:");
+                    break;
+            }
         }
     }
 
@@ -69,7 +70,6 @@ public class Menu {
         System.out.println("*** Login Menu Help ***");
         System.out.println("Login Menu commands are:");
         System.out.println("Create account, Login, Leaderboard, Exit and Help");
-        loginMenu();
     }
 
     static void mainMenuHelp() {
