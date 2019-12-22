@@ -42,23 +42,31 @@ public class Plant {
         this.type = plant.type;
 
     }
-    public static Shoot fakeShoot = new Shoot();
 
     static {
-        new Plant("Peashooter",2,2, fakeShoot,1,0,2,2,false,"range").setRespawnTime(2);
-        new Plant("Snow Pea", 3, 3, fakeShoot, 1, 0, 3, 3, false, "range").setRespawnTime(3);
-        new Plant("(Cabbage-pult", 2, 2, fakeShoot, 1, 0, 3, 2, false, "range").setRespawnTime(3);
-        new Plant("Repeater",4, 3, fakeShoot, 2, 0, 4, 3, false,"range").setRespawnTime(4);
-        new Plant("Threepeater", 5, 4, fakeShoot, 1, 0, 4, 4, false, "range").setRespawnTime(4);
-        new Plant("Cactus", 5, 5, fakeShoot, 1, 1, 4, 2, false, "range").setRespawnTime(4);
-        new Plant("Gatling Pea", 3, 5, fakeShoot, 4, 0 ,4, 5, false, "range").setRespawnTime(4);
-        new Plant("(Scaredy-shroom", 1, 1, fakeShoot, 1, 0, 2, 2, false, "range 2").setRespawnTime(2);
-        new Plant("Kernel-pult", 2, 3, fakeShoot, 1 ,0, 3, 4, false, "range").setRespawnTime(3);
-        new Plant("Melon-pult", 3, 3, fakeShoot, 1, 0, 3, 4, false, "range").setRespawnTime(3);
-        new Plant("Winter Melon", 3, 4, fakeShoot,1, 0, 5, 4, false, "range").setRespawnTime(5);
+        //Shoots:
+        Shoot normalPea = new Shoot(true, 1, 3, 1, 0);
+        Shoot frozenPea = new Shoot(true, 1, 3, 0.5, 1);
+        Shoot cabbage = new Shoot(false, 2, 3, 1, 0);
+        Shoot kernel = new Shoot(false, 0, 3, 0, 2);
+        Shoot melon =  new Shoot(false, 3, 3, 1, 0);
+        Shoot frozenMelon = new Shoot(false,  3, 3, 0.5, -1);
+
+
+        new Plant("Peashooter",2,2, normalPea,1,0,2,2,false,"range -1").setRespawnTime(2);
+        new Plant("Snow Pea", 3, 3, frozenPea, 1, 0, 3, 3, false, "range -1").setRespawnTime(3);
+        new Plant("Cabbage-pult", 2, 2, cabbage, 1, 0, 3, 2, false, "range -1").setRespawnTime(3);
+        new Plant("Repeater",4, 3, normalPea, 2, 0, 4, 3, false,"range -1").setRespawnTime(4);
+        new Plant("Threepeater", 5, 4, normalPea, 1, 0, 4, 4, false, "range -1").setRespawnTime(4);
+        new Plant("Cactus", 5, 5, normalPea, 1, 1, 4, 2, false, "range -1").setRespawnTime(4);
+        new Plant("Gatling Pea", 3, 5, normalPea, 4, 0 ,4, 5, false, "range -1").setRespawnTime(4);
+        new Plant("Scaredy-shroom", 1, 1, normalPea, 1, 0, 2, 2, false, "range 2").setRespawnTime(2);
+        new Plant("Kernel-pult", 2, 3, kernel, 1 ,0, 3, 4, false, "range -1").setRespawnTime(3);
+        new Plant("Melon-pult", 3, 3, melon, 1, 0, 3, 4, false, "range -1").setRespawnTime(3);
+        new Plant("Winter Melon", 3, 4, frozenMelon,1, 0, 5, 4, false, "range -1").setRespawnTime(5);
 
         new Plant("Wall-nut", 4, 2, null, 0, 0, 4, 0, false, "wall").setRespawnTime(4);
-        new Plant("(Explode-o-nut", 3, 4, null, 0, 1, 5, 0, false, "wall").setRespawnTime(5);
+        new Plant("Explode-o-nut", 3, 4, null, 0, 1, 5, 0, false, "wall").setRespawnTime(5);
         new Plant("Tall-nut", 6, 4, null, 0, 0, 6, 0, false, "wall").setRespawnTime(6);
         new Plant("Potato Mine", 1, 2, null, 0, 100, 3, 0, false, "mine").setRespawnTime(3);
         new Plant("Cherry Bomb", 0, 2, null, 0, 100, 4, 0, false, "circleBomb 1").setRespawnTime(4);
