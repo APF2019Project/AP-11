@@ -1,3 +1,140 @@
-public class Plant {
+import java.util.ArrayList;
 
+public class Plant {
+    private static ArrayList<Plant> plants = new ArrayList<>();
+
+    private String name;
+    private int health;
+    private int age = 0;
+    private final int sunCost;
+    private final Shoot bullet;
+    private final int bulletNumber;
+    private final int meleeDamage;
+    private final int respawnCoolDown;
+    private int respawnTime;
+    private final int shootCoolDown;
+    private final boolean isCat;
+    private String type;
+
+    public Plant(String name, int health, int sunCost, Shoot bullet, int bulletNumber, int meleeDamage, int respawnCoolDown, int shootCoolDown, Boolean isCat, String type) {
+        this.name = name;
+        this.health = health;
+        this.sunCost = sunCost;
+        this.bullet = bullet;
+        this.bulletNumber = bulletNumber;
+        this.meleeDamage = meleeDamage;
+        this.respawnCoolDown = respawnCoolDown;
+        this.shootCoolDown = shootCoolDown;
+        this.isCat = isCat;
+        this.type = type;
+        Plant.plants.add(this);
+    }
+    public Plant( Plant plant) {
+        this.name = plant.name;
+        this.health = plant.health;
+        this.sunCost = plant.sunCost;
+        this.bullet = plant.bullet;
+        this.bulletNumber = plant.bulletNumber;
+        this.meleeDamage = plant.meleeDamage;
+        this.respawnCoolDown = plant.respawnCoolDown;
+        this.shootCoolDown = plant.shootCoolDown;
+        this.isCat = plant.isCat;
+        this.type = plant.type;
+
+    }
+    public static Shoot fakeShoot = new Shoot();
+
+    static {
+        new Plant("Peashooter",2,2, fakeShoot,1,0,2,2,false,"range").setRespawnTime(2);
+        new Plant("Snow Pea", 3, 3, fakeShoot, 1, 0, 3, 3, false, "range").setRespawnTime(3);
+        new Plant("(Cabbage-pult", 2, 2, fakeShoot, 1, 0, 3, 2, false, "range").setRespawnTime(3);
+        new Plant("Repeater",4, 3, fakeShoot, 2, 0, 4, 3, false,"range").setRespawnTime(4);
+        new Plant("Threepeater", 5, 4, fakeShoot, 1, 0, 4, 4, false, "range").setRespawnTime(4);
+        new Plant("Cactus", 5, 5, fakeShoot, 1, 1, 4, 2, false, "range").setRespawnTime(4);
+        new Plant("Gatling Pea", 3, 5, fakeShoot, 4, 0 ,4, 5, false, "range").setRespawnTime(4);
+        new Plant("(Scaredy-shroom", 1, 1, fakeShoot, 1, 0, 2, 2, false, "range 2").setRespawnTime(2);
+        new Plant("Kernel-pult", 2, 3, fakeShoot, 1 ,0, 3, 4, false, "range").setRespawnTime(3);
+        new Plant("Melon-pult", 3, 3, fakeShoot, 1, 0, 3, 4, false, "range").setRespawnTime(3);
+        new Plant("Winter Melon", 3, 4, fakeShoot,1, 0, 5, 4, false, "range").setRespawnTime(5);
+
+        new Plant("Wall-nut", 4, 2, null, 0, 0, 4, 0, false, "wall").setRespawnTime(4);
+        new Plant("(Explode-o-nut", 3, 4, null, 0, 1, 5, 0, false, "wall").setRespawnTime(5);
+        new Plant("Tall-nut", 6, 4, null, 0, 0, 6, 0, false, "wall").setRespawnTime(6);
+        new Plant("Potato Mine", 1, 2, null, 0, 100, 3, 0, false, "mine").setRespawnTime(3);
+        new Plant("Cherry Bomb", 0, 2, null, 0, 100, 4, 0, false, "circleBomb 1").setRespawnTime(4);
+        new Plant("Jalapeno", 0, 4, null, 0, 100, 5, 0, false, "linearBomb").setRespawnTime(5);
+        new Plant("Magnet-shroom", 2, 4, null ,0, 0, 4, 0, false, "magnet 1").setRespawnTime(4);
+        new Plant("Sunflower", 2, 1, null, 1, 0, 2, 1, false, "producer").setRespawnTime(2);
+        new Plant("Twin Sunflower", 2, 3, null, 2, 0, 5, 2, false, "producer").setRespawnTime(5);
+    }
+
+    //Getters:
+
+    public static ArrayList<Plant> getPlants() {
+        return plants;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public int getSunCost() {
+        return sunCost;
+    }
+
+    public Shoot getBullet() {
+        return bullet;
+    }
+
+    public int getBulletNumber() {
+        return bulletNumber;
+    }
+
+    public int getMeleeDamage() {
+        return meleeDamage;
+    }
+
+    public int getRespawnCoolDown() {
+        return respawnCoolDown;
+    }
+
+    public int getRespawnTime() {
+        return respawnTime;
+    }
+
+    public int getShootCoolDown() {
+        return shootCoolDown;
+    }
+
+    public boolean isCat() {
+        return isCat;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    //Methods:
+
+    public void decreaseHealth(int damage){
+        this.health -= damage;
+    }
+
+    public void endTurn(){
+        this.age++;
+        if (this.respawnTime < this.respawnCoolDown)
+            this.respawnTime++;
+    }
+
+    public void setRespawnTime(int time){
+        this.respawnTime = time;
+    }
 }
