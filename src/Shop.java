@@ -5,7 +5,7 @@ public class Shop {
     public static Scanner scanner = new Scanner(System.in);
 
     public static void shop() {
-        System.out.println("***Shop***\nEnter command:");
+        System.out.println("--- Shop ---\nEnter command:");
         String command;
         while (true) {
          command = scanner.nextLine();
