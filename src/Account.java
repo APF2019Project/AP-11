@@ -26,13 +26,11 @@ public class Account {
         this.password = password;
         this.money = 0;
         this.killedPlants = 0;
-        this.killedPlants = 0;
+        this.killedZombies = 0;
     }
 
     // All setters:
-    public void setUsername(String username) {
-        this.username = username;
-    }
+    public void setUsername(String username) {this.username = username;}
 
     public void setPassword(String password) {
         this.password = password;
