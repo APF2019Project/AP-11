@@ -1,20 +1,23 @@
 import java.util.ArrayList;
 
 public class Unit {
+
     private int X;
     private int Y;
     private boolean IsWater;
-    private boolean HaveChamanZan;
+    private boolean haveLawnMover;  //chamanZan
     private ArrayList<Zombie> zombies = new ArrayList<>();
     private ArrayList<Plant> plants = new ArrayList<>();
     private ArrayList<Shoot> shoots = new ArrayList<>();
 
-    public Unit(int x, int y, boolean isWater, boolean haveChamanZan) {
-        setHaveChamanZan(haveChamanZan);
+
+    public Unit(int x, int y, boolean isWater, boolean haveLawnMover) {
+        setHaveLawnMover(haveLawnMover);
         setIsWater(isWater);
         setX(x);
         setY(y);
     }
+
 
     public int getX() {
         return X;
@@ -52,9 +55,11 @@ public class Unit {
     public void RemoveFromPlants(Plant plant){
         plants.remove(plant);
     }
+
     public void RemoveFromShoots(Shoot shoot){
         shoots.remove(shoot);
     }
+
 
     public boolean getIsWater() {
         return IsWater;
@@ -65,11 +70,11 @@ public class Unit {
     }
 
     public boolean getHaveChamanZan() {
-        return HaveChamanZan;
+        return haveLawnMover;
     }
 
-    public void setHaveChamanZan(boolean haveChamanZan) {
-        HaveChamanZan = haveChamanZan;
+    public void setHaveLawnMover(boolean haveLawnMover) {
+        this.haveLawnMover = haveLawnMover;
     }
 
     public void printUnit() {

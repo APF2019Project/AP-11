@@ -1,41 +1,41 @@
 public class PlayGround {
 
-    private static Unit[][] units = new Unit[6][20];
+    private static Unit[][] playGround = new Unit[6][20];
 
-    public static void BuildNewWithoutWaterPlayGround(){
-        for (int i = 0; i < 6; i++){
-            for (int j = 0; j < 20; j++){
-                units[i][j] = new Unit(i, j, false, false);
+    public static void BuildDayPlayGround() {
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 20; j++) {
+                playGround[i][j] = new Unit(i, j, false, false);
             }
-            units[i][0].setHaveChamanZan(true);
+            playGround[i][0].setHaveLawnMover(true);
         }
     }
 
-    public static void BuildNewWithWaterPlayGround(){
-        for (int i = 0; i < 6; i++){
-            for (int j = 0; j < 20; j++){
-                units[i][j] = new Unit(i, j, false, false);
-                if (i == 2 || i == 3){
-                    units[i][j].setIsWater(true);
+    public static void BuildWaterPlayGround() {
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 20; j++) {
+                playGround[i][j] = new Unit(i, j, false, false);
+                if (i == 2 || i == 3) {
+                    playGround[i][j].setIsWater(true);
                 }
             }
-            units[i][0].setHaveChamanZan(true);
+            playGround[i][0].setHaveLawnMover(true);
         }
     }
 
     public static Unit[][] getUnits() {
-        return units;
+        return playGround;
     }
 
-    public void printAllGround(){
-        for (int i = 0; i < 6; i++){
-            for (int j = 0; j < 20; j++){
-                units[i][j].printUnit();
+    public void printAllGround() {
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 20; j++) {
+                playGround[i][j].printUnit();
             }
         }
     }
 
     public static Unit getSpecifiedUnit(int i, int j) {
-        return units[i][j];
+        return playGround[i][j];
     }
 }

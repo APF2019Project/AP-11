@@ -112,12 +112,19 @@ public class Zombie {
     }
 
     public static Zombie initializeRegularZombie(){
-        Zombie zRegular = new Zombie("Zombie", false, false, false, false, false, false, false, false, false, false, Integer.MAX_VALUE, 2, 0, 1, 2, 0, 1, Integer.MAX_VALUE, false, false);
+        Zombie zRegular = new Zombie("Zombie", false, false, false,
+                false, false, false, false,
+                false, false, false, Integer.MAX_VALUE, 2, 0,
+                1, 2, 0, 1, Integer.MAX_VALUE, false, false);
         return zRegular;
     }
 
 
-    public Zombie(String name, boolean isPartabeProof, boolean haveAntiTiq, boolean haveBucketHead, boolean couldRevertToRegularZombie, boolean couldDestroyInRow, boolean isWaterProof, boolean isPeaProof, boolean randomPosition, boolean haveDuck, boolean couldJump, int turnThief, int speed, int howManyTurnSpeedIsReduced, int speedReductionRatio, int health, int shieldStrength, int damagePower, int effectiveTimeBuff, boolean isJumper, boolean mustBeInWater) {
+    public Zombie(String name, boolean isPartabeProof, boolean haveAntiTiq, boolean haveBucketHead, boolean couldRevertToRegularZombie,
+                  boolean couldDestroyInRow, boolean isWaterProof, boolean isPeaProof, boolean randomPosition, boolean haveDuck, boolean couldJump,
+                  int turnThief, int speed, int howManyTurnSpeedIsReduced, int speedReductionRatio, int health, int shieldStrength, int damagePower,
+                  int effectiveTimeBuff, boolean isJumper, boolean mustBeInWater) {
+
         this.speedReductionRatio = speedReductionRatio;
         this.IsPartabeProof = isPartabeProof;
         this.name = name;
@@ -125,9 +132,9 @@ public class Zombie {
         this.haveBucketHead = haveBucketHead;
         this.couldRevertToRegularZombie = couldRevertToRegularZombie;
         this.couldDestroyInRow = couldDestroyInRow;
-        IsWaterProof = isWaterProof;
-        IsPeaProof = isPeaProof;
-        RandomPosition = randomPosition;
+        this.IsWaterProof = isWaterProof;
+        this.IsPeaProof = isPeaProof;
+        this.RandomPosition = randomPosition;
         this.haveDuck = haveDuck;
         this.couldJump = couldJump;
         this.turnThief = turnThief;
@@ -140,6 +147,7 @@ public class Zombie {
         this.isJumper = isJumper;
         this.mustBeInWater = mustBeInWater;
     }
+
 
     public static ArrayList<Zombie> getZombies() {
         return zombies;
