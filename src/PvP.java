@@ -1,3 +1,3 @@
-public class PvP extends Play {
+public class PvP {
 
 }

@@ -8,7 +8,7 @@ public class Shop {
         System.out.println("***Shop***\nEnter command:");
         String command;
         while (true) {
-         command = scanner.nextLine();
+            command = scanner.nextLine();
             switch (command) {
                 case "Exit":
                 case "exit":
@@ -40,37 +40,37 @@ public class Shop {
         ArrayList<Plant> collection = account.getPlantsCollection();
         for (Plant plant : Plant.getPlants()) {
             boolean cardIsSold = false;
-            for (int i =0; i < collection.size(); i++)
+            for (int i = 0; i < collection.size(); i++)
                 if (plant == collection.get(i)) {
                     cardIsSold = true;
                     break;
                 }
             if (cardIsSold)
                 continue;
-            System.out.println(plant.getName() +": "+plant.getSunCost());
+            System.out.println(plant.getName() + ": " + plant.getSunCost());
         }
     }
 
     public static void buy(Account account, String cardName) {
-        for (Plant plant: Plant.getPlants())
-            if (cardName.equals(plant.getName())){
+        for (Plant plant : Plant.getPlants())
+            if (cardName.equals(plant.getName())) {
                 account.getPlantsCollection().add(plant);
                 return;
             }
     }
 
-    public static void showMoney(Account account){
-        System.out.println("Your money: "+ account.getMoney());
+    public static void showMoney(Account account) {
+        System.out.println("Your money: " + account.getMoney());
     }
 
     public static void showCollection(Account account) {
         Plant[] collection = (Plant[]) account.getPlantsCollection().toArray();
-        for (int i = 0; i<collection.length; i++){
-            if (i +1 == collection.length){
+        for (int i = 0; i < collection.length; i++) {
+            if (i + 1 == collection.length) {
                 System.out.println(collection[i].getName());
                 break;
             }
-            System.out.print(collection[i].getName()+" ,\t");
+            System.out.print(collection[i].getName() + " ,\t");
         }
     }
 }
