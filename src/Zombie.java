@@ -1,6 +1,5 @@
-import org.omg.CORBA.ARG_OUT;
-
 import java.util.ArrayList;
+
 
 public class Zombie {
     private static ArrayList<Zombie> zombies = new ArrayList<>();
@@ -24,6 +23,7 @@ public class Zombie {
     private int effectiveTimeBuff;
     private boolean mustBeInWater;
     private boolean IsPartabeProof;
+
 
     static {
         Zombie zRegular = Zombie.initializeRegularZombie();
