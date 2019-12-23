@@ -1,4 +1,4 @@
-import com.sun.xml.internal.bind.v2.TODO;
+//import com.sun.xml.internal.bind.v2.TODO;
  /*  in positioning isWaterProof is important
  *
  * */
@@ -144,7 +144,7 @@ public class Zombie {
     }
 
     private void TurnToThief() {
-        TODO burglaring;
+       // TODO burglaring;
     }
 
     public static Zombie initializeRegularZombie(){

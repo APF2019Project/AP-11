@@ -10,44 +10,33 @@ public class Shop {
         while (!exitShop) {
             System.out.println("--- Shop ---\nEnter command:");
             command = scanner.nextLine();
+
             if (command.matches("[b,B]uy (.+)")) {
-                command = command.replaceFirst("[b,B]uy", "");
-                command = command.trim();
-                buy(Account.getPlayingAccount(), command);
+                readyToBuy(command);
                 continue;
             }
-            switch (command) {
-                case "Exit":
+            switch (command.toLowerCase()) {
                 case "exit":
                     exitShop = true;
                     break;
-                case "Show shop":
                 case "show shop":
                     showShop(Account.getPlayingAccount());
                     break;
-                case "Show collection":
                 case "show collection":
                     showCollection(Account.getPlayingAccount());
                     break;
-                case "Money":
                 case "money":
                     showMoney(Account.getPlayingAccount());
-                case "Help":
                 case "help":
-                    System.out.println("show shop, show collection, money, buy [card name], help");
+                    System.out.println("Shop Menu commands are:\nShow shop, show collection, money, buy [card name], help");
                 default:
-                    invalidCommand(0);
+                    View.invalidCommand(-10);
             }
         }
     }
 
-    private static void invalidCommand(int index) {
-        if (index == 0)
-            System.out.println("invalid command in Login Menu\nTry again:");
-        else if (index == 1) ;
-    }
 
-    public static void showShop(Account account) {
+    private static void showShop(Account account) {
         Plant[] plantsCollection = (Plant[]) Plant.getPlants().toArray();
         Zombie[] zombiesCollection = (Zombie[]) Zombie.getZombies().toArray();
         for (int i = 0; i < plantsCollection.length; i++)
@@ -87,28 +76,38 @@ public class Shop {
         }
     }
 
-    public static void buy(Account account, String cardName) {
-        for (Plant plant : Plant.getPlants())
-            if (cardName.equals(plant.getName()))
+    private static void readyToBuy(String command) {
+        command = command.replaceFirst("[b,B]uy", "");
+        command = command.trim();
+        buy(Account.getPlayingAccount(), command);
+    }
+
+    private static void buy(Account account, String cardName) {
+        for (Plant plant : Plant.getPlants()) {
+            if (cardName.equals(plant.getName())) {
                 if (account.getMoney() >= plant.getPrice()) {
                     account.setMoney(account.getMoney() - plant.getPrice());
                     account.getPlantsCollection().add(plant);
                     return;
                 }
-        for (Zombie zombie : account.getZombiesCollection())
-            if (cardName.equals(zombie.getName()))
+            }
+        }
+        for (Zombie zombie : account.getZombiesCollection()) {
+            if (cardName.equals(zombie.getName())) {
                 if (account.getMoney() >= zombie.getPrice()) {
                     account.setMoney(account.getMoney() - zombie.getPrice());
                     account.getZombiesCollection().add(zombie);
                     return;
                 }
+            }
+        }
     }
 
-    public static void showMoney(Account account) {
+    private static void showMoney(Account account) {
         System.out.println("Your money: " + account.getMoney());
     }
 
-    public static void showCollection(Account account) {
+    private static void showCollection(Account account) {
         System.out.println(" Plants\tZombies ");
         Plant[] plants = (Plant[]) account.getPlantsCollection().toArray();
         Zombie[] zombies = (Zombie[]) account.getZombiesCollection().toArray();
