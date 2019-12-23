@@ -17,7 +17,7 @@ public class Shop {
             }
             switch (command.toLowerCase()) {
                 case "exit":
-                    View.goingBackTo(-2);
+                    View.goingBackTo(-2); // Going back to Main Menu
                     exitShop = true;
                     break;
                 case "show shop":
@@ -79,6 +79,7 @@ public class Shop {
             j++;
         }
     }
+
 
     private static void readyToBuy(String command) {
         command = command.replaceFirst("[b,B]uy", "");
