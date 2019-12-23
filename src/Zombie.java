@@ -1,5 +1,5 @@
-
 import java.util.ArrayList;
+
 
 public class Zombie {
     private static ArrayList<Zombie> zombies = new ArrayList<>();
@@ -24,14 +24,6 @@ public class Zombie {
     private boolean mustBeInWater;
     private boolean IsPartabeProof;
 
-
-    private static void mammad(int number) {
-        System.out.println("mammad");
-        while (number > 0) {
-            System.out.println("sasjjad");
-            number -= 1;
-        }
-    }
 
     static {
         Zombie zRegular = Zombie.initializeRegularZombie();
