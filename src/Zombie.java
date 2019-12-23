@@ -1,3 +1,5 @@
+import org.omg.CORBA.ARG_OUT;
+
 import java.util.ArrayList;
 
 public class Zombie {
@@ -19,8 +21,7 @@ public class Zombie {
     private int health;
     private int shieldStrength;
     private int damagePower;
-    private int effectiveTimeBuff; //
-    private boolean isJumper; //
+    private int effectiveTimeBuff;
     private boolean mustBeInWater;
     private boolean IsPartabeProof;
 
@@ -95,7 +96,7 @@ public class Zombie {
         addZombies(zGiga);
 
         Zombie zPogo = Zombie.initializeRegularZombie();
-        zPogo.setIsJumper(true);
+        zPogo.setCouldJump(true);
         addZombies(zPogo);
 
         Zombie zSnorkel = Zombie.initializeRegularZombie();
@@ -115,15 +116,25 @@ public class Zombie {
         Zombie zRegular = new Zombie("Zombie", false, false, false,
                 false, false, false, false,
                 false, false, false, Integer.MAX_VALUE, 2, 0,
-                1, 2, 0, 1, Integer.MAX_VALUE, false, false);
+                1, 2, 0, 1, Integer.MAX_VALUE, false);
         return zRegular;
+    }
+
+    public int getPrice(int zombieName){
+        for (Zombie zombie: zombies){
+            if (zombie.getName().equals(zombieName)){
+                return (1 + zombie.getSpeed()) * zombie.getHealth() * 10;
+            }
+        }
+        System.out.println("invalid zombie name"); // in bayad bere too shop
+        return 0;
     }
 
 
     public Zombie(String name, boolean isPartabeProof, boolean haveAntiTiq, boolean haveBucketHead, boolean couldRevertToRegularZombie,
                   boolean couldDestroyInRow, boolean isWaterProof, boolean isPeaProof, boolean randomPosition, boolean haveDuck, boolean couldJump,
                   int turnThief, int speed, int howManyTurnSpeedIsReduced, int speedReductionRatio, int health, int shieldStrength, int damagePower,
-                  int effectiveTimeBuff, boolean isJumper, boolean mustBeInWater) {
+                  int effectiveTimeBuff, boolean mustBeInWater) {
 
         this.speedReductionRatio = speedReductionRatio;
         this.IsPartabeProof = isPartabeProof;
@@ -144,7 +155,6 @@ public class Zombie {
         this.shieldStrength = shieldStrength;
         this.damagePower = damagePower;
         this.effectiveTimeBuff = effectiveTimeBuff;
-        this.isJumper = isJumper;
         this.mustBeInWater = mustBeInWater;
     }
 
@@ -311,14 +321,6 @@ public class Zombie {
 
     public void setMustBeInWater(boolean mustBeInWater) {
         this.mustBeInWater = mustBeInWater;
-    }
-
-    public boolean getIsJumper() {
-        return isJumper;
-    }
-
-    public void setIsJumper(boolean jumper) {
-        this.isJumper = jumper;
     }
 
     public boolean isPartabeProof() {
