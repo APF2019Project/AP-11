@@ -51,7 +51,7 @@ public class Plant {
         Shoot cabbage = new Shoot(false, 2, 3, 1, 0);
         Shoot kernel = new Shoot(false, 0, 3, 0, 2);
         Shoot melon = new Shoot(false, 3, 3, 1, 0);
-        Shoot frozenMelon = new Shoot(false, 3, 3, 0.5, -1);
+        Shoot frozenMelon = new Shoot(false, 3, 3, 0.5, Integer.MAX_VALUE); // sajjad editted this.
 
 
         new Plant("Peashooter", 2, 2, normalPea, 1, 0, 2, 2, false, "range -1").setRespawnTime(2);
