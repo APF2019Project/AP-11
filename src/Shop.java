@@ -8,7 +8,7 @@ public class Shop {
         String command;
         boolean exitShop = false;
         while (!exitShop) {
-            System.out.println("***Shop***\nEnter command:");
+            System.out.println("--- Shop ---\nEnter command:");
             command = scanner.nextLine();
             if (command.matches("[b,B]uy (.+)")) {
                 command = command.replaceFirst("[b,B]uy", "");
