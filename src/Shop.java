@@ -17,6 +17,7 @@ public class Shop {
             }
             switch (command.toLowerCase()) {
                 case "exit":
+                    View.goingBackTo(-2);
                     exitShop = true;
                     break;
                 case "show shop":

@@ -3,7 +3,7 @@ import java.util.Scanner;
 
 public class Menu {
 
-    static void loginMenu() {
+    static void loginMenu() { // Login Menu index = -1
         Scanner scanner = new Scanner(System.in);
         String command;
         boolean whileTrue = true;
@@ -35,7 +35,7 @@ public class Menu {
     }
 
 
-    static void mainMenu() {
+    static void mainMenu() { // Main Menu index = -2
         Scanner scanner = new Scanner(System.in);
         String command;
         boolean whileTrue = true;
