@@ -10,24 +10,22 @@ public class Zombie {
     private static ArrayList<Zombie> zombies = new ArrayList<>();
 
     private String name;
-    private boolean haveAntiTiq;
     private boolean haveBucketHead;
-    private boolean couldRevertToRegularZombie;
+    private boolean couldRevertToRegularZombie; //
     private boolean couldDestroyInRow;
-    private boolean IsWaterProof;
-    private boolean IsPeaProof;
-    private boolean IsPartabeProof;
     private boolean RandomPosition; //
-    private boolean haveDuck;
     private boolean couldJump;
     private int turnThief; //
     private int speed; //
     private int howManyTurnSpeedIsReduced;  //
     private int speedReductionRatio;  //
     private int health;
+    private boolean haveAntiTiq;
+    private boolean IsPeaProof;
     private int shieldStrength;
-    private int damagePower;
-
+    private int damagePower; //
+    private boolean IsWaterProof;
+    private boolean haveDuck;
 
     static {
         Zombie zRegular = Zombie.initializeRegularZombie();
@@ -118,14 +116,14 @@ public class Zombie {
     }
 
     public void zombieAction(int X, int Y){
-
+        int currentSpeed = Math.floorDiv(this.getSpeed(), this.speedReductionRatio);
+//        positioning
         if (Y == 20 && this.isRandomPosition()){
             int newX = PlayGround.randomPositionX();
             int newY = PlayGround.randomPositiomY();
             PlayGround.getSpecifiedUnit(newX, newY).AddToZombies(this);
         }
 
-        int currentSpeed = Math.floorDiv(this.getSpeed(), this.speedReductionRatio);
 
 //        TODO function ;
 
@@ -141,6 +139,8 @@ public class Zombie {
                 this.setTurnThief(this.getTurnThief() - 1);
         }
 
+
+
     }
 
     private void TurnToThief() {
@@ -148,7 +148,7 @@ public class Zombie {
     }
 
     public static Zombie initializeRegularZombie(){
-        Zombie zRegular = new Zombie("Zombie", false, false, false,
+        Zombie zRegular = new Zombie("Zombie",false, false,
                 false, false, false, false,
                 false, false, false, Integer.MAX_VALUE, 2, 0,
                 1, 2, 0, 1);
@@ -159,13 +159,25 @@ public class Zombie {
         return (1 + this.getSpeed()) * this.getHealth() * 10;
     }
 
+    public boolean killZombie(){
+        if (this.getHealth() <= 0)
+            return true;
 
-    public Zombie(String name, boolean isPartabeProof, boolean haveAntiTiq, boolean haveBucketHead, boolean couldRevertToRegularZombie,
+        return false;
+    }
+
+    public void turnToRegularZombie(int X, int Y){
+        PlayGround.getSpecifiedUnit(X, Y).RemoveFromZombies(this);
+        Zombie zRegular = Zombie.initializeRegularZombie();
+        PlayGround.getSpecifiedUnit(X, Y).AddToZombies(zRegular);
+    }
+
+
+    public Zombie(String name, boolean haveAntiTiq, boolean haveBucketHead, boolean couldRevertToRegularZombie,
                   boolean couldDestroyInRow, boolean isWaterProof, boolean isPeaProof, boolean randomPosition, boolean haveDuck, boolean couldJump,
                   int turnThief, int speed, int howManyTurnSpeedIsReduced, int speedReductionRatio, int health, int shieldStrength, int damagePower) {
 
         this.speedReductionRatio = speedReductionRatio;
-        this.IsPartabeProof = isPartabeProof;
         this.name = name;
         this.haveAntiTiq = haveAntiTiq;
         this.haveBucketHead = haveBucketHead;
@@ -331,13 +343,5 @@ public class Zombie {
 
     public void setSpeedReductionRatio(int speedReductionRatio) {
         this.speedReductionRatio = speedReductionRatio;
-    }
-
-    public boolean isPartabeProof() {
-        return IsPartabeProof;
-    }
-
-    public void setPartabeProof(boolean partabeProof) {
-        IsPartabeProof = partabeProof;
     }
 }
