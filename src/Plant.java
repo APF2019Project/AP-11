@@ -51,7 +51,7 @@ public class Plant {
         Shoot cabbage = new Shoot(false, 2, 3, 1, 0);
         Shoot kernel = new Shoot(false, 0, 3, 0, 2);
         Shoot melon = new Shoot(false, 3, 3, 1, 0);
-        Shoot frozenMelon = new Shoot(false, 3, 3, 0.5, Integer.MAX_VALUE); // sajjad editted this.
+        Shoot frozenMelon = new Shoot(false, 3, 3, 0.5, Integer.MAX_VALUE);
 
 
         new Plant("Peashooter", 2, 2, normalPea, 1, 0, 2, 2, false, "range -1").setRespawnTime(2);
@@ -137,8 +137,7 @@ public class Plant {
         this.health -= damage;
     }
 
-    public void endTurn() {
-        this.age++;
+    public void respawnTime() {
         if (this.respawnTime < this.respawnCoolDown)
             this.respawnTime++;
     }
@@ -150,4 +149,34 @@ public class Plant {
     public int getPrice() {
         return (this.sunCost * this.health * this.respawnCoolDown + 1);
     }
+
+
+    //Turn:
+
+    public void turn(Unit unit) {
+
+        this.age++;
+        if (unit.getZombies().size() > 0) {
+            Zombie zombie = unit.getZombies().get(0);
+            zombie.decreaseHealth(this.meleeDamage);
+        }
+        if (this.type.matches("range [-]?\\d*"))
+            if ((this.age % this.shootCoolDown) == 0) {
+                boolean isRangeOk = true;
+                String rangeString = this.type.replaceFirst("range ", "");
+                int range = Integer.parseInt(rangeString);
+                for (int i = range; i > 0; i--)
+                    if (PlayGround.getSpecifiedUnit(unit.getX(), unit.getY() + i).getZombies().size() > 0){
+                        isRangeOk = false;
+                        break;
+                    }
+                if (isRangeOk)
+                    for (int i = 0; i < this.bulletNumber; i++){
+                        unit.addToShoots(new Shoot(this.bullet));
+                    }
+
+
+            }
+    }
+
 }
