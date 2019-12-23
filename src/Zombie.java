@@ -120,14 +120,8 @@ public class Zombie {
         return zRegular;
     }
 
-    public int getPrice(int zombieName){
-        for (Zombie zombie: zombies){
-            if (zombie.getName().equals(zombieName)){
-                return (1 + zombie.getSpeed()) * zombie.getHealth() * 10;
-            }
-        }
-        System.out.println("invalid zombie name"); // in bayad bere too shop
-        return 0;
+    public int getPrice(){
+        return (1 + this.getSpeed()) * this.getHealth() * 10;
     }
 
 
