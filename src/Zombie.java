@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 public class Zombie {
     private static ArrayList<Zombie> zombies = new ArrayList<>();
+    private ArrayList<Shoot> shootsRecieved = new ArrayList<>();
 
     private String name;
     private boolean haveBucketHead;
@@ -145,6 +146,26 @@ public class Zombie {
 
     private void TurnToThief() {
        // TODO burglaring;
+    }
+
+    public void recievingShoots(Shoot shoot){
+
+    }
+
+    public int curSpeedCalculationByAffectingPreviousShoots(){ // return curSpeed
+        int currentSpeed = this.getSpeed();
+        ArrayList<Shoot> tmp = new ArrayList<>();
+        for (Shoot shoot: shootsRecieved){
+            if (shoot.getEffectiveTime() == 0)
+                tmp.add(shoot);
+            else {
+                shoot.setEffectiveTime(shoot.getEffectiveTime() - 1);
+                if (currentSpeed > shoot.getBufFactor() * this.getSpeed()){
+                    currentSpeed = (int)Math.floor(shoot.getBufFactor() * this.getSpeed());
+                }
+            }
+        }
+        return currentSpeed;
     }
 
     public static Zombie initializeRegularZombie(){
