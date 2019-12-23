@@ -4,7 +4,7 @@ import java.util.Scanner;
 public class Shop {
     public static Scanner scanner = new Scanner(System.in);
 
-    public static void shop() {
+    public static void shop() { // Show Shop index: -10
         String command;
         boolean exitShop = false;
         while (!exitShop) {
@@ -27,10 +27,13 @@ public class Shop {
                     break;
                 case "money":
                     showMoney(Account.getPlayingAccount());
+                    break;
                 case "help":
-                    System.out.println("Shop Menu commands are:\nShow shop, show collection, money, buy [card name], help");
+                    View.showHelp(-10);
+                    break;
                 default:
                     View.invalidCommand(-10);
+                    break;
             }
         }
     }
