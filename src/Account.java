@@ -225,7 +225,7 @@ public class Account {
     }
 
 
-    static void profile() {
+    static void profileMenu() {
         Scanner scanner = new Scanner(System.in);
         boolean whileTrue = true;
         while (whileTrue) {
@@ -233,35 +233,35 @@ public class Account {
             System.out.println("You are logged in as: " + playingAccount.getUsername());
             System.out.println("Enter command:");
             String command = scanner.nextLine();
-            switch (command) {
-                case "Change":
+            switch (command.toLowerCase()) {
+                case "change":
                     System.out.println("Logging in with another account:");
                     login(false);
                     break;
-                case "Change password":
+                case "change password":
                     Account.changePassword();
                     break;
-                case "Delete account":
+                case "delete account":
                     Account.deleteAccount();
                     break;
-                case "Rename":
+                case "rename":
                     Account.renameAccount();
                     break;
-                case "Create account":
+                case "create account":
                     createAccount(false);
                     break;
-                case "Show":
+                case "show":
                     Account.showAccount();
                     break;
-                case "Exit":
-                    System.out.println("Going back to --> Main Menu");
+                case "exit":
+                    View.goingBackTo(-2); // Going back to Main Menu
                     whileTrue = false;
                     break;
-                case "Help":
-                    profileMenuHelp();
+                case "help":
+                    View.showHelp(-3);
                     break;
                 default:
-                    System.out.println("Invalid command in profile Menu.\nTry again:");
+                    View.invalidCommand(-3);
                     break;
             }
         }
@@ -347,16 +347,6 @@ public class Account {
             System.out.println("Wrong password!\nTry again:");
             changePassword();
         }
-    }
-
-
-    static void profileMenuHelp() {
-        System.out.println("--- Profile Menu Help ---");
-        System.out.println("Profile Menu commands are:");
-        System.out.println("Change (logging in with another account)");
-        System.out.println("Delete account, Change password, Rename (change your username)");
-        System.out.println("Create account (and login with that), Show (show your current logged in account)");
-        System.out.println("Exit and Help");
     }
 
 }

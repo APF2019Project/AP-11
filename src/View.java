@@ -3,16 +3,16 @@ public class View {
     public static void invalidCommand(int index) {
         switch (index) {
             case -1:  // Login Menu
-                System.out.println("Invalid command in Login Menu,\nTry again:");
+                System.out.println("Invalid command in Login Menu, Try again:");
                 break;
             case -2:  // Main Menu
-                System.out.println("Invalid command in Main Menu.\nTry again:");
+                System.out.println("Invalid command in Main Menu, Try again:");
                 break;
             case -10:  // Shop Menu
                 System.out.println("Invalid command in Shop Menu, Try again:");
                 break;
             case -3:  //
-                System.out.println();
+                System.out.println("Invalid command in Profile Menu, Try again:");
                 break;
             default:
                 indexError();
@@ -28,9 +28,11 @@ public class View {
             case -2:  // Main Menu
                 mainMenuHelp();
                 break;
-            case -10:  // Shop Menu
-                shopMenuHelp();
+            case -3:  // Profile Menu
+                profileMenuHelp();
                 break;
+            case -10:  //  Shop Menu
+                shopMenuHelp();
             default:
                 indexError();
                 break;
@@ -74,6 +76,16 @@ public class View {
     private static void shopMenuHelp() {
         System.out.println("Shop Menu commands are:\nshow shop, show collection, money, buy [card name], help");
     }
+
+    private static void profileMenuHelp() {
+        System.out.println("--- Profile Menu Help ---");
+        System.out.println("Profile Menu commands are:");
+        System.out.println("Change (logging in with another account)");
+        System.out.println("Delete account, Change password, Rename (change your username)");
+        System.out.println("Create account (and login with that), Show (show your current logged in account)");
+        System.out.println("Exit and Help");
+    }
+
 
     private static void indexError() {
         System.out.println("$$$ index Error!!! $$$");

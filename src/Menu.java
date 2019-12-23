@@ -47,13 +47,13 @@ public class Menu {
                     Play.goPlay();
                     break;
                 case "profile":
-                    Account.profile();
+                    Account.profileMenu();
                     break;
                 case "shop":
                     Shop.shop();
                     break;
                 case "exit":
-                    System.out.println("Going back to -->  Login Menu:");
+                    View.goingBackTo(-1);
                     whileTrue = false;
                     break;
                 case "help":
@@ -65,5 +65,4 @@ public class Menu {
             }
         }
     }
-
 }
