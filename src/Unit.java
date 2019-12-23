@@ -7,7 +7,7 @@ public class Unit {
     private boolean IsWater;
     private boolean haveLawnMover;  //chamanZan
     private ArrayList<Zombie> zombies = new ArrayList<>();
-    private ArrayList<Plant> plants = new ArrayList<>();
+    private Plant[] plants = new Plant[2];
     private ArrayList<Shoot> shoots = new ArrayList<>();
 
 
@@ -40,8 +40,11 @@ public class Unit {
         zombies.add(zombie);
     }
 
-    public void AddToPlants(Plant plant){
-        plants.add(plant);
+    public void setPlant0(Plant plant){
+        this.plants[0] = plant;
+    }
+    public void setPlant1(Plant plant){
+        this.plants[1] = plant;
     }
     public void AddToShoots(Shoot shoot){
         shoots.add(shoot);
@@ -52,8 +55,11 @@ public class Unit {
         zombies.remove(zombie);
     }
 
-    public void RemoveFromPlants(Plant plant){
-        plants.remove(plant);
+    public void RemovePlant(Plant plant){
+        if (plants[0] == plant)
+            plants[0] = null;
+        else if (plants[1] == plant)
+            plants[1] = null;
     }
 
     public void RemoveFromShoots(Shoot shoot){

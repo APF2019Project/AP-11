@@ -32,40 +32,59 @@ public class Shop {
                 case "Money":
                 case "money":
                     showMoney(Account.getPlayingAccount());
+                case "Help":
+                case "help":
+                    System.out.println("show shop, show collection, money, buy [card name], help");
                 default:
-                    System.out.println("invalid command in Login Menu\nTry again:");
+                    invalidCommand(0);
             }
         }
+    }
+
+    private static void invalidCommand(int index) {
+        if (index == 0)
+            System.out.println("invalid command in Login Menu\nTry again:");
+        else if (index == 1) ;
     }
 
     public static void showShop(Account account) {
         Plant[] plantsCollection = (Plant[]) Plant.getPlants().toArray();
         Zombie[] zombiesCollection = (Zombie[]) Zombie.getZombies().toArray();
-        int numOfPlants = plantsCollection.length;
-        int numOfZombies = zombiesCollection.length;
-        for (int i = 0; i < numOfPlants; i++)
+        for (int i = 0; i < plantsCollection.length; i++)
             for (Plant plant : account.getPlantsCollection())
                 if (plantsCollection[i] == plant) {
                     plantsCollection[i] = null;
                     break;
                 }
-        for (int i = 0; i < numOfZombies; i++)
+        for (int i = 0; i < zombiesCollection.length; i++)
             for (Zombie zombie : account.getZombiesCollection())
                 if (zombiesCollection[i] == zombie) {
                     zombiesCollection[i] = null;
                     break;
                 }
-        // still needs work //
+        ArrayList<Plant> plantArrayList = new ArrayList<>();
+        ArrayList<Zombie> zombieArrayList = new ArrayList<>();
+        for (Plant plant : plantsCollection)
+            if (plant != null)
+                plantArrayList.add(plant);
+        for (Zombie zombie : zombiesCollection)
+            if (zombie != null)
+                zombieArrayList.add(zombie);
 
-        /*int i = 0;
+        int i = 0;
         int j = 0;
-
-        while (i < numOfPlants || j < numOfZombies) {
-            if (i < numOfPlants) {
-                System.out.print();
-            }
+        while (i < plantArrayList.size() || j < zombieArrayList.size()) {
+            if (i < plantArrayList.size())
+                System.out.print(plantsCollection[i].getName());
+            else
+                System.out.print(" \t ");
+            if (j < zombieArrayList.size())
+                System.out.println(zombiesCollection[i].getName());
+            else
+                System.out.println();
             i++;
-        }*/
+            j++;
+        }
     }
 
     public static void buy(Account account, String cardName) {
