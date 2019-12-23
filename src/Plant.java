@@ -29,7 +29,8 @@ public class Plant {
         this.type = type;
         Plant.plants.add(this);
     }
-    public Plant( Plant plant) {
+
+    public Plant(Plant plant) {
         this.name = plant.name;
         this.health = plant.health;
         this.sunCost = plant.sunCost;
@@ -49,21 +50,21 @@ public class Plant {
         Shoot frozenPea = new Shoot(true, 1, 3, 0.5, 1);
         Shoot cabbage = new Shoot(false, 2, 3, 1, 0);
         Shoot kernel = new Shoot(false, 0, 3, 0, 2);
-        Shoot melon =  new Shoot(false, 3, 3, 1, 0);
-        Shoot frozenMelon = new Shoot(false,  3, 3, 0.5, -1);
+        Shoot melon = new Shoot(false, 3, 3, 1, 0);
+        Shoot frozenMelon = new Shoot(false, 3, 3, 0.5, -1);
 
 
-        new Plant("Peashooter",2,2, normalPea,1,0,2,2,false,"range -1").setRespawnTime(2);
+        new Plant("Peashooter", 2, 2, normalPea, 1, 0, 2, 2, false, "range -1").setRespawnTime(2);
         new Plant("Snow Pea", 3, 3, frozenPea, 1, 0, 3, 3, false, "range -1").setRespawnTime(3);
         new Plant("Cabbage-pult", 2, 2, cabbage, 1, 0, 3, 2, false, "range -1").setRespawnTime(3);
-        new Plant("Repeater",4, 3, normalPea, 2, 0, 4, 3, false,"range -1").setRespawnTime(4);
+        new Plant("Repeater", 4, 3, normalPea, 2, 0, 4, 3, false, "range -1").setRespawnTime(4);
         new Plant("Threepeater", 5, 4, normalPea, 1, 0, 4, 4, false, "range -1").setRespawnTime(4);
         new Plant("Cactus", 5, 5, normalPea, 1, 1, 4, 2, false, "range -1").setRespawnTime(4);
-        new Plant("Gatling Pea", 3, 5, normalPea, 4, 0 ,4, 5, false, "range -1").setRespawnTime(4);
+        new Plant("Gatling Pea", 3, 5, normalPea, 4, 0, 4, 5, false, "range -1").setRespawnTime(4);
         new Plant("Scaredy-shroom", 1, 1, normalPea, 1, 0, 2, 2, false, "range 2").setRespawnTime(2);
-        new Plant("Kernel-pult", 2, 3, kernel, 1 ,0, 3, 4, false, "range -1").setRespawnTime(3);
+        new Plant("Kernel-pult", 2, 3, kernel, 1, 0, 3, 4, false, "range -1").setRespawnTime(3);
         new Plant("Melon-pult", 3, 3, melon, 1, 0, 3, 4, false, "range -1").setRespawnTime(3);
-        new Plant("Winter Melon", 3, 4, frozenMelon,1, 0, 5, 4, false, "range -1").setRespawnTime(5);
+        new Plant("Winter Melon", 3, 4, frozenMelon, 1, 0, 5, 4, false, "range -1").setRespawnTime(5);
 
         new Plant("Wall-nut", 4, 2, null, 0, 0, 4, 0, false, "wall").setRespawnTime(4);
         new Plant("Explode-o-nut", 3, 4, null, 0, 1, 5, 0, false, "wall").setRespawnTime(5);
@@ -71,7 +72,7 @@ public class Plant {
         new Plant("Potato Mine", 1, 2, null, 0, 100, 3, 0, false, "mine").setRespawnTime(3);
         new Plant("Cherry Bomb", 0, 2, null, 0, 100, 4, 0, false, "circleBomb 1").setRespawnTime(4);
         new Plant("Jalapeno", 0, 4, null, 0, 100, 5, 0, false, "linearBomb").setRespawnTime(5);
-        new Plant("Magnet-shroom", 2, 4, null ,0, 0, 4, 0, false, "magnet 1").setRespawnTime(4);
+        new Plant("Magnet-shroom", 2, 4, null, 0, 0, 4, 0, false, "magnet 1").setRespawnTime(4);
         new Plant("Sunflower", 2, 1, null, 1, 0, 2, 1, false, "producer").setRespawnTime(2);
         new Plant("Twin Sunflower", 2, 3, null, 2, 0, 5, 2, false, "producer").setRespawnTime(5);
     }
@@ -132,17 +133,21 @@ public class Plant {
 
     //Methods:
 
-    public void decreaseHealth(int damage){
+    public void decreaseHealth(int damage) {
         this.health -= damage;
     }
 
-    public void endTurn(){
+    public void endTurn() {
         this.age++;
         if (this.respawnTime < this.respawnCoolDown)
             this.respawnTime++;
     }
 
-    public void setRespawnTime(int time){
+    public void setRespawnTime(int time) {
         this.respawnTime = time;
+    }
+
+    public int getPrice() {
+        return (this.sunCost * this.health * this.respawnCoolDown + 1);
     }
 }
