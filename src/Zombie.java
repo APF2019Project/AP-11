@@ -1,5 +1,3 @@
-import org.omg.CORBA.ARG_OUT;
-
 import java.util.ArrayList;
 
 public class Zombie {
@@ -24,6 +22,13 @@ public class Zombie {
     private int effectiveTimeBuff;
     private boolean mustBeInWater;
     private boolean IsPartabeProof;
+
+
+    private int jigar = 100;
+
+    private int jigar2 = 1000;
+
+
 
     static {
         Zombie zRegular = Zombie.initializeRegularZombie();
