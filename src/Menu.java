@@ -10,25 +10,25 @@ public class Menu {
         while(whileTrue) {
             System.out.println("____ LOGIN MENU ____\nEnter command:");
             command = scanner.nextLine();
-            switch (command) {
-                case "Create account":
+            switch (command.toLowerCase()) {
+                case "create account":
                     Account.createAccount(true);
                     break;
-                case "Login":
+                case "login":
                     Account.login(true);
                     break;
-                case "Leaderboard":
+                case "leaderboard":
                     Account.leaderboard();
                     break;
-                case "Exit":
-                    System.out.println("___^^___ END GAME ___^^___");
+                case "exit":
+                    View.goingBackTo(-100);
                     whileTrue = false;
                     break;
-                case "Help":
-                    loginMenuHelp();
+                case "help":
+                    View.showHelp(-1);
                     break;
                 default:
-                    System.out.println("Invalid command in Login Menu,\nTry again:");
+                    View.invalidCommand(-1);
                     break;
             }
         }
@@ -42,39 +42,28 @@ public class Menu {
         while(whileTrue) {
             System.out.println("____ MAIN MENU ____\nEnter command:");
             command = scanner.nextLine();
-            switch (command) {
-                case "Play":
+            switch (command.toLowerCase()) {
+                case "play":
                     Play.goPlay();
                     break;
-                case "Profile":
+                case "profile":
                     Account.profile();
                     break;
-                case "Shop":
+                case "shop":
                     Shop.shop();
                     break;
-                case "Exit":
+                case "exit":
                     System.out.println("Going back to -->  Login Menu:");
                     whileTrue = false;
                     break;
-                case "Help":
-                    mainMenuHelp();
+                case "help":
+                    View.showHelp(-2);
                     break;
                 default:
-                    System.out.println("Invalid command in Main Menu.\nTry again:");
+                    View.invalidCommand(-2);
                     break;
             }
         }
     }
 
-    static void loginMenuHelp() {
-        System.out.println("--- Login Menu Help ---");
-        System.out.println("Login Menu commands are:");
-        System.out.println("Create account, Login, Leaderboard, Exit and Help");
-    }
-
-    static void mainMenuHelp() {
-        System.out.println("--- Main Menu Help ---");
-        System.out.println("Main Menu commands are:");
-        System.out.println("Play, Profile, Shop, Exit and Help");
-    }
 }

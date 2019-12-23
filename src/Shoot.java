@@ -3,7 +3,7 @@ public class Shoot {
     private final int damage;
     private int speed;
     private double bufFactor;
-    private final int effectiveTime;
+    private int effectiveTime;
 
     public Shoot(boolean isPea, int damage, int speed, double bufFactor, int effectiveTime) {
         this.isPea = isPea;
