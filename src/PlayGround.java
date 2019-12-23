@@ -1,3 +1,5 @@
+import com.sun.xml.internal.bind.v2.TODO;
+
 public class PlayGround {
 
     private static Unit[][] playGround = new Unit[6][20];
@@ -25,6 +27,16 @@ public class PlayGround {
 
     public static Unit[][] getUnits() {
         return playGround;
+    }
+
+    public static int randomPositiomY() {
+        TODO rand;
+        return 0;
+    }
+
+    public static int randomPositionX() {
+        TODO rand;
+        return 0;
     }
 
     public void printAllGround() {

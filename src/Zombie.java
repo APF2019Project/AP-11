@@ -1,8 +1,14 @@
+import com.sun.xml.internal.bind.v2.TODO;
+ /*  in positioning isWaterProof is important
+ *
+ * */
+
 import java.util.ArrayList;
 
 
 public class Zombie {
     private static ArrayList<Zombie> zombies = new ArrayList<>();
+
     private String name;
     private boolean haveAntiTiq;
     private boolean haveBucketHead;
@@ -10,19 +16,17 @@ public class Zombie {
     private boolean couldDestroyInRow;
     private boolean IsWaterProof;
     private boolean IsPeaProof;
-    private boolean RandomPosition;
+    private boolean IsPartabeProof;
+    private boolean RandomPosition; //
     private boolean haveDuck;
     private boolean couldJump;
-    private int turnThief;
-    private int speed;
-    private int howManyTurnSpeedIsReduced;
-    private int speedReductionRatio;
+    private int turnThief; //
+    private int speed; //
+    private int howManyTurnSpeedIsReduced;  //
+    private int speedReductionRatio;  //
     private int health;
     private int shieldStrength;
     private int damagePower;
-    private int effectiveTimeBuff;
-    private boolean mustBeInWater;
-    private boolean IsPartabeProof;
 
 
     static {
@@ -61,7 +65,7 @@ public class Zombie {
         Zombie zBungee = Zombie.initializeRegularZombie();
         zBungee.setName("Bungee Zombie");
         zBungee.setRandomPosition(true);
-        zBungee.setEffectiveTimeBuff(3);
+        zBungee.setTurnThief(3);
         zBungee.setHealth(3);
         zBungee.setSpeed(0);
         addZombies(zBungee);
@@ -78,7 +82,7 @@ public class Zombie {
         addZombies(zNewspaper);
 
         Zombie zTarget = Zombie.initializeRegularZombie();
-        zNewspaper.setName("Target Zombie");
+        zTarget.setName("Target Zombie");
         zTarget.setShieldStrength(3);
         zTarget.setHealth(3);
         addZombies(zTarget);
@@ -96,27 +100,58 @@ public class Zombie {
         addZombies(zGiga);
 
         Zombie zPogo = Zombie.initializeRegularZombie();
+        zPogo.setName("Pogo Zombie");
         zPogo.setCouldJump(true);
         addZombies(zPogo);
 
         Zombie zSnorkel = Zombie.initializeRegularZombie();
         zSnorkel.setName("Snorkel Zombie");
-        zSnorkel.setMustBeInWater(true);
+        zSnorkel.setWaterProof(true);
         addZombies(zSnorkel);
 
 
         Zombie zDolphin = Zombie.initializeRegularZombie();
         zDolphin.setName("Dolphin Rider Zombie");
-        zDolphin.setMustBeInWater(true);
+        zDolphin.setWaterProof(true);
         zDolphin.setShieldStrength(2);
         addZombies(zDolphin);
+    }
+
+    public void zombieAction(int X, int Y){
+
+        if (Y == 20 && this.isRandomPosition()){
+            int newX = PlayGround.randomPositionX();
+            int newY = PlayGround.randomPositiomY();
+            PlayGround.getSpecifiedUnit(newX, newY).AddToZombies(this);
+        }
+
+        int currentSpeed = Math.floorDiv(this.getSpeed(), this.speedReductionRatio);
+
+//        TODO function ;
+
+        if (this.getHowManyTurnSpeedIsReduced() != 0)
+            this.setHowManyTurnSpeedIsReduced(this.getHowManyTurnSpeedIsReduced() - 1);
+        else
+            setSpeedReductionRatio(1);
+
+        if (this.getTurnThief() != Integer.MAX_VALUE){
+            if (this.getTurnThief() == 0)
+                this.TurnToThief();
+            else
+                this.setTurnThief(this.getTurnThief() - 1);
+        }
+
+    }
+
+    private void TurnToThief() {
+        TODO burglaring;
     }
 
     public static Zombie initializeRegularZombie(){
         Zombie zRegular = new Zombie("Zombie", false, false, false,
                 false, false, false, false,
                 false, false, false, Integer.MAX_VALUE, 2, 0,
-                1, 2, 0, 1, Integer.MAX_VALUE, false);
+                1, 2, 0, 1);
         return zRegular;
     }
 
@@ -127,8 +162,7 @@ public class Zombie {
 
     public Zombie(String name, boolean isPartabeProof, boolean haveAntiTiq, boolean haveBucketHead, boolean couldRevertToRegularZombie,
                   boolean couldDestroyInRow, boolean isWaterProof, boolean isPeaProof, boolean randomPosition, boolean haveDuck, boolean couldJump,
-                  int turnThief, int speed, int howManyTurnSpeedIsReduced, int speedReductionRatio, int health, int shieldStrength, int damagePower,
-                  int effectiveTimeBuff, boolean mustBeInWater) {
+                  int turnThief, int speed, int howManyTurnSpeedIsReduced, int speedReductionRatio, int health, int shieldStrength, int damagePower) {
 
         this.speedReductionRatio = speedReductionRatio;
         this.IsPartabeProof = isPartabeProof;
@@ -148,8 +182,6 @@ public class Zombie {
         this.health = health;
         this.shieldStrength = shieldStrength;
         this.damagePower = damagePower;
-        this.effectiveTimeBuff = effectiveTimeBuff;
-        this.mustBeInWater = mustBeInWater;
     }
 
 
@@ -293,28 +325,12 @@ public class Zombie {
         this.damagePower = damagePower;
     }
 
-    public int getEffectiveTimeBuff() {
-        return effectiveTimeBuff;
-    }
-
-    public void setEffectiveTimeBuff(int effectiveTimeBuff) {
-        this.effectiveTimeBuff = effectiveTimeBuff;
-    }
-
     public int getSpeedReductionRatio() {
         return speedReductionRatio;
     }
 
     public void setSpeedReductionRatio(int speedReductionRatio) {
         this.speedReductionRatio = speedReductionRatio;
-    }
-
-    public boolean getMustBeInWater() {
-        return mustBeInWater;
-    }
-
-    public void setMustBeInWater(boolean mustBeInWater) {
-        this.mustBeInWater = mustBeInWater;
     }
 
     public boolean isPartabeProof() {
