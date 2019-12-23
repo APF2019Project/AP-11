@@ -217,6 +217,14 @@ public class Zombie {
         this.damagePower = damagePower;
     }
 
+    public static boolean zombieExists(String zombieName) {
+        for (Zombie zombieIterator : zombies) {
+            if (zombieIterator.getName().equals(zombieName)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     public static ArrayList<Zombie> getZombies() {
         return zombies;

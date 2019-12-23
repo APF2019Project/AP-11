@@ -48,7 +48,10 @@ public class View {
             case -2:  // Main Menu
                 System.out.println("Going back to --> Main Menu:");
                 break;
-            case -10:  // Shop Menu
+            case -3:  //  Profile Menu
+                System.out.println("Going back to Profile Menu:");
+                break;
+                case -10:  // Shop Menu
                 System.out.println("Going back to --> Shop Menu");
                 break;
             case -100: // Exit The Program (Exit command in Login Menu)
@@ -59,6 +62,23 @@ public class View {
                 break;
         }
     }
+
+    public static void invalidCardName() {
+        System.out.println("Invalid card name");
+    }
+
+    public static void plantPurchased(String cardName) {
+        System.out.println(cardName + " added to your plants collection.");
+    }
+
+    public static void zombiePurchased(String cardName) {
+        System.out.println(cardName + " added to your zombies collection.");
+    }
+
+    public static void notEnoughMoney() {
+        System.out.println("Not enough money!");
+    }
+
 
 
     private static void loginMenuHelp() {

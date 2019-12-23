@@ -150,6 +150,7 @@ public class Plant {
         return (this.sunCost * this.health * this.respawnCoolDown + 1);
     }
 
+
     public static boolean plantExist(String plantName) {
         for (Plant plantIterator : plants) {
             if (plantIterator.getName().equals(plantName)) {

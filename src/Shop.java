@@ -88,21 +88,36 @@ public class Shop {
     }
 
     private static void buy(Account account, String cardName) {
-        for (Plant plant : Plant.getPlants()) {
-            if (cardName.equals(plant.getName())) {
-                if (account.getMoney() >= plant.getPrice()) {
-                    account.setMoney(account.getMoney() - plant.getPrice());
-                    account.getPlantsCollection().add(plant);
-                    return;
+        if (!(Plant.plantExist(cardName) || Zombie.zombieExists(cardName))) {
+            View.invalidCardName();
+            return;
+        }
+        if (Plant.plantExist(cardName)) {
+            for (Plant plant : Plant.getPlants()) {
+                if (cardName.equals(plant.getName())) {
+                    if (account.getMoney() >= plant.getPrice()) {
+                        account.setMoney(account.getMoney() - plant.getPrice());
+                        account.getPlantsCollection().add(plant);
+                        View.plantPurchased(cardName);
+                        return;
+                    } else {
+                        View.notEnoughMoney();
+                        View.goingBackTo(-10);
+                    }
                 }
             }
-        }
-        for (Zombie zombie : account.getZombiesCollection()) {
-            if (cardName.equals(zombie.getName())) {
-                if (account.getMoney() >= zombie.getPrice()) {
-                    account.setMoney(account.getMoney() - zombie.getPrice());
-                    account.getZombiesCollection().add(zombie);
-                    return;
+        } else if (Zombie.zombieExists(cardName)) {
+            for (Zombie zombie : account.getZombiesCollection()) {
+                if (cardName.equals(zombie.getName())) {
+                    if (account.getMoney() >= zombie.getPrice()) {
+                        account.setMoney(account.getMoney() - zombie.getPrice());
+                        account.getZombiesCollection().add(zombie);
+                        View.zombiePurchased(cardName);
+                        return;
+                    } else {
+                        View.notEnoughMoney();
+                        View.goingBackTo(-10);
+                    }
                 }
             }
         }

@@ -225,7 +225,7 @@ public class Account {
     }
 
 
-    static void profileMenu() {
+    static void profileMenu() { // Profile Menu index = -3
         Scanner scanner = new Scanner(System.in);
         boolean whileTrue = true;
         while (whileTrue) {
