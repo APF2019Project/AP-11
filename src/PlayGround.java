@@ -1,4 +1,4 @@
-import com.sun.xml.internal.bind.v2.TODO;
+//import com.sun.xml.internal.bind.v2.TODO;
 
 public class PlayGround {
 
@@ -30,12 +30,12 @@ public class PlayGround {
     }
 
     public static int randomPositiomY() {
-        TODO rand;
+       // TODO rand;
         return 0;
     }
 
     public static int randomPositionX() {
-        TODO rand;
+       // TODO rand;
         return 0;
     }
 
