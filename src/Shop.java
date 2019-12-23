@@ -32,10 +32,19 @@ public class Shop {
                 case "Money":
                 case "money":
                     showMoney(Account.getPlayingAccount());
+                case "Help":
+                case "help":
+                    System.out.println("show shop, show collection, money, buy [card name], help");
                 default:
-                    System.out.println("invalid command in Login Menu\nTry again:");
+                    invalidCommand(0);
             }
         }
+    }
+
+    private static void invalidCommand(int index) {
+        if (index == 0)
+            System.out.println("invalid command in Login Menu\nTry again:");
+        else if (index == 1) ;
     }
 
     public static void showShop(Account account) {
@@ -55,17 +64,22 @@ public class Shop {
                     zombiesCollection[i] = null;
                     break;
                 }
-        // still needs work //
 
-        /*int i = 0;
+        int i = 0;
         int j = 0;
 
         while (i < numOfPlants || j < numOfZombies) {
             if (i < numOfPlants) {
-                System.out.print();
-            }
+                System.out.print(plantsCollection[i].getName());
+            } else
+                System.out.print(" \t ");
+            if (j < numOfZombies)
+                System.out.println(zombiesCollection[i].getName());
+            else
+                System.out.println();
             i++;
-        }*/
+            j++;
+        }
     }
 
     public static void buy(Account account, String cardName) {
