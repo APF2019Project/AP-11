@@ -1,4 +1,4 @@
-import com.sun.xml.internal.bind.v2.TODO;
+//import com.sun.xml.internal.bind.v2.TODO;
  /*  in positioning isWaterProof is important
  *
  * */
@@ -130,7 +130,7 @@ public class Zombie {
         if (Y == 20 && this.isRandomPosition()){
             int newX = PlayGround.randomPositionX();
             int newY = PlayGround.randomPositiomY();
-            PlayGround.getSpecifiedUnit(newX, newY).AddToZombies(this);
+            PlayGround.getSpecifiedUnit(newX, newY).addToZombies(this);
         }
 
 
@@ -194,7 +194,7 @@ public class Zombie {
     public void turnToRegularZombie(int X, int Y){
         PlayGround.getSpecifiedUnit(X, Y).RemoveFromZombies(this);
         Zombie zRegular = Zombie.initializeRegularZombie();
-        PlayGround.getSpecifiedUnit(X, Y).AddToZombies(zRegular);
+        PlayGround.getSpecifiedUnit(X, Y).addToZombies(zRegular);
     }
 
 
@@ -221,6 +221,14 @@ public class Zombie {
         this.damagePower = damagePower;
     }
 
+    public static boolean zombieExists(String zombieName) {
+        for (Zombie zombieIterator : zombies) {
+            if (zombieIterator.getName().equals(zombieName)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     public static ArrayList<Zombie> getZombies() {
         return zombies;
@@ -368,5 +376,9 @@ public class Zombie {
 
     public void setSpeedReductionRatio(int speedReductionRatio) {
         this.speedReductionRatio = speedReductionRatio;
+    }
+
+    public void decreaseHealth(int damage){
+        this.health -= damage;
     }
 }

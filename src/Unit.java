@@ -36,7 +36,7 @@ public class Unit {
     }
 
 
-    public void AddToZombies(Zombie zombie){
+    public void addToZombies(Zombie zombie){
         zombies.add(zombie);
     }
 
@@ -46,7 +46,7 @@ public class Unit {
     public void setPlant1(Plant plant){
         this.plants[1] = plant;
     }
-    public void AddToShoots(Shoot shoot){
+    public void addToShoots(Shoot shoot){
         shoots.add(shoot);
     }
 
@@ -60,6 +60,21 @@ public class Unit {
             plants[0] = null;
         else if (plants[1] == plant)
             plants[1] = null;
+    }
+
+    //Getters:
+
+
+    public ArrayList<Zombie> getZombies() {
+        return zombies;
+    }
+
+    public Plant[] getPlants() {
+        return plants;
+    }
+
+    public ArrayList<Shoot> getShoots() {
+        return shoots;
     }
 
     public void RemoveFromShoots(Shoot shoot){

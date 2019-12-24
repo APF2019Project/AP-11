@@ -2,66 +2,66 @@ import java.util.Scanner;
 
 public class Play {
 
-    static void goPlay() {
+    static void goPlay() { // Play Menu index: -4
         Scanner scanner = new Scanner(System.in);
         boolean whileTrue = true;
         while (whileTrue) {
-            System.out.println("--- Play ---");
+            System.out.println("--- Play Menu ---");
             System.out.println("What kind of playground do you want?");
             String playType = scanner.nextLine();
-            switch (playType) {
-                case "Day":
+            switch (playType.toLowerCase()) {
+                case "day":
                     Day();
                     break;
-                case "Water":
+                case "water":
                     Water();
                     break;
-                case "Rail":
+                case "rail":
                     Rail();
                     break;
-                case "Zombie":
+                case "zombie":
                     Zombie();
                     break;
-                case "PvP":
+                case "pvp":
                     PvP();
                     break;
-                case "Exit":
-                    System.out.println("Going  back to --> Main Menu:");
+                case "exit":
+                    View.goingBackTo(-2);
                     whileTrue = false;
                     break;
-                case "Help":
-                    playMenuHelp();
+                case "help":
+                    View.showHelp(-4);
                     break;
                 default:
-                    System.out.println("Invalid play type in Play Menu.\nTry again:");
+                    View.invalidCommand(-4);
                     break;
             }
         }
     }
 
-    static void Day() {
+    static void Day() { // Play type index: 1
+
+        Collection.collectionMenu(1);
 
     }
 
-    static void Water() {
+    static void Water() { // Play type index: 2
 
+        Collection.collectionMenu(2);
     }
 
-    static void Rail() {
-
+    static void Rail() { // Play type index: 3
+        //
     }
 
-    static void Zombie() {
+    static void Zombie() { // Play type index: 4
 
+        Collection.collectionMenu(4);
     }
 
-    static void PvP() {
-
+    static void PvP() { // Play type index: 5
+        //
     }
 
-    static void playMenuHelp() {
-        System.out.println("--- Play Menu Help ---");
-        System.out.println("Play Menu commands are:");
-        System.out.println("Day, Water, Rail, Zombie, PvP, Exit and Help");
-    }
+
 }

@@ -3,7 +3,6 @@ public class Shoot {
     private final int damage;
     private int speed;
     private double bufFactor;
-
     private int effectiveTime;
 
     public Shoot(boolean isPea, int damage, int speed, double bufFactor, int effectiveTime) {
@@ -13,9 +12,16 @@ public class Shoot {
         this.bufFactor = bufFactor;
         this.effectiveTime = effectiveTime;
     }
-
+    public Shoot(Shoot shoot) {
+        this.isPea = shoot.isPea;
+        this.damage = shoot.damage;
+        this.speed = shoot.speed;
+        this.bufFactor = shoot.bufFactor;
+        this.effectiveTime = shoot.effectiveTime;
+    }
 
     //Getters:
+
     public boolean isPea() {
         return isPea;
     }
