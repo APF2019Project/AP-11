@@ -1,8 +1,6 @@
  /*  in positioning isWaterProof is important
  *
  * */
-
-import java.awt.*;
 import java.util.ArrayList;
 
 
@@ -124,6 +122,14 @@ public class Zombie {
         addZombies(zDolphin);
     }
 
+    public void zombiesTurn(){
+        for (int i = 0; i < 6; i++){
+            for (int j = 1; j <= 19; j++){
+                zombiesActionsInSpecifiedUnit(i, j);
+            }
+        }
+    }
+
     public void zombiesActionsInSpecifiedUnit(int X, int Y){
         ArrayList<Zombie> tmpArrForDestroyedZombies = new ArrayList<>();
         for (Zombie zombie: PlayGround.getSpecifiedUnit(X, Y).getZombies()){
@@ -163,6 +169,14 @@ public class Zombie {
         }
     }
 
+    private void addZombieToSpecifiedPosition(int X, int Y){
+        PlayGround.getSpecifiedUnit(X, Y).addToZombies(this);
+    }
+
+    private void removeZombieFromSpecifiedPosition(int X, int Y){
+        PlayGround.getSpecifiedUnit(X, Y).RemoveFromZombies(this);
+    }
+
     private void destroyShootsInWay(int X, int Y, int currentSpeed) {
         Label1 : for (int i = Y; i >= 0 && i >= Y - currentSpeed; i--){
             ArrayList<Shoot> tmp = new ArrayList<>();
@@ -185,10 +199,7 @@ public class Zombie {
     }
 
     private void TurnToThief(int X, int Y) {
-//        TODO burglaring;
-    }
-    private void TurnToThief() {
-       // TODO burglaring;
+        PlayGround.getSpecifiedUnit(X, Y).removeAllPlants();
     }
 
     public int curSpeedCalculationByAffectingPreviousShoots(){ // return curSpeed
@@ -235,6 +246,13 @@ public class Zombie {
         PlayGround.getSpecifiedUnit(X, Y).addToZombies(zRegular);
     }
 
+
+    private Zombie cloningZombie(Zombie zombie){
+        Zombie returnZom = new Zombie(zombie.getName(), zombie.isHaveAntiTiq(), zombie.isHaveBucketHead(), zombie.isCouldRevertToRegularZombie(),
+                zombie.isCouldDestroyInRow(), zombie.isWaterProof(), zombie.isPeaProof(), zombie.isRandomPosition(), zombie.isHaveDuck(), zombie.isCouldJump(), zombie.getTurnThief(),
+                zombie.getSpeed(), zombie.getHowManyTurnSpeedIsReduced(), zombie.getSpeedReductionRatio(), zombie.getHealth(), zombie.getShieldStrength(), zombie.getDamagePower());
+        return returnZom;
+    }
 
     public Zombie(String name, boolean haveAntiTiq, boolean haveBucketHead, boolean couldRevertToRegularZombie,
                   boolean couldDestroyInRow, boolean isWaterProof, boolean isPeaProof, boolean randomPosition, boolean haveDuck, boolean couldJump,
