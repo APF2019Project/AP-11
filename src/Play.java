@@ -2,11 +2,11 @@ import java.util.Scanner;
 
 public class Play {
 
-    static void goPlay() {
+    static void goPlay() { // Play Menu index: -4
         Scanner scanner = new Scanner(System.in);
         boolean whileTrue = true;
         while (whileTrue) {
-            System.out.println("--- Play ---");
+            System.out.println("--- Play Menu ---");
             System.out.println("What kind of playground do you want?");
             String playType = scanner.nextLine();
             switch (playType) {
@@ -26,44 +26,40 @@ public class Play {
                     PvP();
                     break;
                 case "Exit":
-                    System.out.println("Going  back to --> Main Menu:");
+                    View.goingBackTo(-2);
                     whileTrue = false;
                     break;
                 case "Help":
-                    playMenuHelp();
+                    View.showHelp(-4);
                     break;
                 default:
-                    System.out.println("Invalid play type in Play Menu.\nTry again:");
+                    View.invalidCommand(-4);
                     break;
             }
         }
     }
 
-    static void Day() {
+    static void Day() { // Play type index: 1
 
-        Collection.collectionMenu();
-
-    }
-
-    static void Water() {
+        Collection.collectionMenu(1);
 
     }
 
-    static void Rail() {
+    static void Water() { // Play type index: 2
 
     }
 
-    static void Zombie() {
+    static void Rail() { // Play type index: 3
 
     }
 
-    static void PvP() {
+    static void Zombie() { // Play type index: 4
 
     }
 
-    static void playMenuHelp() {
-        System.out.println("--- Play Menu Help ---");
-        System.out.println("Play Menu commands are:");
-        System.out.println("Day, Water, Rail, Zombie, PvP, Exit and Help");
+    static void PvP() { // Play type index: 5
+
     }
+
+
 }

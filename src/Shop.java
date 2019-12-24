@@ -127,7 +127,7 @@ public class Shop {
         System.out.println("Your money: " + account.getMoney());
     }
 
-    private static void showCollection(Account account) {
+    public static void showCollection(Account account) {
         System.out.println(" Plants\tZombies ");
         Plant[] plants = (Plant[]) account.getPlantsCollection().toArray();
         Zombie[] zombies = (Zombie[]) account.getZombiesCollection().toArray();
@@ -142,4 +142,5 @@ public class Shop {
             i++;
         }
     }
+
 }
