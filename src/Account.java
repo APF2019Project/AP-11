@@ -11,7 +11,7 @@ public class Account {
     private int killedZombies;
     private int killedPlants;
 
-    public Plant[] plantsDeck = new Plant[7];
+    public ArrayList<Plant> plantsDeck = new ArrayList<>();
     public ArrayList<Zombie> zombiesDeck = new ArrayList<>();
     public ArrayList<Plant> plantsCollection = new ArrayList<>();
     public ArrayList<Zombie> zombiesCollection = new ArrayList<>();
@@ -47,9 +47,9 @@ public class Account {
         this.killedPlants = killedPlants;
     }
 
-    public void setPlantsDeck(Plant[] plantsDeck) {
-        this.plantsDeck = plantsDeck;
-    }
+  //  public void setPlantsDeck(Plant[] plantsDeck) {
+   //     this.plantsDeck = plantsDeck;
+ //   }
 
     public void setZombiesDeck(ArrayList<Zombie> zombiesDeck) {
         this.zombiesDeck = zombiesDeck;
@@ -89,9 +89,7 @@ public class Account {
         return killedPlants;
     }
 
-    public Plant[] getPlantsDeck() {
-        return plantsDeck;
-    }
+ //   public Plant[] getPlantsDeck() {return plantsDeck;}
 
     public ArrayList<Zombie> getZombiesDeck() {
         return zombiesDeck;
