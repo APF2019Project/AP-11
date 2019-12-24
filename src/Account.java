@@ -126,6 +126,7 @@ public class Account {
             password = scanner.nextLine();
             accounts.add(new Account(username, password));
             System.out.println("Account created.");
+            Collection.setDefaultPlantsDeck();
             if (calledFromLoginMenu) {
                 System.out.println("Going back to --> Login Menu:");
             } else {
@@ -154,7 +155,6 @@ public class Account {
                 playingAccount = getAccountByUsername(username);
                 if (calledFromLoginMenu) {
                     System.out.println("Logged in, going to --> Main Menu:");
-                  //  Collection.setDefaultPlantsDeck();
                     Menu.mainMenu();
                 } else {
                     System.out.println("Logged in, going back to --> Profile Menu:");
