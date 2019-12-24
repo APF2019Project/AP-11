@@ -4,6 +4,7 @@ public class Shoot {
     private int speed;
     private double bufFactor;
     private int effectiveTime;
+    private String direction;
 
     public Shoot(boolean isPea, int damage, int speed, double bufFactor, int effectiveTime) {
         this.isPea = isPea;
@@ -20,6 +21,10 @@ public class Shoot {
         this.effectiveTime = shoot.effectiveTime;
     }
 
+    public void setDirection(String direction) {
+        this.direction = direction;
+    }
+
     //Getters:
 
     public boolean isPea() {
@@ -32,6 +37,10 @@ public class Shoot {
 
     public int getSpeed() {
         return speed;
+    }
+
+    public String getDirection() {
+        return direction;
     }
 
     public double getBufFactor() {
