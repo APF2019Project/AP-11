@@ -1,8 +1,8 @@
-//import com.sun.xml.internal.bind.v2.TODO;
  /*  in positioning isWaterProof is important
  *
  * */
 
+import java.awt.*;
 import java.util.ArrayList;
 
 
@@ -27,6 +27,14 @@ public class Zombie {
     private int damagePower; //
     private boolean IsWaterProof;
     private boolean haveDuck;
+
+    public void recievingShoots(Shoot shoot){
+        if (shoot.getEffectiveTime() != 0){
+            shootsRecieved.add(shoot);
+        }
+//        TODO differentSHOOTtypes;
+        this.decreaseHealth(shoot.getDamage());
+    }
 
     static {
         Zombie zRegular = Zombie.initializeRegularZombie();
@@ -116,8 +124,19 @@ public class Zombie {
         addZombies(zDolphin);
     }
 
-    public void zombieAction(int X, int Y){
-        int currentSpeed = Math.floorDiv(this.getSpeed(), this.speedReductionRatio);
+    public void zombiesActionsInSpecifiedUnit(int X, int Y){
+        ArrayList<Zombie> tmpArrForDestroyedZombies = new ArrayList<>();
+        for (Zombie zombie: PlayGround.getSpecifiedUnit(X, Y).getZombies()){
+            zombie.zombieAction(X, Y, tmpArrForDestroyedZombies);
+        }
+        for (Zombie zombie: tmpArrForDestroyedZombies){
+            PlayGround.getSpecifiedUnit(X, Y).RemoveFromZombies(zombie);
+        }
+    }
+
+    public void zombieAction(int X, int Y, ArrayList<Zombie> tmpArrForDestroyedZombies){
+//        int currentSpeed = Math.floorDiv(this.getSpeed(), this.speedReductionRatio);
+        int currentSpeed = this.curSpeedCalculationByAffectingPreviousShoots();
 //        positioning
         if (Y == 20 && this.isRandomPosition()){
             int newX = PlayGround.randomPositionX();
@@ -125,7 +144,10 @@ public class Zombie {
             PlayGround.getSpecifiedUnit(newX, newY).addToZombies(this);
         }
 
-
+        destroyShootsInWay(X, Y, currentSpeed);
+        if (this.getHealth() <= 0){
+            tmpArrForDestroyedZombies.add(this);
+        }
 //        TODO function ;
 
         if (this.getHowManyTurnSpeedIsReduced() != 0)
@@ -135,21 +157,38 @@ public class Zombie {
 
         if (this.getTurnThief() != Integer.MAX_VALUE){
             if (this.getTurnThief() == 0)
-                this.TurnToThief();
+                this.TurnToThief(X, Y);
             else
                 this.setTurnThief(this.getTurnThief() - 1);
         }
-
-
-
     }
 
+    private void destroyShootsInWay(int X, int Y, int currentSpeed) {
+        Label1 : for (int i = Y; i >= 0 && i >= Y - currentSpeed; i--){
+            ArrayList<Shoot> tmp = new ArrayList<>();
+            Label2 : for (Shoot shoot: PlayGround.getSpecifiedUnit(X, i).getShoots()){
+                if (this.getHealth() > 0){
+                    this.recievingShoots(shoot);
+                    tmp.add(shoot);
+                }
+                else {
+                    for (Shoot shallNotExistAnymoreShoot: tmp){
+                        PlayGround.getSpecifiedUnit(X, i).RemoveFromShoots(shallNotExistAnymoreShoot);
+                    }
+                    break Label1;
+                }
+            }
+            for (Shoot shallNotExistAnymoreShoot: tmp){
+                PlayGround.getSpecifiedUnit(X, i).RemoveFromShoots(shallNotExistAnymoreShoot);
+            }
+        }
+    }
+
+    private void TurnToThief(int X, int Y) {
+//        TODO burglaring;
+    }
     private void TurnToThief() {
        // TODO burglaring;
-    }
-
-    public void recievingShoots(Shoot shoot){
-
     }
 
     public int curSpeedCalculationByAffectingPreviousShoots(){ // return curSpeed
@@ -164,6 +203,9 @@ public class Zombie {
                     currentSpeed = (int)Math.floor(shoot.getBufFactor() * this.getSpeed());
                 }
             }
+        }
+        for (Shoot shoot: tmp){
+            shootsRecieved.remove(shoot);
         }
         return currentSpeed;
     }
@@ -374,7 +416,7 @@ public class Zombie {
         this.speedReductionRatio = speedReductionRatio;
     }
 
-    public void decreaseHealth(int damage){
+    public void decreaseHealth(int damage){ // in che joor encapsulationiye marde momen??
         this.health -= damage;
     }
 }
