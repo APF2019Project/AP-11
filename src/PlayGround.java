@@ -50,4 +50,8 @@ public class PlayGround {
     public static Unit getSpecifiedUnit(int i, int j) {
         return playGround[i][j];
     }
+
+    public static void removeAllPlants(int i, int j){
+        playGround[i][j].removeAllPlants();
+    }
 }
