@@ -69,9 +69,9 @@ public class Plant {
         new Plant("Wall-nut", 4, 2, null, 0, 0, 4, 0, false, "wall").setRespawnTime(4);
         new Plant("Explode-o-nut", 3, 4, null, 0, 1, 5, 0, false, "wall").setRespawnTime(5);
         new Plant("Tall-nut", 6, 4, null, 0, 0, 6, 0, false, "wall").setRespawnTime(6);
-        new Plant("Potato Mine", 1, 2, null, 0, 100, 3, 0, false, "mine").setRespawnTime(3);
-        new Plant("Cherry Bomb", 0, 2, null, 0, 100, 4, 0, false, "circleBomb 1").setRespawnTime(4);
-        new Plant("Jalapeno", 0, 4, null, 0, 100, 5, 0, false, "linearBomb").setRespawnTime(5);
+        new Plant("Potato Mine", 1, 2, null, 0, 100, 3, 0, false, "bomb mine").setRespawnTime(3);
+        new Plant("Cherry Bomb", 0, 2, null, 0, 100, 4, 0, false, "bomb circle 1").setRespawnTime(4);
+        new Plant("Jalapeno", 0, 4, null, 0, 100, 5, 0, false, "bomb linear").setRespawnTime(5);
         new Plant("Magnet-shroom", 2, 4, null, 0, 0, 4, 0, false, "magnet 1").setRespawnTime(4);
         new Plant("Sunflower", 2, 1, null, 1, 0, 2, 1, false, "producer").setRespawnTime(2);
         new Plant("Twin Sunflower", 2, 3, null, 2, 0, 5, 2, false, "producer").setRespawnTime(5);
@@ -168,11 +168,6 @@ public class Plant {
     }
 
 
-
-
-
-
-
     //Turn:
 
     public void turn(Unit unit) {
@@ -181,24 +176,56 @@ public class Plant {
         if (unit.getZombies().size() > 0) {
             Zombie zombie = unit.getZombies().get(0);
             zombie.decreaseHealth(this.meleeDamage);
+            if (zombie.getHealth() == 0)
+                unit.killZombie(zombie);
         }
         if (this.type.matches("range [-]?\\d*"))
-            if ((this.age % this.shootCoolDown) == 0) {
-                boolean isRangeOk = true;
-                String rangeString = this.type.replaceFirst("range ", "");
-                int range = Integer.parseInt(rangeString);
-                for (int i = range; i > 0; i--)
-                    if (PlayGround.getSpecifiedUnit(unit.getX(), unit.getY() + i).getZombies().size() > 0){
-                        isRangeOk = false;
-                        break;
-                    }
-                if (isRangeOk)
-                    for (int i = 0; i < this.bulletNumber; i++){
-                        unit.addToShoots(new Shoot(this.bullet));
-                    }
-
-
+            isRange(unit);
+        else if (this.type.matches("bomb .+"))
+    }
+    private void isRange(Unit unit){
+        if ((this.age % this.shootCoolDown) == 0) {
+            boolean isRangeOk = true;
+            String rangeString = this.type.replaceFirst("range ", "");
+            int range = Integer.parseInt(rangeString);
+            for (int i = range; i > 0; i--)
+                if (PlayGround.getSpecifiedUnit(unit.getX(), unit.getY() + i).getZombies().size() > 0){
+                    isRangeOk = false;
+                    break;
+                }
+            if (isRangeOk){
+                if ()
+                    threepeaterShoot(unit);
+                else
+                    normalShoot(unit);
             }
+        }
+    }
+
+    private void threepeaterShoot(Unit unit) {
+        for (int i =0 ; i < this.bulletNumber; i++){
+            Shoot bullet = new Shoot(this.bullet);
+            bullet.setDirection("forward");
+            unit.addToShoots(bullet);
+        }
+        for (int i =0 ; i < this.bulletNumber; i++){
+            Shoot bullet = new Shoot(this.bullet);
+            bullet.setDirection("up");
+            unit.addToShoots(bullet);
+        }
+        for (int i =0 ; i < this.bulletNumber; i++){
+            Shoot bullet = new Shoot(this.bullet);
+            bullet.setDirection("down");
+            unit.addToShoots(bullet);
+        }
+    }
+
+    private void normalShoot(Unit unit) {
+        for (int i =0 ; i < this.bulletNumber; i++){
+            Shoot bullet = new Shoot(this.bullet);
+            bullet.setDirection("forward");
+            unit.addToShoots(bullet);
+        }
     }
 
 }

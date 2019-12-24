@@ -23,7 +23,7 @@ public class Collection {
                     showHand(playTypeIndex);
                     break;
                 case "show collection":
-                    // showCollection(Account.getPlayingAccount());
+                    // Shop.showCollection(Account.getPlayingAccount());
                     break;
                 case "play":
                     goToPlayByPlayType(playTypeIndex);
@@ -144,7 +144,7 @@ public class Collection {
 
         public static void setDefaultPlantsDeck () {
             Account.getPlayingAccount().plantsDeck.add(new Plant(Plant.getPlant("Peashooter")));
-            Account.getPlayingAccount().plantsDeck.add(new Plant(Plant.getPlant("Snow Pea")));
+            Account.getPlayingAccount().plantsDeck.add(new Plant(Plant.getPlant("Snow pea")));
             Account.getPlayingAccount().plantsDeck.add(new Plant(Plant.getPlant("Explode-o-nut")));
             Account.getPlayingAccount().plantsDeck.add(new Plant(Plant.getPlant("Scaredy-shroom")));
             Account.getPlayingAccount().plantsDeck.add(new Plant(Plant.getPlant("Cherry Bomb")));

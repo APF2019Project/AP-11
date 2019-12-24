@@ -98,6 +98,14 @@ public class Unit {
         this.haveLawnMover = haveLawnMover;
     }
 
+    public void killPlant(int index){
+        plants[index] = null;
+    }
+
+    public void killZombie(Zombie zombie) {
+        this.zombies.remove(zombie);
+    }
+
     public void printUnit() {
         System.out.print(this.getX() + " " + this.getY() + " ");
         for (Zombie z: Zombie.getZombies()){
