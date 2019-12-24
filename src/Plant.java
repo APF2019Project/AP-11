@@ -182,6 +182,7 @@ public class Plant {
         if (this.type.matches("range [-]?\\d*"))
             isRange(unit);
         else if (this.type.matches("bomb .+"))
+            isBomb(unit);
     }
     private void isRange(Unit unit){
         if ((this.age % this.shootCoolDown) == 0) {
@@ -228,4 +229,26 @@ public class Plant {
         }
     }
 
+    private void isBomb(Unit unit){
+        String[] bombType = this.type.split(" ");
+        if (bombType[1].equals("mine"))
+            isMine(unit);
+        else if (bombType[1].equals("linear"))
+            isLinearBomb(unit);
+        else if (bombType[1].equals("circle"))
+            isCircleBomb(unit, Integer.parseInt(bombType[2]));
+    }
+    private void isMine(Unit unit){
+
+    }
+    private void isLinearBomb(Unit unit){
+        int x = unit.getX();
+        for(int y = 1; y <20; y++)
+            for (Zombie zombie : unit.getZombies()) {
+                zombie.decreaseHealth(this.meleeDamage);
+            }
+    }
+    private void isCircleBomb(Unit unit, int range){
+
+    }
 }
