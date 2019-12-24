@@ -177,6 +177,10 @@ public class Zombie {
         PlayGround.getSpecifiedUnit(X, Y).RemoveFromZombies(this);
     }
 
+    public int moveZombieMax(){
+        return 0; // not coded;
+    }
+
     private void destroyShootsInWay(int X, int Y, int currentSpeed) {
         Label1 : for (int i = Y; i >= 0 && i >= Y - currentSpeed; i--){
             ArrayList<Shoot> tmp = new ArrayList<>();
@@ -246,6 +250,15 @@ public class Zombie {
         PlayGround.getSpecifiedUnit(X, Y).addToZombies(zRegular);
     }
 
+    public Zombie cloningZombieByName(String name){
+        Zombie zombie = null;
+        for (Zombie z: zombies){
+            if (name.equals(z.getName())){
+                zombie = cloningZombie(z);
+            }
+        }
+        return zombie;
+    }
 
     private Zombie cloningZombie(Zombie zombie){
         Zombie returnZom = new Zombie(zombie.getName(), zombie.isHaveAntiTiq(), zombie.isHaveBucketHead(), zombie.isCouldRevertToRegularZombie(),
