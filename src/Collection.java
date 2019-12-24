@@ -56,12 +56,22 @@ public class Collection {
 
     private static void selectCard(String cardName, int playTypeIndex) {
         if (playTypeIndex == 1 || playTypeIndex == 2) {
-            if (!Plant.plantExist(cardName)) {
-                View.invalidCardName();
-            } else {
-
-            }
+           putPlantInDeck(cardName);
+        } else if (playTypeIndex == 4) {
+            putZombieInDeck(cardName);
         }
+    }
+
+    private static void putPlantInDeck(String cardName) {
+        if (!Plant.plantExist(cardName)) {
+            View.invalidCardName();
+        } else {
+            //
+        }
+    }
+
+    private static void putZombieInDeck(String cardName) {
+        //
     }
 
     private static void removeCard(String cardName, int playTypeIndex) {
@@ -84,6 +94,7 @@ public class Collection {
                 }
             }
             Account.getPlayingAccount().plantsDeck.remove(plantSample);
+            View.cardRemovedFromDeck(cardName);
         }
     }
 
@@ -99,6 +110,7 @@ public class Collection {
                 }
             }
             Account.getPlayingAccount().zombiesDeck.remove(zombieSample);
+            View.cardRemovedFromDeck(cardName);
         }
     }
 
