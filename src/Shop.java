@@ -41,11 +41,11 @@ public class Shop {
 
 
     private static void showShop(Account account) {
-        ArrayList<Plant> plantsShop =(ArrayList<Plant>) Plant.getPlants().clone();
-        ArrayList<Zombie> zombiesShop =(ArrayList<Zombie>) Zombie.getZombies().clone();
+        ArrayList<Plant> plantsShop = (ArrayList<Plant>) Plant.getPlants().clone();
+        ArrayList<Zombie> zombiesShop = (ArrayList<Zombie>) Zombie.getZombies().clone();
 
 
-        for (Plant plant: Plant.getPlants())
+        for (Plant plant : Plant.getPlants())
             for (Plant myPlant : account.getPlantsCollection())
                 if (myPlant == plant) {
                     plantsShop.remove(plant);
@@ -68,11 +68,13 @@ public class Shop {
     }
 
     private static void buy(Account account, String cardName) {
-        if (!(Plant.plantExist(cardName) || Zombie.zombieExists(cardName))) {
+        boolean cardIsPlant = Plant.plantExist(cardName);
+        boolean cardIsZombie = Zombie.zombieExists(cardName);
+        if (!(cardIsPlant || cardIsZombie)) {
             View.invalidCardName();
             return;
         }
-        if (Plant.plantExist(cardName)) {
+        if (cardIsPlant) {
             for (Plant plant : Plant.getPlants()) {
                 if (cardName.equals(plant.getName())) {
                     if (account.getMoney() >= plant.getPrice()) {
@@ -86,7 +88,7 @@ public class Shop {
                     }
                 }
             }
-        } else if (Zombie.zombieExists(cardName)) {
+        } else if (cardIsZombie) {
             for (Zombie zombie : account.getZombiesCollection()) {
                 if (cardName.equals(zombie.getName())) {
                     if (account.getMoney() >= zombie.getPrice()) {
@@ -108,17 +110,18 @@ public class Shop {
     }
 
     private static void showCollection(Account account) {
-        ArrayList<Plant> plants =(ArrayList<Plant>) account.getPlantsCollection().clone();
-        ArrayList<Zombie> zombies =(ArrayList<Zombie>) account.getZombiesCollection().clone();
+        ArrayList<Plant> plants = (ArrayList<Plant>) account.getPlantsCollection().clone();
+        ArrayList<Zombie> zombies = (ArrayList<Zombie>) account.getZombiesCollection().clone();
         printCollections(plants, zombies);
     }
+
     private static void printCollections(ArrayList<Plant> plantsCollection, ArrayList<Zombie> zombiesCollection) {
         System.out.println("Plants:  \t\t  Zombies:");
         int i = 0;
         int j = 0;
         while (i < plantsCollection.size() || j < zombiesCollection.size()) {
             if (i < plantsCollection.size())
-                System.out.print(plantsCollection.get(i).getName()+"\t\t");
+                System.out.print(plantsCollection.get(i).getName() + "\t\t");
             else
                 System.out.print(" \t \t \t \t");
             if (j < zombiesCollection.size())

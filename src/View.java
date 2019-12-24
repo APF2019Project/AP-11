@@ -98,6 +98,9 @@ public class View {
         System.out.println("Not enough money!");
     }
 
+    public static void cardRemovedFromDeck (String cardName) {
+        System.out.println(cardName + " removed from deck.");
+    }
 
 
     private static void loginMenuHelp() {
