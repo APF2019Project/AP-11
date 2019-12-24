@@ -41,38 +41,32 @@ public class Shop {
 
 
     private static void showShop(Account account) {
-        Plant[] plantsCollection = (Plant[]) Plant.getPlants().toArray();
-        Zombie[] zombiesCollection = (Zombie[]) Zombie.getZombies().toArray();
-        for (int i = 0; i < plantsCollection.length; i++)
-            for (Plant plant : account.getPlantsCollection())
-                if (plantsCollection[i] == plant) {
-                    plantsCollection[i] = null;
-                    break;
-                }
-        for (int i = 0; i < zombiesCollection.length; i++)
-            for (Zombie zombie : account.getZombiesCollection())
-                if (zombiesCollection[i] == zombie) {
-                    zombiesCollection[i] = null;
-                    break;
-                }
-        ArrayList<Plant> plantArrayList = new ArrayList<>();
-        ArrayList<Zombie> zombieArrayList = new ArrayList<>();
-        for (Plant plant : plantsCollection)
-            if (plant != null)
-                plantArrayList.add(plant);
-        for (Zombie zombie : zombiesCollection)
-            if (zombie != null)
-                zombieArrayList.add(zombie);
+        ArrayList<Plant> plantsShop =(ArrayList<Plant>) Plant.getPlants().clone();
+        ArrayList<Zombie> zombiesShop =(ArrayList<Zombie>) Zombie.getZombies().clone();
 
+
+        for (Plant plant: Plant.getPlants())
+            for (Plant myPlant : account.getPlantsCollection())
+                if (myPlant == plant) {
+                    plantsShop.remove(plant);
+                    break;
+                }
+        for (Zombie zombie : Zombie.getZombies())
+            for (Zombie myZombie : account.getZombiesCollection())
+                if (myZombie == zombie) {
+                    zombiesShop.remove(zombie);
+                    break;
+                }
+        System.out.println("Plants:  \t\t  Zombies:");
         int i = 0;
         int j = 0;
-        while (i < plantArrayList.size() || j < zombieArrayList.size()) {
-            if (i < plantArrayList.size())
-                System.out.print(plantsCollection[i].getName());
+        while (i < plantsShop.size() || j < zombiesShop.size()) {
+            if (i < plantsShop.size())
+                System.out.print(plantsShop.get(i).getName()+"\t\t");
             else
-                System.out.print(" \t ");
-            if (j < zombieArrayList.size())
-                System.out.println(zombiesCollection[i].getName());
+                System.out.print(" \t \t \t \t");
+            if (j < zombiesShop.size())
+                System.out.println(zombiesShop.get(i).getName());
             else
                 System.out.println();
             i++;

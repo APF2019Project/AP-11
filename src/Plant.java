@@ -83,6 +83,14 @@ public class Plant {
         return plants;
     }
 
+    public static Plant getPlant(String name){
+        for (Plant plant : Plant.plants) {
+            if (name.equals(plant.getName()))
+                return plant;
+        }
+        return null;
+    }
+
     public String getName() {
         return name;
     }
