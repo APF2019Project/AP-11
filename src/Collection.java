@@ -26,7 +26,7 @@ public class Collection {
                     showHand(playTypeIndex);
                     break;
                 case "show collection":
-                    Shop.showCollection(Account.getPlayingAccount());
+                    // showCollection(Account.getPlayingAccount());
                     break;
                 case "play":
                     goToPlayByPlayType(playTypeIndex);

@@ -154,7 +154,7 @@ public class Account {
                 playingAccount = getAccountByUsername(username);
                 if (calledFromLoginMenu) {
                     System.out.println("Logged in, going to --> Main Menu:");
-                    Collection.setDefaultPlantsDeck();
+                  //  Collection.setDefaultPlantsDeck();
                     Menu.mainMenu();
                 } else {
                     System.out.println("Logged in, going back to --> Profile Menu:");
