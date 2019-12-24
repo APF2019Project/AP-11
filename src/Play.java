@@ -9,27 +9,27 @@ public class Play {
             System.out.println("--- Play Menu ---");
             System.out.println("What kind of playground do you want?");
             String playType = scanner.nextLine();
-            switch (playType) {
-                case "Day":
+            switch (playType.toLowerCase()) {
+                case "day":
                     Day();
                     break;
-                case "Water":
+                case "water":
                     Water();
                     break;
-                case "Rail":
+                case "rail":
                     Rail();
                     break;
-                case "Zombie":
+                case "zombie":
                     Zombie();
                     break;
-                case "PvP":
+                case "pvp":
                     PvP();
                     break;
-                case "Exit":
+                case "exit":
                     View.goingBackTo(-2);
                     whileTrue = false;
                     break;
-                case "Help":
+                case "help":
                     View.showHelp(-4);
                     break;
                 default:
@@ -47,18 +47,20 @@ public class Play {
 
     static void Water() { // Play type index: 2
 
+        Collection.collectionMenu(2);
     }
 
     static void Rail() { // Play type index: 3
-
+        //
     }
 
     static void Zombie() { // Play type index: 4
 
+        Collection.collectionMenu(4);
     }
 
     static void PvP() { // Play type index: 5
-
+        //
     }
 
 

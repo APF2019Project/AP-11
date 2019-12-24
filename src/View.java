@@ -14,8 +14,11 @@ public class View {
             case -3:  // Profile Menu
                 System.out.println("Invalid command in Profile Menu, Try again:");
                 break;
-            case -4:
+            case -4:  // Play Menu
                 System.out.println("Invalid command in Play Menu, Try again:");
+                break;
+            case -5:  // Collection Menu
+                System.out.println("Invalid command in Collection Menu, Try again:");
                 break;
             default:
                 indexError();
@@ -135,7 +138,7 @@ public class View {
     }
 
     private static void indexError() {
-        System.out.println("$$$ index Error!!! $$$");
+        System.out.println("$$$ index Error!!! (View Class) $$$");
     }
 
 }

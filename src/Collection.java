@@ -33,10 +33,10 @@ public class Collection {
                     whileTrue = false;
                     break;
                 case "help":
-                    //
+                    View.showHelp(-5);
                     break;
                 default:
-                    //
+                    View.invalidCommand(-5);
                     break;
             }
         }
