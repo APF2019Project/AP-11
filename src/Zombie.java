@@ -2,6 +2,7 @@
  *
  * */
 
+import java.awt.*;
 import java.util.ArrayList;
 
 
@@ -32,7 +33,7 @@ public class Zombie {
             shootsRecieved.add(shoot);
         }
 //        TODO differentSHOOTtypes;
-        this.setHealth(this.getHealth() - shoot.getDamage());
+        this.decreaseHealth(shoot.getDamage());
     }
 
     static {
@@ -123,8 +124,19 @@ public class Zombie {
         addZombies(zDolphin);
     }
 
-    public void zombieAction(int X, int Y){
-        int currentSpeed = Math.floorDiv(this.getSpeed(), this.speedReductionRatio);
+    public void zombiesActionsInSpecifiedUnit(int X, int Y){
+        ArrayList<Zombie> tmpArrForDestroyedZombies = new ArrayList<>();
+        for (Zombie zombie: PlayGround.getSpecifiedUnit(X, Y).getZombies()){
+            zombie.zombieAction(X, Y, tmpArrForDestroyedZombies);
+        }
+        for (Zombie zombie: tmpArrForDestroyedZombies){
+            PlayGround.getSpecifiedUnit(X, Y).RemoveFromZombies(zombie);
+        }
+    }
+
+    public void zombieAction(int X, int Y, ArrayList<Zombie> tmpArrForDestroyedZombies){
+//        int currentSpeed = Math.floorDiv(this.getSpeed(), this.speedReductionRatio);
+        int currentSpeed = this.curSpeedCalculationByAffectingPreviousShoots();
 //        positioning
         if (Y == 20 && this.isRandomPosition()){
             int newX = PlayGround.randomPositionX();
@@ -132,7 +144,10 @@ public class Zombie {
             PlayGround.getSpecifiedUnit(newX, newY).addToZombies(this);
         }
 
-
+        destroyShootsInWay(X, Y, currentSpeed);
+        if (this.getHealth() <= 0){
+            tmpArrForDestroyedZombies.add(this);
+        }
 //        TODO function ;
 
         if (this.getHowManyTurnSpeedIsReduced() != 0)
@@ -145,6 +160,27 @@ public class Zombie {
                 this.TurnToThief(X, Y);
             else
                 this.setTurnThief(this.getTurnThief() - 1);
+        }
+    }
+
+    private void destroyShootsInWay(int X, int Y, int currentSpeed) {
+        Label1 : for (int i = Y; i >= 0 && i >= Y - currentSpeed; i--){
+            ArrayList<Shoot> tmp = new ArrayList<>();
+            Label2 : for (Shoot shoot: PlayGround.getSpecifiedUnit(X, i).getShoots()){
+                if (this.getHealth() > 0){
+                    this.recievingShoots(shoot);
+                    tmp.add(shoot);
+                }
+                else {
+                    for (Shoot shallNotExistAnymoreShoot: tmp){
+                        PlayGround.getSpecifiedUnit(X, i).RemoveFromShoots(shallNotExistAnymoreShoot);
+                    }
+                    break Label1;
+                }
+            }
+            for (Shoot shallNotExistAnymoreShoot: tmp){
+                PlayGround.getSpecifiedUnit(X, i).RemoveFromShoots(shallNotExistAnymoreShoot);
+            }
         }
     }
 
@@ -380,7 +416,7 @@ public class Zombie {
         this.speedReductionRatio = speedReductionRatio;
     }
 
-    public void decreaseHealth(int damage){
+    public void decreaseHealth(int damage){ // in che joor encapsulationiye marde momen??
         this.health -= damage;
     }
 }
