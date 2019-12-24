@@ -57,21 +57,7 @@ public class Shop {
                     zombiesShop.remove(zombie);
                     break;
                 }
-        System.out.println("Plants:  \t\t  Zombies:");
-        int i = 0;
-        int j = 0;
-        while (i < plantsShop.size() || j < zombiesShop.size()) {
-            if (i < plantsShop.size())
-                System.out.print(plantsShop.get(i).getName()+"\t\t");
-            else
-                System.out.print(" \t \t \t \t");
-            if (j < zombiesShop.size())
-                System.out.println(zombiesShop.get(i).getName());
-            else
-                System.out.println();
-            i++;
-            j++;
-        }
+        printCollections(plantsShop, zombiesShop);
     }
 
 
@@ -122,18 +108,25 @@ public class Shop {
     }
 
     private static void showCollection(Account account) {
-        System.out.println(" Plants\tZombies ");
-        Plant[] plants = (Plant[]) account.getPlantsCollection().toArray();
-        Zombie[] zombies = (Zombie[]) account.getZombiesCollection().toArray();
+        ArrayList<Plant> plants =(ArrayList<Plant>) account.getPlantsCollection().clone();
+        ArrayList<Zombie> zombies =(ArrayList<Zombie>) account.getZombiesCollection().clone();
+        printCollections(plants, zombies);
+    }
+    private static void printCollections(ArrayList<Plant> plantsCollection, ArrayList<Zombie> zombiesCollection) {
+        System.out.println("Plants:  \t\t  Zombies:");
         int i = 0;
-        while (i < plants.length || i < zombies.length) {
-            if (i < plants.length && i < zombies.length)
-                System.out.println(plants[i].getName() + "\t" + zombies[i].getName());
-            else if (i < plants.length)
-                System.out.println(plants[i].getName());
+        int j = 0;
+        while (i < plantsCollection.size() || j < zombiesCollection.size()) {
+            if (i < plantsCollection.size())
+                System.out.print(plantsCollection.get(i).getName()+"\t\t");
             else
-                System.out.println(" \t\t " + zombies[i].getName());
+                System.out.print(" \t \t \t \t");
+            if (j < zombiesCollection.size())
+                System.out.println(zombiesCollection.get(i).getName());
+            else
+                System.out.println();
             i++;
+            j++;
         }
     }
 }
