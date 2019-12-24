@@ -28,6 +28,14 @@ public class Zombie {
     private boolean IsWaterProof;
     private boolean haveDuck;
 
+    public void recievingShoots(Shoot shoot){
+        if (shoot.getEffectiveTime() != 0){
+            shootsRecieved.add(shoot);
+        }
+        TODO differentSHOOTtypes;
+        this.setHealth(this.getHealth() - shoot.getDamage());
+    }
+
     static {
         Zombie zRegular = Zombie.initializeRegularZombie();
         addZombies(zRegular);
@@ -135,21 +143,14 @@ public class Zombie {
 
         if (this.getTurnThief() != Integer.MAX_VALUE){
             if (this.getTurnThief() == 0)
-                this.TurnToThief();
+                this.TurnToThief(X, Y);
             else
                 this.setTurnThief(this.getTurnThief() - 1);
         }
-
-
-
     }
 
-    private void TurnToThief() {
+    private void TurnToThief(int X, int Y) {
         TODO burglaring;
-    }
-
-    public void recievingShoots(Shoot shoot){
-
     }
 
     public int curSpeedCalculationByAffectingPreviousShoots(){ // return curSpeed
@@ -164,6 +165,9 @@ public class Zombie {
                     currentSpeed = (int)Math.floor(shoot.getBufFactor() * this.getSpeed());
                 }
             }
+        }
+        for (Shoot shoot: tmp){
+            shootsRecieved.remove(shoot);
         }
         return currentSpeed;
     }
