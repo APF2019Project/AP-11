@@ -1,3 +1,6 @@
+import javafx.print.PageLayout;
+
+import java.awt.*;
 import java.util.Scanner;
 
 public class Collection {
@@ -54,38 +57,92 @@ public class Collection {
         removeCard(command, playTypeIndex);
     }
 
-    private static void selectCard(String cardName, int playCardIndex) {
-        //
+    private static void selectCard(String cardName, int playTypeIndex) {
+        if (playTypeIndex == 1 || playTypeIndex == 2) {
+            if (!Plant.plantExist(cardName)) {
+                View.invalidCardName();
+            } else {
+
+            }
+        }
     }
 
     private static void removeCard(String cardName, int playTypeIndex) {
-        //
+        if (playTypeIndex == 1 || playTypeIndex == 2) {
+            removeCardFromPlantsDeck(cardName);
+        } else if (playTypeIndex == 4) {
+            removeCardFromZombiesDeck(cardName);
+        }
     }
 
-    private static void showHand(int playTypeIndex) {
-        //
+    private static void removeCardFromPlantsDeck(String cardName) {
+        if (!Plant.plantExist(cardName)) {
+            View.invalidCardName();
+        } else {
+            Plant plantSample = null;
+            for (Plant plantIterator : Account.getPlayingAccount().plantsDeck) {
+                if (plantIterator.getName().equals(cardName)) {
+                    plantSample = plantIterator;
+                    break;
+                }
+            }
+            Account.getPlayingAccount().plantsDeck.remove(plantSample);
+        }
     }
 
-    public static void goToPlayByPlayType(int playTypeIndex) {
-        switch (playTypeIndex) {
-            case 1:
-                //
-                break;
-            case 2:
-                //
-                break;
-            case 3:
-                //
-                break;
-            case 4:
-                //
-                break;
-            case 5:
-                //
-                break;
+    private static void removeCardFromZombiesDeck(String cardName) {
+        if (!Zombie.zombieExists(cardName)) {
+            View.invalidCardName();
+        } else {
+            Zombie zombieSample = null;
+            for (Zombie zombieIterator : Account.getPlayingAccount().zombiesDeck) {
+                if (zombieIterator.getName().equals(cardName)) {
+                    zombieSample = zombieIterator;
+                    break;
+                }
+            }
+            Account.getPlayingAccount().zombiesDeck.remove(zombieSample);
+        }
+    }
+
+        private static void showHand ( int playTypeIndex){
+            //
         }
 
+        public static void goToPlayByPlayType ( int playTypeIndex){
+            switch (playTypeIndex) {
+                case 1:
+                    //
+                    break;
+                case 2:
+                    //
+                    break;
+                case 3:
+                    //
+                    break;
+                case 4:
+                    //
+                    break;
+                case 5:
+                    //
+                    break;
+                default:
+                    //
+                    break;
+            }
+
+        }
+
+        public static void setDefaultPlantsDeck () {
+            Account.getPlayingAccount().plantsDeck.add(new Plant(Plant.getPlant("Peashooter")));
+            Account.getPlayingAccount().plantsDeck.add(new Plant(Plant.getPlant("Snow pea")));
+            Account.getPlayingAccount().plantsDeck.add(new Plant(Plant.getPlant("Explode-o-nut")));
+            Account.getPlayingAccount().plantsDeck.add(new Plant(Plant.getPlant("Scaredy-shroom")));
+            Account.getPlayingAccount().plantsDeck.add(new Plant(Plant.getPlant("Cherry Bomb")));
+            Account.getPlayingAccount().plantsDeck.add(new Plant(Plant.getPlant("Kernel-pult")));
+            Account.getPlayingAccount().plantsDeck.add(new Plant(Plant.getPlant("Sunflower")));
+        }
+
+
     }
 
-
-}

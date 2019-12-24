@@ -103,12 +103,11 @@ public class Unit {
         for (Zombie z: Zombie.getZombies()){
             System.out.print(z.getName() + " ");
         }
-//        for (Plant p: plants.getPlants()){
-//            System.out.print(p.getName() + " ");
-//        }
-//        for (Shoot s: Shoot.getShoots()){
-//            System.out.print();
-//        }
     }
 
+    public void removeAllPlants() {
+        Plant[] arr = this.getPlants();
+        arr[0] = null;
+        arr[1] = null;
+    }
 }

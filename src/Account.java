@@ -11,10 +11,10 @@ public class Account {
     private int killedZombies;
     private int killedPlants;
 
-    private Plant[] plantsDeck = new Plant[7];
-    private ArrayList<Zombie> zombiesDeck = new ArrayList<>();
-    private ArrayList<Plant> plantsCollection = new ArrayList<>();
-    private ArrayList<Zombie> zombiesCollection = new ArrayList<>();
+    public ArrayList<Plant> plantsDeck = new ArrayList<>();
+    public ArrayList<Zombie> zombiesDeck = new ArrayList<>();
+    public ArrayList<Plant> plantsCollection = new ArrayList<>();
+    public ArrayList<Zombie> zombiesCollection = new ArrayList<>();
 
     private static ArrayList<Account> accounts = new ArrayList<>();
 
@@ -47,9 +47,9 @@ public class Account {
         this.killedPlants = killedPlants;
     }
 
-    public void setPlantsDeck(Plant[] plantsDeck) {
-        this.plantsDeck = plantsDeck;
-    }
+  //  public void setPlantsDeck(Plant[] plantsDeck) {
+   //     this.plantsDeck = plantsDeck;
+ //   }
 
     public void setZombiesDeck(ArrayList<Zombie> zombiesDeck) {
         this.zombiesDeck = zombiesDeck;
@@ -89,9 +89,7 @@ public class Account {
         return killedPlants;
     }
 
-    public Plant[] getPlantsDeck() {
-        return plantsDeck;
-    }
+ //   public Plant[] getPlantsDeck() {return plantsDeck;}
 
     public ArrayList<Zombie> getZombiesDeck() {
         return zombiesDeck;
@@ -156,6 +154,7 @@ public class Account {
                 playingAccount = getAccountByUsername(username);
                 if (calledFromLoginMenu) {
                     System.out.println("Logged in, going to --> Main Menu:");
+                    Collection.setDefaultPlantsDeck();
                     Menu.mainMenu();
                 } else {
                     System.out.println("Logged in, going back to --> Profile Menu:");
