@@ -41,6 +41,8 @@ public class Play {
 
     static void Day() {
 
+        Collection.collectionMenu();
+
     }
 
     static void Water() {
