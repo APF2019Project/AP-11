@@ -77,19 +77,28 @@ public class Plant {
         new Plant("Twin Sunflower", 2, 3, null, 2, 0, 5, 2, false, "producer").setRespawnTime(5);
     }
 
-    //Getters:
-
     public static ArrayList<Plant> getPlants() {
         return plants;
     }
 
-    public static Plant getPlant(String name){
-        for (Plant plant : Plant.plants) {
-            if (name.equals(plant.getName()))
-                return plant;
+    public static boolean plantExist(String plantName) {
+        for (Plant plantIterator : plants) {
+            if (plantIterator.getName().equals(plantName)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static Plant getPlant(String plantName) {
+        for (Plant plantIterator : Plant.plants) {
+            if (plantIterator.getName().equals(plantName)) {
+                return plantIterator;
+            }
         }
         return null;
     }
+    //Getters:
 
     public String getName() {
         return name;
@@ -159,23 +168,9 @@ public class Plant {
     }
 
 
-    public static boolean plantExist(String plantName) {
-        for (Plant plantIterator : plants) {
-            if (plantIterator.getName().equals(plantName)) {
-                return true;
-            }
-        }
-        return false;
-    }
 
-    public static Plant getPlant(String plantName) {
-        for (Plant plantIterator : plants) {
-            if (plantIterator.getName().equals(plantName)) {
-                return plantIterator;
-            }
-        }
-        return null;
-    }
+
+
 
 
     //Turn:
