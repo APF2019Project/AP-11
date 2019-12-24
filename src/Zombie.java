@@ -1,4 +1,3 @@
-//import com.sun.xml.internal.bind.v2.TODO;
  /*  in positioning isWaterProof is important
  *
  * */
@@ -32,7 +31,7 @@ public class Zombie {
         if (shoot.getEffectiveTime() != 0){
             shootsRecieved.add(shoot);
         }
-        TODO differentSHOOTtypes;
+//        TODO differentSHOOTtypes;
         this.setHealth(this.getHealth() - shoot.getDamage());
     }
 
@@ -150,7 +149,10 @@ public class Zombie {
     }
 
     private void TurnToThief(int X, int Y) {
-        TODO burglaring;
+//        TODO burglaring;
+    }
+    private void TurnToThief() {
+       // TODO burglaring;
     }
 
     public int curSpeedCalculationByAffectingPreviousShoots(){ // return curSpeed
