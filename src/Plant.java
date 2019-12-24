@@ -160,6 +160,15 @@ public class Plant {
         return false;
     }
 
+    public static Plant getPlant(String plantName) {
+        for (Plant plantIterator : plants) {
+            if (plantIterator.getName().equals(plantName)) {
+                return plantIterator;
+            }
+        }
+        return null;
+    }
+
 
     //Turn:
 

@@ -11,10 +11,10 @@ public class Account {
     private int killedZombies;
     private int killedPlants;
 
-    private Plant[] plantsDeck = new Plant[7];
-    private ArrayList<Zombie> zombiesDeck = new ArrayList<>();
-    private ArrayList<Plant> plantsCollection = new ArrayList<>();
-    private ArrayList<Zombie> zombiesCollection = new ArrayList<>();
+    public Plant[] plantsDeck = new Plant[7];
+    public ArrayList<Zombie> zombiesDeck = new ArrayList<>();
+    public ArrayList<Plant> plantsCollection = new ArrayList<>();
+    public ArrayList<Zombie> zombiesCollection = new ArrayList<>();
 
     private static ArrayList<Account> accounts = new ArrayList<>();
 
@@ -156,6 +156,7 @@ public class Account {
                 playingAccount = getAccountByUsername(username);
                 if (calledFromLoginMenu) {
                     System.out.println("Logged in, going to --> Main Menu:");
+                    Collection.setDefaultPlantsDeck();
                     Menu.mainMenu();
                 } else {
                     System.out.println("Logged in, going back to --> Profile Menu:");

@@ -1,3 +1,6 @@
+import javafx.print.PageLayout;
+
+import java.awt.*;
 import java.util.Scanner;
 
 public class Collection {
@@ -54,8 +57,14 @@ public class Collection {
         removeCard(command, playTypeIndex);
     }
 
-    private static void selectCard(String cardName, int playCardIndex) {
-        //
+    private static void selectCard(String cardName, int playTypeIndex) {
+        if (playTypeIndex == 1 || playTypeIndex == 2) {
+            if(!Plant.plantExist(cardName)) {
+                View.invalidCardName();
+            } else {
+               // Account.getPlayingAccount()
+            }
+        }
     }
 
     private static void removeCard(String cardName, int playTypeIndex) {
@@ -83,9 +92,21 @@ public class Collection {
             case 5:
                 //
                 break;
+            default:
+                //
+                break;
         }
 
     }
 
+    public static void setDefaultPlantsDeck() {
+        Account.getPlayingAccount().plantsDeck[0] = new Plant(Plant.getPlant("Peashooter"));
+        Account.getPlayingAccount().plantsDeck[1] = new Plant(Plant.getPlant("Snow pea"));
+        Account.getPlayingAccount().plantsDeck[2] = new Plant(Plant.getPlant("Explode-o-nut"));
+        Account.getPlayingAccount().plantsDeck[3] = new Plant(Plant.getPlant("Scaredy-shroom"));
+        Account.getPlayingAccount().plantsDeck[4] = new Plant(Plant.getPlant("Cherry Bomb"));
+        Account.getPlayingAccount().plantsDeck[5] = new Plant(Plant.getPlant("Kernel-pult"));
+        Account.getPlayingAccount().plantsDeck[6] = new Plant(Plant.getPlant("Sunflower"));
+    }
 
 }
