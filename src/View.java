@@ -11,8 +11,14 @@ public class View {
             case -10:  // Shop Menu
                 System.out.println("Invalid command in Shop Menu, Try again:");
                 break;
-            case -3:  //
+            case -3:  // Profile Menu
                 System.out.println("Invalid command in Profile Menu, Try again:");
+                break;
+            case -4:  // Play Menu
+                System.out.println("Invalid command in Play Menu, Try again:");
+                break;
+            case -5:  // Collection Menu
+                System.out.println("Invalid command in Collection Menu, Try again:");
                 break;
             default:
                 indexError();
@@ -33,6 +39,13 @@ public class View {
                 break;
             case -10:  //  Shop Menu
                 shopMenuHelp();
+                break;
+            case -4:  // Play Menu
+                playMenuHelp();
+                break;
+            case -5:  // Collection Menu
+                collectionMenuHelp();
+                break;
             default:
                 indexError();
                 break;
@@ -49,13 +62,19 @@ public class View {
                 System.out.println("Going back to --> Main Menu:");
                 break;
             case -3:  //  Profile Menu
-                System.out.println("Going back to Profile Menu:");
+                System.out.println("Going back to --> Profile Menu:");
                 break;
                 case -10:  // Shop Menu
                 System.out.println("Going back to --> Shop Menu");
                 break;
             case -100: // Exit The Program (Exit command in Login Menu)
                 System.out.println("___^^___ END GAME ___^^___");
+                break;
+            case -4:  // Play Menu
+                System.out.println("Going back to --> Play Menu:");
+                break;
+            case -5:  // Collection Menu
+                System.out.println("Going back to --> Collection Menu:");
                 break;
             default:
                 indexError();
@@ -82,13 +101,13 @@ public class View {
 
 
     private static void loginMenuHelp() {
-        System.out.println("--- Login Menu Help ---");
+        System.out.println("-- Login Menu Help --");
         System.out.println("Login Menu commands are:");
         System.out.println("Create account, Login, Leaderboard, Exit and Help");
     }
 
     private static void mainMenuHelp() {
-        System.out.println("--- Main Menu Help ---");
+        System.out.println("-- Main Menu Help --");
         System.out.println("Main Menu commands are:");
         System.out.println("Play, Profile, Shop, Exit and Help");
     }
@@ -98,7 +117,7 @@ public class View {
     }
 
     private static void profileMenuHelp() {
-        System.out.println("--- Profile Menu Help ---");
+        System.out.println("-- Profile Menu Help --");
         System.out.println("Profile Menu commands are:");
         System.out.println("Change (logging in with another account)");
         System.out.println("Delete account, Change password, Rename (change your username)");
@@ -106,9 +125,20 @@ public class View {
         System.out.println("Exit and Help");
     }
 
+    private static void playMenuHelp() {
+        System.out.println("-- Play Menu Help --");
+        System.out.println("Play Menu commands are:");
+        System.out.println("Day, Water, Rail, Zombie, PvP, Exit and Help");
+    }
+
+    private static void collectionMenuHelp() {
+        System.out.println("-- Collection Menu Help --");
+        System.out.println("Collection Menu commands are:");
+        System.out.println("show hand, show collection, select[name], remove[name], play and help.");
+    }
 
     private static void indexError() {
-        System.out.println("$$$ index Error!!! $$$");
+        System.out.println("$$$ index Error!!! (View Class) $$$");
     }
 
 }
