@@ -134,6 +134,7 @@ public class View {
         for (Plant plantIterator : arrayList) {
             System.out.print(i + ". ");
             System.out.println(plantIterator.getName());
+            i++;
         }
     }
 
@@ -142,6 +143,7 @@ public class View {
         for (Zombie zombieIterator : arrayList) {
             System.out.print(i + ". ");
             System.out.println(zombieIterator.getName());
+            i++;
         }
     }
 

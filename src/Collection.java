@@ -133,7 +133,7 @@ public class Collection {
     }
 
     private static boolean zombieExistsInDeck(String zombieName) {
-        for (Zombie zombieIterator : Account.getPlayingAccount().getZombiesCollection()) {
+        for (Zombie zombieIterator : Account.getPlayingAccount().zombiesDeck) {
             if (zombieIterator.getName().equals(zombieName)) {
                 return true;
             }
@@ -158,8 +158,8 @@ public class Collection {
                     continue;
                 }
                 collectionMinusDeck.add(zombieIterator);
-                View.printNumberedZombieArrayList(collectionMinusDeck);
             }
+            View.printNumberedZombieArrayList(collectionMinusDeck);
         }
     }
 
@@ -202,7 +202,7 @@ public class Collection {
         Account.getPlayingAccount().zombiesDeck.add(Zombie.getZombie("Football Zombie"));
         Account.getPlayingAccount().zombiesDeck.add(Zombie.getZombie("Screen Door Zombie"));
         Account.getPlayingAccount().zombiesDeck.add(Zombie.getZombie("Zomboni"));
-        Account.getPlayingAccount().zombiesDeck.add(Zombie.getZombie("Ballon Zombie"));
+        Account.getPlayingAccount().zombiesDeck.add(Zombie.getZombie("Balloon Zombie"));
         Account.getPlayingAccount().zombiesDeck.add(Zombie.getZombie("Bungee Zombie"));
         Account.getPlayingAccount().zombiesDeck.add(Zombie.getZombie("Conehead Zombie"));
     }

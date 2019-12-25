@@ -29,6 +29,9 @@ public class Shop {
                 case "money":
                     showMoney(Account.getPlayingAccount());
                     break;
+                case "pooool mikhaaaam":
+                    Account.getPlayingAccount().setMoney(Account.getPlayingAccount().getMoney() + 1000);
+                    break;
                 case "help":
                     View.showHelp(-10);
                     break;
@@ -89,7 +92,7 @@ public class Shop {
                 }
             }
         } else if (cardIsZombie) {
-            for (Zombie zombie : account.getZombiesCollection()) {
+            for (Zombie zombie : Zombie.getZombies()) {
                 if (cardName.equals(zombie.getName())) {
                     if (account.getMoney() >= zombie.getPrice()) {
                         account.setMoney(account.getMoney() - zombie.getPrice());
