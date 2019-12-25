@@ -105,7 +105,15 @@ public class View {
     }
 
     public static void notEnoughSpacePlantDeck() {
-        System.out.println("You already have 7 plants in your deck");
+        System.out.println("You already have 7 plants in your deck.");
+    }
+
+    public static void cardAlreadyExistsInDeck(String deckType, String cardName) {
+        System.out.println(cardName + " already Exists in your " + deckType + " deck.");
+    }
+
+    public static void cardNotInCollection(String collectionType, String cardName) {
+        System.out.println(cardName + " is not in your " + collectionType + " collection.");
     }
 
 

@@ -154,6 +154,8 @@ public class Account {
                 playingAccount = getAccountByUsername(username);
                 if (calledFromLoginMenu) {
                     System.out.println("Logged in, going to --> Main Menu:");
+                    Collection.setDefaultPlantsCollection();
+                    Collection.setDefaultZombiesCollection();
                     Collection.setDefaultPlantsDeck();
                     Collection.setDefaultZombiesDeck();
                     Menu.mainMenu();
