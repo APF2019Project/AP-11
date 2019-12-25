@@ -262,22 +262,42 @@ public class Plant {
     private void isLinearBomb(Unit unit) {
         int x = unit.getX();
         for (int y = 1; y < 20; y++)
-            for (Zombie zombie : unit.getZombies()) {
-                zombie.decreaseHealth(this.meleeDamage);
-            }
+            for (Zombie zombieIterator : PlayGround.getSpecifiedUnit(x, y).getZombies())
+                damageZombie(PlayGround.getSpecifiedUnit(x, y), zombieIterator);
         unit.killPlant(0);
     }
 
     private void isCircleBomb(Unit unit, int range) {
+        int minRow = unit.getX() - range;
+        int minColumn = unit.getY() - range;
+        int maxRow = unit.getX() + range;
+        int maxColumn = unit.getY() + range;
+        if (minRow < 0)
+            minRow = 0;
+        if (minColumn < 0)
+            minColumn = 0;
+        if (maxRow > 6)
+            maxRow = 6;
+        if (maxColumn > 19)
+            maxColumn = 19;
+        for (int i = minRow; i < maxRow; i++)
+            for (int j = minColumn; j < maxColumn; j++)
+                for (Zombie zombieIterator : PlayGround.getSpecifiedUnit(i, j).getZombies())
+                    damageZombie(PlayGround.getSpecifiedUnit(i, j), zombieIterator);
+        unit.killPlant(0);
 
     }
 
     private void isWall(Unit unit) {
         if (unit.getZombies().size() > 0) {
-            Zombie zombie = unit.getZombies().get(0);
-            zombie.decreaseHealth(this.meleeDamage);
-            if (zombie.getHealth() == 0)
-                unit.killZombie(zombie);
+            damageZombie(unit, unit.getZombies().get(0));
+
         }
+    }
+
+    private void damageZombie(Unit unit, Zombie zombie) {
+        zombie.decreaseHealth(this.meleeDamage);
+        if (zombie.getHealth() <= 0)
+            unit.killZombie(zombie);
     }
 }
