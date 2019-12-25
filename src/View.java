@@ -103,6 +103,26 @@ public class View {
     }
 
 
+    public static void showPlantsDeck() {
+        System.out.println("Your plants deck:");
+        int i = 1;
+        for (Plant plantIterator : Account.getPlayingAccount().plantsDeck) {
+            System.out.print(i + ". ");
+            System.out.println(plantIterator.getName());
+            i++;
+        }
+    }
+
+    public static void showZombiesDeck() {
+        System.out.println("Your zombies deck:");
+        int i = 1;
+        for (Zombie zombieIterator : Account.getPlayingAccount().zombiesDeck) {
+            System.out.print(i + ". ");
+            System.out.println(zombieIterator.getName());
+            i++;
+        }
+    }
+
     private static void loginMenuHelp() {
         System.out.println("-- Login Menu Help --");
         System.out.println("Login Menu commands are:");

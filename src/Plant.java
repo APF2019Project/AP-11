@@ -194,12 +194,12 @@ public class Plant {
                     isRangeOk = false;
                     break;
                 }
-            if (isRangeOk){
-                if ()
-                    threepeaterShoot(unit);
-                else
-                    normalShoot(unit);
-            }
+ //           if (isRangeOk){
+//                if ()
+//                    threepeaterShoot(unit);
+//                else
+//                    normalShoot(unit);
+//          }
         }
     }
 
