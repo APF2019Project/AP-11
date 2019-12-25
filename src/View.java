@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class View {
 
     public static void invalidCommand(int index) {
@@ -120,6 +122,26 @@ public class View {
             System.out.print(i + ". ");
             System.out.println(zombieIterator.getName());
             i++;
+        }
+    }
+
+    public static void printCardName(String cardName) {
+        System.out.println(cardName);
+    }
+
+    public static void printNumberedPlantArrayList(ArrayList<Plant> arrayList) {
+        int i = 1;
+        for (Plant plantIterator : arrayList) {
+            System.out.print(i + ". ");
+            System.out.println(plantIterator.getName());
+        }
+    }
+
+    public static void printNumberedZombieArrayList(ArrayList<Zombie> arrayList) {
+        int i = 1;
+        for (Zombie zombieIterator : arrayList) {
+            System.out.print(i + ". ");
+            System.out.println(zombieIterator.getName());
         }
     }
 

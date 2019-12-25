@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Collection {
@@ -23,7 +24,7 @@ public class Collection {
                     showHand(playTypeIndex);
                     break;
                 case "show collection":
-                    // Shop.showCollection(Account.getPlayingAccount());
+                    showCollection(playTypeIndex);
                     break;
                 case "play":
                     goToPlayByPlayType(playTypeIndex);
@@ -120,6 +121,46 @@ public class Collection {
             } else if (playTypeIndex == 4) {
                 View.showZombiesDeck();
             }
+    }
+
+    private static boolean plantExistsInDeck(String plantName) {
+        for (Plant plantIterator : Account.getPlayingAccount().plantsDeck) {
+            if (plantIterator.getName().equals(plantName)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static boolean zombieExistsInDeck(String zombieName) {
+        for (Zombie zombieIterator : Account.getPlayingAccount().getZombiesCollection()) {
+            if (zombieIterator.getName().equals(zombieName)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static void showCollection(int playTypeIndex) {
+        if (playTypeIndex == 1 || playTypeIndex == 2) {
+            ArrayList<Plant> collectionMinusDeck = new ArrayList<>();
+            for (Plant plantIterator : Account.getPlayingAccount().getPlantsCollection()) {
+                if (plantExistsInDeck(plantIterator.getName())) {
+                    continue;
+                }
+                collectionMinusDeck.add(plantIterator);
+            }
+            View.printNumberedPlantArrayList(collectionMinusDeck);
+        } else if (playTypeIndex == 4) {
+            ArrayList<Zombie> collectionMinusDeck = new ArrayList<>();
+            for (Zombie zombieIterator : Account.getPlayingAccount().getZombiesCollection()) {
+                if (zombieExistsInDeck(zombieIterator.getName())) {
+                    continue;
+                }
+                collectionMinusDeck.add(zombieIterator);
+                View.printNumberedZombieArrayList(collectionMinusDeck);
+            }
+        }
     }
 
     public static void goToPlayByPlayType(int playTypeIndex) {
