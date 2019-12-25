@@ -156,8 +156,6 @@ public class Account {
                     System.out.println("Logged in, going to --> Main Menu:");
                     Collection.setDefaultPlantsCollection();
                     Collection.setDefaultZombiesCollection();
-                    Collection.setDefaultPlantsDeck();
-                    Collection.setDefaultZombiesDeck();
                     Menu.mainMenu();
                 } else {
                     System.out.println("Logged in, going back to --> Profile Menu:");

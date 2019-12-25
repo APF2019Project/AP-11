@@ -116,6 +116,14 @@ public class View {
         System.out.println(cardName + " is not in your " + collectionType + " collection.");
     }
 
+    public static void cardAddedToDeck(String deckType, String cardName) {
+        System.out.println(cardName + " added to your " + deckType + " deck.");
+    }
+
+    public static void cardAlreadyExistsInCollection(String collectionType, String cardName) {
+        System.out.println(cardName + " is already in your " + collectionType + " collection.");
+    }
+
 
     public static void showPlantsDeck() {
         System.out.println("Your plants deck:");
