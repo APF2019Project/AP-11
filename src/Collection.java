@@ -205,19 +205,19 @@ public class Collection {
     public static void goToPlayByPlayType(int playTypeIndex) {
         switch (playTypeIndex) {
             case 1:
-                //
+                Play.Day();
                 break;
             case 2:
-                //
+                Play.Water();
                 break;
             case 3:
-                //
+                Play.Rail();
                 break;
             case 4:
-                //
+                Play.Zombie();
                 break;
             case 5:
-                //
+                Play.PvP();
                 break;
             default:
                 //

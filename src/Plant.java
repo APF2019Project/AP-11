@@ -98,6 +98,7 @@ public class Plant {
         }
         return null;
     }
+
     //Getters:
 
     public String getName() {

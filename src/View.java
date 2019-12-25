@@ -66,7 +66,7 @@ public class View {
             case -3:  //  Profile Menu
                 System.out.println("Going back to --> Profile Menu:");
                 break;
-                case -10:  // Shop Menu
+            case -10:  // Shop Menu
                 System.out.println("Going back to --> Shop Menu");
                 break;
             case -100: // Exit The Program (Exit command in Login Menu)
@@ -100,7 +100,7 @@ public class View {
         System.out.println("Not enough money!");
     }
 
-    public static void cardRemovedFromDeck (String cardName) {
+    public static void cardRemovedFromDeck(String cardName) {
         System.out.println(cardName + " removed from deck.");
     }
 
@@ -166,6 +166,15 @@ public class View {
             i++;
         }
     }
+
+    public static void cardNotInDeck(String deckType, String cardName) {
+        System.out.println(cardName + " is not in your " + deckType + " deck.");
+    }
+
+    public static void cardSelected(String cardName) {
+        System.out.println(cardName + " is selected.");
+    }
+
 
     private static void loginMenuHelp() {
         System.out.println("-- Login Menu Help --");
