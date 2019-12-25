@@ -104,6 +104,10 @@ public class View {
         System.out.println(cardName + " removed from deck.");
     }
 
+    public static void notEnoughSpacePlantDeck() {
+        System.out.println("You already have 7 plants in your deck");
+    }
+
 
     public static void showPlantsDeck() {
         System.out.println("Your plants deck:");

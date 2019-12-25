@@ -66,9 +66,9 @@ public class Collection {
     private static void putPlantInDeck(String cardName) {
         if (!Plant.plantExist(cardName)) {
             View.invalidCardName();
-        } else {
-            //
-        }
+        } else if (Account.getPlayingAccount().plantsDeck.size() >= 7) {
+            View.notEnoughSpacePlantDeck();
+        } 
     }
 
     private static void putZombieInDeck(String cardName) {
@@ -100,7 +100,6 @@ public class Collection {
     }
 
     private static void removeCardFromZombiesDeck(String cardName) {
-                                                            System.out.println("$$$$$$$$$$$$$$$$$$$$$ --> " + cardName);
         if (!Zombie.zombieExists(cardName)) {
             View.invalidCardName();
         } else {
@@ -117,11 +116,11 @@ public class Collection {
     }
 
     private static void showHand(int playTypeIndex) {
-            if (playTypeIndex == 1 || playTypeIndex == 2) {
-                View.showPlantsDeck();
-            } else if (playTypeIndex == 4) {
-                View.showZombiesDeck();
-            }
+        if (playTypeIndex == 1 || playTypeIndex == 2) {
+            View.showPlantsDeck();
+        } else if (playTypeIndex == 4) {
+            View.showZombiesDeck();
+        }
     }
 
     private static boolean plantExistsInDeck(String plantName) {
