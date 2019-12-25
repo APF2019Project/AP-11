@@ -81,7 +81,7 @@ public class Plant {
         new Plant("Twin Sunflower", 2, 3, null, 2, 0, 5, 2, false, false, "producer").setRespawnTime(5);
 
         //  new Plant("Split Pea", 3, 4, normalPea, , 0, 4, , false, "range -1 twoWay")
-        new Plant("Lily Pad", 1, 0, null, 0, 0, 1, 0, false, true, "stage")
+        new Plant("Lily Pad", 1, 0, null, 0, 0, 1, 0, false, true, "stage");
 
     }
 

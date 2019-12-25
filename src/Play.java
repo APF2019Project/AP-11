@@ -45,23 +45,37 @@ public class Play {
     }
 
     static void Day() { // Play type index: 1
-        
+        PlayGround.BuildDayPlayGround();
         boolean whileTrue = true;
         String command;
-        Pattern plantPattern = Pattern.compile("[p,P]lant (?<row>\\d+),(?<column>\\d+)");
+        Pattern plantingPattern = Pattern.compile("plant (?<row>\\d+),(?<column>\\d+)");
+        Pattern removePattern = Pattern.compile("remove (?<row>\\d+),(?<column>\\d+)");
         while (whileTrue) {
             System.out.println("--- Day Play Menu ---\nEnter command:");
             command = scanner.nextLine();
-            Matcher plantMatcher = plantPattern.matcher(command);
+            command = command.toLowerCase();
+            Matcher plantMatcher = plantingPattern.matcher(command);
+            Matcher removeMatcher = removePattern.matcher(command);
 
-            if (command.toLowerCase().matches("select (.+)")) {
+            if (command.matches("select (.+)")) {
                 String cardName = getCardName(command);
                 selectPlant(cardName);
             } else if (plantMatcher.matches()) {
                 int row = Integer.parseInt(plantMatcher.group("row"));
                 int column = Integer.parseInt(plantMatcher.group("column"));
                 plantSelectedPlant(row, column);
+            } else if (removeMatcher.matches()) {
+                int row = Integer.parseInt(removeMatcher.group("row"));
+                int column = Integer.parseInt(removeMatcher.group("column"));
+                removePlant(row, column);
+            } else if (command.equals("end turn")) {
+                //
+            } else if (command.equals("show lawn")) {
+                //
+            } else {
+                //
             }
+
 
         }
 
@@ -101,8 +115,13 @@ public class Play {
         }
     }
 
-    private static void plantSelectedPlant(int row, int column) {
+    public static void plantSelectedPlant(int row, int column) {
+        PlayGround.getSpecifiedUnit(row, column).setPlant0(selectedPlant);
+        selectedPlant = null;
+    }
 
+    public static void removePlant(int row, int column) {
+        PlayGround.getSpecifiedUnit(row, column).setPlant0(null);
     }
 
 }
