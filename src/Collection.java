@@ -205,10 +205,8 @@ public class Collection {
     public static void goToPlayByPlayType(int playTypeIndex) {
         switch (playTypeIndex) {
             case 1:
-                Play.Day();
-                break;
             case 2:
-                Play.Water();
+                Day.dayAndWaterMenu();
                 break;
             case 3:
                 Play.Rail();
