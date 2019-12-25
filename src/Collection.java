@@ -50,7 +50,7 @@ public class Collection {
     }
 
     private static void readyToRemove(String command, int playTypeIndex) {
-        command = command.replaceFirst("[s,S]elect", "");
+        command = command.replaceFirst("[r,R]emove", "");
         command = command.trim();
         removeCard(command, playTypeIndex);
     }
@@ -100,6 +100,7 @@ public class Collection {
     }
 
     private static void removeCardFromZombiesDeck(String cardName) {
+                                                            System.out.println("$$$$$$$$$$$$$$$$$$$$$ --> " + cardName);
         if (!Zombie.zombieExists(cardName)) {
             View.invalidCardName();
         } else {
