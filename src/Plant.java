@@ -66,7 +66,7 @@ public class Plant {
         new Plant("Cactus", 5, 5, normalPea, 1, 1, 4, 2, false, false, "range -1 normal").setRespawnTime(4);
         new Plant("Gatling Pea", 3, 5, normalPea, 4, 0, 4, 5, false, false, "range -1 normal").setRespawnTime(4);
         new Plant("Scaredy-shroom", 1, 1, normalPea, 1, 0, 2, 2, false, false, "range 2 normal").setRespawnTime(2);
-        new Plant("Kernel-pult", 2, 3, kernel, 1, 0, 3, 4, false, false,"range -1 normal").setRespawnTime(3);
+        new Plant("Kernel-pult", 2, 3, kernel, 1, 0, 3, 4, false, false, "range -1 normal").setRespawnTime(3);
         new Plant("Melon-pult", 3, 3, melon, 1, 0, 3, 4, false, false, "range -1 normal").setRespawnTime(3);
         new Plant("Winter Melon", 3, 4, frozenMelon, 1, 0, 5, 4, false, false, "range -1 normal").setRespawnTime(5);
 
@@ -80,7 +80,7 @@ public class Plant {
         new Plant("Sunflower", 2, 1, null, 1, 0, 2, 1, false, false, "producer").setRespawnTime(2);
         new Plant("Twin Sunflower", 2, 3, null, 2, 0, 5, 2, false, false, "producer").setRespawnTime(5);
 
-      //  new Plant("Split Pea", 3, 4, normalPea, , 0, 4, , false, "range -1 twoWay")
+        //  new Plant("Split Pea", 3, 4, normalPea, , 0, 4, , false, "range -1 twoWay")
         new Plant("Lily Pad", 1, 0, null, 0, 0, 1, 0, false, true, "stage")
 
     }
@@ -262,8 +262,10 @@ public class Plant {
     }
 
     public void explodeMine(Unit unit) {
-        damageZombie(unit, unit.getZombies().get(0));
-        unit.killPlant(0);
+        if (this.age > 1) {
+            damageZombie(unit, unit.getZombies().get(0));
+            unit.killPlant(0);
+        }
     }
 
     private void isLinearBomb(Unit unit) {
