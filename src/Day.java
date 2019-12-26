@@ -3,17 +3,56 @@ import java.util.regex.Pattern;
 
 public class Day extends Play {
 
+    private static boolean whileDayTurn = true;
 
-    public static void dayAndWaterMenu() {  // DayAndWater Menu index : 11
+    private static int wave = 0; // after play, initialize to zero.
 
-        PlayGround.BuildDayPlayGround();
+    public static void dayTurn() {
+
+        while (whileDayTurn) {
+            if(checkFinished()) {
+                return;
+            }
+            Shoot.shootTurn();
+            if(checkFinished()) {
+                return;
+            }
+            Zombie.zombiesTurn();
+            if(checkFinished()) {
+                return;
+            }
+            Plant.plantsTurn();
+            dayMenu();
+
+        }
+    }
+
+    private static boolean checkFinished() {
+        // based on wave and allZombiesAreDead checks finish
+        // wave++;
+        // waveGenerator;
+        //
+        return false;
+    }
+
+    private static void waveGenerator() {
+        //
+    }
+
+    private static boolean allZombiesAreDead() {
+       return false;
+    }
+
+
+    public static void dayMenu() {  // DayAndWater Menu index : 11
+
         boolean whileTrue = true;
         String command;
         Pattern plantingPattern = Pattern.compile("[p,P]lant (?<row>\\d+),(?<column>\\d+)");
         Pattern removePattern = Pattern.compile("[r,R]emove (?<row>\\d+),(?<column>\\d+)");
 
         while (whileTrue) {
-            System.out.println("--- Day Play Menu ---\nEnter command:");
+            System.out.println("--- Day Menu ---\nEnter command:");
 
             command = scanner.nextLine();
             Matcher plantMatcher = plantingPattern.matcher(command);
@@ -37,13 +76,15 @@ public class Day extends Play {
                 showHandInDay();
 
             } else if (command.toLowerCase().equals("end turn")) {
-                //
+                whileTrue = false;
+                return;
+
             } else if (command.toLowerCase().equals("show lawn")) {
                 //
             } else if (command.toLowerCase().equals("exit")) {
                 whileTrue = false;
-                View.goingBackTo(-5); // Going back to Collection Menu
-
+                whileDayTurn = false;
+                View.goingBackTo(-5);
             } else if (command.toLowerCase().equals("help")) {
                 View.showHelp(11);
 
@@ -87,7 +128,7 @@ public class Day extends Play {
         int i = 1;
         for (Plant plantIterator : Account.getPlayingAccount().plantsDeck) {
             System.out.print(i + ". ");
-            System.out.print(plantIterator.getName() + "  sun: " + plantIterator.getSunCost() + "  respawnTime: " +
+            System.out.println(plantIterator.getName() + "  sun: " + plantIterator.getSunCost() + "  respawnTime: " +
                     plantIterator.getRespawnTime());
             i++;
         }

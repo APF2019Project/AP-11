@@ -1,6 +1,12 @@
 import java.util.ArrayList;
 
 public class Plant {
+
+    public static void plantsTurn() {
+        ///////////////////////
+    }
+
+
     private static ArrayList<Plant> plants = new ArrayList<>();
 
     private String name;

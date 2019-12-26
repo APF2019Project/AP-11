@@ -205,8 +205,11 @@ public class Collection {
     public static void goToPlayByPlayType(int playTypeIndex) {
         switch (playTypeIndex) {
             case 1:
+                PlayGround.BuildDayPlayGround();
+                Day.dayTurn();
+                break;
             case 2:
-                Day.dayAndWaterMenu();
+                //
                 break;
             case 3:
                 //
