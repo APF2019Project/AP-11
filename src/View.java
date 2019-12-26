@@ -22,6 +22,9 @@ public class View {
             case -5:  // Collection Menu
                 System.out.println("Invalid command in Collection Menu, Try again:");
                 break;
+            case 11:  // DayAndWater Menu
+                System.out.println("Invalid command in Day or Water Menu, Try again:");
+                break;
             default:
                 indexError();
                 break;
@@ -48,6 +51,8 @@ public class View {
             case -5:  // Collection Menu
                 collectionMenuHelp();
                 break;
+            case 11:  // DayAndWater Menu
+                DayAndWaterMenuHelp();
             default:
                 indexError();
                 break;
@@ -214,6 +219,14 @@ public class View {
         System.out.println("-- Collection Menu Help --");
         System.out.println("Collection Menu commands are:");
         System.out.println("show hand, show collection, select[name], remove[name], play and help.");
+    }
+
+    private static void DayAndWaterMenuHelp() {
+        System.out.println("-- Day or Water help --");
+        System.out.println("commands are:");
+        System.out.println("select [plant name], plant #,# (plant selected plant)");
+        System.out.println("remove #,# (remove plant in unit #,#), show hand, show lawn");
+        System.out.println("ent turn, exit and help");
     }
 
     private static void indexError() {
