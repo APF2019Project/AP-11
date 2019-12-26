@@ -4,7 +4,8 @@ import java.util.regex.Pattern;
 public class Day extends Play {
 
 
-    public static void dayAndWaterMenu() {
+    public static void dayAndWaterMenu() {  // DayAndWater Menu index : 11
+
         PlayGround.BuildDayPlayGround();
         boolean whileTrue = true;
         String command;
@@ -15,29 +16,39 @@ public class Day extends Play {
             System.out.println("--- Day Play Menu ---\nEnter command:");
 
             command = scanner.nextLine();
-           // command = command.toLowerCase();
             Matcher plantMatcher = plantingPattern.matcher(command);
             Matcher removeMatcher = removePattern.matcher(command);
 
             if (command.matches("[s,S]elect (.+)")) {
                 String cardName = getCardName(command);
                 selectPlant(cardName);
+
             } else if (plantMatcher.matches()) {
                 int row = Integer.parseInt(plantMatcher.group("row"));
                 int column = Integer.parseInt(plantMatcher.group("column"));
                 plantSelectedPlant(row, column, selectedPlant.getName());
+
             } else if (removeMatcher.matches()) {
                 int row = Integer.parseInt(removeMatcher.group("row"));
                 int column = Integer.parseInt(removeMatcher.group("column"));
                 removePlant(row, column);
+
             } else if (command.toLowerCase().equals("show hand")) {
+                showHandInDay();
 
             } else if (command.toLowerCase().equals("end turn")) {
                 //
             } else if (command.toLowerCase().equals("show lawn")) {
                 //
+            } else if (command.toLowerCase().equals("exit")) {
+                whileTrue = false;
+                View.goingBackTo(-5); // Going back to Collection Menu
+
+            } else if (command.toLowerCase().equals("help")) {
+                View.showHelp(11);
+
             } else {
-                //
+                View.invalidCommand(11);
             }
         }
     }
@@ -72,4 +83,13 @@ public class Day extends Play {
         PlayGround.getSpecifiedUnit(row, column).setPlant0(null);
     }
 
+    private static void showHandInDay() {
+        int i = 1;
+        for (Plant plantIterator : Account.getPlayingAccount().plantsDeck) {
+            System.out.print(i + ". ");
+            System.out.print(plantIterator.getName() + "  sun: " + plantIterator.getSunCost() + "  respawnTime: " +
+                    plantIterator.getRespawnTime());
+            i++;
+        }
+    }
 }
