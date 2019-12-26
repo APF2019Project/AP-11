@@ -175,6 +175,9 @@ public class View {
         System.out.println(cardName + " is selected.");
     }
 
+    public static void plantedInUnit(int row, int column, String plantName) {
+        System.out.println(plantName + " planted in unit " + row + "," + column);
+    }
 
     private static void loginMenuHelp() {
         System.out.println("-- Login Menu Help --");

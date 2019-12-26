@@ -2,6 +2,13 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+// Play Type Indexes:
+// Day: 1
+// Water: 2
+// Rail: 3
+// Zombie: 4
+// PvP: 5
+
 public class Play {
 
     public static Scanner scanner = new Scanner(System.in);
@@ -12,6 +19,7 @@ public class Play {
         boolean whileTrue = true;
         while (whileTrue) {
             System.out.println("--- Play Menu ---");
+
             System.out.println("Choose your play type:");
             String playType = scanner.nextLine();
             switch (playType.toLowerCase()) {
@@ -43,28 +51,5 @@ public class Play {
             }
         }
     }
-
-    static void Day() { // Play type index: 1
-
-    }
-
-    static void Water() { // Play type index: 2
-
-
-    }
-
-    static void Rail() { // Play type index: 3
-        //
-    }
-
-    static void Zombie() { // Play type index: 4
-
-
-    }
-
-    static void PvP() { // Play type index: 5
-        //
-    }
-
 
 }

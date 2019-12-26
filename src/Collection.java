@@ -209,13 +209,13 @@ public class Collection {
                 Day.dayAndWaterMenu();
                 break;
             case 3:
-                Play.Rail();
+                //
                 break;
             case 4:
-                Play.Zombie();
+                //
                 break;
             case 5:
-                Play.PvP();
+                //
                 break;
             default:
                 //
