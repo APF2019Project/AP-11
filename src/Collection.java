@@ -101,7 +101,8 @@ public class Collection {
     private static void removeCardFromZombiesDeck(String cardName) {
         if (!Zombie.zombieExists(cardName)) {
             View.invalidCardName();
-        } else {
+        }
+        else {
             Zombie zombieSample = null;
             for (Zombie zombieIterator : Account.getPlayingAccount().zombiesDeck) {
                 if (zombieIterator.getName().equals(cardName)) {
