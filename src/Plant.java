@@ -15,10 +15,10 @@ public class Plant {
     private final int shootCoolDown;
     private int shootTime = 100;
     private final boolean isCattail;
-    private final boolean isLilyPad;
+    private final boolean canBePlantedInWater;
     private String type;
 
-    public Plant(String name, int health, int sunCost, Shoot bullet, int bulletNumber, int meleeDamage, int respawnCoolDown, int shootCoolDown, Boolean isCattail, boolean isLilyPad, String type) {
+    public Plant(String name, int health, int sunCost, Shoot bullet, int bulletNumber, int meleeDamage, int respawnCoolDown, int shootCoolDown, Boolean isCattail, boolean canBePlantedInWater, String type) {
         this.name = name;
         this.health = health;
         this.sunCost = sunCost;
@@ -28,7 +28,7 @@ public class Plant {
         this.respawnCoolDown = respawnCoolDown;
         this.shootCoolDown = shootCoolDown;
         this.isCattail = isCattail;
-        this.isLilyPad = isLilyPad;
+        this.canBePlantedInWater = canBePlantedInWater;
         this.type = type;
         Plant.plants.add(this);
     }
@@ -43,7 +43,7 @@ public class Plant {
         this.respawnCoolDown = plant.respawnCoolDown;
         this.shootCoolDown = plant.shootCoolDown;
         this.isCattail = plant.isCattail;
-        this.isLilyPad = plant.isLilyPad;
+        this.canBePlantedInWater = plant.canBePlantedInWater;
         this.type = plant.type;
 
     }
@@ -82,6 +82,8 @@ public class Plant {
 
         //  new Plant("Split Pea", 3, 4, normalPea, , 0, 4, , false, "range -1 twoWay")
         new Plant("Lily Pad", 1, 0, null, 0, 0, 1, 0, false, true, "stage");
+        new Plant("Tangle Kelp", 0, 3, null, 0, 100, 3, 0, false, true, "bomb mine");
+        new Plant("Cattail", 3, 5, null, 0, 100, 5, 0, true, false, "melee");
 
     }
 
@@ -151,6 +153,14 @@ public class Plant {
 
     public boolean isCattail() {
         return isCattail;
+    }
+
+    public int getShootTime() {
+        return shootTime;
+    }
+
+    public boolean isCanBePlantedInWater() {
+        return canBePlantedInWater;
     }
 
     public String getType() {
@@ -310,6 +320,26 @@ public class Plant {
         if (age % shootCoolDown == 0)
             for (int i = 0; i < this.bulletNumber; i++)
                 ;
+    }
+
+    private void isMelee(Unit unit) {
+        int[][] distances = new int[6][20];
+        int x = unit.getX();
+        int y = unit.getY();
+        for (int i = 0; i < 6; i++)
+            for (int j = 1; j < 20; j++)
+                if (PlayGround.getSpecifiedUnit(i, j).getZombies().size() > 0)
+                    distances[i][j] = (int) Math.pow(i - x, 2) + (int) Math.pow(j - y, 2);
+                else
+                    distances[i][j] = 400;
+                for (int i = 0; i<6; i++)
+                    for (int j =1; j<20; j++)
+                        if (distances[i][j] < distances[x][y]){
+                            x = i;
+                            y= j;
+                        }
+                unit = PlayGround.getSpecifiedUnit(x,y);
+                damageZombie(unit, unit.getZombies().get(0));
     }
 
     private void damageZombie(Unit unit, Zombie zombie) {
