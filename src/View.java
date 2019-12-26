@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class View {
 
     public static void invalidCommand(int index) {
@@ -64,7 +66,7 @@ public class View {
             case -3:  //  Profile Menu
                 System.out.println("Going back to --> Profile Menu:");
                 break;
-                case -10:  // Shop Menu
+            case -10:  // Shop Menu
                 System.out.println("Going back to --> Shop Menu");
                 break;
             case -100: // Exit The Program (Exit command in Login Menu)
@@ -98,10 +100,84 @@ public class View {
         System.out.println("Not enough money!");
     }
 
-    public static void cardRemovedFromDeck (String cardName) {
+    public static void cardRemovedFromDeck(String cardName) {
         System.out.println(cardName + " removed from deck.");
     }
 
+    public static void notEnoughSpacePlantDeck() {
+        System.out.println("You already have 7 plants in your deck.");
+    }
+
+    public static void cardAlreadyExistsInDeck(String deckType, String cardName) {
+        System.out.println(cardName + " already Exists in your " + deckType + " deck.");
+    }
+
+    public static void cardNotInCollection(String collectionType, String cardName) {
+        System.out.println(cardName + " is not in your " + collectionType + " collection.");
+    }
+
+    public static void cardAddedToDeck(String deckType, String cardName) {
+        System.out.println(cardName + " added to your " + deckType + " deck.");
+    }
+
+    public static void cardAlreadyExistsInCollection(String collectionType, String cardName) {
+        System.out.println(cardName + " is already in your " + collectionType + " collection.");
+    }
+
+
+    public static void showPlantsDeck() {
+        System.out.println("Your plants deck:");
+        int i = 1;
+        for (Plant plantIterator : Account.getPlayingAccount().plantsDeck) {
+            System.out.print(i + ". ");
+            System.out.println(plantIterator.getName());
+            i++;
+        }
+    }
+
+    public static void showZombiesDeck() {
+        System.out.println("Your zombies deck:");
+        int i = 1;
+        for (Zombie zombieIterator : Account.getPlayingAccount().zombiesDeck) {
+            System.out.print(i + ". ");
+            System.out.println(zombieIterator.getName());
+            i++;
+        }
+    }
+
+    public static void printCardName(String cardName) {
+        System.out.println(cardName);
+    }
+
+    public static void printNumberedPlantArrayList(ArrayList<Plant> arrayList) {
+        int i = 1;
+        for (Plant plantIterator : arrayList) {
+            System.out.print(i + ". ");
+            System.out.println(plantIterator.getName());
+            i++;
+        }
+    }
+
+    public static void printNumberedZombieArrayList(ArrayList<Zombie> arrayList) {
+        int i = 1;
+        for (Zombie zombieIterator : arrayList) {
+            System.out.print(i + ". ");
+            System.out.println(zombieIterator.getName());
+            i++;
+        }
+    }
+
+    public static void cardNotInDeck(String deckType, String cardName) {
+        System.out.println(cardName + " is not in your " + deckType + " deck.");
+    }
+
+    public static void cardSelected(String cardName) {
+        System.out.println(cardName + " is selected.");
+    }
+
+    public static void plantedInUnit(int row, int column, String plantName) {
+        System.out.println(plantName + " planted in unit " + row + "," + column);
+    }
 
     private static void loginMenuHelp() {
         System.out.println("-- Login Menu Help --");

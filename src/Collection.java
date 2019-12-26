@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Collection {
@@ -23,7 +24,7 @@ public class Collection {
                     showHand(playTypeIndex);
                     break;
                 case "show collection":
-                    // showCollection(Account.getPlayingAccount());
+                    showCollection(playTypeIndex);
                     break;
                 case "play":
                     goToPlayByPlayType(playTypeIndex);
@@ -49,14 +50,14 @@ public class Collection {
     }
 
     private static void readyToRemove(String command, int playTypeIndex) {
-        command = command.replaceFirst("[s,S]elect", "");
+        command = command.replaceFirst("[r,R]emove", "");
         command = command.trim();
         removeCard(command, playTypeIndex);
     }
 
     private static void selectCard(String cardName, int playTypeIndex) {
         if (playTypeIndex == 1 || playTypeIndex == 2) {
-           putPlantInDeck(cardName);
+            putPlantInDeck(cardName);
         } else if (playTypeIndex == 4) {
             putZombieInDeck(cardName);
         }
@@ -65,13 +66,31 @@ public class Collection {
     private static void putPlantInDeck(String cardName) {
         if (!Plant.plantExist(cardName)) {
             View.invalidCardName();
+        } else if (Account.getPlayingAccount().plantsDeck.size() >= 7) {
+            View.notEnoughSpacePlantDeck();
+        } else if (plantExistsInDeck(cardName)) {
+            View.cardAlreadyExistsInDeck("plants", cardName);
+        } else if (!plantExistsInCollection(cardName)) {
+            View.cardNotInCollection("plants", cardName);
         } else {
-            //
+            Account.getPlayingAccount().plantsDeck.add(Plant.getPlant(cardName));
+            Account.getPlayingAccount().getPlantsCollection().remove(Plant.getPlant(cardName));
+            View.cardAddedToDeck("plants", cardName);
         }
     }
 
     private static void putZombieInDeck(String cardName) {
-        //
+        if (!Zombie.zombieExists(cardName)) {
+            View.invalidCardName();
+        } else if (zombieExistsInDeck(cardName)) {
+            View.cardAlreadyExistsInDeck("zombies", cardName);
+        } else if (!zombieExistsInCollection(cardName)) {
+            View.cardNotInCollection("zombies", cardName);
+        } else {
+            Account.getPlayingAccount().zombiesDeck.add(Zombie.getZombie(cardName));
+            Account.getPlayingAccount().getZombiesCollection().remove(Zombie.getZombie(cardName));
+            View.cardAddedToDeck("zombies", cardName);
+        }
     }
 
     private static void removeCard(String cardName, int playTypeIndex) {
@@ -94,6 +113,7 @@ public class Collection {
                 }
             }
             Account.getPlayingAccount().plantsDeck.remove(plantSample);
+            Account.getPlayingAccount().getPlantsCollection().add(plantSample);
             View.cardRemovedFromDeck(cardName);
         }
     }
@@ -111,48 +131,139 @@ public class Collection {
                 }
             }
             Account.getPlayingAccount().zombiesDeck.remove(zombieSample);
+            Account.getPlayingAccount().getZombiesCollection().add(zombieSample);
             View.cardRemovedFromDeck(cardName);
         }
     }
 
-        private static void showHand ( int playTypeIndex){
-            //
+    private static void showHand(int playTypeIndex) {
+        if (playTypeIndex == 1 || playTypeIndex == 2) {
+            View.showPlantsDeck();
+        } else if (playTypeIndex == 4) {
+            View.showZombiesDeck();
         }
+    }
 
-        public static void goToPlayByPlayType ( int playTypeIndex){
-            switch (playTypeIndex) {
-                case 1:
-                    //
-                    break;
-                case 2:
-                    //
-                    break;
-                case 3:
-                    //
-                    break;
-                case 4:
-                    //
-                    break;
-                case 5:
-                    //
-                    break;
-                default:
-                    //
-                    break;
+
+    public static boolean plantExistsInCollection(String plantName) {
+        for (Plant plantIterator : Account.getPlayingAccount().getPlantsCollection()) {
+            if (plantIterator.getName().equals(plantName)) {
+                return true;
             }
-
         }
+        return false;
+    }
 
-        public static void setDefaultPlantsDeck () {
-            Account.getPlayingAccount().plantsDeck.add(new Plant(Plant.getPlant("Peashooter")));
-            Account.getPlayingAccount().plantsDeck.add(new Plant(Plant.getPlant("Snow Pea")));
-            Account.getPlayingAccount().plantsDeck.add(new Plant(Plant.getPlant("Explode-o-nut")));
-            Account.getPlayingAccount().plantsDeck.add(new Plant(Plant.getPlant("Scaredy-shroom")));
-            Account.getPlayingAccount().plantsDeck.add(new Plant(Plant.getPlant("Cherry Bomb")));
-            Account.getPlayingAccount().plantsDeck.add(new Plant(Plant.getPlant("Kernel-pult")));
-            Account.getPlayingAccount().plantsDeck.add(new Plant(Plant.getPlant("Sunflower")));
+    public static boolean zombieExistsInCollection(String zombieName) {
+        for (Zombie zombieIterator : Account.getPlayingAccount().getZombiesCollection()) {
+            if (zombieIterator.getName().equals(zombieName)) {
+                return true;
+            }
         }
+        return false;
+    }
 
+    public static boolean plantExistsInDeck(String plantName) {
+        for (Plant plantIterator : Account.getPlayingAccount().plantsDeck) {
+            if (plantIterator.getName().equals(plantName)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean zombieExistsInDeck(String zombieName) {
+        for (Zombie zombieIterator : Account.getPlayingAccount().zombiesDeck) {
+            if (zombieIterator.getName().equals(zombieName)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static void showCollection(int playTypeIndex) {
+        if (playTypeIndex == 1 || playTypeIndex == 2) {
+            ArrayList<Plant> collectionMinusDeck = new ArrayList<>();
+            for (Plant plantIterator : Account.getPlayingAccount().getPlantsCollection()) {
+                if (plantExistsInDeck(plantIterator.getName())) {
+                    continue;
+                }
+                collectionMinusDeck.add(plantIterator);
+            }
+            View.printNumberedPlantArrayList(collectionMinusDeck);
+        } else if (playTypeIndex == 4) {
+            ArrayList<Zombie> collectionMinusDeck = new ArrayList<>();
+            for (Zombie zombieIterator : Account.getPlayingAccount().getZombiesCollection()) {
+                if (zombieExistsInDeck(zombieIterator.getName())) {
+                    continue;
+                }
+                collectionMinusDeck.add(zombieIterator);
+            }
+            View.printNumberedZombieArrayList(collectionMinusDeck);
+        }
+    }
+
+    public static void goToPlayByPlayType(int playTypeIndex) {
+        switch (playTypeIndex) {
+            case 1:
+            case 2:
+                Day.dayAndWaterMenu();
+                break;
+            case 3:
+                //
+                break;
+            case 4:
+                //
+                break;
+            case 5:
+                //
+                break;
+            default:
+                //
+                break;
+        }
 
     }
+
+//    public static void setDefaultPlantsDeck() {
+//        Account.getPlayingAccount().plantsDeck.add((Plant.getPlant("Peashooter")));
+//        Account.getPlayingAccount().plantsDeck.add((Plant.getPlant("Snow Pea")));
+//        Account.getPlayingAccount().plantsDeck.add((Plant.getPlant("Explode-o-nut")));
+//        Account.getPlayingAccount().plantsDeck.add((Plant.getPlant("Scaredy-shroom")));
+//        Account.getPlayingAccount().plantsDeck.add((Plant.getPlant("Cherry Bomb")));
+//        Account.getPlayingAccount().plantsDeck.add((Plant.getPlant("Kernel-pult")));
+//        Account.getPlayingAccount().plantsDeck.add((Plant.getPlant("Sunflower")));
+//    }
+//
+//    public static void setDefaultZombiesDeck() {
+//        Account.getPlayingAccount().zombiesDeck.add(Zombie.getZombie("Zombie"));
+//        Account.getPlayingAccount().zombiesDeck.add(Zombie.getZombie("Football Zombie"));
+//        Account.getPlayingAccount().zombiesDeck.add(Zombie.getZombie("Screen Door Zombie"));
+//        Account.getPlayingAccount().zombiesDeck.add(Zombie.getZombie("Zomboni"));
+//        Account.getPlayingAccount().zombiesDeck.add(Zombie.getZombie("Balloon Zombie"));
+//        Account.getPlayingAccount().zombiesDeck.add(Zombie.getZombie("Bungee Zombie"));
+//        Account.getPlayingAccount().zombiesDeck.add(Zombie.getZombie("Conehead Zombie"));
+//    }
+
+    public static void setDefaultPlantsCollection() {
+        Account.getPlayingAccount().getPlantsCollection().add((Plant.getPlant("Peashooter")));
+        Account.getPlayingAccount().getPlantsCollection().add((Plant.getPlant("Snow Pea")));
+        Account.getPlayingAccount().getPlantsCollection().add((Plant.getPlant("Explode-o-nut")));
+        Account.getPlayingAccount().getPlantsCollection().add((Plant.getPlant("Scaredy-shroom")));
+        Account.getPlayingAccount().getPlantsCollection().add((Plant.getPlant("Cherry Bomb")));
+        Account.getPlayingAccount().getPlantsCollection().add((Plant.getPlant("Kernel-pult")));
+        Account.getPlayingAccount().getPlantsCollection().add((Plant.getPlant("Sunflower")));
+    }
+
+    public static void setDefaultZombiesCollection() {
+        Account.getPlayingAccount().getZombiesCollection().add(Zombie.getZombie("Zombie"));
+        Account.getPlayingAccount().getZombiesCollection().add(Zombie.getZombie("Football Zombie"));
+        Account.getPlayingAccount().getZombiesCollection().add(Zombie.getZombie("Screen Door Zombie"));
+        Account.getPlayingAccount().getZombiesCollection().add(Zombie.getZombie("Zomboni"));
+        Account.getPlayingAccount().getZombiesCollection().add(Zombie.getZombie("Balloon Zombie"));
+        Account.getPlayingAccount().getZombiesCollection().add(Zombie.getZombie("Bungee Zombie"));
+        Account.getPlayingAccount().getZombiesCollection().add(Zombie.getZombie("Conehead Zombie"));
+    }
+
+}
 

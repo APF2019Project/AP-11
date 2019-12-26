@@ -122,6 +122,15 @@ public class Zombie {
         addZombies(zDolphin);
     }
 
+    public static Zombie getZombie(String zombieName) {
+        for (Zombie zombieIterator : zombies) {
+            if (zombieIterator.getName().equals(zombieName)) {
+                return zombieIterator;
+            }
+        }
+        return null;
+    }
+
     public void zombiesTurn(){
         for (int i = 0; i < 6; i++){
             for (int j = 1; j <= 19; j++){
