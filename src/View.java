@@ -53,6 +53,7 @@ public class View {
                 break;
             case 11:  // DayAndWater Menu
                 DayAndWaterMenuHelp();
+                break;
             default:
                 indexError();
                 break;
@@ -237,7 +238,7 @@ public class View {
     }
 
     public static void landPlantInWater() {
-        System.out.println("This plant should be planted in land.");
+        System.out.println("This plant should be planted in land or on a Lily Pad.");
     }
 
     public static void landPlantOnLilyPad() {
@@ -246,6 +247,10 @@ public class View {
 
     public static void notEnoughSunOrCharge() {
         System.out.println("You don't have enough sun or this plant is not charged.");
+    }
+
+    public static void noPlantIsSelected() {
+        System.out.println("No plant is selected.");
     }
 
     private static void loginMenuHelp() {
@@ -282,7 +287,8 @@ public class View {
     private static void collectionMenuHelp() {
         System.out.println("-- Collection Menu Help --");
         System.out.println("Collection Menu commands are:");
-        System.out.println("show hand, show collection, select[name], remove[name], play and help.");
+        System.out.println("show hand, show collection, select[name], remove[name], play, help\nand exit (going back" +
+                "to Play Menu)");
     }
 
     private static void DayAndWaterMenuHelp() {

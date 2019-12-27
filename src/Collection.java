@@ -73,7 +73,7 @@ public class Collection {
         } else if (!plantExistsInCollection(cardName)) {
             View.cardNotInCollection("plants", cardName);
         } else {
-            Account.getPlayingAccount().plantsDeck.add(new Plant (Plant.getPlant(cardName)));
+            Account.getPlayingAccount().plantsDeck.add(new Plant(Plant.getPlant(cardName)));
             Account.getPlayingAccount().getPlantsCollection().remove(Plant.getPlant(cardName));
             View.cardAddedToDeck("plants", cardName);
         }
@@ -246,6 +246,14 @@ public class Collection {
 
     }
 
+    public static void respawnCheat() {
+        for (Plant plantIterator : Account.getPlayingAccount().plantsDeck) {
+            if (plantIterator.getRespawnTime() >= 1) {
+                plantIterator.setRespawnTime(plantIterator.getRespawnTime() - 1);
+            }
+        }
+    }
+
     public static void setDefaultPlantsCollection() {
         boolean Peashooter = false;
         boolean SnowPea = false;
@@ -297,7 +305,6 @@ public class Collection {
             Account.getPlayingAccount().getPlantsCollection().add((Plant.getPlant("Sunflower")));
         }
     }
-
 
 
     public static void setDefaultZombiesCollection() {

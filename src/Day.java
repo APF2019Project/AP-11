@@ -72,6 +72,10 @@ public class Day extends Play {
                 selectPlant(cardName);
 
             } else if (plantMatcher.matches()) {
+                if (selectedPlant == null) {
+                    View.noPlantIsSelected();
+                    return;
+                }
                 int row = Integer.parseInt(plantMatcher.group("row"));
                 int column = Integer.parseInt(plantMatcher.group("column"));
                 plantSelectedPlant(row, column, selectedPlant.getName());
@@ -94,8 +98,15 @@ public class Day extends Play {
                 whileTrue = false;
                 whileDayTurn = false;
                 View.goingBackTo(-5);
+
             } else if (command.toLowerCase().equals("help")) {
                 View.showHelp(11);
+
+            } else if (command.equals("suuun mikhaaam")) {
+                sun += 5;
+
+            } else if (command.equals("respawn mikhaaam")) {
+                Collection.respawnCheat();
 
             } else {
                 View.invalidCommand(11);
@@ -118,7 +129,7 @@ public class Day extends Play {
         } else {
             selectCandidate = Collection.getPlantInDeck(plantName);
         }
-        if (selectCandidate.getSunCost() > sun || selectCandidate.getRespawnTime() < selectCandidate.getRespawnCoolDown()) {
+        if (selectCandidate.getSunCost() > sun || selectCandidate.getRespawnTime() != 0) {
             View.notEnoughSunOrCharge();
         } else {
             selectedPlant = selectCandidate;
@@ -126,7 +137,12 @@ public class Day extends Play {
         }
     }
 
+
     public static void plantSelectedPlant(int row, int column, String plantName) {
+        if (selectedPlant == null) {
+            View.noPlantIsSelected();
+            return;
+        }
         Unit unit = PlayGround.getSpecifiedUnit(row, column);
         Plant plant = selectedPlant;
         boolean isWater = unit.getIsWater();
@@ -134,8 +150,10 @@ public class Day extends Play {
         if (unit.getPlants()[0] == null) {
             if ((!isWater) && (!waterPlant)) {
                 unit.setPlant0(plant);
-                Collection.getPlantInDeck(plantName).setRespawnTime(0);
+                Collection.getPlantInDeck(plantName).setRespawnTime(Collection.getPlantInDeck(plantName)
+                        .getRespawnCoolDown());
                 selectedPlant = null;
+                sun -= Collection.getPlantInDeck(plantName).getSunCost();
                 View.plantedInUnit(row, column, plantName);
             } else if ((!isWater) && waterPlant) {
                 View.waterPlantInLand();
@@ -143,16 +161,20 @@ public class Day extends Play {
                 View.landPlantInWater();
             } else if (isWater && waterPlant) {
                 unit.setPlant0(plant);
-                Collection.getPlantInDeck(plantName).setRespawnTime(0);
+                Collection.getPlantInDeck(plantName).setRespawnTime(Collection.getPlantInDeck(plantName)
+                        .getRespawnCoolDown());
                 selectedPlant = null;
+                sun -= Collection.getPlantInDeck(plantName).getSunCost();
                 View.plantedInUnit(row, column, plantName);
             }
         } else if (unit.getPlants()[1] == null) {
             if (unit.getPlants()[0].getName().equals("Lily Pad")) {
                 if (!waterPlant) {
                     unit.setPlant1(plant);
-                    Collection.getPlantInDeck(plantName).setRespawnTime(0);
+                    Collection.getPlantInDeck(plantName).setRespawnTime(Collection.getPlantInDeck(plantName)
+                            .getRespawnCoolDown());
                     selectedPlant = null;
+                    sun -= Collection.getPlantInDeck(plantName).getSunCost();
                     View.plantedInUnit(row, column, plantName);
                 } else {
                     View.landPlantOnLilyPad();
@@ -164,6 +186,7 @@ public class Day extends Play {
             View.unitIsFilled(row, column, unit);
         }
     }
+
 
     public static void removePlant(int row, int column) {
         PlayGround.getSpecifiedUnit(row, column).setPlant0(null);
