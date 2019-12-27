@@ -2,11 +2,6 @@ import java.util.ArrayList;
 
 public class Plant {
 
-    public static void plantsTurn() {
-        ///////////////////////
-    }
-
-
     private static ArrayList<Plant> plants = new ArrayList<>();
 
     private String name;
@@ -113,6 +108,16 @@ public class Plant {
             }
         }
         return null;
+    }
+
+    public static void plantsTurn() {
+        for (int i = 0; i < 6; i++)
+            for (int j = 1; j < 20; j++) {
+                Unit unit = PlayGround.getSpecifiedUnit(i,j);
+                Plant plant = unit.getPlants()[0];
+                if (plant != null)
+                    plant.turn(unit);
+            }
     }
 
     //Getters:
@@ -338,14 +343,14 @@ public class Plant {
                     distances[i][j] = (int) Math.pow(i - x, 2) + (int) Math.pow(j - y, 2);
                 else
                     distances[i][j] = 400;
-                for (int i = 0; i<6; i++)
-                    for (int j =1; j<20; j++)
-                        if (distances[i][j] < distances[x][y]){
-                            x = i;
-                            y= j;
-                        }
-                unit = PlayGround.getSpecifiedUnit(x,y);
-                damageZombie(unit, unit.getZombies().get(0));
+        for (int i = 0; i < 6; i++)
+            for (int j = 1; j < 20; j++)
+                if (distances[i][j] < distances[x][y]) {
+                    x = i;
+                    y = j;
+                }
+        unit = PlayGround.getSpecifiedUnit(x, y);
+        damageZombie(unit, unit.getZombies().get(0));
     }
 
     private void damageZombie(Unit unit, Zombie zombie) {
