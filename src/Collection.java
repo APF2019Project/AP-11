@@ -228,44 +228,110 @@ public class Collection {
 
     }
 
-//    public static void setDefaultPlantsDeck() {
-//        Account.getPlayingAccount().plantsDeck.add((Plant.getPlant("Peashooter")));
-//        Account.getPlayingAccount().plantsDeck.add((Plant.getPlant("Snow Pea")));
-//        Account.getPlayingAccount().plantsDeck.add((Plant.getPlant("Explode-o-nut")));
-//        Account.getPlayingAccount().plantsDeck.add((Plant.getPlant("Scaredy-shroom")));
-//        Account.getPlayingAccount().plantsDeck.add((Plant.getPlant("Cherry Bomb")));
-//        Account.getPlayingAccount().plantsDeck.add((Plant.getPlant("Kernel-pult")));
-//        Account.getPlayingAccount().plantsDeck.add((Plant.getPlant("Sunflower")));
-//    }
-//
-//    public static void setDefaultZombiesDeck() {
-//        Account.getPlayingAccount().zombiesDeck.add(Zombie.getZombie("Zombie"));
-//        Account.getPlayingAccount().zombiesDeck.add(Zombie.getZombie("Football Zombie"));
-//        Account.getPlayingAccount().zombiesDeck.add(Zombie.getZombie("Screen Door Zombie"));
-//        Account.getPlayingAccount().zombiesDeck.add(Zombie.getZombie("Zomboni"));
-//        Account.getPlayingAccount().zombiesDeck.add(Zombie.getZombie("Balloon Zombie"));
-//        Account.getPlayingAccount().zombiesDeck.add(Zombie.getZombie("Bungee Zombie"));
-//        Account.getPlayingAccount().zombiesDeck.add(Zombie.getZombie("Conehead Zombie"));
-//    }
-
     public static void setDefaultPlantsCollection() {
-        Account.getPlayingAccount().getPlantsCollection().add((Plant.getPlant("Peashooter")));
-        Account.getPlayingAccount().getPlantsCollection().add((Plant.getPlant("Snow Pea")));
-        Account.getPlayingAccount().getPlantsCollection().add((Plant.getPlant("Explode-o-nut")));
-        Account.getPlayingAccount().getPlantsCollection().add((Plant.getPlant("Scaredy-shroom")));
-        Account.getPlayingAccount().getPlantsCollection().add((Plant.getPlant("Cherry Bomb")));
-        Account.getPlayingAccount().getPlantsCollection().add((Plant.getPlant("Kernel-pult")));
-        Account.getPlayingAccount().getPlantsCollection().add((Plant.getPlant("Sunflower")));
+        boolean Peashooter = false;
+        boolean SnowPea = false;
+        boolean Explode_o_nut = false;
+        boolean Scaredy_Shroom = false;
+        boolean Cherry_Bomb = false;
+        boolean Kernel_Pult = false;
+        boolean Sunflower = false;
+
+        String plantIteratorName;
+        for (Plant plantIterator : Account.getPlayingAccount().getPlantsCollection()) {
+            plantIteratorName = plantIterator.getName();
+            if (plantIteratorName.equals("Peashooter")) {
+                Peashooter = true;
+            } else if (plantIteratorName.equals("Snow Pea")) {
+                SnowPea = true;
+            } else if (plantIteratorName.equals("Explode-o-nut")) {
+                Explode_o_nut = true;
+            } else if (plantIteratorName.equals("Scaredy-shroom")) {
+                Scaredy_Shroom = true;
+            } else if (plantIteratorName.equals("Cherry Bomb")) {
+                Cherry_Bomb = true;
+            } else if (plantIteratorName.equals("Kernel-pult")) {
+                Kernel_Pult = true;
+            } else if (plantIteratorName.equals("Sunflower")) {
+                Sunflower = true;
+            }
+        }
+
+        if (!Peashooter) {
+            Account.getPlayingAccount().getPlantsCollection().add((Plant.getPlant("Peashooter")));
+        }
+        if (!SnowPea) {
+            Account.getPlayingAccount().getPlantsCollection().add((Plant.getPlant("Snow Pea")));
+        }
+        if (!Explode_o_nut) {
+            Account.getPlayingAccount().getPlantsCollection().add((Plant.getPlant("Explode-o-nut")));
+        }
+        if (!Scaredy_Shroom) {
+            Account.getPlayingAccount().getPlantsCollection().add((Plant.getPlant("Scaredy-shroom")));
+        }
+        if (!Cherry_Bomb) {
+            Account.getPlayingAccount().getPlantsCollection().add((Plant.getPlant("Cherry Bomb")));
+        }
+        if (!Kernel_Pult) {
+            Account.getPlayingAccount().getPlantsCollection().add((Plant.getPlant("Kernel-pult")));
+        }
+        if (!Sunflower) {
+            Account.getPlayingAccount().getPlantsCollection().add((Plant.getPlant("Sunflower")));
+        }
     }
 
+
+
     public static void setDefaultZombiesCollection() {
-        Account.getPlayingAccount().getZombiesCollection().add(Zombie.getZombie("Zombie"));
-        Account.getPlayingAccount().getZombiesCollection().add(Zombie.getZombie("Football Zombie"));
-        Account.getPlayingAccount().getZombiesCollection().add(Zombie.getZombie("Screen Door Zombie"));
-        Account.getPlayingAccount().getZombiesCollection().add(Zombie.getZombie("Zomboni"));
-        Account.getPlayingAccount().getZombiesCollection().add(Zombie.getZombie("Balloon Zombie"));
-        Account.getPlayingAccount().getZombiesCollection().add(Zombie.getZombie("Bungee Zombie"));
-        Account.getPlayingAccount().getZombiesCollection().add(Zombie.getZombie("Conehead Zombie"));
+        boolean ZombieBoolean = false;
+        boolean Football_Zombie = false;
+        boolean Screen_Door_Zombie = false;
+        boolean Zomboni = false;
+        boolean Balloon_Zombie = false;
+        boolean Bungee_Zombie = false;
+        boolean Conehead_Zombie = false;
+
+        String zombieIteratorName;
+        for (Zombie zombieIterator : Account.getPlayingAccount().getZombiesCollection()) {
+            zombieIteratorName = zombieIterator.getName();
+            if (zombieIteratorName.equals("Zombie")) {
+                ZombieBoolean = true;
+            } else if (zombieIteratorName.equals("Football Zombie")) {
+                Football_Zombie = true;
+            } else if (zombieIteratorName.equals("Screen Door Zombie")) {
+                Screen_Door_Zombie = true;
+            } else if (zombieIteratorName.equals("Zomboni")) {
+                Zomboni = true;
+            } else if (zombieIteratorName.equals("Balloon Zombie")) {
+                Balloon_Zombie = true;
+            } else if (zombieIteratorName.equals("Bungee Zombie")) {
+                Bungee_Zombie = true;
+            } else if (zombieIteratorName.equals("Conehead Zombie")) {
+                Conehead_Zombie = true;
+            }
+        }
+
+        if (!ZombieBoolean) {
+            Account.getPlayingAccount().getZombiesCollection().add(Zombie.getZombie("Zombie"));
+        }
+        if (!Football_Zombie) {
+            Account.getPlayingAccount().getZombiesCollection().add(Zombie.getZombie("Football Zombie"));
+        }
+        if (!Screen_Door_Zombie) {
+            Account.getPlayingAccount().getZombiesCollection().add(Zombie.getZombie("Screen Door Zombie"));
+        }
+        if (!Zomboni) {
+            Account.getPlayingAccount().getZombiesCollection().add(Zombie.getZombie("Zomboni"));
+        }
+        if (!Balloon_Zombie) {
+            Account.getPlayingAccount().getZombiesCollection().add(Zombie.getZombie("Balloon Zombie"));
+        }
+        if (!Bungee_Zombie) {
+            Account.getPlayingAccount().getZombiesCollection().add(Zombie.getZombie("Bungee Zombie"));
+        }
+        if (!Conehead_Zombie) {
+            Account.getPlayingAccount().getZombiesCollection().add(Zombie.getZombie("Conehead Zombie"));
+        }
     }
 
 }
