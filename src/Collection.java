@@ -27,7 +27,7 @@ public class Collection {
                     showCollection(playTypeIndex);
                     break;
                 case "play":
-                    goToPlayByPlayType(playTypeIndex);
+                    Play.goToPlayByPlayType(playTypeIndex);
                     break;
                 case "exit": // Going back to Play Menu
                     View.goingBackTo(-4);
@@ -220,31 +220,6 @@ public class Collection {
         }
     }
 
-    public static void goToPlayByPlayType(int playTypeIndex) {
-        switch (playTypeIndex) {
-            case 1:
-                PlayGround.BuildDayPlayGround();
-                Day.dayTurn();
-                break;
-            case 2:
-                PlayGround.BuildWaterPlayGround();
-                Water.dayTurn();
-                break;
-            case 3:
-                //
-                break;
-            case 4:
-                //
-                break;
-            case 5:
-                //
-                break;
-            default:
-                //
-                break;
-        }
-
-    }
 
     public static void respawnCheat() {
         for (Plant plantIterator : Account.getPlayingAccount().plantsDeck) {

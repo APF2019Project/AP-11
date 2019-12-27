@@ -52,4 +52,32 @@ public class Play {
         }
     }
 
+
+
+    public static void goToPlayByPlayType(int playTypeIndex) {
+        switch (playTypeIndex) {
+            case 1:
+                PlayGround.BuildDayPlayGround();
+                Day.dayAndWaterTurn(1);
+                break;
+            case 2:
+                PlayGround.BuildWaterPlayGround();
+                Water.dayAndWaterTurn(2);
+                break;
+            case 3:
+                //
+                break;
+            case 4:
+                Zombie.zombiesTurn();
+                break;
+            case 5:
+                //
+                break;
+            default:
+                //
+                break;
+        }
+
+    }
+
 }

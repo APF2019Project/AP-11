@@ -17,7 +17,7 @@ public class Day extends Play {
         Day.sun = sun;
     }
 
-    public static void dayTurn() {
+    public static void dayAndWaterTurn(int playTypeIndex) {
 
         while (whileDayTurn) {
             if (checkFinished()) {
@@ -32,7 +32,7 @@ public class Day extends Play {
                 return;
             }
             Plant.plantsTurn();
-            dayMenu();
+            dayMenu(playTypeIndex);
         }
     }
 
@@ -53,7 +53,7 @@ public class Day extends Play {
     }
 
 
-    public static void dayMenu() {  // DayAndWater Menu index : 11
+    public static void dayMenu(int playTypeIndex) {  // DayAndWater Menu index : 11
 
         boolean whileTrue = true;
         String command;
@@ -61,7 +61,11 @@ public class Day extends Play {
         Pattern removePattern = Pattern.compile("[r,R]emove (?<row>\\d+),(?<column>\\d+)");
 
         while (whileTrue) {
-            System.out.println("^-^-^-^- Day Menu -^-^-^-^\nEnter command:");
+            if (playTypeIndex == 1) {
+                System.out.println("^-^-^-^- Day Menu -^-^-^-^\nEnter command:");
+            } else if (playTypeIndex == 2) {
+                System.out.println("^-^-^-^- Water Menu ^-^-^-^-");
+            }
 
             command = scanner.nextLine();
             Matcher plantMatcher = plantingPattern.matcher(command);
@@ -105,7 +109,11 @@ public class Day extends Play {
                 }
 
             } else if (command.toLowerCase().equals("help")) {
-                View.showHelp(11);
+                if (playTypeIndex == 1) {
+                    View.showHelp(11);
+                } else if (playTypeIndex == 2) {
+                    View.showHelp(22);
+                }
 
             } else if (command.equals("sun mikhaaam")) {
                 sun += 5;
@@ -114,7 +122,11 @@ public class Day extends Play {
                 Collection.respawnCheat();
 
             } else {
-                View.invalidCommand(11);
+                if (playTypeIndex == 1) {
+                    View.invalidCommand(11);
+                } else if (playTypeIndex == 2) {
+                    View.invalidCommand(22);
+                }
             }
         }
     }
