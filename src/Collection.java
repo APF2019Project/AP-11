@@ -143,6 +143,24 @@ public class Collection {
         }
     }
 
+    public static Plant getPlantInDeck(String plantName) {
+        for (Plant plantIterator : Account.getPlayingAccount().plantsDeck) {
+            if (plantIterator.getName().equals(plantName)) {
+                return plantIterator;
+            }
+        }
+        return null;
+    }
+
+    public static Zombie getZombieInDeck(String zombieName) {
+        for (Zombie zombieIterator : Account.getPlayingAccount().zombiesDeck) {
+            if (zombieIterator.getName().equals(zombieName)) {
+                return zombieIterator;
+            }
+        }
+        return null;
+    }
+
 
     public static boolean plantExistsInCollection(String plantName) {
         for (Plant plantIterator : Account.getPlayingAccount().getPlantsCollection()) {

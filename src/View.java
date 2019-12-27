@@ -196,7 +196,9 @@ public class View {
                 spacesNumber = 20 - (plantsShop.get(i).getName().length());
                 System.out.print(i + 1 + ". ");
                 System.out.print(plantsShop.get(i).getName());
-                if (i + 1 > 9) { spacesNumber --; }
+                if (i + 1 > 9) {
+                    spacesNumber--;
+                }
                 for (int k = 1; k <= spacesNumber; k++) {
                     System.out.print(" ");
                 }
@@ -224,6 +226,26 @@ public class View {
             i++;
             j++;
         }
+    }
+
+    public static void unitIsFilled(int row, int column, Unit unit) {
+        System.out.println("Unit " + row + "," + column + " is already filled with a " + unit.getPlants()[0].getName());
+    }
+
+    public static void waterPlantInLand() {
+        System.out.println("This plant should be planted in water.");
+    }
+
+    public static void landPlantInWater() {
+        System.out.println("This plant should be planted in land.");
+    }
+
+    public static void landPlantOnLilyPad() {
+        System.out.println("You can only plant land plants on a Lily Pad");
+    }
+
+    public static void notEnoughSunOrCharge() {
+        System.out.println("You don't have enough sun or this plant is not charged.");
     }
 
     private static void loginMenuHelp() {
