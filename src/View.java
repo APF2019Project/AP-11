@@ -184,6 +184,33 @@ public class View {
         System.out.println(plantName + " planted in unit " + row + "," + column);
     }
 
+    public static void printCollectionInShop(ArrayList<Plant> plantsShop, ArrayList<Zombie> zombiesShop) {
+        System.out.println("Plants:" + "                 " + "Zombies:");
+        int i = 0;
+        int j = 0;
+        String spaces;
+        int spacesNumber;
+        while (i < plantsShop.size() || j < zombiesShop.size()) {
+            if (i < plantsShop.size()) {
+                spacesNumber = 21 - plantsShop.get(i).getName().length();
+                System.out.print(i + 1 + ". ");
+                System.out.print(plantsShop.get(i).getName());
+                for (int k = 1; k <= spacesNumber; k++) {
+                    System.out.print(" ");
+                }
+            } else {
+                System.out.print(" \t \t \t \t");
+            }
+            if (j < zombiesShop.size()) {
+                System.out.print(j + 1 + ". ");
+                System.out.println(zombiesShop.get(i).getName());
+            } else
+                System.out.println();
+            i++;
+            j++;
+        }
+    }
+
     private static void loginMenuHelp() {
         System.out.println("-- Login Menu Help --");
         System.out.println("Login Menu commands are:");

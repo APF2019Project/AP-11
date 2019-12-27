@@ -209,7 +209,8 @@ public class Collection {
                 Day.dayTurn();
                 break;
             case 2:
-                //
+                PlayGround.BuildWaterPlayGround();
+                Water.dayTurn();
                 break;
             case 3:
                 //

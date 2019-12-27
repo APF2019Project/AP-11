@@ -50,7 +50,7 @@ public class Shop {
 
         for (Plant plant : Plant.getPlants())
             for (Plant myPlant : account.getPlantsCollection())
-                if (myPlant == plant) {
+                if (myPlant.equals(plant)) {
                     plantsShop.remove(plant);
                     break;
                 }
@@ -60,7 +60,7 @@ public class Shop {
                     zombiesShop.remove(zombie);
                     break;
                 }
-        printCollections(plantsShop, zombiesShop);
+        View.printCollectionInShop(plantsShop, zombiesShop);
     }
 
 
@@ -125,24 +125,26 @@ public class Shop {
     private static void showCollection(Account account) {
         ArrayList<Plant> plants = (ArrayList<Plant>) account.getPlantsCollection().clone();
         ArrayList<Zombie> zombies = (ArrayList<Zombie>) account.getZombiesCollection().clone();
-        printCollections(plants, zombies);
+        View.printCollectionInShop(plants, zombies);
     }
 
-    private static void printCollections(ArrayList<Plant> plantsCollection, ArrayList<Zombie> zombiesCollection) {
-        System.out.println("Plants:  \t\t  Zombies:");
-        int i = 0;
-        int j = 0;
-        while (i < plantsCollection.size() || j < zombiesCollection.size()) {
-            if (i < plantsCollection.size())
-                System.out.print(plantsCollection.get(i).getName() + "\t\t");
-            else
-                System.out.print(" \t \t \t \t");
-            if (j < zombiesCollection.size())
-                System.out.println(zombiesCollection.get(i).getName());
-            else
-                System.out.println();
-            i++;
-            j++;
-        }
-    }
+//    private static void printCollections(ArrayList<Plant> plantsCollection, ArrayList<Zombie> zombiesCollection) {
+//        System.out.println("Plants:  \t\t  Zombies:");
+//        int i = 0;
+//        int j = 0;
+//        while (i < plantsCollection.size() || j < zombiesCollection.size()) {
+//            if (i < plantsCollection.size())
+//                System.out.print(plantsCollection.get(i).getName() + "\t\t");
+//            else
+//                System.out.print(" \t \t \t \t");
+//            if (j < zombiesCollection.size())
+//                System.out.println(zombiesCollection.get(i).getName());
+//            else
+//                System.out.println();
+//            i++;
+//            j++;
+//        }
+//    }
+
+
 }
