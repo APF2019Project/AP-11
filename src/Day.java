@@ -93,6 +93,7 @@ public class Day extends Play {
                 showHandInDay();
 
             } else if (command.toLowerCase().equals("end turn")) {
+                Collection.decreaseRespawnsInDeck();
                 whileTrue = false;
                 return;
 
@@ -108,7 +109,6 @@ public class Day extends Play {
                     Collection.clearPlantsDeck();
                     Collection.clearZombiesDeck();
                 }
-
             } else if (command.toLowerCase().equals("help")) {
                 if (playTypeIndex == 1) {
                     View.showHelp(11);
@@ -120,7 +120,7 @@ public class Day extends Play {
                 sun += 5;
 
             } else if (command.toLowerCase().equals("respawn mikhaaam")) {
-                Collection.respawnCheat();
+                Collection.decreaseRespawnsInDeck();
 
             } else {
                 if (playTypeIndex == 1) {

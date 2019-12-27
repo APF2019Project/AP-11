@@ -221,7 +221,7 @@ public class Collection {
     }
 
 
-    public static void respawnCheat() {
+    public static void decreaseRespawnsInDeck() {
         for (Plant plantIterator : Account.getPlayingAccount().plantsDeck) {
             if (plantIterator.getRespawnTime() >= 1) {
                 plantIterator.setRespawnTime(plantIterator.getRespawnTime() - 1);
@@ -236,6 +236,7 @@ public class Collection {
     public static void clearZombiesDeck() {
         Account.getPlayingAccount().zombiesDeck.clear();
     }
+
 
     public static void setDefaultPlantsCollection() {
         boolean Peashooter = false;

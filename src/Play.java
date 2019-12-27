@@ -53,7 +53,6 @@ public class Play {
     }
 
 
-
     public static void goToPlayByPlayType(int playTypeIndex) {
         switch (playTypeIndex) {
             case 1:
@@ -65,10 +64,18 @@ public class Play {
                 Water.dayAndWaterTurn(2);
                 break;
             case 3:
-                //
+                PlayGround.BuildDayPlayGround();
+                Rail.railTurn();
                 break;
             case 4:
-                ZombieStyle.zombieStyleTurn();
+                int index = View.choosePlayGroundInZombieStyle();
+                if (index == 1) {
+                    PlayGround.BuildDayPlayGround();
+                    ZombieStyle.zombieStyleTurn();
+                } else if (index == 2) {
+                    PlayGround.BuildWaterPlayGround();
+                    ZombieStyle.zombieStyleTurn();
+                }
                 break;
             case 5:
                 //

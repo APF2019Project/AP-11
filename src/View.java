@@ -288,6 +288,18 @@ public class View {
         System.out.println("The unit " + row + "," + column + " is already empty.");
     }
 
+    public static int choosePlayGroundInZombieStyle() {
+        System.out.println("choose your play ground (land or water):");
+        String playGround = scanner.nextLine();
+        if (playGround.toLowerCase().equals("land")) {
+            return 1;
+        } else if (playGround.toLowerCase().equals("water")) {
+            return 2;
+        } else {
+            System.out.println("Invalid answer, going back to Collection Menu:");
+            return 3;
+        }
+    }
     private static void loginMenuHelp() {
         System.out.println("-- Login Menu Help --");
         System.out.println("Login Menu commands are:");
