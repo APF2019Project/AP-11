@@ -185,25 +185,27 @@ public class View {
     }
 
     public static void printCollectionInShop(ArrayList<Plant> plantsShop, ArrayList<Zombie> zombiesShop) {
-        System.out.println("Plants:" + "                 " + "Zombies:");
+        System.out.println("Plants:" + "                       " + "Zombies:");
         int i = 0;
         int j = 0;
         String spaces;
         int spacesNumber;
         while (i < plantsShop.size() || j < zombiesShop.size()) {
             if (i < plantsShop.size()) {
-                spacesNumber = 21 - plantsShop.get(i).getName().length();
+                spacesNumber = 25 - (plantsShop.get(i).getName().length() + Integer.toString(plantsShop.get(i).getPrice()).length());
                 System.out.print(i + 1 + ". ");
-                System.out.print(plantsShop.get(i).getName());
+                System.out.print(plantsShop.get(i).getName() + "  " + plantsShop.get(i).getPrice());
                 for (int k = 1; k <= spacesNumber; k++) {
                     System.out.print(" ");
                 }
             } else {
-                System.out.print(" \t \t \t \t");
+                for (int k = 1; k <= 25; k++) {
+                    System.out.print(" ");
+                }
             }
             if (j < zombiesShop.size()) {
                 System.out.print(j + 1 + ". ");
-                System.out.println(zombiesShop.get(i).getName());
+                System.out.println(zombiesShop.get(i).getName() + "  " + zombiesShop.get(i).getPrice());
             } else
                 System.out.println();
             i++;

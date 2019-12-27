@@ -47,7 +47,6 @@ public class Shop {
         ArrayList<Plant> plantsShop = (ArrayList<Plant>) Plant.getPlants().clone();
         ArrayList<Zombie> zombiesShop = (ArrayList<Zombie>) Zombie.getZombies().clone();
 
-
         for (Plant plant : Plant.getPlants())
             for (Plant myPlant : account.getPlantsCollection())
                 if (myPlant.equals(plant)) {
