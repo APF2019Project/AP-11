@@ -185,17 +185,24 @@ public class View {
     }
 
     public static void printCollectionInShop(ArrayList<Plant> plantsShop, ArrayList<Zombie> zombiesShop) {
-        System.out.println("Plants:" + "                       " + "Zombies:");
+        System.out.println("Plants:" + "            " + "Price:" + "        " + "Zombies:" + "                " + "Price:");
         int i = 0;
         int j = 0;
         String spaces;
         int spacesNumber;
+        int spaceNumbers2;
         while (i < plantsShop.size() || j < zombiesShop.size()) {
             if (i < plantsShop.size()) {
-                spacesNumber = 25 - (plantsShop.get(i).getName().length() + Integer.toString(plantsShop.get(i).getPrice()).length());
+                spacesNumber = 20 - (plantsShop.get(i).getName().length());
                 System.out.print(i + 1 + ". ");
-                System.out.print(plantsShop.get(i).getName() + "  " + plantsShop.get(i).getPrice());
+                System.out.print(plantsShop.get(i).getName());
+                if (i + 1 > 9) { spacesNumber --; }
                 for (int k = 1; k <= spacesNumber; k++) {
+                    System.out.print(" ");
+                }
+                System.out.print(plantsShop.get(i).getPrice());
+                spaceNumbers2 = 10 - Integer.toString(plantsShop.get(i).getPrice()).length();
+                for (int m = 1; m <= spaceNumbers2; m++) {
                     System.out.print(" ");
                 }
             } else {
@@ -205,7 +212,13 @@ public class View {
             }
             if (j < zombiesShop.size()) {
                 System.out.print(j + 1 + ". ");
-                System.out.println(zombiesShop.get(i).getName() + "  " + zombiesShop.get(i).getPrice());
+                System.out.print(zombiesShop.get(i).getName());
+                spacesNumber = 25 - zombiesShop.get(i).getName().length();
+                for (int k = 1; k <= spacesNumber; k++) {
+                    System.out.print(" ");
+                }
+                System.out.println(zombiesShop.get(i).getPrice());
+
             } else
                 System.out.println();
             i++;
