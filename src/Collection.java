@@ -73,7 +73,7 @@ public class Collection {
         } else if (!plantExistsInCollection(cardName)) {
             View.cardNotInCollection("plants", cardName);
         } else {
-            Account.getPlayingAccount().plantsDeck.add(Plant.getPlant(cardName));
+            Account.getPlayingAccount().plantsDeck.add(new Plant (Plant.getPlant(cardName)));
             Account.getPlayingAccount().getPlantsCollection().remove(Plant.getPlant(cardName));
             View.cardAddedToDeck("plants", cardName);
         }

@@ -134,6 +134,7 @@ public class Day extends Play {
         if (unit.getPlants()[0] == null) {
             if ((!isWater) && (!waterPlant)) {
                 unit.setPlant0(plant);
+                Collection.getPlantInDeck(plantName).setRespawnTime(0);
                 selectedPlant = null;
                 View.plantedInUnit(row, column, plantName);
             } else if ((!isWater) && waterPlant) {
@@ -142,6 +143,7 @@ public class Day extends Play {
                 View.landPlantInWater();
             } else if (isWater && waterPlant) {
                 unit.setPlant0(plant);
+                Collection.getPlantInDeck(plantName).setRespawnTime(0);
                 selectedPlant = null;
                 View.plantedInUnit(row, column, plantName);
             }
@@ -149,6 +151,7 @@ public class Day extends Play {
             if (unit.getPlants()[0].getName().equals("Lily Pad")) {
                 if (!waterPlant) {
                     unit.setPlant1(plant);
+                    Collection.getPlantInDeck(plantName).setRespawnTime(0);
                     selectedPlant = null;
                     View.plantedInUnit(row, column, plantName);
                 } else {
