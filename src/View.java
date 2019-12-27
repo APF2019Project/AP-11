@@ -280,6 +280,14 @@ public class View {
         System.out.println("Invalid coordinates!");
     }
 
+    public static void plantRemoved(int row, int column, String plantName) {
+        System.out.println("The " + plantName + " in the unit " + row + "," + column + " has been removed.");
+    }
+
+    public static void unitIsEmpty(int row, int column) {
+        System.out.println("The unit " + row + "," + column + " is already empty.");
+    }
+
     private static void loginMenuHelp() {
         System.out.println("-- Login Menu Help --");
         System.out.println("Login Menu commands are:");

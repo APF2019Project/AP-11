@@ -7,7 +7,7 @@ public class ZombieStyle extends Play {
         private static int coins = 50;
 
 
-        public static void zombieTurn() {
+        public static void zombieStyleTurn() {
 
 
             zombieMenu();

@@ -98,6 +98,7 @@ public class Day extends Play {
 
             } else if (command.toLowerCase().equals("show lawn")) {
                 //
+
             } else if (command.toLowerCase().equals("exit")) {
                 boolean exit = View.areYouSureExitingPlay();
                 if (exit) {
@@ -115,10 +116,10 @@ public class Day extends Play {
                     View.showHelp(22);
                 }
 
-            } else if (command.equals("sun mikhaaam")) {
+            } else if (command.toLowerCase().equals("sun mikhaaam")) {
                 sun += 5;
 
-            } else if (command.equals("respawn mikhaaam")) {
+            } else if (command.toLowerCase().equals("respawn mikhaaam")) {
                 Collection.respawnCheat();
 
             } else {
@@ -210,7 +211,37 @@ public class Day extends Play {
 
 
     public static void removePlant(int row, int column) {
-        PlayGround.getSpecifiedUnit(row, column).setPlant0(null);
+        if (PlayGround.getSpecifiedUnit(row, column) == null) {
+            View.invalidCoordinates();
+            return;
+        }
+        Unit unit = PlayGround.getSpecifiedUnit(row, column);
+        boolean isWater = unit.getIsWater();
+        String plantName;
+        if(!isWater) {
+            if (unit.getPlants()[0] != null) {
+                plantName = unit.getPlants()[0].getName();
+                unit.getPlants()[0] = null;
+                View.plantRemoved(row, column, plantName);
+            } else {
+                View.unitIsEmpty(row, column);
+            }
+        } else { // is water:
+            if (unit.getPlants()[0] == null) {
+                View.unitIsEmpty(row, column);
+            } else {
+                if (unit.getPlants()[1] == null) {
+                    plantName = unit.getPlants()[0].getName();
+                    unit.getPlants()[0] = null;
+                    View.plantRemoved(row, column, plantName);
+                } else {
+                    plantName = unit.getPlants()[1].getName();
+                    unit.getPlants()[1] = null;
+                    View.plantRemoved(row, column, plantName);
+                }
+            }
+        }
+
     }
 
     private static void showHandInDay() {

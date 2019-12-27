@@ -68,7 +68,7 @@ public class Play {
                 //
                 break;
             case 4:
-                Zombie.zombiesTurn();
+                ZombieStyle.zombieStyleTurn();
                 break;
             case 5:
                 //
