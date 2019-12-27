@@ -30,12 +30,12 @@ public class PlayGround {
     }
 
     public static int randomPositiomY() {
-       // TODO rand;
+        // TODO rand;
         return 0;
     }
 
     public static int randomPositionX() {
-       // TODO rand;
+        // TODO rand;
         return 0;
     }
 
@@ -48,10 +48,16 @@ public class PlayGround {
     }
 
     public static Unit getSpecifiedUnit(int i, int j) {
+        if (i > 5 || j > 19) {
+            return null;
+        }
+        if (i < 0 || j < 0) {
+            return null;
+        }
         return playGround[i][j];
     }
 
-    public static void removeAllPlants(int i, int j){
+    public static void removeAllPlants(int i, int j) {
         playGround[i][j].removeAllPlants();
     }
 }

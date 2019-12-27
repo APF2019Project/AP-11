@@ -254,6 +254,14 @@ public class Collection {
         }
     }
 
+    public static void clearPlantsDeck() {
+        Account.getPlayingAccount().plantsDeck.clear();
+    }
+
+    public static void clearZombiesDeck() {
+        Account.getPlayingAccount().zombiesDeck.clear();
+    }
+
     public static void setDefaultPlantsCollection() {
         boolean Peashooter = false;
         boolean SnowPea = false;

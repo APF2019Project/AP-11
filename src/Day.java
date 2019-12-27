@@ -61,7 +61,7 @@ public class Day extends Play {
         Pattern removePattern = Pattern.compile("[r,R]emove (?<row>\\d+),(?<column>\\d+)");
 
         while (whileTrue) {
-            System.out.println("--- Day Menu ---\nEnter command:");
+            System.out.println("^-^-^-^- Day Menu -^-^-^-^\nEnter command:");
 
             command = scanner.nextLine();
             Matcher plantMatcher = plantingPattern.matcher(command);
@@ -95,14 +95,19 @@ public class Day extends Play {
             } else if (command.toLowerCase().equals("show lawn")) {
                 //
             } else if (command.toLowerCase().equals("exit")) {
-                whileTrue = false;
-                whileDayTurn = false;
-                View.goingBackTo(-5);
+                boolean exit = View.areYouSureExitingPlay();
+                if (exit) {
+                    whileTrue = false;
+                    whileDayTurn = false;
+                    View.goingBackTo(-5);
+                    Collection.clearPlantsDeck();
+                    Collection.clearZombiesDeck();
+                }
 
             } else if (command.toLowerCase().equals("help")) {
                 View.showHelp(11);
 
-            } else if (command.equals("suuun mikhaaam")) {
+            } else if (command.equals("sun mikhaaam")) {
                 sun += 5;
 
             } else if (command.equals("respawn mikhaaam")) {
@@ -141,6 +146,10 @@ public class Day extends Play {
     public static void plantSelectedPlant(int row, int column, String plantName) {
         if (selectedPlant == null) {
             View.noPlantIsSelected();
+            return;
+        }
+        if (PlayGround.getSpecifiedUnit(row, column) == null) {
+            View.invalidCoordinates();
             return;
         }
         Unit unit = PlayGround.getSpecifiedUnit(row, column);

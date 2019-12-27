@@ -1,6 +1,9 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class View {
+
+    public static Scanner scanner = new Scanner(System.in);
 
     public static void invalidCommand(int index) {
         switch (index) {
@@ -251,6 +254,23 @@ public class View {
 
     public static void noPlantIsSelected() {
         System.out.println("No plant is selected.");
+    }
+
+    public static boolean areYouSureExitingPlay() {
+        System.out.println("Are you sure exiting play?");
+        String sure = scanner.nextLine();
+        if (sure.toLowerCase().equals("yes")) {
+            return true;
+        } else if (sure.toLowerCase().equals("no")) {
+            return false;
+        } else {
+            System.out.println("Invalid answer. Try exiting again:");
+        }
+        return false;
+    }
+
+    public static void invalidCoordinates() {
+        System.out.println("Invalid coordinates!");
     }
 
     private static void loginMenuHelp() {
