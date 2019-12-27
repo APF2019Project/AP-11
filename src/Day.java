@@ -170,39 +170,47 @@ public class Day extends Play {
         boolean isWater = unit.getIsWater();
         boolean waterPlant = plant.isCanBePlantedInWater();
         if (unit.getPlants()[0] == null) {
-            if ((!isWater) && (!waterPlant)) {
-                unit.setPlant0(plant);
-                Collection.getPlantInDeck(plantName).setRespawnTime(Collection.getPlantInDeck(plantName)
-                        .getRespawnCoolDown());
-                selectedPlant = null;
-                sun -= Collection.getPlantInDeck(plantName).getSunCost();
-                View.plantedInUnit(row, column, plantName);
-            } else if ((!isWater) && waterPlant) {
-                View.waterPlantInLand();
-            } else if (isWater && (!waterPlant)) {
-                View.landPlantInWater();
-            } else if (isWater && waterPlant) {
-                unit.setPlant0(plant);
-                Collection.getPlantInDeck(plantName).setRespawnTime(Collection.getPlantInDeck(plantName)
-                        .getRespawnCoolDown());
-                selectedPlant = null;
-                sun -= Collection.getPlantInDeck(plantName).getSunCost();
-                View.plantedInUnit(row, column, plantName);
-            }
+            plantIn0(isWater, waterPlant, unit, plant, row, column, plantName);
         } else if (unit.getPlants()[1] == null) {
-            if (unit.getPlants()[0].getName().equals("Lily Pad")) {
-                if (!waterPlant) {
-                    unit.setPlant1(plant);
-                    Collection.getPlantInDeck(plantName).setRespawnTime(Collection.getPlantInDeck(plantName)
-                            .getRespawnCoolDown());
-                    selectedPlant = null;
-                    sun -= Collection.getPlantInDeck(plantName).getSunCost();
-                    View.plantedInUnit(row, column, plantName);
-                } else {
-                    View.landPlantOnLilyPad();
-                }
+            plantIn1(isWater, waterPlant, unit, plant, row, column, plantName);
+        } else {
+            View.unitIsFilled(row, column, unit);
+        }
+    }
+
+    private static void plantIn0 (boolean isWater, boolean waterPlant, Unit unit, Plant plant, int row, int column, String plantName) {
+        if ((!isWater) && (!waterPlant)) {
+            unit.setPlant0(plant);
+            Collection.getPlantInDeck(plantName).setRespawnTime(Collection.getPlantInDeck(plantName)
+                    .getRespawnCoolDown());
+            selectedPlant = null;
+            sun -= Collection.getPlantInDeck(plantName).getSunCost();
+            View.plantedInUnit(row, column, plantName);
+        } else if ((!isWater) && waterPlant) {
+            View.waterPlantInLand();
+        } else if (isWater && (!waterPlant)) {
+            View.landPlantInWater();
+        } else if (isWater && waterPlant) {
+            unit.setPlant0(plant);
+            Collection.getPlantInDeck(plantName).setRespawnTime(Collection.getPlantInDeck(plantName)
+                    .getRespawnCoolDown());
+            selectedPlant = null;
+            sun -= Collection.getPlantInDeck(plantName).getSunCost();
+            View.plantedInUnit(row, column, plantName);
+        }
+    }
+
+    private static void plantIn1 (boolean isWater, boolean waterPlant, Unit unit, Plant plant, int row, int column, String plantName) {
+        if (unit.getPlants()[0].getName().equals("Lily Pad")) {
+            if (!waterPlant) {
+                unit.setPlant1(plant);
+                Collection.getPlantInDeck(plantName).setRespawnTime(Collection.getPlantInDeck(plantName)
+                        .getRespawnCoolDown());
+                selectedPlant = null;
+                sun -= Collection.getPlantInDeck(plantName).getSunCost();
+                View.plantedInUnit(row, column, plantName);
             } else {
-                View.unitIsFilled(row, column, unit);
+                View.landPlantOnLilyPad();
             }
         } else {
             View.unitIsFilled(row, column, unit);

@@ -78,38 +78,46 @@ public class Shop {
             return;
         }
         if (cardIsPlant) {
-            if (Collection.plantExistsInCollection(cardName)) {
-                View.cardAlreadyExistsInCollection("plants", cardName);
-            } else {
-                for (Plant plant : Plant.getPlants()) {
-                    if (cardName.equals(plant.getName())) {
-                        if (account.getMoney() >= plant.getPrice()) {
-                            account.setMoney(account.getMoney() - plant.getPrice());
-                            account.getPlantsCollection().add(plant);
-                            View.plantPurchased(cardName);
-                            return;
-                        } else {
-                            View.notEnoughMoney();
-                            View.goingBackTo(-10);
-                        }
+            buyPlant(cardName, account);
+        } else if (cardIsZombie) {
+            buyZombie(cardName, account);
+        }
+    }
+
+    private static void buyPlant(String cardName, Account account) {
+        if (Collection.plantExistsInCollection(cardName)) {
+            View.cardAlreadyExistsInCollection("plants", cardName);
+        } else {
+            for (Plant plant : Plant.getPlants()) {
+                if (cardName.equals(plant.getName())) {
+                    if (account.getMoney() >= plant.getPrice()) {
+                        account.setMoney(account.getMoney() - plant.getPrice());
+                        account.getPlantsCollection().add(plant);
+                        View.plantPurchased(cardName);
+                        return;
+                    } else {
+                        View.notEnoughMoney();
+                        View.goingBackTo(-10);
                     }
                 }
             }
-        } else if (cardIsZombie) {
-            if (Collection.zombieExistsInCollection(cardName)) {
-                View.cardAlreadyExistsInCollection("zombies", cardName);
-            } else {
-                for (Zombie zombie : Zombie.getZombies()) {
-                    if (cardName.equals(zombie.getName())) {
-                        if (account.getMoney() >= zombie.getPrice()) {
-                            account.setMoney(account.getMoney() - zombie.getPrice());
-                            account.getZombiesCollection().add(zombie);
-                            View.zombiePurchased(cardName);
-                            return;
-                        } else {
-                            View.notEnoughMoney();
-                            View.goingBackTo(-10);
-                        }
+        }
+    }
+
+    private static void buyZombie(String cardName, Account account) {
+        if (Collection.zombieExistsInCollection(cardName)) {
+            View.cardAlreadyExistsInCollection("zombies", cardName);
+        } else {
+            for (Zombie zombie : Zombie.getZombies()) {
+                if (cardName.equals(zombie.getName())) {
+                    if (account.getMoney() >= zombie.getPrice()) {
+                        account.setMoney(account.getMoney() - zombie.getPrice());
+                        account.getZombiesCollection().add(zombie);
+                        View.zombiePurchased(cardName);
+                        return;
+                    } else {
+                        View.notEnoughMoney();
+                        View.goingBackTo(-10);
                     }
                 }
             }
