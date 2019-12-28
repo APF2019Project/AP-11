@@ -21,6 +21,11 @@ public class Shoot {
         this.effectiveTime = shoot.effectiveTime;
     }
 
+    public static void shootTurn() {
+
+        // movement of shoots
+    }
+
     public void setDirection(String direction) {
         this.direction = direction;
     }

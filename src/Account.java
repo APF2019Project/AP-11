@@ -225,48 +225,6 @@ public class Account {
     }
 
 
-    static void profileMenu() { // Profile Menu index = -3
-        Scanner scanner = new Scanner(System.in);
-        boolean whileTrue = true;
-        while (whileTrue) {
-            System.out.println("--- PROFILE MENU ---");
-            System.out.println("You are logged in as: " + playingAccount.getUsername());
-            System.out.println("Enter command:");
-            String command = scanner.nextLine();
-            switch (command.toLowerCase()) {
-                case "change":
-                    System.out.println("Logging in with another account:");
-                    login(false);
-                    break;
-                case "change password":
-                    Account.changePassword();
-                    break;
-                case "delete account":
-                    Account.deleteAccount();
-                    break;
-                case "rename":
-                    Account.renameAccount();
-                    break;
-                case "create account":
-                    createAccount(false);
-                    break;
-                case "show":
-                    Account.showAccount();
-                    break;
-                case "exit":
-                    View.goingBackTo(-2); // Going back to Main Menu
-                    whileTrue = false;
-                    break;
-                case "help":
-                    View.showHelp(-3);
-                    break;
-                default:
-                    View.invalidCommand(-3);
-                    break;
-            }
-        }
-    }
-
 
     static void deleteAccount() {
         Scanner scanner = new Scanner(System.in);

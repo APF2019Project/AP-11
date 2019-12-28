@@ -1,3 +1,5 @@
-public class Water extends Play {
+public class Water extends Day {
+
+
 
 }

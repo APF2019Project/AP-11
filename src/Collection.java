@@ -3,59 +3,20 @@ import java.util.Scanner;
 
 public class Collection {
 
-    static void collectionMenu(int playTypeIndex) { // Collection Menu index: -5
 
-        Scanner scanner = new Scanner(System.in);
-        String command;
-        boolean whileTrue = true;
-        while (whileTrue) {
-            System.out.println("--- Collection Menu ---\nEnter command:");
-            command = scanner.nextLine();
-
-            if (command.toLowerCase().matches("select (.+)")) {
-                readyToSelect(command, playTypeIndex);
-                continue;
-            } else if (command.toLowerCase().matches("remove (.+)")) {
-                readyToRemove(command, playTypeIndex);
-                continue;
-            }
-            switch (command.toLowerCase()) {
-                case "show hand":
-                    showHand(playTypeIndex);
-                    break;
-                case "show collection":
-                    showCollection(playTypeIndex);
-                    break;
-                case "play":
-                    goToPlayByPlayType(playTypeIndex);
-                    break;
-                case "exit": // Going back to Play Menu
-                    View.goingBackTo(-4);
-                    whileTrue = false;
-                    break;
-                case "help":
-                    View.showHelp(-5);
-                    break;
-                default:
-                    View.invalidCommand(-5);
-                    break;
-            }
-        }
-    }
-
-    private static void readyToSelect(String command, int playTypeIndex) {
+    public static void readyToSelect(String command, int playTypeIndex) {
         command = command.replaceFirst("[s,S]elect", "");
         command = command.trim();
         selectCard(command, playTypeIndex);
     }
 
-    private static void readyToRemove(String command, int playTypeIndex) {
+    public static void readyToRemove(String command, int playTypeIndex) {
         command = command.replaceFirst("[r,R]emove", "");
         command = command.trim();
         removeCard(command, playTypeIndex);
     }
 
-    private static void selectCard(String cardName, int playTypeIndex) {
+    public static void selectCard(String cardName, int playTypeIndex) {
         if (playTypeIndex == 1 || playTypeIndex == 2) {
             putPlantInDeck(cardName);
         } else if (playTypeIndex == 4) {
@@ -63,7 +24,7 @@ public class Collection {
         }
     }
 
-    private static void putPlantInDeck(String cardName) {
+    public static void putPlantInDeck(String cardName) {
         if (!Plant.plantExist(cardName)) {
             View.invalidCardName();
         } else if (Account.getPlayingAccount().plantsDeck.size() >= 7) {
@@ -73,13 +34,13 @@ public class Collection {
         } else if (!plantExistsInCollection(cardName)) {
             View.cardNotInCollection("plants", cardName);
         } else {
-            Account.getPlayingAccount().plantsDeck.add(Plant.getPlant(cardName));
+            Account.getPlayingAccount().plantsDeck.add(new Plant(Plant.getPlant(cardName)));
             Account.getPlayingAccount().getPlantsCollection().remove(Plant.getPlant(cardName));
             View.cardAddedToDeck("plants", cardName);
         }
     }
 
-    private static void putZombieInDeck(String cardName) {
+    public static void putZombieInDeck(String cardName) {
         if (!Zombie.zombieExists(cardName)) {
             View.invalidCardName();
         } else if (zombieExistsInDeck(cardName)) {
@@ -93,7 +54,7 @@ public class Collection {
         }
     }
 
-    private static void removeCard(String cardName, int playTypeIndex) {
+    public static void removeCard(String cardName, int playTypeIndex) {
         if (playTypeIndex == 1 || playTypeIndex == 2) {
             removeCardFromPlantsDeck(cardName);
         } else if (playTypeIndex == 4) {
@@ -101,7 +62,7 @@ public class Collection {
         }
     }
 
-    private static void removeCardFromPlantsDeck(String cardName) {
+    public static void removeCardFromPlantsDeck(String cardName) {
         if (!Plant.plantExist(cardName)) {
             View.invalidCardName();
         } else {
@@ -118,7 +79,7 @@ public class Collection {
         }
     }
 
-    private static void removeCardFromZombiesDeck(String cardName) {
+    public static void removeCardFromZombiesDeck(String cardName) {
         if (!Zombie.zombieExists(cardName)) {
             View.invalidCardName();
         }
@@ -136,12 +97,30 @@ public class Collection {
         }
     }
 
-    private static void showHand(int playTypeIndex) {
+    public static void showHand(int playTypeIndex) {
         if (playTypeIndex == 1 || playTypeIndex == 2) {
             View.showPlantsDeck();
         } else if (playTypeIndex == 4) {
             View.showZombiesDeck();
         }
+    }
+
+    public static Plant getPlantInDeck(String plantName) {
+        for (Plant plantIterator : Account.getPlayingAccount().plantsDeck) {
+            if (plantIterator.getName().equals(plantName)) {
+                return plantIterator;
+            }
+        }
+        return null;
+    }
+
+    public static Zombie getZombieInDeck(String zombieName) {
+        for (Zombie zombieIterator : Account.getPlayingAccount().zombiesDeck) {
+            if (zombieIterator.getName().equals(zombieName)) {
+                return zombieIterator;
+            }
+        }
+        return null;
     }
 
 
@@ -181,7 +160,7 @@ public class Collection {
         return false;
     }
 
-    private static void showCollection(int playTypeIndex) {
+    public static void showCollection(int playTypeIndex) {
         if (playTypeIndex == 1 || playTypeIndex == 2) {
             ArrayList<Plant> collectionMinusDeck = new ArrayList<>();
             for (Plant plantIterator : Account.getPlayingAccount().getPlantsCollection()) {
@@ -203,66 +182,127 @@ public class Collection {
         }
     }
 
-    public static void goToPlayByPlayType(int playTypeIndex) {
-        switch (playTypeIndex) {
-            case 1:
-            case 2:
-                Day.dayAndWaterMenu();
-                break;
-            case 3:
-                //
-                break;
-            case 4:
-                //
-                break;
-            case 5:
-                //
-                break;
-            default:
-                //
-                break;
-        }
 
+    public static void decreaseRespawnsInDeck() {
+        for (Plant plantIterator : Account.getPlayingAccount().plantsDeck) {
+            if (plantIterator.getRespawnTime() >= 1) {
+                plantIterator.setRespawnTime(plantIterator.getRespawnTime() - 1);
+            }
+        }
     }
 
-//    public static void setDefaultPlantsDeck() {
-//        Account.getPlayingAccount().plantsDeck.add((Plant.getPlant("Peashooter")));
-//        Account.getPlayingAccount().plantsDeck.add((Plant.getPlant("Snow Pea")));
-//        Account.getPlayingAccount().plantsDeck.add((Plant.getPlant("Explode-o-nut")));
-//        Account.getPlayingAccount().plantsDeck.add((Plant.getPlant("Scaredy-shroom")));
-//        Account.getPlayingAccount().plantsDeck.add((Plant.getPlant("Cherry Bomb")));
-//        Account.getPlayingAccount().plantsDeck.add((Plant.getPlant("Kernel-pult")));
-//        Account.getPlayingAccount().plantsDeck.add((Plant.getPlant("Sunflower")));
-//    }
-//
-//    public static void setDefaultZombiesDeck() {
-//        Account.getPlayingAccount().zombiesDeck.add(Zombie.getZombie("Zombie"));
-//        Account.getPlayingAccount().zombiesDeck.add(Zombie.getZombie("Football Zombie"));
-//        Account.getPlayingAccount().zombiesDeck.add(Zombie.getZombie("Screen Door Zombie"));
-//        Account.getPlayingAccount().zombiesDeck.add(Zombie.getZombie("Zomboni"));
-//        Account.getPlayingAccount().zombiesDeck.add(Zombie.getZombie("Balloon Zombie"));
-//        Account.getPlayingAccount().zombiesDeck.add(Zombie.getZombie("Bungee Zombie"));
-//        Account.getPlayingAccount().zombiesDeck.add(Zombie.getZombie("Conehead Zombie"));
-//    }
+    public static void clearPlantsDeck() {
+        Account.getPlayingAccount().plantsDeck.clear();
+    }
+
+    public static void clearZombiesDeck() {
+        Account.getPlayingAccount().zombiesDeck.clear();
+    }
+
 
     public static void setDefaultPlantsCollection() {
-        Account.getPlayingAccount().getPlantsCollection().add((Plant.getPlant("Peashooter")));
-        Account.getPlayingAccount().getPlantsCollection().add((Plant.getPlant("Snow Pea")));
-        Account.getPlayingAccount().getPlantsCollection().add((Plant.getPlant("Explode-o-nut")));
-        Account.getPlayingAccount().getPlantsCollection().add((Plant.getPlant("Scaredy-shroom")));
-        Account.getPlayingAccount().getPlantsCollection().add((Plant.getPlant("Cherry Bomb")));
-        Account.getPlayingAccount().getPlantsCollection().add((Plant.getPlant("Kernel-pult")));
-        Account.getPlayingAccount().getPlantsCollection().add((Plant.getPlant("Sunflower")));
+        boolean Peashooter = false;
+        boolean SnowPea = false;
+        boolean Explode_o_nut = false;
+        boolean Scaredy_Shroom = false;
+        boolean Cherry_Bomb = false;
+        boolean Kernel_Pult = false;
+        boolean Sunflower = false;
+
+        String plantIteratorName;
+        for (Plant plantIterator : Account.getPlayingAccount().getPlantsCollection()) {
+            plantIteratorName = plantIterator.getName();
+            if (plantIteratorName.equals("Peashooter")) {
+                Peashooter = true;
+            } else if (plantIteratorName.equals("Snow Pea")) {
+                SnowPea = true;
+            } else if (plantIteratorName.equals("Explode-o-nut")) {
+                Explode_o_nut = true;
+            } else if (plantIteratorName.equals("Scaredy-shroom")) {
+                Scaredy_Shroom = true;
+            } else if (plantIteratorName.equals("Cherry Bomb")) {
+                Cherry_Bomb = true;
+            } else if (plantIteratorName.equals("Kernel-pult")) {
+                Kernel_Pult = true;
+            } else if (plantIteratorName.equals("Sunflower")) {
+                Sunflower = true;
+            }
+        }
+
+        if (!Peashooter) {
+            Account.getPlayingAccount().getPlantsCollection().add((Plant.getPlant("Peashooter")));
+        }
+        if (!SnowPea) {
+            Account.getPlayingAccount().getPlantsCollection().add((Plant.getPlant("Snow Pea")));
+        }
+        if (!Explode_o_nut) {
+            Account.getPlayingAccount().getPlantsCollection().add((Plant.getPlant("Explode-o-nut")));
+        }
+        if (!Scaredy_Shroom) {
+            Account.getPlayingAccount().getPlantsCollection().add((Plant.getPlant("Scaredy-shroom")));
+        }
+        if (!Cherry_Bomb) {
+            Account.getPlayingAccount().getPlantsCollection().add((Plant.getPlant("Cherry Bomb")));
+        }
+        if (!Kernel_Pult) {
+            Account.getPlayingAccount().getPlantsCollection().add((Plant.getPlant("Kernel-pult")));
+        }
+        if (!Sunflower) {
+            Account.getPlayingAccount().getPlantsCollection().add((Plant.getPlant("Sunflower")));
+        }
     }
 
+
     public static void setDefaultZombiesCollection() {
-        Account.getPlayingAccount().getZombiesCollection().add(Zombie.getZombie("Zombie"));
-        Account.getPlayingAccount().getZombiesCollection().add(Zombie.getZombie("Football Zombie"));
-        Account.getPlayingAccount().getZombiesCollection().add(Zombie.getZombie("Screen Door Zombie"));
-        Account.getPlayingAccount().getZombiesCollection().add(Zombie.getZombie("Zomboni"));
-        Account.getPlayingAccount().getZombiesCollection().add(Zombie.getZombie("Balloon Zombie"));
-        Account.getPlayingAccount().getZombiesCollection().add(Zombie.getZombie("Bungee Zombie"));
-        Account.getPlayingAccount().getZombiesCollection().add(Zombie.getZombie("Conehead Zombie"));
+        boolean ZombieBoolean = false;
+        boolean Football_Zombie = false;
+        boolean Screen_Door_Zombie = false;
+        boolean Zomboni = false;
+        boolean Balloon_Zombie = false;
+        boolean Bungee_Zombie = false;
+        boolean Conehead_Zombie = false;
+
+        String zombieIteratorName;
+        for (Zombie zombieIterator : Account.getPlayingAccount().getZombiesCollection()) {
+            zombieIteratorName = zombieIterator.getName();
+            if (zombieIteratorName.equals("Zombie")) {
+                ZombieBoolean = true;
+            } else if (zombieIteratorName.equals("Football Zombie")) {
+                Football_Zombie = true;
+            } else if (zombieIteratorName.equals("Screen Door Zombie")) {
+                Screen_Door_Zombie = true;
+            } else if (zombieIteratorName.equals("Zomboni")) {
+                Zomboni = true;
+            } else if (zombieIteratorName.equals("Balloon Zombie")) {
+                Balloon_Zombie = true;
+            } else if (zombieIteratorName.equals("Bungee Zombie")) {
+                Bungee_Zombie = true;
+            } else if (zombieIteratorName.equals("Conehead Zombie")) {
+                Conehead_Zombie = true;
+            }
+        }
+
+        if (!ZombieBoolean) {
+            Account.getPlayingAccount().getZombiesCollection().add(Zombie.getZombie("Zombie"));
+        }
+        if (!Football_Zombie) {
+            Account.getPlayingAccount().getZombiesCollection().add(Zombie.getZombie("Football Zombie"));
+        }
+        if (!Screen_Door_Zombie) {
+            Account.getPlayingAccount().getZombiesCollection().add(Zombie.getZombie("Screen Door Zombie"));
+        }
+        if (!Zomboni) {
+            Account.getPlayingAccount().getZombiesCollection().add(Zombie.getZombie("Zomboni"));
+        }
+        if (!Balloon_Zombie) {
+            Account.getPlayingAccount().getZombiesCollection().add(Zombie.getZombie("Balloon Zombie"));
+        }
+        if (!Bungee_Zombie) {
+            Account.getPlayingAccount().getZombiesCollection().add(Zombie.getZombie("Bungee Zombie"));
+        }
+        if (!Conehead_Zombie) {
+            Account.getPlayingAccount().getZombiesCollection().add(Zombie.getZombie("Conehead Zombie"));
+        }
     }
 
 }

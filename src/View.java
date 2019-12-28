@@ -1,6 +1,9 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class View {
+
+    public static Scanner scanner = new Scanner(System.in);
 
     public static void invalidCommand(int index) {
         switch (index) {
@@ -23,8 +26,13 @@ public class View {
                 System.out.println("Invalid command in Collection Menu, Try again:");
                 break;
             case 11:  // DayAndWater Menu
-                System.out.println("Invalid command in Day or Water Menu, Try again:");
+                System.out.println("Invalid command in Day Menu, Try again:");
                 break;
+            case 22:
+                System.out.println("Invalid command in Water Menu, Try again:");
+                break;
+            case 44:
+                System.out.println("Invalid command in Zombie Menu, Try again:");
             default:
                 indexError();
                 break;
@@ -53,6 +61,9 @@ public class View {
                 break;
             case 11:  // DayAndWater Menu
                 DayAndWaterMenuHelp();
+                break;
+            case 22:
+                waterMenuHelp();
             default:
                 indexError();
                 break;
@@ -184,6 +195,111 @@ public class View {
         System.out.println(plantName + " planted in unit " + row + "," + column);
     }
 
+    public static void printCollectionInShop(ArrayList<Plant> plantsShop, ArrayList<Zombie> zombiesShop) {
+        System.out.println("Plants:" + "            " + "Price:" + "        " + "Zombies:" + "                " + "Price:");
+        int i = 0;
+        int j = 0;
+        String spaces;
+        int spacesNumber;
+        int spaceNumbers2;
+        while (i < plantsShop.size() || j < zombiesShop.size()) {
+            if (i < plantsShop.size()) {
+                spacesNumber = 20 - (plantsShop.get(i).getName().length());
+                System.out.print(i + 1 + ". ");
+                System.out.print(plantsShop.get(i).getName());
+                if (i + 1 > 9) {
+                    spacesNumber--;
+                }
+                for (int k = 1; k <= spacesNumber; k++) {
+                    System.out.print(" ");
+                }
+                System.out.print(plantsShop.get(i).getPrice());
+                spaceNumbers2 = 10 - Integer.toString(plantsShop.get(i).getPrice()).length();
+                for (int m = 1; m <= spaceNumbers2; m++) {
+                    System.out.print(" ");
+                }
+            } else {
+                for (int k = 1; k <= 25; k++) {
+                    System.out.print(" ");
+                }
+            }
+            if (j < zombiesShop.size()) {
+                System.out.print(j + 1 + ". ");
+                System.out.print(zombiesShop.get(i).getName());
+                spacesNumber = 25 - zombiesShop.get(i).getName().length();
+                for (int k = 1; k <= spacesNumber; k++) {
+                    System.out.print(" ");
+                }
+                System.out.println(zombiesShop.get(i).getPrice());
+
+            } else
+                System.out.println();
+            i++;
+            j++;
+        }
+    }
+
+    public static void unitIsFilled(int row, int column, Unit unit) {
+        System.out.println("Unit " + row + "," + column + " is already filled with a " + unit.getPlants()[0].getName());
+    }
+
+    public static void waterPlantInLand() {
+        System.out.println("This plant should be planted in water.");
+    }
+
+    public static void landPlantInWater() {
+        System.out.println("This plant should be planted in land or on a Lily Pad.");
+    }
+
+    public static void landPlantOnLilyPad() {
+        System.out.println("You can only plant land plants on a Lily Pad");
+    }
+
+    public static void notEnoughSunOrCharge() {
+        System.out.println("You don't have enough sun or this plant is not charged.");
+    }
+
+    public static void noPlantIsSelected() {
+        System.out.println("No plant is selected.");
+    }
+
+    public static boolean areYouSureExitingPlay() {
+        System.out.println("Are you sure exiting play?");
+        String sure = scanner.nextLine();
+        if (sure.toLowerCase().equals("yes")) {
+            return true;
+        } else if (sure.toLowerCase().equals("no")) {
+            return false;
+        } else {
+            System.out.println("Invalid answer. Try exiting again:");
+        }
+        return false;
+    }
+
+    public static void invalidCoordinates() {
+        System.out.println("Invalid coordinates!");
+    }
+
+    public static void plantRemoved(int row, int column, String plantName) {
+        System.out.println("The " + plantName + " in the unit " + row + "," + column + " has been removed.");
+    }
+
+    public static void unitIsEmpty(int row, int column) {
+        System.out.println("The unit " + row + "," + column + " is already empty.");
+    }
+
+    public static int choosePlayGroundInZombieStyle() {
+        System.out.println("choose your play ground (land or water):");
+        String playGround = scanner.nextLine();
+        if (playGround.toLowerCase().equals("land")) {
+            return 1;
+        } else if (playGround.toLowerCase().equals("water")) {
+            return 2;
+        } else {
+            System.out.println("Invalid answer, going back to Collection Menu:");
+            return 3;
+        }
+    }
     private static void loginMenuHelp() {
         System.out.println("-- Login Menu Help --");
         System.out.println("Login Menu commands are:");
@@ -218,11 +334,20 @@ public class View {
     private static void collectionMenuHelp() {
         System.out.println("-- Collection Menu Help --");
         System.out.println("Collection Menu commands are:");
-        System.out.println("show hand, show collection, select[name], remove[name], play and help.");
+        System.out.println("show hand, show collection, select[name], remove[name], play, help\nand exit (going back" +
+                "to Play Menu)");
     }
 
     private static void DayAndWaterMenuHelp() {
-        System.out.println("-- Day or Water help --");
+        System.out.println("-- Day Menu help --");
+        System.out.println("commands are:");
+        System.out.println("select [plant name], plant #,# (plant selected plant)");
+        System.out.println("remove #,# (remove plant in unit #,#), show hand, show lawn");
+        System.out.println("ent turn, exit and help");
+    }
+
+    private static void waterMenuHelp() {
+        System.out.println("-- Water Menu help --");
         System.out.println("commands are:");
         System.out.println("select [plant name], plant #,# (plant selected plant)");
         System.out.println("remove #,# (remove plant in unit #,#), show hand, show lawn");

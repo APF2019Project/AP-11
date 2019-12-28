@@ -3,91 +3,201 @@ import java.util.regex.Pattern;
 
 public class Day extends Play {
 
+    private static boolean whileDayTurn = true;
 
-    public static void dayAndWaterMenu() {  // DayAndWater Menu index : 11
+    private static int wave = 0; // after play, initialize to zero.
 
-        PlayGround.BuildDayPlayGround();
-        boolean whileTrue = true;
-        String command;
-        Pattern plantingPattern = Pattern.compile("[p,P]lant (?<row>\\d+),(?<column>\\d+)");
-        Pattern removePattern = Pattern.compile("[r,R]emove (?<row>\\d+),(?<column>\\d+)");
+    private static int sun = 2;
 
-        while (whileTrue) {
-            System.out.println("--- Day Play Menu ---\nEnter command:");
+    public static int getSun() {
+        return sun;
+    }
 
-            command = scanner.nextLine();
-            Matcher plantMatcher = plantingPattern.matcher(command);
-            Matcher removeMatcher = removePattern.matcher(command);
-
-            if (command.matches("[s,S]elect (.+)")) {
-                String cardName = getCardName(command);
-                selectPlant(cardName);
-
-            } else if (plantMatcher.matches()) {
-                int row = Integer.parseInt(plantMatcher.group("row"));
-                int column = Integer.parseInt(plantMatcher.group("column"));
-                plantSelectedPlant(row, column, selectedPlant.getName());
-
-            } else if (removeMatcher.matches()) {
-                int row = Integer.parseInt(removeMatcher.group("row"));
-                int column = Integer.parseInt(removeMatcher.group("column"));
-                removePlant(row, column);
-
-            } else if (command.toLowerCase().equals("show hand")) {
-                showHandInDay();
-
-            } else if (command.toLowerCase().equals("end turn")) {
-                //
-            } else if (command.toLowerCase().equals("show lawn")) {
-                //
-            } else if (command.toLowerCase().equals("exit")) {
-                whileTrue = false;
-                View.goingBackTo(-5); // Going back to Collection Menu
-
-            } else if (command.toLowerCase().equals("help")) {
-                View.showHelp(11);
-
-            } else {
-                View.invalidCommand(11);
-            }
-        }
+    public static void setSun(int sun) {
+        Day.sun = sun;
     }
 
 
-    private static String getCardName(String command) {
+    public static boolean isWhileDayTurn() {
+        return whileDayTurn;
+    }
+
+    public static int getWave() {
+        return wave;
+    }
+
+    public static void setWhileDayTurn(boolean whileDayTurn) {
+        Day.whileDayTurn = whileDayTurn;
+    }
+
+    public static void setWave(int wave) {
+        Day.wave = wave;
+    }
+
+    public static void dayAndWaterTurn(int playTypeIndex) {
+
+        while (whileDayTurn) {
+            if (checkFinished()) {
+                return;
+            }
+            Shoot.shootTurn();
+            if (checkFinished()) {
+                return;
+            }
+            Zombie.zombiesTurn();
+            if (checkFinished()) {
+                return;
+            }
+            Plant.plantsTurn();
+            Menu.dayMenu(playTypeIndex);
+        }
+    }
+
+    private static boolean checkFinished() {
+        // based on wave and allZombiesAreDead checks finish
+        // wave++;
+        // waveGenerator;
+        //
+        return false;
+    }
+
+    private static void waveGenerator() {
+        //
+    }
+
+    private static boolean allZombiesAreDead() {
+        return false;
+    }
+
+    public static String getCardName(String command) {
         command = command.replaceFirst("[s,S]elect", "");
         command = command.trim();
         return command;
     }
 
-    private static void selectPlant(String plantName) {
+    public static void selectPlant(String plantName) {
+        Plant selectCandidate = null;
         if (!Collection.plantExistsInDeck(plantName)) {
             View.cardNotInDeck("plants", plantName);
+            return;
+        } else {
+            selectCandidate = Collection.getPlantInDeck(plantName);
         }
-//        else if (Plant.getPlant(plantName).getRespawnTime() ) {
-//
-//        }
-        else {
-            selectedPlant = Plant.getPlant(plantName);
+        if (selectCandidate.getSunCost() > sun || selectCandidate.getRespawnTime() != 0) {
+            View.notEnoughSunOrCharge();
+        } else {
+            selectedPlant = selectCandidate;
             View.cardSelected(plantName);
         }
     }
 
+
     public static void plantSelectedPlant(int row, int column, String plantName) {
-        PlayGround.getSpecifiedUnit(row, column).setPlant0(selectedPlant);
-        selectedPlant = null;
-        View.plantedInUnit(row, column, plantName);
+        if (row % 2 != 0) {
+            View.invalidCoordinates();
+            return;
+        }
+        if (selectedPlant == null) {
+            View.noPlantIsSelected();
+            return;
+        }
+        if (PlayGround.getSpecifiedUnit(row, column) == null) {
+            View.invalidCoordinates();
+            return;
+        }
+        Unit unit = PlayGround.getSpecifiedUnit(row, column);
+        Plant plant = selectedPlant;
+        boolean isWater = unit.getIsWater();
+        boolean waterPlant = plant.isCanBePlantedInWater();
+        if (unit.getPlants()[0] == null) {
+            plantIn0(isWater, waterPlant, unit, plant, row, column, plantName);
+        } else if (unit.getPlants()[1] == null) {
+            plantIn1(isWater, waterPlant, unit, plant, row, column, plantName);
+        } else {
+            View.unitIsFilled(row, column, unit);
+        }
     }
+
+    private static void plantIn0 (boolean isWater, boolean waterPlant, Unit unit, Plant plant, int row, int column,
+                                  String plantName) {
+        if ((!isWater) && (!waterPlant)) {
+            unit.setPlant0(plant);
+            Collection.getPlantInDeck(plantName).setRespawnTime(Collection.getPlantInDeck(plantName)
+                    .getRespawnCoolDown());
+            selectedPlant = null;
+            sun -= Collection.getPlantInDeck(plantName).getSunCost();
+            View.plantedInUnit(row, column, plantName);
+        } else if ((!isWater) && waterPlant) {
+            View.waterPlantInLand();
+        } else if (isWater && (!waterPlant)) {
+            View.landPlantInWater();
+        } else if (isWater && waterPlant) {
+            unit.setPlant0(plant);
+            Collection.getPlantInDeck(plantName).setRespawnTime(Collection.getPlantInDeck(plantName)
+                    .getRespawnCoolDown());
+            selectedPlant = null;
+            sun -= Collection.getPlantInDeck(plantName).getSunCost();
+            View.plantedInUnit(row, column, plantName);
+        }
+    }
+
+    private static void plantIn1 (boolean isWater, boolean waterPlant, Unit unit, Plant plant, int row, int column,
+                                  String plantName) {
+        if (unit.getPlants()[0].getName().equals("Lily Pad")) {
+            if (!waterPlant) {
+                unit.setPlant1(plant);
+                Collection.getPlantInDeck(plantName).setRespawnTime(Collection.getPlantInDeck(plantName)
+                        .getRespawnCoolDown());
+                selectedPlant = null;
+                sun -= Collection.getPlantInDeck(plantName).getSunCost();
+                View.plantedInUnit(row, column, plantName);
+            } else {
+                View.landPlantOnLilyPad();
+            }
+        } else {
+            View.unitIsFilled(row, column, unit);
+        }
+    }
+
 
     public static void removePlant(int row, int column) {
-        PlayGround.getSpecifiedUnit(row, column).setPlant0(null);
+        if (PlayGround.getSpecifiedUnit(row, column) == null) {
+            View.invalidCoordinates();
+            return;
+        }
+        Unit unit = PlayGround.getSpecifiedUnit(row, column);
+        boolean isWater = unit.getIsWater();
+        String plantName;
+        if(!isWater) {
+            if (unit.getPlants()[0] != null) {
+                plantName = unit.getPlants()[0].getName();
+                unit.getPlants()[0] = null;
+                View.plantRemoved(row, column, plantName);
+            } else {
+                View.unitIsEmpty(row, column);
+            }
+        } else { // is water:
+            if (unit.getPlants()[0] == null) {
+                View.unitIsEmpty(row, column);
+            } else {
+                if (unit.getPlants()[1] == null) {
+                    plantName = unit.getPlants()[0].getName();
+                    unit.getPlants()[0] = null;
+                    View.plantRemoved(row, column, plantName);
+                } else {
+                    plantName = unit.getPlants()[1].getName();
+                    unit.getPlants()[1] = null;
+                    View.plantRemoved(row, column, plantName);
+                }
+            }
+        }
     }
 
-    private static void showHandInDay() {
+    public static void showHandInDay() {
         int i = 1;
         for (Plant plantIterator : Account.getPlayingAccount().plantsDeck) {
             System.out.print(i + ". ");
-            System.out.print(plantIterator.getName() + "  sun: " + plantIterator.getSunCost() + "  respawnTime: " +
+            System.out.println(plantIterator.getName() + "  sun: " + plantIterator.getSunCost() + "  respawnTime: " +
                     plantIterator.getRespawnTime());
             i++;
         }

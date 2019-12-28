@@ -131,23 +131,23 @@ public class Zombie {
          return null;
      }
 
-     public void zombiesTurn() {
-         for (int i = 0; i < 6; i++) {
-             for (int j = 1; j <= 19; j++) {
-                 zombiesActionsInSpecifiedUnit(i, j);
-             }
-         }
-     }
+    public static void zombiesTurn(){
+        for (int i = 0; i < 6; i++){
+            for (int j = 1; j <= 19; j++){
+                zombiesActionsInSpecifiedUnit(i, j);
+            }
+        }
+    }
 
-     public void zombiesActionsInSpecifiedUnit(int X, int Y) {
-         ArrayList<Zombie> tmpArrForDestroyedZombies = new ArrayList<>();
-         for (Zombie zombie : PlayGround.getSpecifiedUnit(X, Y).getZombies()) {
-             zombie.zombieAction(X, Y, tmpArrForDestroyedZombies);
-         }
-         for (Zombie zombie : tmpArrForDestroyedZombies) {
-             PlayGround.getSpecifiedUnit(X, Y).RemoveFromZombies(zombie);
-         }
-     }
+    public static void zombiesActionsInSpecifiedUnit(int X, int Y){
+        ArrayList<Zombie> tmpArrForDestroyedZombies = new ArrayList<>();
+        for (Zombie zombie: PlayGround.getSpecifiedUnit(X, Y).getZombies()){
+            zombie.zombieAction(X, Y, tmpArrForDestroyedZombies);
+        }
+        for (Zombie zombie: tmpArrForDestroyedZombies){
+            PlayGround.getSpecifiedUnit(X, Y).RemoveFromZombies(zombie);
+        }
+    }
 
      public void zombieAction(int X, int Y, ArrayList<Zombie> tmpArrForDestroyedZombies) {
          int currentSpeed = this.curSpeedCalculationByAffectingPreviousShoots();
