@@ -1,8 +1,6 @@
  /*  in positioning isWaterProof is important
   *
   * */
-
- import java.security.cert.TrustAnchor;
  import java.util.ArrayList;
 
 
@@ -35,8 +33,16 @@
          if (shoot.getEffectiveTime() != 0) {
              shootsRecieved.add(shoot);
          }
-//        TODO differentSHOOTtypes;
-         this.decreaseHealth(shoot.getDamage());
+         if (shoot.isPea() && this.getShieldStrength() > 0){
+             this.decreaseShieldStrenght(shoot.getDamage());
+         }
+         else{
+             this.decreaseHealth(shoot.getDamage());
+         }
+     }
+
+     private void decreaseShieldStrenght(int damage) {
+         this.shieldStrength -= damage;
      }
 
      static {
