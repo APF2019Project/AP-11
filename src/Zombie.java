@@ -11,9 +11,9 @@
      private String name;
      private boolean haveBucketHead;
      private boolean couldRevertToRegularZombie; //
-     private boolean couldDestroyInRow;
+     private boolean couldDestroyInRow; ////////// handle nashode hanooz
      private boolean RandomPosition; //
-     private boolean couldJump;
+     private boolean couldJump;  //////////// handle nashode hanooz
      private int turnThief; //
      private int speed; //
 
@@ -23,7 +23,7 @@
      private int speedReductionRatio;  //
      private int health;
      private boolean haveAntiTiq;
-     private boolean IsPeaProof;
+     private boolean IsPeaProof; /////////////// handle nashode hanooz
      private int shieldStrength;
      private int damagePower; //
      private boolean IsWaterProof;
@@ -144,6 +144,7 @@
 
      public static void zombiesTurn() {
          for (int i = 0; i < 6; i++) {
+             lawnMoverAction(i);
              for (int j = 1; j <= 19; j++) {
                  zombiesActionsInSpecifiedUnit(i, j);
              }
@@ -228,6 +229,20 @@
              }
          }
          return Y;
+     }
+
+     public static void lawnMoverAction(int X){
+         Unit[][] playGround = PlayGround.getUnits();
+         if (!playGround[X][0].getHaveChamanZan())
+             return;
+         if (playGround[X][0].getZombies().size() == 0){
+             return;
+         }
+         playGround[X][0].setHaveLawnMover(false);
+         for (int i = 1; i < 20; i++){
+             playGround[X][i].removeAllPlants();
+             playGround[X][i].removeAllZombies();
+         }
      }
 
      private boolean couldZombieGoToNextUnit(int X, int Y) {

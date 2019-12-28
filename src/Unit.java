@@ -118,4 +118,8 @@ public class Unit {
         arr[0] = null;
         arr[1] = null;
     }
+
+    public void removeAllZombies() {
+        this.getZombies().clear();
+    }
 }
