@@ -22,7 +22,7 @@ public class Shop {
                     zombiesShop.remove(zombie);
                     break;
                 }
-        View.printCollectionInShop(plantsShop, zombiesShop);
+        View.printShopWithPrices(plantsShop, zombiesShop);
     }
 
 
@@ -95,7 +95,7 @@ public class Shop {
     public static void showCollection(Account account) {
         ArrayList<Plant> plants = (ArrayList<Plant>) account.getPlantsCollection().clone();
         ArrayList<Zombie> zombies = (ArrayList<Zombie>) account.getZombiesCollection().clone();
-        View.printCollectionInShop(plants, zombies);
+        View.printCollections(plants, zombies);
     }
 
 }

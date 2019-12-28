@@ -5,6 +5,42 @@ public class View {
 
     public static Scanner scanner = new Scanner(System.in);
 
+
+    public static String input() {
+        String command = scanner.nextLine();
+        return command;
+    }
+
+    public static void startHeader() {
+        System.out.println("T   A V   L     I");
+        System.out.println(" T   A V L       I");
+        System.out.println("  T   A VL         I");
+        System.out.println("   T   ALV       Z  I");
+        System.out.println("P   T  LA V      Z   I");
+        System.out.println("P    TL  A V  s  Z  B I");
+        System.out.println("P    LT  A  V s  Z M B I");
+        System.out.println("P   L  TA    Vs  Z O M B I");
+        System.out.println("P  L   AT    Vs  Z  O   B I ");
+        System.out.println("P L   A T    Vs  Z  O   B I E ");
+        System.out.println("P L  AN T S  Vs  Z  O   B I E S");
+        System.out.println("P L A N T S  Vs  Z O   B I E S");
+        System.out.println("P L A N T S  Vs  Z O M B I E S");
+        System.out.println("     A    T         O M      E");
+        System.out.println("P  L  A  N  T  S     O  M      E ");
+        System.out.println("                 Vs   O  M       E");
+        System.out.println("                    Z  O  M  B  I  E  S");
+        System.out.println();
+    }
+
+    public static void printNumberedStringArrayList(ArrayList<String> arrayList) {
+        int i = 1;
+        for (String string : arrayList) {
+            System.out.print(i + ". ");
+            System.out.println(string);
+            i++;
+        }
+    }
+
     public static void invalidCommand(int index) {
         switch (index) {
             case -1:  // Login Menu
@@ -195,7 +231,7 @@ public class View {
         System.out.println(plantName + " planted in unit " + row + "," + column);
     }
 
-    public static void printCollectionInShop(ArrayList<Plant> plantsShop, ArrayList<Zombie> zombiesShop) {
+    public static void printShopWithPrices(ArrayList<Plant> plantsShop, ArrayList<Zombie> zombiesShop) {
         System.out.println("Plants:" + "            " + "Price:" + "        " + "Zombies:" + "                " + "Price:");
         int i = 0;
         int j = 0;
@@ -237,7 +273,45 @@ public class View {
             i++;
             j++;
         }
+        System.out.println();
     }
+
+
+
+    public static void printCollections(ArrayList<Plant> plantsShop, ArrayList<Zombie> zombiesShop) {
+        System.out.println("Plants:" + "                " + "Zombies:");
+        int i = 0;
+        int j = 0;
+        String spaces;
+        int spacesNumber;
+        int spaceNumbers2;
+        while (i < plantsShop.size() || j < zombiesShop.size()) {
+            if (i < plantsShop.size()) {
+                spacesNumber = 20 - (plantsShop.get(i).getName().length());
+                System.out.print(i + 1 + ". ");
+                System.out.print(plantsShop.get(i).getName());
+                if (i + 1 > 9) {
+                    spacesNumber--;
+                }
+                for (int k = 1; k <= spacesNumber; k++) {
+                    System.out.print(" ");
+                }
+            } else {
+                for (int k = 1; k <= 25; k++) {
+                    System.out.print(" ");
+                }
+            }
+            if (j < zombiesShop.size()) {
+                System.out.print(j + 1 + ". ");
+                System.out.println(zombiesShop.get(i).getName());
+            } else
+                System.out.println();
+            i++;
+            j++;
+        }
+        System.out.println();
+    }
+
 
     public static void unitIsFilled(int row, int column, Unit unit) {
         System.out.println("Unit " + row + "," + column + " is already filled with a " + unit.getPlants()[0].getName());

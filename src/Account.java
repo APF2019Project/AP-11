@@ -158,6 +158,8 @@ public class Account {
                     Collection.setDefaultZombiesCollection();
                     Menu.mainMenu();
                 } else {
+                    Collection.setDefaultPlantsCollection();
+                    Collection.setDefaultZombiesCollection();
                     System.out.println("Logged in, going back to --> Profile Menu:");
                 }
             } else {
