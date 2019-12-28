@@ -9,27 +9,29 @@
      private ArrayList<Shoot> shootsRecieved = new ArrayList<>();
 
      private String name;
-     private boolean haveBucketHead;
+     private boolean haveBucketHead; //
      private boolean couldRevertToRegularZombie; //
      private boolean couldDestroyInRow; ////////// handle nashode hanooz
      private boolean RandomPosition; //
-     private boolean couldJump;  //////////// handle nashode hanooz
+     private boolean couldJump;  //
      private int turnThief; //
      private int speed; //
-
-     private int currentSpeed;
-
+     private int currentSpeed; //
      private int howManyTurnSpeedIsReduced;  //
      private int speedReductionRatio;  //
-     private int health;
-     private boolean haveAntiTiq;
-     private boolean IsPeaProof; /////////////// handle nashode hanooz
-     private int shieldStrength;
+     private int health; //
+     private boolean haveAntiTiq; // mona
+     private boolean IsPeaProof; //
+     private int shieldStrength; //
      private int damagePower; //
-     private boolean IsWaterProof;
-     private boolean haveDuck;
+     private boolean IsWaterProof; //
+     private boolean haveDuck; //
 
      public void recievingShoot(Shoot shoot) {
+         if (shoot.isPea() && this.isPeaProof()){
+             return;
+         }
+
          if (shoot.getEffectiveTime() != 0) {
              shootsRecieved.add(shoot);
          }
@@ -249,8 +251,14 @@
          boolean condition;
          int farestUnitDidicatedBySpeed = Y - this.currentSpeed;
          Plant[] plant = PlayGround.getSpecifiedUnit(X, Y).getPlants();
-         condition = (Y > 0) && (plant[0] == null && Y >= farestUnitDidicatedBySpeed);
-         return condition;
+         if (this.isCouldJump()){
+             condition = (Y > 0) && (Y >= farestUnitDidicatedBySpeed);
+             return condition;
+         }
+         else {
+             condition = (Y > 0) && (plant[0] == null && Y >= farestUnitDidicatedBySpeed);
+             return condition;
+         }
      }
 
      private void TurnToThief(int X, int Y) {
