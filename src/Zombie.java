@@ -1,6 +1,7 @@
  /*  in positioning isWaterProof is important
  *
  * */
+import java.security.cert.TrustAnchor;
 import java.util.ArrayList;
 
 
@@ -16,17 +17,19 @@ public class Zombie {
      private boolean couldJump;
      private int turnThief; //
      private int speed; //
-     private int howManyTurnSpeedIsReduced;  //
-     private int speedReductionRatio;  //
-     private int health;
-     private boolean haveAntiTiq;
-     private boolean IsPeaProof;
-     private int shieldStrength;
-     private int damagePower; //
-     private boolean IsWaterProof;
-     private boolean haveDuck;
 
-     public void recievingShoots(Shoot shoot) {
+    private int currentSpeed;
+
+    private int howManyTurnSpeedIsReduced;  //
+    private int speedReductionRatio;  //
+    private int health;
+    private boolean haveAntiTiq;
+    private boolean IsPeaProof;
+    private int shieldStrength;
+    private int damagePower; //
+    private boolean IsWaterProof;
+    private boolean haveDuck;
+     public void recievingShoot(Shoot shoot) {
          if (shoot.getEffectiveTime() != 0) {
              shootsRecieved.add(shoot);
          }
@@ -150,7 +153,7 @@ public class Zombie {
     }
 
      public void zombieAction(int X, int Y, ArrayList<Zombie> tmpArrForDestroyedZombies) {
-         int currentSpeed = this.curSpeedCalculationByAffectingPreviousShoots();
+         this.currentSpeed = this.curSpeedCalculationByAffectingPreviousShoots();
 //        positioning
          if (Y == 20 && this.isRandomPosition()) {
              int newX = PlayGround.randomPositionX();
@@ -196,7 +199,7 @@ public class Zombie {
              Label2:
              for (Shoot shoot : PlayGround.getSpecifiedUnit(X, i).getShoots()) {
                  if (this.getHealth() > 0) {
-                     this.recievingShoots(shoot);
+                     this.recievingShoot(shoot);
                      tmp.add(shoot);
                  } else {
                      for (Shoot shallNotExistAnymoreShoot : tmp) {
@@ -211,12 +214,47 @@ public class Zombie {
          }
      }
 
-     private void TurnToThief(int X, int Y) {
+
+    //  this can find the distination
+    public int distinationFinderAndDestroyedShootRemover(int X, int Y){
+         boolean baseConditionToMove = true;
+         Unit thisUnit = PlayGround.getSpecifiedUnit(X, Y);
+         while (baseConditionToMove){
+             Y--;
+             ArrayList<Shoot> shootsTmp = new ArrayList<>();
+             for (Shoot shoot: thisUnit.getShoots()){
+                 if (this.getHealth() > 0){
+                     this.recievingShoot(shoot);
+                 }
+                 else {
+                     Y = Integer.MAX_VALUE;// zombie is dead and gone to heaven far from home
+                 }
+             }
+             for (Shoot shoot: shootsTmp){
+                 thisUnit.RemoveFromShoots(shoot);
+             }
+             baseConditionToMove = couldZombieGoToNextUnit(X, Y);
+             if (Y == Integer.MAX_VALUE){
+                 return Integer.MAX_VALUE;
+             }
+         }
+         return Y;
+    }
+
+    private boolean couldZombieGoToNextUnit(int X, int Y) {
+        boolean condition;
+        int farestUnitDidicatedBySpeed = Y - this.currentSpeed;
+        Plant[] plant = PlayGround.getSpecifiedUnit(X, Y).getPlants();
+        condition = (Y > 0) && (plant[0] == null && Y >= farestUnitDidicatedBySpeed);
+        return condition;
+    }
+
+    private void TurnToThief(int X, int Y) {
          PlayGround.getSpecifiedUnit(X, Y).removeAllPlants();
      }
 
      public int curSpeedCalculationByAffectingPreviousShoots() { // return curSpeed
-         int currentSpeed = this.getSpeed();
+         int currentSpeed = this.getSpeed(); // bayad avval bemune
          ArrayList<Shoot> tmp = new ArrayList<>();
          for (Shoot shoot : shootsRecieved) {
              if (shoot.getEffectiveTime() == 0)
@@ -459,4 +497,13 @@ public class Zombie {
      public void decreaseHealth(int damage) { // in che joor encapsulationiye marde momen??
          this.health -= damage;
      }
- }
+
+    public int getCurrentSpeed() {
+        return currentSpeed;
+    }
+
+
+    public void setCurrentSpeed(int currentSpeed) {
+        this.currentSpeed = currentSpeed;
+    }
+}
