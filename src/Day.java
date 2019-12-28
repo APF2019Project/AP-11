@@ -17,6 +17,23 @@ public class Day extends Play {
         Day.sun = sun;
     }
 
+
+    public static boolean isWhileDayTurn() {
+        return whileDayTurn;
+    }
+
+    public static int getWave() {
+        return wave;
+    }
+
+    public static void setWhileDayTurn(boolean whileDayTurn) {
+        Day.whileDayTurn = whileDayTurn;
+    }
+
+    public static void setWave(int wave) {
+        Day.wave = wave;
+    }
+
     public static void dayAndWaterTurn(int playTypeIndex) {
 
         while (whileDayTurn) {
@@ -32,7 +49,7 @@ public class Day extends Play {
                 return;
             }
             Plant.plantsTurn();
-            dayMenu(playTypeIndex);
+            Menu.dayMenu(playTypeIndex);
         }
     }
 
@@ -52,94 +69,13 @@ public class Day extends Play {
         return false;
     }
 
-
-    public static void dayMenu(int playTypeIndex) {  // DayAndWater Menu index : 11
-
-        boolean whileTrue = true;
-        String command;
-        Pattern plantingPattern = Pattern.compile("[p,P]lant (?<row>\\d+),(?<column>\\d+)");
-        Pattern removePattern = Pattern.compile("[r,R]emove (?<row>\\d+),(?<column>\\d+)");
-
-        while (whileTrue) {
-            if (playTypeIndex == 1) {
-                System.out.println("^-^-^-^- Day Menu -^-^-^-^\nEnter command:");
-            } else if (playTypeIndex == 2) {
-                System.out.println("^-^-^-^- Water Menu ^-^-^-^-");
-            }
-
-            command = scanner.nextLine();
-            Matcher plantMatcher = plantingPattern.matcher(command);
-            Matcher removeMatcher = removePattern.matcher(command);
-
-            if (command.matches("[s,S]elect (.+)")) {
-                String cardName = getCardName(command);
-                selectPlant(cardName);
-
-            } else if (plantMatcher.matches()) {
-                if (selectedPlant == null) {
-                    View.noPlantIsSelected();
-                    return;
-                }
-                int row = Integer.parseInt(plantMatcher.group("row"));
-                int column = Integer.parseInt(plantMatcher.group("column"));
-                plantSelectedPlant(row, column, selectedPlant.getName());
-
-            } else if (removeMatcher.matches()) {
-                int row = Integer.parseInt(removeMatcher.group("row"));
-                int column = Integer.parseInt(removeMatcher.group("column"));
-                removePlant(row, column);
-
-            } else if (command.toLowerCase().equals("show hand")) {
-                showHandInDay();
-
-            } else if (command.toLowerCase().equals("end turn")) {
-                Collection.decreaseRespawnsInDeck();
-                whileTrue = false;
-                return;
-
-            } else if (command.toLowerCase().equals("show lawn")) {
-                //
-
-            } else if (command.toLowerCase().equals("exit")) {
-                boolean exit = View.areYouSureExitingPlay();
-                if (exit) {
-                    whileTrue = false;
-                    whileDayTurn = false;
-                    View.goingBackTo(-5);
-                    Collection.clearPlantsDeck();
-                    Collection.clearZombiesDeck();
-                }
-            } else if (command.toLowerCase().equals("help")) {
-                if (playTypeIndex == 1) {
-                    View.showHelp(11);
-                } else if (playTypeIndex == 2) {
-                    View.showHelp(22);
-                }
-
-            } else if (command.toLowerCase().equals("sun mikhaaam")) {
-                sun += 5;
-
-            } else if (command.toLowerCase().equals("respawn mikhaaam")) {
-                Collection.decreaseRespawnsInDeck();
-
-            } else {
-                if (playTypeIndex == 1) {
-                    View.invalidCommand(11);
-                } else if (playTypeIndex == 2) {
-                    View.invalidCommand(22);
-                }
-            }
-        }
-    }
-
-
-    private static String getCardName(String command) {
+    public static String getCardName(String command) {
         command = command.replaceFirst("[s,S]elect", "");
         command = command.trim();
         return command;
     }
 
-    private static void selectPlant(String plantName) {
+    public static void selectPlant(String plantName) {
         Plant selectCandidate = null;
         if (!Collection.plantExistsInDeck(plantName)) {
             View.cardNotInDeck("plants", plantName);
@@ -255,10 +191,9 @@ public class Day extends Play {
                 }
             }
         }
-
     }
 
-    private static void showHandInDay() {
+    public static void showHandInDay() {
         int i = 1;
         for (Plant plantIterator : Account.getPlayingAccount().plantsDeck) {
             System.out.print(i + ". ");

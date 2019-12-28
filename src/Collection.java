@@ -3,59 +3,20 @@ import java.util.Scanner;
 
 public class Collection {
 
-    static void collectionMenu(int playTypeIndex) { // Collection Menu index: -5
 
-        Scanner scanner = new Scanner(System.in);
-        String command;
-        boolean whileTrue = true;
-        while (whileTrue) {
-            System.out.println("--- Collection Menu ---\nEnter command:");
-            command = scanner.nextLine();
-
-            if (command.toLowerCase().matches("select (.+)")) {
-                readyToSelect(command, playTypeIndex);
-                continue;
-            } else if (command.toLowerCase().matches("remove (.+)")) {
-                readyToRemove(command, playTypeIndex);
-                continue;
-            }
-            switch (command.toLowerCase()) {
-                case "show hand":
-                    showHand(playTypeIndex);
-                    break;
-                case "show collection":
-                    showCollection(playTypeIndex);
-                    break;
-                case "play":
-                    Play.goToPlayByPlayType(playTypeIndex);
-                    break;
-                case "exit": // Going back to Play Menu
-                    View.goingBackTo(-4);
-                    whileTrue = false;
-                    break;
-                case "help":
-                    View.showHelp(-5);
-                    break;
-                default:
-                    View.invalidCommand(-5);
-                    break;
-            }
-        }
-    }
-
-    private static void readyToSelect(String command, int playTypeIndex) {
+    public static void readyToSelect(String command, int playTypeIndex) {
         command = command.replaceFirst("[s,S]elect", "");
         command = command.trim();
         selectCard(command, playTypeIndex);
     }
 
-    private static void readyToRemove(String command, int playTypeIndex) {
+    public static void readyToRemove(String command, int playTypeIndex) {
         command = command.replaceFirst("[r,R]emove", "");
         command = command.trim();
         removeCard(command, playTypeIndex);
     }
 
-    private static void selectCard(String cardName, int playTypeIndex) {
+    public static void selectCard(String cardName, int playTypeIndex) {
         if (playTypeIndex == 1 || playTypeIndex == 2) {
             putPlantInDeck(cardName);
         } else if (playTypeIndex == 4) {
@@ -63,7 +24,7 @@ public class Collection {
         }
     }
 
-    private static void putPlantInDeck(String cardName) {
+    public static void putPlantInDeck(String cardName) {
         if (!Plant.plantExist(cardName)) {
             View.invalidCardName();
         } else if (Account.getPlayingAccount().plantsDeck.size() >= 7) {
@@ -79,7 +40,7 @@ public class Collection {
         }
     }
 
-    private static void putZombieInDeck(String cardName) {
+    public static void putZombieInDeck(String cardName) {
         if (!Zombie.zombieExists(cardName)) {
             View.invalidCardName();
         } else if (zombieExistsInDeck(cardName)) {
@@ -93,7 +54,7 @@ public class Collection {
         }
     }
 
-    private static void removeCard(String cardName, int playTypeIndex) {
+    public static void removeCard(String cardName, int playTypeIndex) {
         if (playTypeIndex == 1 || playTypeIndex == 2) {
             removeCardFromPlantsDeck(cardName);
         } else if (playTypeIndex == 4) {
@@ -101,7 +62,7 @@ public class Collection {
         }
     }
 
-    private static void removeCardFromPlantsDeck(String cardName) {
+    public static void removeCardFromPlantsDeck(String cardName) {
         if (!Plant.plantExist(cardName)) {
             View.invalidCardName();
         } else {
@@ -118,7 +79,7 @@ public class Collection {
         }
     }
 
-    private static void removeCardFromZombiesDeck(String cardName) {
+    public static void removeCardFromZombiesDeck(String cardName) {
         if (!Zombie.zombieExists(cardName)) {
             View.invalidCardName();
         } else {
@@ -135,7 +96,7 @@ public class Collection {
         }
     }
 
-    private static void showHand(int playTypeIndex) {
+    public static void showHand(int playTypeIndex) {
         if (playTypeIndex == 1 || playTypeIndex == 2) {
             View.showPlantsDeck();
         } else if (playTypeIndex == 4) {
@@ -198,7 +159,7 @@ public class Collection {
         return false;
     }
 
-    private static void showCollection(int playTypeIndex) {
+    public static void showCollection(int playTypeIndex) {
         if (playTypeIndex == 1 || playTypeIndex == 2) {
             ArrayList<Plant> collectionMinusDeck = new ArrayList<>();
             for (Plant plantIterator : Account.getPlayingAccount().getPlantsCollection()) {
