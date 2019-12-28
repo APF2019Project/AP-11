@@ -155,65 +155,34 @@ public class Zombie {
      public void zombieAction(int X, int Y, ArrayList<Zombie> tmpArrForDestroyedZombies) {
          this.currentSpeed = this.curSpeedCalculationByAffectingPreviousShoots();
 //        positioning
-         if (Y == 20 && this.isRandomPosition()) {
+         if (Y == 19 && this.isRandomPosition()) {
              int newX = PlayGround.randomPositionX();
              int newY = PlayGround.randomPositiomY();
              PlayGround.getSpecifiedUnit(newX, newY).addToZombies(this);
-         }
-
-         destroyShootsInWay(X, Y, currentSpeed);
-         if (this.getHealth() <= 0) {
              tmpArrForDestroyedZombies.add(this);
+             return;
+             // remove az 19
          }
-//        TODO function ;
 
-         if (this.getHowManyTurnSpeedIsReduced() != 0)
-             this.setHowManyTurnSpeedIsReduced(this.getHowManyTurnSpeedIsReduced() - 1);
-         else
-             setSpeedReductionRatio(1);
+         int newY = this.distinationFinderAndDestroyedShootRemover(X, Y);
+         if (newY == Integer.MAX_VALUE){
+             tmpArrForDestroyedZombies.add(this);
+             return;
+         }
 
          if (this.getTurnThief() != Integer.MAX_VALUE) {
-             if (this.getTurnThief() == 0)
+             if (this.getTurnThief() == 0) {
                  this.TurnToThief(X, Y);
+                 tmpArrForDestroyedZombies.add(this);
+                 return;
+             }
              else
                  this.setTurnThief(this.getTurnThief() - 1);
          }
-     }
 
-     private void addZombieToSpecifiedPosition(int X, int Y) {
-         PlayGround.getSpecifiedUnit(X, Y).addToZombies(this);
-     }
+         PlayGround.getSpecifiedUnit(X, newY).addToZombies(this);
 
-     private void removeZombieFromSpecifiedPosition(int X, int Y) {
-         PlayGround.getSpecifiedUnit(X, Y).RemoveFromZombies(this);
      }
-
-     public int moveZombieMax() {
-         return 0; // not coded;
-     }
-
-     private void destroyShootsInWay(int X, int Y, int currentSpeed) {
-         Label1:
-         for (int i = Y; i >= 0 && i >= Y - currentSpeed; i--) {
-             ArrayList<Shoot> tmp = new ArrayList<>();
-             Label2:
-             for (Shoot shoot : PlayGround.getSpecifiedUnit(X, i).getShoots()) {
-                 if (this.getHealth() > 0) {
-                     this.recievingShoot(shoot);
-                     tmp.add(shoot);
-                 } else {
-                     for (Shoot shallNotExistAnymoreShoot : tmp) {
-                         PlayGround.getSpecifiedUnit(X, i).RemoveFromShoots(shallNotExistAnymoreShoot);
-                     }
-                     break Label1;
-                 }
-             }
-             for (Shoot shallNotExistAnymoreShoot : tmp) {
-                 PlayGround.getSpecifiedUnit(X, i).RemoveFromShoots(shallNotExistAnymoreShoot);
-             }
-         }
-     }
-
 
     //  this can find the distination
     public int distinationFinderAndDestroyedShootRemover(int X, int Y){
