@@ -1,18 +1,28 @@
 import java.beans.beancontext.BeanContextServiceRevokedEvent;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Menu {
 
-    public static Scanner scanner = new Scanner(System.in);
-
     static void loginMenu() { // Login Menu index = -1
+
         String command;
         boolean whileTrue = true;
+        ArrayList<String> instructions = new ArrayList<>();
+        instructions.add("create account");
+        instructions.add("login");
+        instructions.add("leaderboard");
+        instructions.add("exit");
+        instructions.add("help");
+
         while(whileTrue) {
-            System.out.println("______ LOGIN MENU ______\nEnter command:");
-            command = scanner.nextLine();
+            System.out.println("_________ LOGIN MENU _________");
+            View.printNumberedStringArrayList(instructions);
+            System.out.println("Enter command:");
+
+            command = View.input();
             switch (command.toLowerCase()) {
                 case "create account":
                     Account.createAccount(true);
@@ -41,9 +51,20 @@ public class Menu {
     static void mainMenu() { // Main Menu index = -2
         String command;
         boolean whileTrue = true;
+
+        ArrayList<String> instructions = new ArrayList<>();
+        instructions.add("play");
+        instructions.add("profile");
+        instructions.add("shop");
+        instructions.add("exit");
+        instructions.add("help");
+
         while(whileTrue) {
-            System.out.println("______ MAIN MENU ______\nEnter command:");
-            command = scanner.nextLine();
+            System.out.println("______ MAIN MENU ______");
+            View.printNumberedStringArrayList(instructions);
+            System.out.println("Enter command:");
+
+            command = View.input();
             switch (command.toLowerCase()) {
                 case "play":
                     goPlay();
@@ -72,13 +93,26 @@ public class Menu {
 
     static void profileMenu() { // Profile Menu index = -3
         boolean whileTrue = true;
+
+        ArrayList<String> instructions = new ArrayList<>();
+        instructions.add("change account");
+        instructions.add("change password");
+        instructions.add("change username");
+        instructions.add("delete account");
+        instructions.add("create account");
+        instructions.add("show account");
+        instructions.add("exit");
+        instructions.add("help");
+
         while (whileTrue) {
             System.out.println("--- PROFILE MENU ---");
             System.out.println("You are logged in as: " + Account.getPlayingAccount().getUsername());
+            View.printNumberedStringArrayList(instructions);
             System.out.println("Enter command:");
-            String command = scanner.nextLine();
+
+            String command = View.input();
             switch (command.toLowerCase()) {
-                case "change":
+                case "change account":
                     System.out.println("Logging in with another account:");
                     Account.login(false);
                     break;
@@ -88,13 +122,13 @@ public class Menu {
                 case "delete account":
                     Account.deleteAccount();
                     break;
-                case "rename":
+                case "change username":
                     Account.renameAccount();
                     break;
                 case "create account":
                     Account.createAccount(false);
                     break;
-                case "show":
+                case "show account":
                     Account.showAccount();
                     break;
                 case "exit":
@@ -115,11 +149,22 @@ public class Menu {
 
     static void goPlay() { // Play Menu index: -4
         boolean whileTrue = true;
+
+        ArrayList<String> instructions = new ArrayList<>();
+        instructions.add("day");
+        instructions.add("water");
+        instructions.add("rail");
+        instructions.add("zombie");
+        instructions.add("pvp");
+        instructions.add("exit");
+        instructions.add("help");
+
         while (whileTrue) {
             System.out.println("--- Play Menu ---");
-
+            View.printNumberedStringArrayList(instructions);
             System.out.println("Choose your play type:");
-            String playType = scanner.nextLine();
+
+            String playType = View.input();
             switch (playType.toLowerCase()) {
                 case "day":
                     collectionMenu(1);
@@ -152,13 +197,24 @@ public class Menu {
 
 
 
-    public static void shopMenu() { // Show Shop index: -10
+    public static void shopMenu() { // Shop Menu index: -10
         String command;
         boolean exitShop = false;
-        while (!exitShop) {
-            System.out.println("--- Shop ---\nEnter command:");
-            command = scanner.nextLine();
 
+        ArrayList<String> instructions = new ArrayList<>();
+        instructions.add("show shop");
+        instructions.add("show collection");
+        instructions.add("show money");
+        instructions.add("buy [card name]");
+        instructions.add("help");
+        instructions.add("exit");
+
+        while (!exitShop) {
+            System.out.println("--- Shop Menu ---");
+            View.printNumberedStringArrayList(instructions);
+            System.out.println("Enter command:");
+
+            command = View.input();
             if (command.matches("[b,B]uy (.+)")) {
                 Shop.readyToBuy(command);
                 continue;
@@ -174,7 +230,7 @@ public class Menu {
                 case "show collection":
                     Shop.showCollection(Account.getPlayingAccount());
                     break;
-                case "money":
+                case "show money":
                     Shop.showMoney(Account.getPlayingAccount());
                     break;
                 case "pooool mikhaaaam":
@@ -195,14 +251,24 @@ public class Menu {
 
 
     static void collectionMenu(int playTypeIndex) { // Collection Menu index: -5
-
-        Scanner scanner = new Scanner(System.in);
         String command;
         boolean whileTrue = true;
-        while (whileTrue) {
-            System.out.println("--- Collection Menu ---\nEnter command:");
-            command = scanner.nextLine();
 
+        ArrayList<String> instructions = new ArrayList<>();
+        instructions.add("select [card name]");
+        instructions.add("remove [card name]");
+        instructions.add("show collection");
+        instructions.add("show hand");
+        instructions.add("play");
+        instructions.add("exit");
+        instructions.add("help");
+
+        while (whileTrue) {
+            System.out.println("--- Collection Menu ---");
+            View.printNumberedStringArrayList(instructions);
+            System.out.println("Enter command:");
+
+            command = View.input();
             if (command.toLowerCase().matches("select (.+)")) {
                 Collection.readyToSelect(command, playTypeIndex);
                 continue;
@@ -239,20 +305,31 @@ public class Menu {
 
 
     public static void dayMenu(int playTypeIndex) {  // DayAndWater Menu index : 11
-
         boolean whileTrue = true;
         String command;
         Pattern plantingPattern = Pattern.compile("[p,P]lant (?<row>\\d+),(?<column>\\d+)");
         Pattern removePattern = Pattern.compile("[r,R]emove (?<row>\\d+),(?<column>\\d+)");
 
+        ArrayList<String> instructions = new ArrayList<>();
+        instructions.add("select [card name]");
+        instructions.add("plant X,Y");
+        instructions.add("remove X,Y");
+        instructions.add("show hand");
+        instructions.add("show lawn");
+        instructions.add("end turn");
+        instructions.add("help");
+        instructions.add("exit");
+
         while (whileTrue) {
             if (playTypeIndex == 1) {
-                System.out.println("^-^-^-^- Day Menu -^-^-^-^\nEnter command:");
+                System.out.println("^-^-^-^- Day Menu -^-^-^-^");
             } else if (playTypeIndex == 2) {
                 System.out.println("^-^-^-^- Water Menu ^-^-^-^-");
             }
+            View.printNumberedStringArrayList(instructions);
+            System.out.println("Enter command:");
 
-            command = scanner.nextLine();
+            command = View.input();
             Matcher plantMatcher = plantingPattern.matcher(command);
             Matcher removeMatcher = removePattern.matcher(command);
 
@@ -327,10 +404,22 @@ public class Menu {
         boolean whileTrue = true;
         Pattern putPattern = Pattern.compile("[p,P]ut (?<zombieName>.+),(?<row>\\d+)");
 
-        while(whileTrue) {
-            System.out.println("^-^-^-^ Zombie Menu ^-^-^-^-\nEnter command:");
-            command = scanner.nextLine();
+        ArrayList<String> instructions = new ArrayList<>();
+        instructions.add("put [zombie name],[row]");
+        instructions.add("start");
+        instructions.add("show hand");
+        instructions.add("show lanes");
+        instructions.add("show lawn");
+        instructions.add("end turn");
+        instructions.add("help");
+        instructions.add("exit");
 
+        while(whileTrue) {
+            System.out.println("^-^-^-^ Zombie Menu ^-^-^-^");
+            View.printNumberedStringArrayList(instructions);
+            System.out.println("Enter command:");
+
+            command = View.input();
             Matcher putMatcher = putPattern.matcher(command);
 
             if (putMatcher.matches()) {
