@@ -48,7 +48,7 @@ public class PlayGround {
     }
 
     public static Unit getSpecifiedUnit(int i, int j) {
-        if (i > 5 || j > 19) {
+        if (i > 5 || j > 18) {
             return null;
         }
         if (i < 0 || j < 0) {

@@ -157,6 +157,10 @@ public class Day extends Play {
 
 
     public static void plantSelectedPlant(int row, int column, String plantName) {
+        if (row % 2 != 0) {
+            View.invalidCoordinates();
+            return;
+        }
         if (selectedPlant == null) {
             View.noPlantIsSelected();
             return;
@@ -178,7 +182,8 @@ public class Day extends Play {
         }
     }
 
-    private static void plantIn0 (boolean isWater, boolean waterPlant, Unit unit, Plant plant, int row, int column, String plantName) {
+    private static void plantIn0 (boolean isWater, boolean waterPlant, Unit unit, Plant plant, int row, int column,
+                                  String plantName) {
         if ((!isWater) && (!waterPlant)) {
             unit.setPlant0(plant);
             Collection.getPlantInDeck(plantName).setRespawnTime(Collection.getPlantInDeck(plantName)
@@ -200,7 +205,8 @@ public class Day extends Play {
         }
     }
 
-    private static void plantIn1 (boolean isWater, boolean waterPlant, Unit unit, Plant plant, int row, int column, String plantName) {
+    private static void plantIn1 (boolean isWater, boolean waterPlant, Unit unit, Plant plant, int row, int column,
+                                  String plantName) {
         if (unit.getPlants()[0].getName().equals("Lily Pad")) {
             if (!waterPlant) {
                 unit.setPlant1(plant);
