@@ -312,8 +312,8 @@ public class Menu {
 
         ArrayList<String> instructions = new ArrayList<>();
         instructions.add("select [card name]");
-        instructions.add("plant X,Y");
-        instructions.add("remove X,Y");
+        instructions.add("plant [row],[column]");
+        instructions.add("remove [row],[column]");
         instructions.add("show hand");
         instructions.add("show lawn");
         instructions.add("end turn");

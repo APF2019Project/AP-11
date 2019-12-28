@@ -1,5 +1,7 @@
 //import com.sun.xml.internal.bind.v2.TODO;
 
+import java.util.ArrayList;
+
 public class PlayGround {
 
     private static Unit[][] playGround = new Unit[6][20];
@@ -60,4 +62,28 @@ public class PlayGround {
     public static void removeAllPlants(int i, int j) {
         playGround[i][j].removeAllPlants();
     }
+
+    public static void showLawn() {
+
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 20; j++) {
+                View.showLawnZombies(playGround[i][j].getZombies(), i, j);
+            }
+        }
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 20; j++) {
+               if (playGround[i][j].getPlants()[0] == null && playGround[i][j].getPlants()[1] == null) {
+                   continue;
+               } else if (playGround[i][j].getPlants()[1] == null) {
+                   View.showLawnPlants(playGround[i][j].getPlants()[0], i, j);
+               } else {
+                   View.showLawnPlants(playGround[i][j].getPlants()[0], i, j);
+                   View.showLawnPlants(playGround[i][j].getPlants()[1], i, j);
+               }
+
+            }
+        }
+
+    }
+
 }
