@@ -64,12 +64,13 @@ public class PlayGround {
     }
 
     public static void showLawn() {
-
+        System.out.println("Zombies in play ground:");
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 20; j++) {
                 View.showLawnZombies(playGround[i][j].getZombies(), i, j);
             }
         }
+        System.out.println("plants in play ground:");
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 20; j++) {
                if (playGround[i][j].getPlants()[0] == null && playGround[i][j].getPlants()[1] == null) {

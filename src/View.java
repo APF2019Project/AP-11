@@ -336,29 +336,37 @@ public class View {
 
 
     public static void showLawnZombies(ArrayList<Zombie> arrayList, int row, int column) {
-        int numberOfZombies = arrayList.size();
-        System.out.println("Zombies in play ground:");
         int spacesNumber;
         int spacesNumber2;
-
         for (Zombie zombieIterator : arrayList) {
             spacesNumber = 25 - zombieIterator.getName().length();
             System.out.print(zombieIterator.getName());
             for (int i = 1; i <= spacesNumber; i++) {
                 System.out.print(" ");
             }
-            System.out.println(row + "," + column);
+            System.out.print(row + "," + column);
+            spacesNumber2 = 8 - Integer.toString(row).length() - Integer.toString(column).length() - 1;
+            for (int i = 1; i <= spacesNumber2; i++) {
+                System.out.print(" ");
+            }
+            System.out.println(zombieIterator.getHealth());
         }
     }
 
     public static void showLawnPlants(Plant plant, int row, int column) {
         int spacesNumber;
+        int spacesNumber2;
         spacesNumber = 20 - plant.getName().length();
         System.out.print(plant.getName());
         for (int i = 1; i <= spacesNumber; i++) {
             System.out.print(" ");
         }
-        System.out.println(row + "," + column);
+        System.out.print(row + "," + column);
+        spacesNumber2 = 8 - Integer.toString(row).length() - Integer.toString(column).length() - 1;
+        for (int i = 1; i <= spacesNumber2; i++) {
+            System.out.print(" ");
+        }
+        System.out.println(plant.getHealth());
     }
 
     public static void unitIsFilled(int row, int column, Unit unit) {

@@ -37,18 +37,18 @@ public class Day extends Play {
     public static void dayAndWaterTurn(int playTypeIndex) {
 
         while (whileDayTurn) {
-            if (checkFinished()) {
-                return;
-            }
-            Shoot.shootTurn();
-            if (checkFinished()) {
-                return;
-            }
-            Zombie.zombiesTurn();
-            if (checkFinished()) {
-                return;
-            }
-            Plant.plantsTurn();
+//            if (checkFinished()) {
+//                return;
+//            }
+//            Shoot.shootTurn();
+//            if (checkFinished()) {
+//                return;
+//            }
+//            Zombie.zombiesTurn();
+//            if (checkFinished()) {
+//                return;
+//            }
+//            Plant.plantsTurn();
             Menu.dayMenu(playTypeIndex);
         }
     }
@@ -93,7 +93,7 @@ public class Day extends Play {
 
 
     public static void plantSelectedPlant(int row, int column, String plantName) {
-        if (row % 2 != 0) {
+        if (column % 2 != 0) {
             View.invalidCoordinates();
             return;
         }
