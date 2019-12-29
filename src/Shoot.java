@@ -56,17 +56,47 @@ public class Shoot {
     private static void shootAction(int X, int Y, Unit[][] tmpUnits, Shoot shoot) {
         if (shoot.getDirection().equals("forward")){
             int destinationForward = findDestinationForward(X, Y, shoot);
-
+            if (destinationForward == Integer.MAX_VALUE){
+                return;
+            }
+            tmpUnits[X][destinationForward].addToShoots(shoot);
         }
         if (shoot.getDirection().equals("backward")){
-
+            int destinationBackward = findDestinationBackward(X, Y, shoot);
+            if (destinationBackward == Integer.MAX_VALUE){
+                return;
+            }
+            tmpUnits[X][destinationBackward].addToShoots(shoot);
         }
-        if (shoot.getDirection().equals("up")){
-
+        if (shoot.getDirection().equals("up")) {
+            int destinationUp = findDestinationUp(X, Y, shoot);
+            if (destinationUp == Integer.MAX_VALUE) {
+                return;
+            }
+            tmpUnits[destinationUp][Y].addToShoots(shoot);
         }
         if (shoot.getDirection().equals("down")){
-
+            int destinationDown = findDestinationDown(X, Y, shoot);
+            if (destinationDown == Integer.MAX_VALUE) {
+                return;
+            }
+            tmpUnits[destinationDown][Y].addToShoots(shoot);
         }
+    }
+
+    private static int findDestinationDown(int x, int y, Shoot shoot) {
+        // todo or not todo is the quest
+        return Integer.MAX_VALUE; // dead
+    }
+
+    private static int findDestinationUp(int x, int y, Shoot shoot) {
+        // todo or not todo is the quest
+        return Integer.MAX_VALUE; // dead
+    }
+
+    private static int findDestinationBackward(int x, int y, Shoot shoot) {
+        // todo or not todo is the quest
+        return Integer.MAX_VALUE; // dead
     }
 
     private static int findDestinationForward(int x, int y, Shoot shoot) {
