@@ -22,8 +22,56 @@ public class Shoot {
     }
 
     public static void shootTurn() {
+        Unit[][] units = new Unit[6][20];
+        tmpPlayGroundInitializer(units);
+        updateMainPlayGround(units);
+    }
 
-        // movement of shoots
+    private static void tmpPlayGroundInitializer(Unit[][] units) {
+        for (int i = 0; i < 6; i++){
+            for (int j = 0; j < 20; j++){
+                Unit unit = PlayGround.getSpecifiedUnit(i, j);
+                shootUnit(unit, units);
+            }
+        }
+    }
+
+    private static void updateMainPlayGround(Unit[][] units) {
+        for (int i = 0; i < 6; i++){
+            for (int j = 0; j < 20; j++){
+                Unit unit = PlayGround.getSpecifiedUnit(i, j);
+                unit.removeAllShoots();
+                Unit tmpUnit = units[i][j];
+                unit.cpShootsFrom(tmpUnit);
+            }
+        }
+    }
+
+    private static void shootUnit(Unit unit, Unit[][] tmpUnits) {
+        for (Shoot shoot: unit.getShoots()){
+            shootAction(unit.getX(), unit.getY(), tmpUnits, shoot);
+        }
+    }
+
+    private static void shootAction(int X, int Y, Unit[][] tmpUnits, Shoot shoot) {
+        if (shoot.getDirection().equals("forward")){
+            int destinationForward = findDestinationForward(X, Y, shoot);
+
+        }
+        if (shoot.getDirection().equals("backward")){
+
+        }
+        if (shoot.getDirection().equals("up")){
+
+        }
+        if (shoot.getDirection().equals("down")){
+
+        }
+    }
+
+    private static int findDestinationForward(int x, int y, Shoot shoot) {
+        // todo or not todo is the quest
+        return Integer.MAX_VALUE; // dead
     }
 
     public void setDirection(String direction) {
@@ -59,4 +107,6 @@ public class Shoot {
     public void setEffectiveTime(int effectiveTime) {
         this.effectiveTime = effectiveTime;
     }
+
+
 }

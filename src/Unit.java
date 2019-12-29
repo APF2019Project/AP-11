@@ -122,4 +122,14 @@ public class Unit {
     public void removeAllZombies() {
         this.getZombies().clear();
     }
+
+    public void removeAllShoots() {
+        this.getShoots().clear();
+    }
+
+    public void cpShootsFrom(Unit tmpUnit) {
+        for (Shoot shoot: tmpUnit.getShoots()){
+            this.addToShoots(shoot);
+        }
+    }
 }
