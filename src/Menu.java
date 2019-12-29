@@ -20,7 +20,7 @@ public class Menu {
         boolean headerPrinted = true;
 
         boolean whileTrue = true;
-        while(whileTrue) {
+        while (whileTrue) {
 
             if (!headerPrinted) {
                 System.out.println("_____________ LOGIN MENU _____________");
@@ -73,7 +73,7 @@ public class Menu {
         boolean headerPrinted = true;
 
         boolean whileTrue = true;
-        while(whileTrue) {
+        while (whileTrue) {
             if (!headerPrinted) {
                 System.out.println("______ MAIN MENU ______");
             }
@@ -108,7 +108,6 @@ public class Menu {
             }
         }
     }
-
 
 
     static void profileMenu() { // Profile Menu index = -3
@@ -178,7 +177,6 @@ public class Menu {
     }
 
 
-
     static void goPlay() { // Play Menu index: -4
 
         ArrayList<String> instructions = new ArrayList<>();
@@ -238,7 +236,6 @@ public class Menu {
             }
         }
     }
-
 
 
     public static void shopMenu() { // Shop Menu index: -10
@@ -302,9 +299,6 @@ public class Menu {
     }
 
 
-
-
-
     static void collectionMenu(int playTypeIndex) { // Collection Menu index: -5
         String command;
         boolean whileTrue = true;
@@ -363,9 +357,6 @@ public class Menu {
             }
         }
     }
-
-
-
 
 
     public static void dayMenu(int playTypeIndex) {  // DayAndWater Menu index : 11
@@ -474,10 +465,6 @@ public class Menu {
     }
 
 
-
-
-
-
     public static void zombieMenu() { // Zombie Menu index: 44
         String command;
         boolean whileTrue = true;
@@ -496,7 +483,7 @@ public class Menu {
         View.printNumberedStringArrayList(instructions);
         boolean headerPrinted = true;
 
-        while(whileTrue) {
+        while (whileTrue) {
             if (!headerPrinted) {
                 System.out.println("^-^-^-^ Zombie Menu ^-^-^-^");
             }
@@ -509,7 +496,7 @@ public class Menu {
                 String zombieName = putMatcher.group("zombieName");
                 int row = Integer.parseInt(putMatcher.group("row"));
 
-            } else if (command.toLowerCase().equals("show hand")){
+            } else if (command.toLowerCase().equals("show hand")) {
 
                 headerPrinted = false;
             } else if (command.toLowerCase().equals("show lanes")) {
@@ -519,8 +506,9 @@ public class Menu {
 
                 headerPrinted = false;
             } else if (command.toLowerCase().equals("end turn")) {
-
+                ZombieStyle.zombieStyleTurn();
                 headerPrinted = false;
+
             } else if (command.toLowerCase().equals("show lawn")) {
                 PlayGround.showLawn();
                 headerPrinted = false;
@@ -537,6 +525,72 @@ public class Menu {
         }
     }
 
+
+    public static void railMenu() {
+        String command;
+        boolean whileTrue = true;
+        Pattern plantingPattern = Pattern.compile("[p,P]lant (?<row>\\d+),(?<column>\\d+)");
+        Pattern removePattern = Pattern.compile("[r,R]emove (?<row>\\d+),(?<column>\\d+)");
+
+        ArrayList<String> instructions = new ArrayList<>();
+        instructions.add("list");
+        instructions.add("select [card number]");
+        instructions.add("record");
+        instructions.add("plant [row],[column]");
+        instructions.add("remove [row],[column]");
+        instructions.add("show lawn");
+        instructions.add("end turn");
+        System.out.println("^-^-^-^ Rail Menu ^-^-^-^");
+        View.printNumberedStringArrayList(instructions);
+        boolean headerPrinted = true;
+
+        while (whileTrue) {
+            if (!headerPrinted) {
+                System.out.println("^-^-^-^ Rail Menu ^-^-^-^");
+            }
+            System.out.println("Enter command");
+            command = View.input();
+            Matcher plantMatcher = plantingPattern.matcher(command);
+            Matcher removeMatcher = removePattern.matcher(command);
+
+            if (command.matches("[s,S]elect (\\d+)")) {
+                int cardNumber = Rail.getCardNumber(command);
+                //
+                //
+            } else if (plantMatcher.matches()) {
+                if (Day.selectedPlant == null) {
+                    View.noPlantIsSelected();
+                    return;
+                }
+                int row = Integer.parseInt(plantMatcher.group("row"));
+                int column = Integer.parseInt(plantMatcher.group("column"));
+                Day.plantSelectedPlant(row, column, Rail.selectedPlant.getName());
+
+            } else if (removeMatcher.matches()) {
+                int row = Integer.parseInt(removeMatcher.group("row"));
+                int column = Integer.parseInt(removeMatcher.group("column"));
+                Day.removePlant(row, column);
+
+            } else if (command.toLowerCase().equals("list")) {
+
+
+            } else if (command.toLowerCase().equals("record")) {
+
+
+            } else if (command.toLowerCase().equals("show lawn")) {
+
+
+            } else if (command.toLowerCase().equals("end turn")) {
+
+
+            } else {
+                
+            }
+
+        }
+
+
+    }
 
 
 }

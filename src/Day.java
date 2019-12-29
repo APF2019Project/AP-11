@@ -17,6 +17,10 @@ public class Day extends Play {
         Day.sun = sun;
     }
 
+    public static void increaseSun() {
+        setSun(getSun() + 1);
+    }
+
 
     public static boolean isWhileDayTurn() {
         return whileDayTurn;

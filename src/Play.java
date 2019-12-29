@@ -11,7 +11,6 @@ import java.util.regex.Pattern;
 
 public class Play {
 
-    public static Scanner scanner = new Scanner(System.in);
 
     public static Plant selectedPlant = null;
 
