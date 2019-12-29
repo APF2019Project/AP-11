@@ -579,16 +579,25 @@ public class Menu {
 
             } else if (command.toLowerCase().equals("show lawn")) {
 
-
             } else if (command.toLowerCase().equals("end turn")) {
 
 
             } else {
-                
+
             }
 
         }
 
+
+    }
+
+
+    public static void pvpMenu() {
+        String command;
+        boolean whileTrue = true;
+        System.out.println("^-^-^-^ Rail Menu ^-^-^-^");
+        ArrayList<String> instructions = new ArrayList<>();
+        instructions.add("");
 
     }
 

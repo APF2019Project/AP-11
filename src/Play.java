@@ -39,7 +39,7 @@ public class Play {
                 }
                 break;
             case 5:
-                //
+                PvP.pvpTurn();
                 break;
             default:
                 //
