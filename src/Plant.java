@@ -205,6 +205,8 @@ public class Plant {
         this.age++;
         if (this.shootTime < this.shootCoolDown)
             this.shootTime++;
+        if (this.isCattail)
+            isMelee(unit);
 
         if (this.type.matches("range [-]?\\d*"))
             isRange(unit);
@@ -330,7 +332,7 @@ public class Plant {
             damageZombie(unit, unit.getZombies().get(0));
         if (age % shootCoolDown == 0)
             for (int i = 0; i < this.bulletNumber; i++)
-                ;
+                Day.increaseSun();
     }
 
     private void isMelee(Unit unit) {
