@@ -241,11 +241,7 @@ public class Plant {
 
     private void threepeaterShoot(Unit unit) {
         if (checkForthForZombies(unit)) {
-            for (int i = 0; i < this.bulletNumber; i++) {
-                Shoot bullet = new Shoot(this.bullet);
-                bullet.setDirection("forward");
-                unit.addToShoots(bullet);
-            }
+            normalShoot(unit);
             for (int i = 0; i < this.bulletNumber; i++) {
                 Shoot bullet = new Shoot(this.bullet);
                 bullet.setDirection("up");

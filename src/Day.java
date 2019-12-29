@@ -9,6 +9,8 @@ public class Day extends Play {
 
     private static int sun = 2;
 
+    private static int playerHealth = 6;
+
     public static int getSun() {
         return sun;
     }
@@ -41,27 +43,40 @@ public class Day extends Play {
     public static void dayAndWaterTurn(int playTypeIndex) {
 
         while (whileDayTurn) {
-//            if (checkFinished()) {
-//                return;
-//            }
-//            Shoot.shootTurn();
-//            if (checkFinished()) {
-//                return;
-//            }
-//            Zombie.zombiesTurn();
-//            if (checkFinished()) {
-//                return;
-//            }
-//            Plant.plantsTurn();
+            if (checkFinished()) {
+                return;
+            }
+            Shoot.shootTurn();
+            if (checkFinished()) {
+                return;
+            }
+            Zombie.zombiesTurn();
+            if (checkFinished()) {
+                return;
+            }
+            Plant.plantsTurn();
             Menu.dayMenu(playTypeIndex);
         }
     }
 
     private static boolean checkFinished() {
-        // based on wave and allZombiesAreDead checks finish
         // wave++;
         // waveGenerator;
-        //
+
+        for (int i = 0; i < 6; i++)
+            if (PlayGround.getSpecifiedUnit(i, 0).getZombies().size() > 0) {
+                playerHealth -= PlayGround.getSpecifiedUnit(i, 0).getZombies().size();
+                PlayGround.getSpecifiedUnit(i, 0).getZombies().clear();
+                if (playerHealth == 0) {
+                    // you lost
+                    return true;
+                }
+            }
+
+        if (wave == 3 && allZombiesAreDead())
+            //you won.
+            return true;
+
         return false;
     }
 
@@ -70,7 +85,11 @@ public class Day extends Play {
     }
 
     private static boolean allZombiesAreDead() {
-        return false;
+        for (int i = 0; i < 6; i++)
+            for (int j = 1; j < 20; j++)
+                if (PlayGround.getSpecifiedUnit(i, 0).getZombies().size() > 0)
+                    return false;
+        return true;
     }
 
     public static String getCardName(String command) {
@@ -122,8 +141,8 @@ public class Day extends Play {
         }
     }
 
-    private static void plantIn0 (boolean isWater, boolean waterPlant, Unit unit, Plant plant, int row, int column,
-                                  String plantName) {
+    private static void plantIn0(boolean isWater, boolean waterPlant, Unit unit, Plant plant, int row, int column,
+                                 String plantName) {
         if ((!isWater) && (!waterPlant)) {
             unit.setPlant0(plant);
             Collection.getPlantInDeck(plantName).setRespawnTime(Collection.getPlantInDeck(plantName)
@@ -145,8 +164,8 @@ public class Day extends Play {
         }
     }
 
-    private static void plantIn1 (boolean isWater, boolean waterPlant, Unit unit, Plant plant, int row, int column,
-                                  String plantName) {
+    private static void plantIn1(boolean isWater, boolean waterPlant, Unit unit, Plant plant, int row, int column,
+                                 String plantName) {
         if (unit.getPlants()[0].getName().equals("Lily Pad")) {
             if (!waterPlant) {
                 unit.setPlant1(plant);
@@ -172,7 +191,7 @@ public class Day extends Play {
         Unit unit = PlayGround.getSpecifiedUnit(row, column);
         boolean isWater = unit.getIsWater();
         String plantName;
-        if(!isWater) {
+        if (!isWater) {
             if (unit.getPlants()[0] != null) {
                 plantName = unit.getPlants()[0].getName();
                 unit.getPlants()[0] = null;
