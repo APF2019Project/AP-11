@@ -58,9 +58,9 @@ public class Shoot {
     }
 
     private static void shootUnit(Unit unit, Unit[][] tmpUnits) {
-//        for (Shoot shoot : unit.getShoots()) {
-//            shootAction(unit.getX(), unit.getY(), tmpUnits, shoot);
-//        }
+        for (Shoot shoot : unit.getShoots()) {
+            shootAction(unit.getX(), unit.getY(), tmpUnits, shoot);
+        }
     }
 
     private static void shootAction(int X, int Y, Unit[][] tmpUnits, Shoot shoot) {
