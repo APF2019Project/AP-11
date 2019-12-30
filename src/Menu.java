@@ -343,6 +343,8 @@ public class Menu {
                     headerPrinted = false;
                     break;
                 case "exit": // Going back to Play Menu
+                    Collection.clearZombiesDeck();
+                    Collection.clearPlantsDeck();
                     View.goingBackTo(-4);
                     whileTrue = false;
                     break;
