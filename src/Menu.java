@@ -51,9 +51,11 @@ public class Menu {
                     System.out.println("_____________ LOGIN MENU _____________");
                     View.printNumberedStringArrayList(instructions);
                     break;
-                case "cheat account":
+                case "ca":
                     Account.cheatAccount();
-                    headerPrinted = false;
+                    break;
+                case "ca2":
+                    Account.cheatAccount2();
                     break;
                 default:
                     View.invalidCommand(-1);
@@ -440,8 +442,7 @@ public class Menu {
                     whileTrue = false;
                     Day.setWhileDayTurn(false);
                     View.goingBackTo(-5);
-                    Collection.clearPlantsDeck();
-                    Collection.clearZombiesDeck();
+                    Collection.clearDecksSetCollections();
                 }
                 headerPrinted = false;
             } else if (command.toLowerCase().equals("help")) {
@@ -473,6 +474,7 @@ public class Menu {
             }
         }
     }
+
 
 
     public static void zombieMenu() { // Zombie Menu index: 44
