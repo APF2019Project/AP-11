@@ -46,22 +46,20 @@ public class Day extends Play {
             if (checkFinished()) {
                 return;
             }
-            Shoot.shootTurn();
-            if (checkFinished()) {
-                return;
-            }
-            Zombie.zombiesTurn();
-            if (checkFinished()) {
-                return;
-            }
+//            Shoot.shootTurn();
+//            if (checkFinished()) {
+//                return;
+//            }
+//            Zombie.zombiesTurn();
+//            if (checkFinished()) {
+//                return;
+//            }
             Plant.plantsTurn();
             Menu.dayMenu(playTypeIndex);
         }
     }
 
     private static boolean checkFinished() {
-        // wave++;
-        // waveGenerator;
 
         for (int i = 0; i < 6; i++)
             if (PlayGround.getSpecifiedUnit(i, 0).getZombies().size() > 0) {
@@ -81,7 +79,14 @@ public class Day extends Play {
     }
 
     private static void waveGenerator() {
-        //
+        int numberOfZombiesInWave = (int) (Math.random() * 6) + 4;
+        int zombiesNumber = Zombie.getZombies().size();
+        for (int i = 0; i < numberOfZombiesInWave; i++) {
+            int randomZombie =(int) (Math.random() * (zombiesNumber));
+            int randomX = (int) (Math.random() * 5);
+            Zombie zombie = Zombie.cloningZombie(Zombie.getZombies().get(randomZombie));
+            PlayGround.getSpecifiedUnit(randomX, 19).addToZombies(zombie);
+        }
     }
 
     private static boolean allZombiesAreDead() {
