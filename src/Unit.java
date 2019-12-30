@@ -128,7 +128,7 @@ public class Unit {
     }
 
     public void cpShootsFrom(Unit tmpUnit) {
-        for (Shoot shoot: tmpUnit.getShoots()){
+        for (Shoot shoot : tmpUnit.getShoots()) {
             this.addToShoots(shoot);
         }
     }

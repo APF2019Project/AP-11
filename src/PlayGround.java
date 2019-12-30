@@ -50,12 +50,12 @@ public class PlayGround {
     }
 
     public static Unit getSpecifiedUnit(int i, int j) {
-//        if (i > 5 || j > 19) {
-//            return null;
-//        }
-//        if (i < 0 || j < 0) {
-//            return null;
-//        }
+        if (i > 5 || j > 19) {
+            return null;
+        }
+        if (i < 0 || j < 0) {
+            return null;
+        }
         return playGround[i][j];
     }
 
@@ -86,5 +86,19 @@ public class PlayGround {
         }
 
     }
+
+    public static void printShoots() {
+        System.out.println("All the shoots in the play ground are: ");
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 20; j++) {
+                for (Shoot shootIterator : playGround[i][j].getShoots()) {
+                    System.out.print("There is a shoot in: " + i + "," + j + " with direction: " + shootIterator.getDirection()
+                     + " with speed: " + shootIterator.getSpeed() + "with affective time: " + shootIterator.getEffectiveTime());
+                }
+            }
+        }
+    }
+
+
 
 }
