@@ -256,12 +256,15 @@ public class Plant {
     }
 
     private void normalShoot(Unit unit) {
-        if (checkForthForZombies(unit))
+        System.out.println(this.name+": "+this.age);
+        if (checkForthForZombies(unit)) {
+            System.out.println("ssssssssssssssssssssssssssssssssssssajad");
             for (int i = 0; i < this.bulletNumber; i++) {
                 Shoot bullet = new Shoot(this.bullet);
                 bullet.setDirection("forward");
                 unit.addToShoots(bullet);
             }
+        }
     }
 
     private void backShoot(Unit unit) {

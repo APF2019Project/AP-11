@@ -45,6 +45,7 @@ public class Day extends Play {
     public static void dayAndWaterTurn(int playTypeIndex) {
 
         while (whileDayTurn) {
+            checkWave();
             if (checkFinished()) {
                 return;
             }
@@ -67,28 +68,34 @@ public class Day extends Play {
             if (PlayGround.getSpecifiedUnit(i, 0).getZombies().size() > 0) {
                 playerHealth -= PlayGround.getSpecifiedUnit(i, 0).getZombies().size();
                 PlayGround.getSpecifiedUnit(i, 0).getZombies().clear();
-                if (playerHealth == 0) {
+                if (playerHealth <= 0) {
                     // you lost
                     return true;
                 }
             }
+        if (allZombiesAreDead()) {
+            if (wave == 3) {
+                //you won.
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private static void checkWave() {
         if (allZombiesAreDead()) {
             wavelessTurns++;
             if (wave == 0 && wavelessTurns == 3) {
                 waveGenerator();
                 wavelessTurns = 0;
                 wave ++;
-            } else if (wave == 3) {
-                //you won.
-                return true;
-            } else if (wavelessTurns == 7){
+            } else if ((wave == 1 || wave == 2) && wavelessTurns == 7){
                 waveGenerator();
                 wavelessTurns = 0;
                 wave++;
             }
         }
-
-        return false;
     }
 
     private static void waveGenerator() {
