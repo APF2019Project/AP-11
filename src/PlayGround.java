@@ -1,5 +1,4 @@
 //import com.sun.xml.internal.bind.v2.TODO;
-
 import java.util.ArrayList;
 
 public class PlayGround {
@@ -81,24 +80,8 @@ public class PlayGround {
                    View.showLawnPlants(playGround[i][j].getPlants()[0], i, j);
                    View.showLawnPlants(playGround[i][j].getPlants()[1], i, j);
                }
-
             }
         }
-
+        View.showLawnShoots();
     }
-
-    public static void printShoots() {
-        System.out.println("All the shoots in the play ground are: ");
-        for (int i = 0; i < 6; i++) {
-            for (int j = 0; j < 20; j++) {
-                for (Shoot shootIterator : playGround[i][j].getShoots()) {
-                    System.out.print("There is a shoot in: " + i + "," + j + " with direction: " + shootIterator.getDirection()
-                     + " with speed: " + shootIterator.getSpeed() + "with affective time: " + shootIterator.getEffectiveTime());
-                }
-            }
-        }
-    }
-
-
-
 }

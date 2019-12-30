@@ -367,7 +367,22 @@ public class View {
             System.out.print(" ");
         }
         System.out.println(plant.getHealth());
+
     }
+
+    public static void showLawnShoots() {
+        System.out.println("All the shoots in the play ground are: ");
+        Unit[][] playGround = PlayGround.getUnits();
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 20; j++) {
+                for (Shoot shootIterator : playGround[i][j].getShoots()) {
+                    System.out.print("There is a shoot in: " + i + "," + j + " with direction: " + shootIterator.getDirection()
+                            + " with speed: " + shootIterator.getSpeed() + "with affective time: " + shootIterator.getEffectiveTime());
+                }
+            }
+        }
+    }
+
 
     public static void unitIsFilled(int row, int column, Unit unit, int plantIndex) {
         System.out.println("Unit " + row + "," + column + " is already filled with a " + unit.getPlants()[plantIndex].getName());
