@@ -376,8 +376,8 @@ public class View {
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 20; j++) {
                 for (Shoot shootIterator : playGround[i][j].getShoots()) {
-                    System.out.print("There is a shoot in: " + i + "," + j + " with direction: " + shootIterator.getDirection()
-                            + " with speed: " + shootIterator.getSpeed() + "with affective time: " + shootIterator.getEffectiveTime());
+                    System.out.println("There is a shoot in: " + i + "," + j + " with direction: " + shootIterator.getDirection()
+                            + " with speed: " + shootIterator.getSpeed() + " with affective time: " + shootIterator.getEffectiveTime());
                 }
             }
         }
