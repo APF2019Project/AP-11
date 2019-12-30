@@ -9,7 +9,7 @@ public class Day extends Play {
 
     private static int sun = 2;
 
-    private static int playerHealth = 6;
+    private static int playerHealth = 1; // sajad edited this to debug
 
     private static int wavelessTurns = 0;
 

@@ -148,10 +148,17 @@
 
      public static void zombiesTurn() {
          for (int i = 0; i < 6; i++) {
-             lawnMoverAction(i);
              for (int j = 1; j <= 19; j++) {
                  zombiesActionsInSpecifiedUnit(i, j);
              }
+
+//             // debug
+//             if (PlayGround.getSpecifiedUnit(i, 0).getZombies().size() > 0){
+//                 System.out.println(i + " , " + 0 + " is full ");
+//             }
+             //end debug
+
+             lawnMoverAction(i);
          }
      }
 
@@ -248,7 +255,7 @@
              return;
          }
          playGround[X][0].setHaveLawnMover(false);
-         for (int i = 1; i < 20; i++){
+         for (int i = 0; i < 20; i++){
              playGround[X][i].removeAllPlants();
              playGround[X][i].removeAllZombies();
          }
