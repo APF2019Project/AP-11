@@ -309,7 +309,7 @@
          PlayGround.getSpecifiedUnit(X, Y).addToZombies(zRegular);
      }
 
-     public Zombie cloningZombieByName(String name) {
+     public static Zombie cloningZombieByName(String name) {
          Zombie zombie = null;
          for (Zombie z : zombies) {
              if (name.equals(z.getName())) {
@@ -319,7 +319,7 @@
          return zombie;
      }
 
-     private Zombie cloningZombie(Zombie zombie) {
+     public static Zombie cloningZombie(Zombie zombie) {
          Zombie returnZom = new Zombie(zombie.getName(), zombie.isHaveAntiTiq(), zombie.isHaveBucketHead(), zombie.isCouldRevertToRegularZombie(),
                  zombie.isCouldDestroyInRow(), zombie.isWaterProof(), zombie.isPeaProof(), zombie.isRandomPosition(), zombie.isHaveDuck(), zombie.isCouldJump(), zombie.getTurnThief(),
                  zombie.getSpeed(), zombie.getHowManyTurnSpeedIsReduced(), zombie.getSpeedReductionRatio(), zombie.getHealth(), zombie.getShieldStrength(), zombie.getDamagePower());
