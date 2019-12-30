@@ -107,6 +107,7 @@ public class Shoot {
 
         int i;
         for (i = x; i <= destination; i++) {
+
             Unit unit = PlayGround.getSpecifiedUnit(i, y);
             if (unit.getZombies().size() != 0) {
                 unit.getZombies().get(0).recievingShoot(shoot);
