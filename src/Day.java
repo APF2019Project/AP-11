@@ -45,18 +45,18 @@ public class Day extends Play {
     public static void dayAndWaterTurn(int playTypeIndex) {
 
         while (whileDayTurn) {
-//            if (checkFinished()) {
-//                return;
-//            }
-//            Shoot.shootTurn();
-//            if (checkFinished()) {
-//                return;
-//            }
-//            Zombie.zombiesTurn();
-//            if (checkFinished()) {
-//                return;
-//            }
-//            Plant.plantsTurn();
+            if (checkFinished()) {
+                return;
+            }
+            Shoot.shootTurn();
+            if (checkFinished()) {
+                return;
+            }
+            Zombie.zombiesTurn();
+            if (checkFinished()) {
+                return;
+            }
+            Plant.plantsTurn();
             Menu.dayMenu(playTypeIndex);
         }
     }

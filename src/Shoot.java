@@ -24,6 +24,11 @@ public class Shoot {
 
     public static void shootTurn() {
         Unit[][] units = new Unit[6][20];
+        for (int i = 0; i < 6; i++){
+            for (int j = 0; j < 20; j++){
+                units[i][j] = new Unit(i, j, false, false);
+            }
+        }
         tmpPlayGroundInitializer(units);
         updateMainPlayGround(units);
     }
