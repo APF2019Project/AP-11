@@ -35,9 +35,11 @@
          if (shoot.getEffectiveTime() != 0) {
              shootsRecieved.add(shoot);
          }
+
          if (shoot.isPea() && this.getShieldStrength() > 0){
              this.decreaseShieldStrenght(shoot.getDamage());
          }
+
          else{
              this.decreaseHealth(shoot.getDamage());
          }
@@ -294,13 +296,6 @@
 
      public int getPrice() {
          return (1 + this.getSpeed()) * this.getHealth() * 10;
-     }
-
-     public boolean killZombie() {
-         if (this.getHealth() <= 0)
-             return true;
-
-         return false;
      }
 
      public void turnToRegularZombie(int X, int Y) {
