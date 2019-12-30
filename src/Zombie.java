@@ -237,7 +237,6 @@
                  return Integer.MAX_VALUE;
              }
          }
-         System.out.println(Y);
          return Y;
      }
 
