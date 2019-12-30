@@ -51,6 +51,10 @@ public class Menu {
                     System.out.println("_____________ LOGIN MENU _____________");
                     View.printNumberedStringArrayList(instructions);
                     break;
+                case "cheat account":
+                    Account.cheatAccount();
+                    headerPrinted = false;
+                    break;
                 default:
                     View.invalidCommand(-1);
                     break;
