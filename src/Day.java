@@ -103,7 +103,7 @@ public class Day extends Play {
         int zombiesNumber = Zombie.getZombies().size();
         for (int i = 0; i < numberOfZombiesInWave; i++) {
             int randomZombie =(int) (Math.random() * (zombiesNumber));
-            int randomX = (int) (Math.random() * 5);
+            int randomX = (int) (Math.random() * 5.68);
             Zombie zombie = Zombie.cloningZombie(Zombie.getZombies().get(randomZombie));
             PlayGround.getSpecifiedUnit(randomX, 19).addToZombies(zombie);
         }

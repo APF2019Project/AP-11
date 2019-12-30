@@ -207,9 +207,9 @@ public class Plant {
             this.shootTime++;
         if (this.isCattail)
             isMelee(unit);
-
-        if (this.type.matches("range [-]?\\d*"))
+        if (this.type.matches("range [-]?(\\d+) (\\w+)")){
             isRange(unit);
+        }
         else if (this.type.matches("bomb .+"))
             isBomb(unit);
         else if (this.type.equals("wall"))
@@ -219,6 +219,7 @@ public class Plant {
     }
 
     private void isRange(Unit unit) {
+        System.out.println("we're in range.");
         if (unit.getZombies().size() > 0)
             damageZombie(unit, unit.getZombies().get(0));
         if ((this.shootTime % this.shootCoolDown) == 0) {
@@ -231,10 +232,12 @@ public class Plant {
                     break;
                 }
             if (isRangeOk) {
-                if (rangeType[2].equals("threeWay"))
+                if (rangeType[2].equals("threeWay")) {
                     threepeaterShoot(unit);
-                else if (rangeType[2].equals("normal"))
+                }
+                else if (rangeType[2].equals("normal")) {
                     normalShoot(unit);
+                }
             }
         }
     }
@@ -256,9 +259,7 @@ public class Plant {
     }
 
     private void normalShoot(Unit unit) {
-        System.out.println(this.name+": "+this.age);
         if (checkForthForZombies(unit)) {
-            System.out.println("ssssssssssssssssssssssssssssssssssssajad");
             for (int i = 0; i < this.bulletNumber; i++) {
                 Shoot bullet = new Shoot(this.bullet);
                 bullet.setDirection("forward");
