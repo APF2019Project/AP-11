@@ -518,7 +518,7 @@ public class View {
         System.out.println("commands are:");
         System.out.println("select [plant name], plant #,# (plant selected plant)");
         System.out.println("remove #,# (remove plant in unit #,#), show hand, show lawn");
-        System.out.println("ent turn, exit and help");
+        System.out.println("end turn, exit and help");
         System.out.println();
     }
 
@@ -527,4 +527,8 @@ public class View {
         System.out.println();
     }
 
+    public static void unavailableCoordinates() {
+        System.out.println("unavailable coordinates!");
+        System.out.println();
+    }
 }

@@ -154,6 +154,11 @@ public class Day extends Play {
             return;
         }
 
+        if (PlayGround.getSpecifiedUnit(row, column).getZombies().size() != 0){
+            View.unavailableCoordinates();
+            return;
+        }
+
         Unit unit = PlayGround.getSpecifiedUnit(row, column);
         Plant plant = selectedPlant;
         boolean isWater = unit.getIsWater();

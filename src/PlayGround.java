@@ -31,22 +31,17 @@ public class PlayGround {
     }
 
     public static int randomPositiomY() {
-        // TODO rand;
-        return 0;
+        double randY = Math.random();
+        int randYInt = (int) (randY * 18.68 + 1);
+        return randYInt;
     }
 
     public static int randomPositionX() {
-        // TODO rand;
-        return 0;
+        double randX = Math.random();
+        int randXInt = (int) (randX * 5.68);
+        return randXInt;
     }
 
-    public void printAllGround() {
-        for (int i = 0; i < 6; i++) {
-            for (int j = 0; j < 20; j++) {
-                playGround[i][j].printUnit();
-            }
-        }
-    }
 
     public static Unit getSpecifiedUnit(int i, int j) {
         if (i > 5 || j > 19) {
