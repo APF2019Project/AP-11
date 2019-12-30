@@ -157,11 +157,15 @@
 
      public static void zombiesActionsInSpecifiedUnit(int X, int Y) {
          ArrayList<Zombie> tmpArrForDestroyedZombies = new ArrayList<>();
-         for (Zombie zombie : PlayGround.getSpecifiedUnit(X, Y).getZombies()) {
-             zombie.zombieAction(X, Y, tmpArrForDestroyedZombies);
+         if (PlayGround.getSpecifiedUnit(X, Y) != null) {
+             for (Zombie zombie : PlayGround.getSpecifiedUnit(X, Y).getZombies()) {
+                 zombie.zombieAction(X, Y, tmpArrForDestroyedZombies);
+             }
          }
          for (Zombie zombie : tmpArrForDestroyedZombies) {
-             PlayGround.getSpecifiedUnit(X, Y).RemoveFromZombies(zombie);
+             if (PlayGround.getSpecifiedUnit(X, Y) != null) {
+                 PlayGround.getSpecifiedUnit(X, Y).RemoveFromZombies(zombie);
+             }
          }
      }
 
@@ -214,6 +218,7 @@
      public int distinationFinderAndDestroyedShootRemover(int X, int Y) {
          boolean baseConditionToMove = true;
          Unit thisUnit = PlayGround.getSpecifiedUnit(X, Y);
+         int basedY = Y;
          while (baseConditionToMove) {
              Y--;
              ArrayList<Shoot> shootsTmp = new ArrayList<>();
@@ -227,11 +232,12 @@
              for (Shoot shoot : shootsTmp) {
                  thisUnit.RemoveFromShoots(shoot);
              }
-             baseConditionToMove = couldZombieGoToNextUnit(X, Y);
+             baseConditionToMove = couldZombieGoToNextUnit(X, Y, basedY);
              if (Y == Integer.MAX_VALUE) {
                  return Integer.MAX_VALUE;
              }
          }
+         System.out.println(Y);
          return Y;
      }
 
@@ -249,9 +255,9 @@
          }
      }
 
-     private boolean couldZombieGoToNextUnit(int X, int Y) {
+     private boolean couldZombieGoToNextUnit(int X, int Y, int basedY) {
          boolean condition;
-         int farestUnitDidicatedBySpeed = Y - this.currentSpeed;
+         int farestUnitDidicatedBySpeed = basedY - this.currentSpeed;
          Plant[] plant = PlayGround.getSpecifiedUnit(X, Y).getPlants();
          if (this.isCouldJump()){
              condition = (Y > 0) && (Y >= farestUnitDidicatedBySpeed);
@@ -508,7 +514,6 @@
      public int getCurrentSpeed() {
          return currentSpeed;
      }
-
 
      public void setCurrentSpeed(int currentSpeed) {
          this.currentSpeed = currentSpeed;

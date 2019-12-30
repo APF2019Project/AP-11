@@ -105,7 +105,7 @@ public class Day extends Play {
     private static boolean allZombiesAreDead() {
         for (int i = 0; i < 6; i++)
             for (int j = 1; j < 20; j++)
-                if (PlayGround.getSpecifiedUnit(i, 0).getZombies().size() > 0)
+                if (PlayGround.getSpecifiedUnit(i, j).getZombies().size() > 0)
                     return false;
         return true;
     }

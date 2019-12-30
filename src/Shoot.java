@@ -46,17 +46,21 @@ public class Shoot {
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 20; j++) {
                 Unit unit = PlayGround.getSpecifiedUnit(i, j);
-                unit.removeAllShoots();
+                if (unit != null) {
+                    unit.removeAllShoots();
+                }
                 Unit tmpUnit = units[i][j];
-                unit.cpShootsFrom(tmpUnit);
+                if (unit != null) {
+                    unit.cpShootsFrom(tmpUnit);
+                }
             }
         }
     }
 
     private static void shootUnit(Unit unit, Unit[][] tmpUnits) {
-        for (Shoot shoot : unit.getShoots()) {
-            shootAction(unit.getX(), unit.getY(), tmpUnits, shoot);
-        }
+//        for (Shoot shoot : unit.getShoots()) {
+//            shootAction(unit.getX(), unit.getY(), tmpUnits, shoot);
+//        }
     }
 
     private static void shootAction(int X, int Y, Unit[][] tmpUnits, Shoot shoot) {
