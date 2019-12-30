@@ -11,6 +11,8 @@ public class Day extends Play {
 
     private static int playerHealth = 6;
 
+    private static int wavelessTurns = 0;
+
     public static int getSun() {
         return sun;
     }
@@ -46,14 +48,14 @@ public class Day extends Play {
             if (checkFinished()) {
                 return;
             }
-//            Shoot.shootTurn();
-//            if (checkFinished()) {
-//                return;
-//            }
-//            Zombie.zombiesTurn();
-//            if (checkFinished()) {
-//                return;
-//            }
+            Shoot.shootTurn();
+            if (checkFinished()) {
+                return;
+            }
+            Zombie.zombiesTurn();
+            if (checkFinished()) {
+                return;
+            }
             Plant.plantsTurn();
             Menu.dayMenu(playTypeIndex);
         }
@@ -70,10 +72,21 @@ public class Day extends Play {
                     return true;
                 }
             }
-
-        if (wave == 3 && allZombiesAreDead())
-            //you won.
-            return true;
+        if (allZombiesAreDead()) {
+            wavelessTurns++;
+            if (wave == 0 && wavelessTurns == 3) {
+                waveGenerator();
+                wavelessTurns = 0;
+                wave ++;
+            } else if (wave == 3) {
+                //you won.
+                return true;
+            } else if (wavelessTurns == 7){
+                waveGenerator();
+                wavelessTurns = 0;
+                wave++;
+            }
+        }
 
         return false;
     }
