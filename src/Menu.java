@@ -460,7 +460,11 @@ public class Menu {
             } else if (command.toLowerCase().equals("respawn mikhaaam")) {
                 Collection.decreaseRespawnsInDeck();
 
-            } else {
+            } else if (command.toLowerCase().equals("ppg")) {
+                PlayGround.printPlayGround();
+
+            }
+            else {
                 if (playTypeIndex == 1) {
                     View.invalidCommand(11);
                 } else if (playTypeIndex == 2) {

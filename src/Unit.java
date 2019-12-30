@@ -132,4 +132,30 @@ public class Unit {
             this.addToShoots(shoot);
         }
     }
+
+    public static int plantsNumbers(Unit unit) {
+        Plant plant_1 = unit.getPlants()[1];
+        Plant plant_0 = unit.getPlants()[0];
+        if (!unit.getIsWater()) {
+            if (plant_0 == null) {
+                return 0;
+            } else {
+                return 1;
+            }
+        } else {
+            if (plant_1 != null) {
+                if (plant_0 != null) {
+                    return 2;
+                } else {
+                    return 1;
+                }
+            } else {
+                if (plant_0 != null) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            }
+        }
+    }
 }
