@@ -369,9 +369,13 @@ public class View {
         System.out.println(plant.getHealth());
     }
 
-    public static void unitIsFilled(int row, int column, Unit unit) {
-        System.out.println("Unit " + row + "," + column + " is already filled with a " + unit.getPlants()[0].getName());
+    public static void unitIsFilled(int row, int column, Unit unit, int plantIndex) {
+        System.out.println("Unit " + row + "," + column + " is already filled with a " + unit.getPlants()[plantIndex].getName());
         System.out.println();
+    }
+
+    public static void alreadyALilyPadHere(int row, int column) {
+        System.out.println("There is already a Lily Pad in unit " + row + "," + column);
     }
 
     public static void waterPlantInLand() {
