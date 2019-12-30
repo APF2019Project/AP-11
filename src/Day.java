@@ -9,6 +9,8 @@ public class Day extends Play {
 
     private static int sun = 2;
 
+    private static int playerHealth;
+
     public static int getSun() {
         return sun;
     }
