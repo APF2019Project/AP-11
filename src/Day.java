@@ -43,7 +43,7 @@ public class Day extends Play {
     }
 
     public static void dayAndWaterTurn(int playTypeIndex) {
-
+        setWhileDayTurn(true);
         while (whileDayTurn) {
             checkWave();
             if (checkFinished()) {
@@ -89,8 +89,8 @@ public class Day extends Play {
             if (wave == 0 && wavelessTurns == 3) {
                 waveGenerator();
                 wavelessTurns = 0;
-                wave ++;
-            } else if ((wave == 1 || wave == 2) && wavelessTurns == 7){
+                wave++;
+            } else if ((wave == 1 || wave == 2) && wavelessTurns == 7) {
                 waveGenerator();
                 wavelessTurns = 0;
                 wave++;
@@ -102,7 +102,7 @@ public class Day extends Play {
         int numberOfZombiesInWave = (int) (Math.random() * 6) + 4;
         int zombiesNumber = Zombie.getZombies().size();
         for (int i = 0; i < numberOfZombiesInWave; i++) {
-            int randomZombie =(int) (Math.random() * (zombiesNumber));
+            int randomZombie = (int) (Math.random() * (zombiesNumber));
             int randomX = (int) (Math.random() * 5.68);
             Zombie zombie = Zombie.cloningZombie(Zombie.getZombies().get(randomZombie));
             PlayGround.getSpecifiedUnit(randomX, 19).addToZombies(zombie);
@@ -154,7 +154,7 @@ public class Day extends Play {
             return;
         }
 
-        if (PlayGround.getSpecifiedUnit(row, column).getZombies().size() != 0){
+        if (PlayGround.getSpecifiedUnit(row, column).getZombies().size() != 0) {
             View.unavailableCoordinates();
             return;
         }
@@ -224,30 +224,34 @@ public class Day extends Play {
         }
         Unit unit = PlayGround.getSpecifiedUnit(row, column);
         boolean isWater = unit.getIsWater();
+        Plant plant_0 = unit.getPlants()[0];
+        Plant plant_1 = unit.getPlants()[1];
         String plantName;
         if (!isWater) {
-            if (unit.getPlants()[0] != null) {
-                plantName = unit.getPlants()[0].getName();
-                unit.getPlants()[0] = null;
+            if (plant_0 != null) {
+                plantName = plant_0.getName();
+                plant_0 = null;
                 View.plantRemoved(row, column, plantName);
             } else {
                 View.unitIsEmpty(row, column);
             }
         } else { // is water:
-            if (unit.getPlants()[0] == null) {
-                View.unitIsEmpty(row, column);
+            if (plant_0 != null) {
+                plantName = plant_0.getName();
+                plant_0 = null;
+                View.plantRemoved(row, column, plantName);
             } else {
-                if (unit.getPlants()[1] == null) {
-                    plantName = unit.getPlants()[0].getName();
-                    unit.getPlants()[0] = null;
+                if (plant_1 != null) {
+                    plantName = plant_1.getName();
+                    plant_1 = null;
                     View.plantRemoved(row, column, plantName);
                 } else {
-                    plantName = unit.getPlants()[1].getName();
-                    unit.getPlants()[1] = null;
-                    View.plantRemoved(row, column, plantName);
+                    View.unitIsEmpty(row, column);
                 }
             }
         }
+
+
     }
 
     public static void showHandInDay() {

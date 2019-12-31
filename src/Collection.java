@@ -169,6 +169,7 @@ public class Collection {
                 }
                 collectionMinusDeck.add(plantIterator);
             }
+            System.out.println("Your collection:");
             View.printNumberedPlantArrayList(collectionMinusDeck);
         } else if (playTypeIndex == 4) {
             ArrayList<Zombie> collectionMinusDeck = new ArrayList<>();
@@ -178,6 +179,7 @@ public class Collection {
                 }
                 collectionMinusDeck.add(zombieIterator);
             }
+            System.out.println("Your zombies collection");
             View.printNumberedZombieArrayList(collectionMinusDeck);
         }
     }
@@ -303,6 +305,14 @@ public class Collection {
         if (!Conehead_Zombie) {
             Account.getPlayingAccount().getZombiesCollection().add(Zombie.getZombie("Conehead Zombie"));
         }
+    }
+
+
+    public static void clearDecksSetCollections() {
+        Collection.clearPlantsDeck();
+        Collection.clearZombiesDeck();
+        Collection.setDefaultPlantsCollection();
+        Collection.setDefaultZombiesCollection();
     }
 
 }

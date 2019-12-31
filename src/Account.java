@@ -319,9 +319,21 @@ public class Account {
             Account.getPlayingAccount().plantsDeck.add(new Plant(Plant.getPlant(plant.getName())));
         }
         Menu.goPlay();
-
     }
 
+    public static void cheatAccount2() {
+        Account cheatAccount = new Account("sajad", "mohamad");
+        playingAccount = cheatAccount;
+        Collection.setDefaultZombiesCollection();
+        Collection.setDefaultPlantsCollection();
+        for (Plant plant : playingAccount.plantsCollection) {
+            if (plant.getName().equals("Sunflower"))
+                continue;
+            Account.getPlayingAccount().plantsDeck.add(new Plant(Plant.getPlant(plant.getName())));
+        }
+        Account.getPlayingAccount().plantsDeck.add(new Plant(Plant.getPlant("Lily Pad")));
+        Menu.goPlay();
+    }
 }
 
 // This class is used for sorting Accounts by their killed zombies for Leaderboard:
