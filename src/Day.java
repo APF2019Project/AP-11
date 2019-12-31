@@ -53,11 +53,11 @@ public class Day extends Play {
                 return;
             }
             Zombie.zombiesTurn();
+            checkWave();
             if (checkFinished()) {
                 return;
             }
             Plant.plantsTurn();
-            checkWave();
             Menu.dayMenu(playTypeIndex);
         }
     }
