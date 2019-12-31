@@ -1,6 +1,7 @@
  /*  in positioning isWaterProof is important
   *
   * */
+
  import java.util.ArrayList;
 
 
@@ -28,19 +29,17 @@
      private boolean haveDuck; //
 
      public void recievingShoot(Shoot shoot) {
-         if (shoot.isPea() && this.isPeaProof()){
-             return;
-         }
+//         if (shoot.isPea() && this.isPeaProof()) {
+//             return;
+//         }
 
          if (shoot.getEffectiveTime() != 0) {
              shootsRecieved.add(shoot);
          }
 
-         if (shoot.isPea() && this.getShieldStrength() > 0){
+         if (shoot.isPea() && this.getShieldStrength() > 0) {
              this.decreaseShieldStrenght(shoot.getDamage());
-         }
-
-         else{
+         } else {
              this.decreaseHealth(shoot.getDamage());
          }
      }
@@ -164,19 +163,30 @@
 
      public static void zombiesActionsInSpecifiedUnit(int X, int Y) {
          ArrayList<Zombie> tmpArrForDestroyedZombies = new ArrayList<>();
-         if (PlayGround.getSpecifiedUnit(X, Y) != null) {
-             for (Zombie zombie : PlayGround.getSpecifiedUnit(X, Y).getZombies()) {
-                 zombie.zombieAction(X, Y, tmpArrForDestroyedZombies);
-             }
+         ArrayList<ZombieByLocation> tmpArrZombieByLocation = new ArrayList<>();
+
+         // not used yet
+         ArrayList<Zombie> ConcurrenMEErrorArrayList = new ArrayList<>();
+         for (Zombie z: PlayGround.getSpecifiedUnit(X, Y).getZombies()){
+             ConcurrenMEErrorArrayList.add(z);
+         }
+         // not used yet
+
+         for (Zombie zombie : PlayGround.getSpecifiedUnit(X, Y).getZombies()) {
+             zombie.zombieAction(X, Y, tmpArrForDestroyedZombies, tmpArrZombieByLocation);
          }
          for (Zombie zombie : tmpArrForDestroyedZombies) {
              if (PlayGround.getSpecifiedUnit(X, Y) != null) {
                  PlayGround.getSpecifiedUnit(X, Y).RemoveFromZombies(zombie);
              }
          }
+         for (ZombieByLocation zombieXY: tmpArrZombieByLocation){
+             PlayGround.getSpecifiedUnit(zombieXY.X, zombieXY.Y).addToZombies(zombieXY.getZombie());
+         }
+
      }
 
-     public void zombieAction(int X, int Y, ArrayList<Zombie> tmpArrForDestroyedZombies) {
+     public void zombieAction(int X, int Y, ArrayList<Zombie> tmpArrForDestroyedZombies, ArrayList<ZombieByLocation> tmpArrZombieByLocation) {
          this.currentSpeed = this.curSpeedCalculationByAffectingPreviousShoots();
 //        positioning
          if (Y == 19 && this.isRandomPosition()) {
@@ -203,10 +213,10 @@
                  this.setTurnThief(this.getTurnThief() - 1);
          }
          tmpArrForDestroyedZombies.add(this);
-         Unit unitNew = PlayGround.getSpecifiedUnit(X, newY);
-         unitNew.addToZombies(this);
-
-         this.damagingPlantIfExist(unitNew);
+         tmpArrZombieByLocation.add(new ZombieByLocation(X, newY, this));
+//         Unit unitNew = PlayGround.getSpecifiedUnit(X, newY);
+//         unitNew.addToZombies(this);
+         this.damagingPlantIfExist(PlayGround.getSpecifiedUnit(X, newY));
 
 
      }
@@ -227,35 +237,40 @@
          Unit thisUnit = PlayGround.getSpecifiedUnit(X, Y);
          int basedY = Y;
          while (baseConditionToMove) {
-             Y--;
              ArrayList<Shoot> shootsTmp = new ArrayList<>();
              for (Shoot shoot : thisUnit.getShoots()) {
                  if (this.getHealth() > 0) {
                      this.recievingShoot(shoot);
+                     shootsTmp.add(shoot);
                  } else {
                      Y = Integer.MAX_VALUE;// zombie is dead and gone to heaven far from home
                  }
              }
              for (Shoot shoot : shootsTmp) {
                  thisUnit.RemoveFromShoots(shoot);
+                 System.out.println("shoot location is: 'removed' " + X + " " + Y);
              }
              baseConditionToMove = couldZombieGoToNextUnit(X, Y, basedY);
+             if (!baseConditionToMove) {
+                 return Y;
+             }
              if (Y == Integer.MAX_VALUE) {
                  return Integer.MAX_VALUE;
              }
+             Y--;
          }
          return Y;
      }
 
-     public static void lawnMoverAction(int X){
+     public static void lawnMoverAction(int X) {
          Unit[][] playGround = PlayGround.getUnits();
          if (!playGround[X][0].getHaveChamanZan())
              return;
-         if (playGround[X][0].getZombies().size() == 0){
+         if (playGround[X][0].getZombies().size() == 0) {
              return;
          }
          playGround[X][0].setHaveLawnMover(false);
-         for (int i = 0; i < 20; i++){
+         for (int i = 0; i < 20; i++) {
              playGround[X][i].removeAllPlants();
              playGround[X][i].removeAllZombies();
          }
@@ -265,12 +280,11 @@
          boolean condition;
          int farestUnitDidicatedBySpeed = basedY - this.currentSpeed;
          Plant[] plant = PlayGround.getSpecifiedUnit(X, Y).getPlants();
-         if (this.isCouldJump()){
-             condition = (Y > 0) && (Y >= farestUnitDidicatedBySpeed);
+         if (this.isCouldJump()) {
+             condition = (Y >= 1) && (Y > farestUnitDidicatedBySpeed);
              return condition;
-         }
-         else {
-             condition = (Y > 0) && (plant[0] == null && Y >= farestUnitDidicatedBySpeed);
+         } else {
+             condition = (Y >= 1) && (plant[0] == null && Y > farestUnitDidicatedBySpeed);
              return condition;
          }
      }
