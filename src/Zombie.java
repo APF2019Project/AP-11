@@ -234,12 +234,14 @@
      //  this can find the distination
      public int distinationFinderAndDestroyedShootRemover(int X, int Y) {
          boolean baseConditionToMove = true;
-         Unit thisUnit = PlayGround.getSpecifiedUnit(X, Y);
          int basedY = Y;
          while (baseConditionToMove) {
+             System.out.println("1");
              ArrayList<Shoot> shootsTmp = new ArrayList<>();
+             Unit thisUnit = PlayGround.getSpecifiedUnit(X, Y);
              for (Shoot shoot : thisUnit.getShoots()) {
                  if (this.getHealth() > 0) {
+                     System.out.println("2");
                      this.recievingShoot(shoot);
                      shootsTmp.add(shoot);
                  } else {
@@ -248,7 +250,7 @@
              }
              for (Shoot shoot : shootsTmp) {
                  thisUnit.RemoveFromShoots(shoot);
-                 System.out.println("shoot location is: 'removed' " + X + " " + Y);
+//                 System.out.println("shoot location is: 'removed' " + X + " " + Y);
              }
              baseConditionToMove = couldZombieGoToNextUnit(X, Y, basedY);
              if (!baseConditionToMove) {
