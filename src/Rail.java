@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.regex.Matcher;
 
 public class Rail extends Play {
 
@@ -31,7 +32,9 @@ public class Rail extends Play {
         }
     }
 
-    private static void generate()
+    private static int generateTwoThreeFour() {
+        return ((int) (Math.random() * 4.99));
+    }
 
     public static void railTurn() {
 

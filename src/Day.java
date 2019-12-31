@@ -40,6 +40,7 @@ public class Day extends Play {
     }
 
     public static void dayAndWaterTurn(int playTypeIndex) {
+        playerHealth = 1;
         setWhileDayTurn(true);
         while (whileDayTurn) {
             if (checkFinished()) {
