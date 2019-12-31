@@ -1,4 +1,5 @@
 //import com.sun.xml.internal.bind.v2.TODO;
+
 import java.util.ArrayList;
 
 public class PlayGround {
@@ -49,13 +50,10 @@ public class PlayGround {
 
 
     public static Unit getSpecifiedUnit(int i, int j) {
-        if (i > 5 || j > 19) {
+        if ((0 <= i && i < 6) && (0 <= j && j < 20))
+            return playGround[i][j];
+        else
             return null;
-        }
-        if (i < 0 || j < 0) {
-            return null;
-        }
-        return playGround[i][j];
     }
 
     public static void removeAllPlants(int i, int j) {
@@ -72,14 +70,14 @@ public class PlayGround {
         System.out.println("plants in play ground:");
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 20; j++) {
-               if (playGround[i][j].getPlants()[0] == null && playGround[i][j].getPlants()[1] == null) {
-                   continue;
-               } else if (playGround[i][j].getPlants()[1] == null) {
-                   View.showLawnPlants(playGround[i][j].getPlants()[0], i, j);
-               } else {
-                   View.showLawnPlants(playGround[i][j].getPlants()[0], i, j);
-                   View.showLawnPlants(playGround[i][j].getPlants()[1], i, j);
-               }
+                if (playGround[i][j].getPlants()[0] == null && playGround[i][j].getPlants()[1] == null) {
+                    continue;
+                } else if (playGround[i][j].getPlants()[1] == null) {
+                    View.showLawnPlants(playGround[i][j].getPlants()[0], i, j);
+                } else {
+                    View.showLawnPlants(playGround[i][j].getPlants()[0], i, j);
+                    View.showLawnPlants(playGround[i][j].getPlants()[1], i, j);
+                }
             }
         }
         View.showLawnShoots();
