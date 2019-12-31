@@ -236,12 +236,11 @@
          boolean baseConditionToMove = true;
          int basedY = Y;
          while (baseConditionToMove) {
-             System.out.println("1");
              ArrayList<Shoot> shootsTmp = new ArrayList<>();
              Unit thisUnit = PlayGround.getSpecifiedUnit(X, Y);
              for (Shoot shoot : thisUnit.getShoots()) {
                  if (this.getHealth() > 0) {
-                     System.out.println("2");
+
                      this.recievingShoot(shoot);
                      shootsTmp.add(shoot);
                  } else {
