@@ -1,3 +1,5 @@
+import java.util.regex.Matcher;
+
 public class Day extends Play {
 
     private static boolean whileDayTurn = true;
@@ -7,6 +9,8 @@ public class Day extends Play {
     private static int sun = 2;
 
     private static int playerHealth = 1; // sajad edited this to debug
+
+    private static int playerWon = 0;
 
     private static int wavelessTurns = 0;
 
@@ -40,24 +44,41 @@ public class Day extends Play {
     }
 
     public static void dayAndWaterTurn(int playTypeIndex) {
-        playerHealth = 1;
-        setWhileDayTurn(true);
+        setUpTheBeginningOfPlay();
         while (whileDayTurn) {
             if (checkFinished()) {
+                doFinalThings(playerWon);
                 return;
             }
             Shoot.shootTurn();
             if (checkFinished()) {
+                doFinalThings(playerWon);
                 return;
             }
             Zombie.zombiesTurn();
             checkWave();
             if (checkFinished()) {
+                doFinalThings(playerWon);
                 return;
             }
             Plant.plantsTurn();
             Menu.dayMenu(playTypeIndex);
         }
+    }
+
+    private static void setUpTheBeginningOfPlay() {
+        playerHealth = 1;
+        setWhileDayTurn(true);
+    }
+
+    public static void doFinalThings(int playerWon) {
+        if (playerWon == 1)
+            View.youWon();
+        if (playerWon == -1)
+            View.youLost();
+       Collection.clearDecksSetCollections();
+        View.goingBackTo(-2); // Going back to Login Menu
+        Menu.mainMenu();
     }
 
     private static boolean checkFinished() {
@@ -68,16 +89,17 @@ public class Day extends Play {
                 PlayGround.getSpecifiedUnit(i, 0).getZombies().clear();
                 if (playerHealth <= 0) {
                     // you lost
+                    playerWon = -1;
                     return true;
                 }
             }
         if (allZombiesAreDead()) {
             if (wave == 3) {
                 //you won.
+                playerWon = 1;
                 return true;
             }
         }
-
         return false;
     }
 
@@ -168,7 +190,7 @@ public class Day extends Play {
         }
 
         Unit unit = PlayGround.getSpecifiedUnit(row, column);
-        Plant plant = selectedPlant;
+        Plant plant = new Plant(selectedPlant);
         Plant plant_0 = unit.getPlants()[0];
         Plant plant_1 = unit.getPlants()[1];
         boolean isWater = unit.isWater();
@@ -270,6 +292,7 @@ public class Day extends Play {
     }
 
     public static void showHandInDay() {
+        System.out.println("Your deck:");
         int i = 1;
         for (Plant plantIterator : Account.getPlayingAccount().plantsDeck) {
             System.out.print(i + ". ");

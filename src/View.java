@@ -452,6 +452,20 @@ public class View {
         System.out.println();
     }
 
+    public static void youLost() {
+        System.out.println("YOU LOST..!!!!");
+        System.out.println("ZOMBIES are EATING you......");
+    }
+
+    public static void youWon() {
+        System.out.println("YOU WON..!!!");
+        System.out.println("You DESTROYED all of the FUCKIN Zombies!");
+    }
+
+    public static void invalidCardNumber() {
+        System.out.println("Invalid card number. Try again:");
+    }
+
     public static int choosePlayGroundInZombieStyle() {
         System.out.println("choose your play ground (land or water):");
         String playGround = scanner.nextLine();

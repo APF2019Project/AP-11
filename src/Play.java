@@ -42,8 +42,28 @@ public class Play {
                 PvP.pvpTurn();
                 break;
             default:
-                //
+                System.out.println("$$$ playType index Error in Play class");
                 break;
         }
     }
+
+
+    public static String getPlayType (int playTypeIndex) {
+        switch (playTypeIndex) {
+            case 1:
+                return "Day";
+            case 2:
+                return "Water";
+            case 3:
+                return "Rail";
+            case 4:
+                return "Zombie";
+            case 5:
+                return "PvP";
+        }
+        return null;
+    }
+
+
+
 }

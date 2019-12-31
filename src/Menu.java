@@ -68,6 +68,7 @@ public class Menu {
     }
 
 
+
     static void mainMenu() { // Main Menu index = -2
         String command;
 
@@ -321,12 +322,14 @@ public class Menu {
         instructions.add("exit");
         instructions.add("help");
         System.out.println("--- Collection Menu ---");
+        System.out.println("Your play type: " + Play.getPlayType(playTypeIndex));
         View.printNumberedStringArrayList(instructions);
         boolean headerPrinted = true;
 
         while (whileTrue) {
             if (!headerPrinted) {
                 System.out.println("--- Collection Menu ---");
+                System.out.println("Your play type: " + Play.getPlayType(playTypeIndex));
             }
             System.out.println("Enter command:");
 
@@ -368,6 +371,7 @@ public class Menu {
             }
         }
     }
+
 
 
     public static void dayMenu(int playTypeIndex) {  // DayAndWater Menu index : 11
@@ -485,6 +489,7 @@ public class Menu {
 
 
 
+
     public static void zombieMenu() { // Zombie Menu index: 44
         String command;
         boolean whileTrue = true;
@@ -546,6 +551,8 @@ public class Menu {
     }
 
 
+
+
     public static void railMenu() {
         String command;
         boolean whileTrue = true;
@@ -575,8 +582,9 @@ public class Menu {
 
             if (command.matches("[s,S]elect (\\d+)")) {
                 int cardNumber = Rail.getCardNumber(command);
-                //
-                //
+                Rail.selectCard(cardNumber);
+
+
             } else if (plantMatcher.matches()) {
                 if (Day.selectedPlant == null) {
                     View.noPlantIsSelected();
@@ -592,7 +600,7 @@ public class Menu {
                 Day.removePlant(row, column);
 
             } else if (command.toLowerCase().equals("list")) {
-
+                View.printNumberedPlantArrayList(Rail.railDeck);
 
             } else if (command.toLowerCase().equals("record")) {
 

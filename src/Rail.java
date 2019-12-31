@@ -7,46 +7,62 @@ public class Rail extends Play {
     private static int turn = 0;
     private static boolean addPlantInNextTurn = false;
     private static int lastAddedTurn = 1000;
+    private static int nextAddingPlantTurn = 0;
+
+
+    public static void railTurn() {
+        turn++;
+        checkAddingPlantToDeck();
+        Menu.railMenu();
+    }
 
 
     public static Plant generateRandomPlant() {
         Plant plant = null;
-        int ranNum = (int) (Math.random() * 24);
-        int i = 0;
-        for (Plant plantIterator : Plant.getPlants()) {
-            if (i < ranNum || plantIterator.isCanBePlantedInWater()) {
-                i++;
-                continue;
-            }
-
-            plant = new Plant(plantIterator);
-            break;
-        }
+        int randomPlantIndex = (int) (Math.random() * 24);
+        plant = new Plant(Plant.getPlants().get(randomPlantIndex));
         return plant;
     }
 
-    public static void addRandomPlantToRailDeck() {
+    private static Plant getNonWaterPlant() {
+        Plant plant = generateRandomPlant();
+        if (!plant.isCanBePlantedInWater())
+            return plant;
+        else
+            return getNonWaterPlant();
+    }
 
-        if (railDeck.size() < 10) {
-            railDeck.add(generateRandomPlant());
-        }
+    public static void addRandomPlantToRailDeck() {
+        if (railDeck.size() < 10)
+            railDeck.add(getNonWaterPlant());
     }
 
     private static int generateTwoThreeFour() {
-        return ((int) (Math.random() * 4.99));
+        return 2 + ((int) (Math.random() * 2.99));
     }
 
-    public static void railTurn() {
-
-
-
-        Menu.railMenu();
+    private static void checkAddingPlantToDeck() {
+        if (turn == nextAddingPlantTurn) {
+            addRandomPlantToRailDeck();
+            nextAddingPlantTurn = turn + generateTwoThreeFour();
+        }
     }
+
 
     public static int getCardNumber(String command) {
         command = command.replaceFirst("[s,S]elect", "");
         command = command.trim();
         return Integer.parseInt(command);
     }
+
+    public static void selectCard(int cardNumber) {
+        int indexInDeck = cardNumber - 1;
+        if (indexInDeck > railDeck.size() - 1) {
+            View.invalidCardNumber();
+            return;
+        }
+        selectedPlant = railDeck.get(indexInDeck);
+    }
+
 
 }
