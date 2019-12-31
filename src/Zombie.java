@@ -29,9 +29,9 @@
      private boolean haveDuck; //
 
      public void recievingShoot(Shoot shoot) {
-         if (shoot.isPea() && this.isPeaProof()) {
-             return;
-         }
+//         if (shoot.isPea() && this.isPeaProof()) {
+//             return;
+//         }
 
          if (shoot.getEffectiveTime() != 0) {
              shootsRecieved.add(shoot);
@@ -248,6 +248,7 @@
              }
              for (Shoot shoot : shootsTmp) {
                  thisUnit.RemoveFromShoots(shoot);
+                 System.out.println("shoot location is: 'removed' " + X + " " + Y);
              }
              baseConditionToMove = couldZombieGoToNextUnit(X, Y, basedY);
              if (!baseConditionToMove) {

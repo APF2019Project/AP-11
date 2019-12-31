@@ -190,7 +190,11 @@ public class Shoot {
         for (j = y; j <= destination; j++) {
             Unit unit = PlayGround.getSpecifiedUnit(x, j);
             if (unit.getZombies().size() != 0) {
-                unit.getZombies().get(0).recievingShoot(shoot);
+                int index = 0;
+//                int len = unit.getZombies().size() - 1;
+//                double rand = Math.random();
+//                index = (int)(len * rand);
+                unit.getZombies().get(index).recievingShoot(shoot);
                 break;
             }
         }
