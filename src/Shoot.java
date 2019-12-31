@@ -195,6 +195,9 @@ public class Shoot {
 //                double rand = Math.random();
 //                index = (int)(len * rand);
                 unit.getZombies().get(index).recievingShoot(shoot);
+                if (unit.getZombies().get(index).getHealth() <= 0){
+                    unit.getZombies().remove(index);
+                }
                 break;
             }
         }

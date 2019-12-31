@@ -244,19 +244,20 @@
                      this.recievingShoot(shoot);
                      shootsTmp.add(shoot);
                  } else {
+
                      Y = Integer.MAX_VALUE;// zombie is dead and gone to heaven far from home
                  }
              }
+
+             if (Y == Integer.MAX_VALUE) {
+                 return Integer.MAX_VALUE;
+             }
              for (Shoot shoot : shootsTmp) {
                  thisUnit.RemoveFromShoots(shoot);
-//                 System.out.println("shoot location is: 'removed' " + X + " " + Y);
              }
              baseConditionToMove = couldZombieGoToNextUnit(X, Y, basedY);
              if (!baseConditionToMove) {
                  return Y;
-             }
-             if (Y == Integer.MAX_VALUE) {
-                 return Integer.MAX_VALUE;
              }
              Y--;
          }
@@ -285,7 +286,7 @@
              condition = (Y >= 1) && (Y > farestUnitDidicatedBySpeed);
              return condition;
          } else {
-             condition = (Y >= 1) && (plant[0] == null && Y > farestUnitDidicatedBySpeed);
+             condition = (Y >= 1) && (plant == null || plant[0] == null && Y > farestUnitDidicatedBySpeed);
              return condition;
          }
      }
