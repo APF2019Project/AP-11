@@ -7,13 +7,45 @@ public class Rail extends Play {
     private static int turn = 0;
     private static boolean addPlantInNextTurn = false;
     private static int lastAddedTurn = 1000;
-    private static int nextAddingPlantTurn = 0;
+    private static int nextAddingPlantTurn = 1;
 
+    private static boolean whileRailTurn = true;
+
+    public static void setWhileRailTurn(boolean whileRailTurn) {
+        Rail.whileRailTurn = whileRailTurn;
+    }
 
     public static void railTurn() {
-        turn++;
-        checkAddingPlantToDeck();
-        Menu.railMenu();
+        setWhileRailTurn(true);
+        while(whileRailTurn) {
+            turn++;
+            System.out.println("$$$$ turn: " + turn);
+            if (railCheckLoose()) {
+                doFinalThingsRail();
+                break;
+            }
+            Shoot.shootTurn();
+            if (railCheckLoose()) {
+                doFinalThingsRail();
+                break;
+            }
+            Zombie.zombiesTurn();
+            if (railCheckLoose()) {
+                doFinalThingsRail();
+                break;
+            }
+            Plant.plantsTurn();
+            checkAddingPlantToDeck();
+            Menu.railMenu();
+        }
+    }
+
+    public static boolean railCheckLoose() {
+        for (int i = 0; i < 6; i++) {
+            if (PlayGround.getSpecifiedUnit(i, 0).getZombies().size() > 0)
+                return true;
+        }
+        return false;
     }
 
 
@@ -26,10 +58,18 @@ public class Rail extends Play {
 
     private static Plant getNonWaterPlant() {
         Plant plant = generateRandomPlant();
-        if (!plant.isCanBePlantedInWater())
+        if (!plant.isCanBePlantedInWater() || !plantExitsInRailDeck(plant.getName()))
             return plant;
         else
             return getNonWaterPlant();
+    }
+
+    private static boolean plantExitsInRailDeck(String plantName) {
+        for (Plant plantIterator : railDeck) {
+            if (plantIterator.getName().equals(plantName))
+                return true;
+        }
+        return false;
     }
 
     public static void addRandomPlantToRailDeck() {
@@ -74,6 +114,19 @@ public class Rail extends Play {
         unit.setPlant0(plant);
         selectedPlant = null;
         View.plantedInUnit(row, column, plantName);
+    }
+
+    public static void clearRailDeck() {
+        railDeck.clear();
+    }
+
+    public static void doFinalThingsRail() {
+        System.out.println("You Lost..!!");
+        System.out.println("Zombies are EATING you.....");
+        Collection.clearDecksSetCollections();
+        clearRailDeck();
+        View.goingBackTo(-2); // Going back to Login Menu
+        Menu.mainMenu();
     }
 
 }

@@ -10,11 +10,7 @@ public class Menu {
 
         String command;
         ArrayList<String> instructions = new ArrayList<>();
-        instructions.add("create account");
-        instructions.add("login");
-        instructions.add("leaderboard");
-        instructions.add("exit");
-        instructions.add("help");
+        setLoginMenuHelp(instructions);
         System.out.println("_____________ LOGIN MENU _____________");
         View.printNumberedStringArrayList(instructions);
         boolean headerPrinted = true;
@@ -70,13 +66,8 @@ public class Menu {
 
     static void mainMenu() { // Main Menu index = -2
         String command;
-
         ArrayList<String> instructions = new ArrayList<>();
-        instructions.add("play");
-        instructions.add("profile");
-        instructions.add("shop");
-        instructions.add("exit");
-        instructions.add("help");
+        setMainMenuHelp(instructions);
         System.out.println("______ MAIN MENU ______");
         View.printNumberedStringArrayList(instructions);
         boolean headerPrinted = true;
@@ -109,7 +100,6 @@ public class Menu {
                 case "help":
                     System.out.println("______ MAIN MENU ______");
                     View.printNumberedStringArrayList(instructions);
-//                    View.showHelp(-2);
                     break;
                 default:
                     View.invalidCommand(-2);
@@ -123,14 +113,7 @@ public class Menu {
         boolean whileTrue = true;
 
         ArrayList<String> instructions = new ArrayList<>();
-        instructions.add("change account");
-        instructions.add("change password");
-        instructions.add("change username");
-        instructions.add("delete account");
-        instructions.add("create account");
-        instructions.add("show account");
-        instructions.add("exit");
-        instructions.add("help");
+        setProfileMenuHelp(instructions);
         System.out.println("--- PROFILE MENU ---");
         View.printNumberedStringArrayList(instructions);
 
@@ -189,13 +172,7 @@ public class Menu {
     static void goPlay() { // Play Menu index: -4
 
         ArrayList<String> instructions = new ArrayList<>();
-        instructions.add("day");
-        instructions.add("water");
-        instructions.add("rail");
-        instructions.add("zombie");
-        instructions.add("pvp");
-        instructions.add("exit");
-        instructions.add("help");
+        setGoPlayMenuHelp(instructions);
         System.out.println("--- Play Menu ---");
         View.printNumberedStringArrayList(instructions);
         boolean headerPrinted = true;
@@ -482,8 +459,6 @@ public class Menu {
     }
 
 
-
-
     public static void zombieMenu() { // Zombie Menu index: 44
         String command;
         boolean whileTrue = true;
@@ -545,8 +520,6 @@ public class Menu {
     }
 
 
-
-
     public static void railMenu() {
         String command;
         boolean whileTrue = true;
@@ -578,7 +551,6 @@ public class Menu {
                 int cardNumber = Rail.getCardNumber(command);
                 Rail.selectCard(cardNumber);
 
-
             } else if (plantMatcher.matches()) {
                 if (Day.selectedPlant == null) {
                     View.noPlantIsSelected();
@@ -600,12 +572,25 @@ public class Menu {
 
 
             } else if (command.toLowerCase().equals("show lawn")) {
+                PlayGround.showLawn();
+                headerPrinted = false;
 
             } else if (command.toLowerCase().equals("end turn")) {
+                whileTrue = false;
 
+            } else if (command.toLowerCase().equals("exit")) {
+                boolean exit = View.areYouSureExitingPlay();
+                if (exit) {
+                    whileTrue = false;
+                    Rail.setWhileRailTurn(false);
+                    View.goingBackTo(-5);
+                    Collection.clearDecksSetCollections();
+                    Rail.clearRailDeck();
+                }
+                headerPrinted = false;
 
-            } else {
-
+            } else if (command.toLowerCase().equals("ppg")) {
+                PlayGround.printPlayGround();
             }
 
         }
@@ -621,6 +606,45 @@ public class Menu {
         ArrayList<String> instructions = new ArrayList<>();
         instructions.add("");
 
+    }
+
+
+
+    private static void setLoginMenuHelp(ArrayList<String> instructions) {
+        instructions.add("create account");
+        instructions.add("login");
+        instructions.add("leaderboard");
+        instructions.add("exit");
+        instructions.add("help");
+    }
+
+    private static void setMainMenuHelp(ArrayList<String> instructions) {
+        instructions.add("play");
+        instructions.add("profile");
+        instructions.add("shop");
+        instructions.add("exit");
+        instructions.add("help");
+    }
+
+    private static void setProfileMenuHelp(ArrayList<String> instructions) {
+        instructions.add("change account");
+        instructions.add("change password");
+        instructions.add("change username");
+        instructions.add("delete account");
+        instructions.add("create account");
+        instructions.add("show account");
+        instructions.add("exit");
+        instructions.add("help");
+    }
+
+    private static void setGoPlayMenuHelp(ArrayList<String> instructions) {
+        instructions.add("day");
+        instructions.add("water");
+        instructions.add("rail");
+        instructions.add("zombie");
+        instructions.add("pvp");
+        instructions.add("exit");
+        instructions.add("help");
     }
 
 
