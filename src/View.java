@@ -1,3 +1,4 @@
+import javax.swing.event.InternalFrameEvent;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -350,7 +351,7 @@ public class View {
                 System.out.print(" ");
             }
             System.out.print(zombieIterator.getHealth());
-            for (int i = 1; i <= 10 - zombieIterator.getHealth(); i++){
+            for (int i = 1; i <= 10 - Integer.toString(zombieIterator.getHealth()).length(); i++){
                 System.out.print(" ");
             }
             System.out.println("shield: " + zombieIterator.getShieldStrength());

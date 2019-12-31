@@ -1,5 +1,3 @@
-import javafx.print.PageLayout;
-
 import java.util.*;
 
 // All of the outputs that are starting with $$$ are being told to the programmer
