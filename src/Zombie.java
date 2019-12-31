@@ -227,11 +227,11 @@
          Unit thisUnit = PlayGround.getSpecifiedUnit(X, Y);
          int basedY = Y;
          while (baseConditionToMove) {
-             Y--;
              ArrayList<Shoot> shootsTmp = new ArrayList<>();
              for (Shoot shoot : thisUnit.getShoots()) {
                  if (this.getHealth() > 0) {
                      this.recievingShoot(shoot);
+                     shootsTmp.add(shoot);
                  } else {
                      Y = Integer.MAX_VALUE;// zombie is dead and gone to heaven far from home
                  }
@@ -239,10 +239,14 @@
              for (Shoot shoot : shootsTmp) {
                  thisUnit.RemoveFromShoots(shoot);
              }
-             baseConditionToMove = couldZombieGoToNextUnit(X, Y, basedY);
+             baseConditionToMove = couldZombieGoToNextUnit(X, Y-1, basedY);
+             if (!baseConditionToMove){
+                 return Y;
+             }
              if (Y == Integer.MAX_VALUE) {
                  return Integer.MAX_VALUE;
              }
+             Y--;
          }
          return Y;
      }
@@ -266,11 +270,11 @@
          int farestUnitDidicatedBySpeed = basedY - this.currentSpeed;
          Plant[] plant = PlayGround.getSpecifiedUnit(X, Y).getPlants();
          if (this.isCouldJump()){
-             condition = (Y > 0) && (Y >= farestUnitDidicatedBySpeed);
+             condition = (Y >= 1) && (Y >= farestUnitDidicatedBySpeed);
              return condition;
          }
          else {
-             condition = (Y > 0) && (plant[0] == null && Y >= farestUnitDidicatedBySpeed);
+             condition = (Y >= 1) && (plant[0] == null && Y >= farestUnitDidicatedBySpeed);
              return condition;
          }
      }
