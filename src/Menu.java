@@ -57,6 +57,9 @@ public class Menu {
                 case "ca2":
                     Account.cheatAccount2();
                     break;
+                case "ca3":
+                    Account.cheatAccount3();
+                    break;
                 default:
                     View.invalidCommand(-1);
                     break;
@@ -456,10 +459,15 @@ public class Menu {
                 View.printNumberedStringArrayList(instructions);
 
             } else if (command.toLowerCase().equals("sun mikhaaam")) {
-                Day.setSun(Day.getSun() + 5);
+                Day.setSun(Day.getSun() + 50);
 
             } else if (command.toLowerCase().equals("respawn mikhaaam")) {
                 Collection.decreaseRespawnsInDeck();
+                Collection.decreaseRespawnsInDeck();
+                Collection.decreaseRespawnsInDeck();
+                Collection.decreaseRespawnsInDeck();
+                Collection.decreaseRespawnsInDeck();
+
 
             } else if (command.toLowerCase().equals("ppg")) {
                 PlayGround.printPlayGround();

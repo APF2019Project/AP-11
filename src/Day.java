@@ -153,7 +153,6 @@ public class Day extends Play {
             View.invalidCoordinates();
             return;
         }
-
         if (PlayGround.getSpecifiedUnit(row, column).getZombies().size() != 0) {
             View.unavailableCoordinates();
             return;
@@ -161,32 +160,38 @@ public class Day extends Play {
 
         Unit unit = PlayGround.getSpecifiedUnit(row, column);
         Plant plant = selectedPlant;
+        Plant plant_0 = unit.getPlants()[0];
+        Plant plant_1 = unit.getPlants()[1];
         boolean isWater = unit.getIsWater();
         boolean waterPlant = plant.isCanBePlantedInWater();
 
         if ((!waterPlant) && (!isWater)) {
-            if (unit.getPlants()[0] == null) {
+            if (plant_0 == null) {
                 plantIn0(unit, plant, row, column, plantName);
             } else {
                 View.unitIsFilled(row, column, unit, 0);
             }
         } else if ((!waterPlant)) {
-            if (unit.getPlants()[1].getName().equals("Lily Pad")) {
+            if (plant_1 != null) {
                 plantIn0(unit, plant, row, column, plantName);
             } else {
                 View.landPlantInWater();
             }
         } else if (isWater) {
             if (plant.getName().equals("Lily Pad")) {
-                if (unit.getPlants()[1] == null) {
+                if (plant_1 == null && plant_0 == null) {
                     plantIn1(unit, plant, row, column, plantName);
-                } else {
+                } else if (plant_0 != null && plant_1 == null) {
+                    View.unitIsFilled(row, column, unit, 0);
+                } else if (plant_0 == null && plant_1 != null) {
                     View.alreadyALilyPadHere(row, column);
+                } else if (plant_0 != null && plant_1 != null) {
+                    View.unitIsFilled(row, column, unit, 0);
                 }
             } else {
-                if (unit.getPlants()[1] != null) {
+                if (plant_1 != null) {
                     View.alreadyALilyPadHere(row, column);
-                } else if (unit.getPlants()[0] != null) {
+                } else if (plant_0 != null) {
                     View.unitIsFilled(row, column, unit, 0);
                 } else {
                     plantIn0(unit, plant, row, column, plantName);
@@ -198,6 +203,10 @@ public class Day extends Play {
     }
 
 
+    public static void cheatPlantIn0 (Unit unit, Plant plant) {
+        unit.setPlant0(plant);
+    }
+
     private static void plantIn0(Unit unit, Plant plant, int row, int column, String plantName) {
         unit.setPlant0(plant);
         Collection.getPlantInDeck(plantName).setRespawnTime(Collection.getPlantInDeck(plantName)
@@ -208,14 +217,13 @@ public class Day extends Play {
     }
 
     private static void plantIn1(Unit unit, Plant plant, int row, int column, String plantName) {
-        unit.setPlant0(plant);
+        unit.setPlant1(plant);
         Collection.getPlantInDeck(plantName).setRespawnTime(Collection.getPlantInDeck(plantName)
                 .getRespawnCoolDown());
         selectedPlant = null;
         sun -= Collection.getPlantInDeck(plantName).getSunCost();
         View.plantedInUnit(row, column, plantName);
     }
-
 
     public static void removePlant(int row, int column) {
         if (PlayGround.getSpecifiedUnit(row, column) == null) {
@@ -224,26 +232,24 @@ public class Day extends Play {
         }
         Unit unit = PlayGround.getSpecifiedUnit(row, column);
         boolean isWater = unit.getIsWater();
-        Plant plant_0 = unit.getPlants()[0];
-        Plant plant_1 = unit.getPlants()[1];
         String plantName;
         if (!isWater) {
-            if (plant_0 != null) {
-                plantName = plant_0.getName();
-                plant_0 = null;
+            if (unit.getPlants()[0] != null) {
+                plantName = unit.getPlants()[0].getName();
+                unit.getPlants()[0] = null;
                 View.plantRemoved(row, column, plantName);
             } else {
                 View.unitIsEmpty(row, column);
             }
         } else { // is water:
-            if (plant_0 != null) {
-                plantName = plant_0.getName();
-                plant_0 = null;
+            if (unit.getPlants()[0] != null) {
+                plantName = unit.getPlants()[0].getName();
+                unit.getPlants()[0] = null;
                 View.plantRemoved(row, column, plantName);
             } else {
-                if (plant_1 != null) {
-                    plantName = plant_1.getName();
-                    plant_1 = null;
+                if (unit.getPlants()[1] != null) {
+                    plantName = unit.getPlants()[1].getName();
+                    unit.getPlants()[1] = null;
                     View.plantRemoved(row, column, plantName);
                 } else {
                     View.unitIsEmpty(row, column);
