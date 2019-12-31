@@ -1,3 +1,5 @@
+import javafx.print.PageLayout;
+
 import java.util.*;
 
 // All of the outputs that are starting with $$$ are being told to the programmer
@@ -329,10 +331,32 @@ public class Account {
         for (Plant plant : playingAccount.plantsCollection) {
             if (plant.getName().equals("Sunflower"))
                 continue;
+            if (plant.getName().equals("Explode-o-nut"))
+                continue;
             Account.getPlayingAccount().plantsDeck.add(new Plant(Plant.getPlant(plant.getName())));
         }
         Account.getPlayingAccount().plantsDeck.add(new Plant(Plant.getPlant("Lily Pad")));
+        Account.getPlayingAccount().plantsDeck.add(new Plant(Plant.getPlant("Tangle Kelp")));
         Menu.goPlay();
+    }
+
+    public static void cheatAccount3() {
+        Account cheatAccount = new Account("sajad", "mohamad");
+        playingAccount = cheatAccount;
+        Collection.setDefaultZombiesCollection();
+        Collection.setDefaultPlantsCollection();
+        for (Plant plant : playingAccount.plantsCollection) {
+            Account.getPlayingAccount().plantsDeck.add(new Plant(Plant.getPlant(plant.getName())));
+        }
+        PlayGround.BuildDayPlayGround();
+        Day.cheatPlantIn0(PlayGround.getSpecifiedUnit(0,2), new Plant(Plant.getPlant("Peashooter")));
+        Day.cheatPlantIn0(PlayGround.getSpecifiedUnit(1,2), new Plant(Plant.getPlant("Snow Pea")));
+        Day.cheatPlantIn0(PlayGround.getSpecifiedUnit(2,2), new Plant(Plant.getPlant("Peashooter")));
+        Day.cheatPlantIn0(PlayGround.getSpecifiedUnit(3,2), new Plant(Plant.getPlant("Peashooter")));
+        Day.cheatPlantIn0(PlayGround.getSpecifiedUnit(4,2), new Plant(Plant.getPlant("Cabbage-pult")));
+        Day.cheatPlantIn0(PlayGround.getSpecifiedUnit(5,2), new Plant(Plant.getPlant("Peashooter")));
+        Day.dayAndWaterTurn(1);
+
     }
 }
 

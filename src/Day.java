@@ -179,10 +179,14 @@ public class Day extends Play {
             }
         } else if (isWater) {
             if (plant.getName().equals("Lily Pad")) {
-                if (plant_1 == null) {
+                if (plant_1 == null && plant_0 == null) {
                     plantIn1(unit, plant, row, column, plantName);
-                } else {
+                } else if (plant_0 != null && plant_1 == null) {
+                    View.unitIsFilled(row, column, unit, 0);
+                } else if (plant_0 == null && plant_1 != null) {
                     View.alreadyALilyPadHere(row, column);
+                } else if (plant_0 != null && plant_1 != null) {
+                    View.unitIsFilled(row, column, unit, 0);
                 }
             } else {
                 if (plant_1 != null) {
@@ -198,6 +202,10 @@ public class Day extends Play {
         }
     }
 
+
+    public static void cheatPlantIn0 (Unit unit, Plant plant) {
+        unit.setPlant0(plant);
+    }
 
     private static void plantIn0(Unit unit, Plant plant, int row, int column, String plantName) {
         unit.setPlant0(plant);
