@@ -74,7 +74,7 @@ public class Rail extends Play {
 
     public static boolean railCheckLoose() {
         for (int i = 0; i < 6; i++) {
-            if (PlayGround.getSpecifiedUnit(i, 0).getZombies().size() > 0)
+            if (PlayGround.getSpecifiedUnit(i,0).getZombies().size() > 0)
                 return true;
         }
         return false;
@@ -90,7 +90,7 @@ public class Rail extends Play {
         return plant;
     }
 
-    private static Plant getNonWaterPlant() {
+    public static Plant getNonWaterPlant() {
         Plant plant = generateRandomPlant();
         if (!plant.isCanBePlantedInWater() || !plantExitsInRailDeck(plant.getName()))
             return plant;
@@ -111,7 +111,7 @@ public class Rail extends Play {
             railDeck.add(getNonWaterPlant());
     }
 
-    private static int generateTwoThreeFour() {
+    public static int generateTwoThreeFour() {
         return 2 + ((int) (Math.random() * 2.99));
     }
 

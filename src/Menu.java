@@ -229,12 +229,7 @@ public class Menu {
         boolean exitShop = false;
 
         ArrayList<String> instructions = new ArrayList<>();
-        instructions.add("show shop");
-        instructions.add("show collection");
-        instructions.add("show money");
-        instructions.add("buy [card name]");
-        instructions.add("help");
-        instructions.add("exit");
+        setShopMenuHelp(instructions);
         System.out.println("--- Shop Menu ---");
         View.printNumberedStringArrayList(instructions);
         boolean headerPrinted = true;
@@ -290,13 +285,7 @@ public class Menu {
         boolean whileTrue = true;
 
         ArrayList<String> instructions = new ArrayList<>();
-        instructions.add("select [card name]");
-        instructions.add("remove [card name]");
-        instructions.add("show collection");
-        instructions.add("show hand");
-        instructions.add("play");
-        instructions.add("exit");
-        instructions.add("help");
+        setCollectionMenuHelp(instructions);
         System.out.println("--- Collection Menu ---");
         System.out.println("Your play type: " + Play.getPlayType(playTypeIndex));
         View.printNumberedStringArrayList(instructions);
@@ -356,14 +345,7 @@ public class Menu {
         Pattern removePattern = Pattern.compile("[r,R]emove (?<row>\\d+),(?<column>\\d+)");
 
         ArrayList<String> instructions = new ArrayList<>();
-        instructions.add("select [card name]");
-        instructions.add("plant [row],[column]");
-        instructions.add("remove [row],[column]");
-        instructions.add("show hand");
-        instructions.add("show lawn");
-        instructions.add("end turn");
-        instructions.add("help");
-        instructions.add("exit");
+        setDayMenuHelp(instructions);
         if (playTypeIndex == 1) {
             System.out.println("^-^-^-^- Day Menu -^-^-^-^");
         } else if (playTypeIndex == 2) {
@@ -465,14 +447,7 @@ public class Menu {
         Pattern putPattern = Pattern.compile("[p,P]ut (?<zombieName>.+),(?<row>\\d+)");
 
         ArrayList<String> instructions = new ArrayList<>();
-        instructions.add("put [zombie name],[row]");
-        instructions.add("start");
-        instructions.add("show hand");
-        instructions.add("show lanes");
-        instructions.add("show lawn");
-        instructions.add("end turn");
-        instructions.add("help");
-        instructions.add("exit");
+        setZombieMenuHelp(instructions);
         System.out.println("^-^-^-^ Zombie Menu ^-^-^-^");
         View.printNumberedStringArrayList(instructions);
         boolean headerPrinted = true;
@@ -513,6 +488,8 @@ public class Menu {
             } else if (command.toLowerCase().equals("exit")) {
                 whileTrue = false;
                 View.goingBackTo(-5);
+            } else if (command.toLowerCase().equals("ppg")) {
+                PlayGround.printPlayGround();
             } else {
                 View.invalidCommand(44);
             }
@@ -527,13 +504,7 @@ public class Menu {
         Pattern removePattern = Pattern.compile("[r,R]emove (?<row>\\d+),(?<column>\\d+)");
 
         ArrayList<String> instructions = new ArrayList<>();
-        instructions.add("list");
-        instructions.add("select [card number]");
-        instructions.add("record");
-        instructions.add("plant [row],[column]");
-        instructions.add("remove [row],[column]");
-        instructions.add("show lawn");
-        instructions.add("end turn");
+        setRailMenuHelp(instructions);
         System.out.println("^-^-^-^ Rail Menu ^-^-^-^");
         View.printNumberedStringArrayList(instructions);
         boolean headerPrinted = true;
@@ -646,6 +617,58 @@ public class Menu {
         instructions.add("exit");
         instructions.add("help");
     }
+
+    private static void setShopMenuHelp(ArrayList<String> instructions) {
+        instructions.add("show shop");
+        instructions.add("show collection");
+        instructions.add("show money");
+        instructions.add("buy [card name]");
+        instructions.add("help");
+        instructions.add("exit");
+    }
+
+    private static void setCollectionMenuHelp(ArrayList<String> instructions) {
+        instructions.add("select [card name]");
+        instructions.add("remove [card name]");
+        instructions.add("show collection");
+        instructions.add("show hand");
+        instructions.add("play");
+        instructions.add("exit");
+        instructions.add("help");
+    }
+
+    private static void setDayMenuHelp(ArrayList<String> instructions) {
+        instructions.add("select [card name]");
+        instructions.add("plant [row],[column]");
+        instructions.add("remove [row],[column]");
+        instructions.add("show hand");
+        instructions.add("show lawn");
+        instructions.add("end turn");
+        instructions.add("help");
+        instructions.add("exit");
+    }
+
+    private static void setZombieMenuHelp(ArrayList<String> instructions) {
+        instructions.add("put [zombie name],[row]");
+        instructions.add("start");
+        instructions.add("show hand");
+        instructions.add("show lanes");
+        instructions.add("show lawn");
+        instructions.add("end turn");
+        instructions.add("help");
+        instructions.add("exit");
+    }
+
+    private static void setRailMenuHelp(ArrayList<String> instructions) {
+        instructions.add("list");
+        instructions.add("select [card number]");
+        instructions.add("record");
+        instructions.add("plant [row],[column]");
+        instructions.add("remove [row],[column]");
+        instructions.add("show lawn");
+        instructions.add("end turn");
+    }
+
 
 
 }
