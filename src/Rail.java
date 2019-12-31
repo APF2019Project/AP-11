@@ -49,6 +49,10 @@ public class Rail extends Play {
     }
 
 
+    public static void setDefaultRailDeck() {
+        railDeck.addAll(Account.getPlayingAccount().getPlantsCollection());
+    }
+
     public static int getCardNumber(String command) {
         command = command.replaceFirst("[s,S]elect", "");
         command = command.trim();
@@ -62,7 +66,14 @@ public class Rail extends Play {
             return;
         }
         selectedPlant = railDeck.get(indexInDeck);
+        View.cardSelected(Integer.toString(cardNumber));
     }
 
+
+    public static void plantIn0 (Unit unit, Plant plant, int row, int column, String plantName) {
+        unit.setPlant0(plant);
+        selectedPlant = null;
+        View.plantedInUnit(row, column, plantName);
+    }
 
 }

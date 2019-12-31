@@ -26,6 +26,7 @@ public class Play {
                 break;
             case 3:
                 PlayGround.BuildDayPlayGround();
+                Rail.setDefaultRailDeck();
                 Rail.railTurn();
                 break;
             case 4:

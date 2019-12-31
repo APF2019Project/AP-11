@@ -68,7 +68,6 @@ public class Menu {
     }
 
 
-
     static void mainMenu() { // Main Menu index = -2
         String command;
 
@@ -220,7 +219,7 @@ public class Menu {
                     headerPrinted = false;
                     break;
                 case "rail":
-                    //
+                    Play.goToPlayByPlayType(3);
                     headerPrinted = false;
                     break;
                 case "zombie":
@@ -373,7 +372,6 @@ public class Menu {
     }
 
 
-
     public static void dayMenu(int playTypeIndex) {  // DayAndWater Menu index : 11
         boolean whileTrue = true;
         String command;
@@ -418,11 +416,12 @@ public class Menu {
             } else if (plantMatcher.matches()) {
                 if (Day.selectedPlant == null) {
                     View.noPlantIsSelected();
-                    return;
+
+                } else {
+                    int row = Integer.parseInt(plantMatcher.group("row"));
+                    int column = Integer.parseInt(plantMatcher.group("column"));
+                    Day.plantSelectedPlant(row, column, Day.selectedPlant.getName(), false);
                 }
-                int row = Integer.parseInt(plantMatcher.group("row"));
-                int column = Integer.parseInt(plantMatcher.group("column"));
-                Day.plantSelectedPlant(row, column, Day.selectedPlant.getName());
 
             } else if (removeMatcher.matches()) {
                 int row = Integer.parseInt(removeMatcher.group("row"));
@@ -455,10 +454,8 @@ public class Menu {
             } else if (command.toLowerCase().equals("help")) {
                 if (playTypeIndex == 1) {
                     System.out.println("^-^-^-^- Day Menu -^-^-^-^");
-//                    View.showHelp(11);
                 } else if (playTypeIndex == 2) {
                     System.out.println("^-^-^-^- Water Menu ^-^-^-^-");
-//                    View.showHelp(22);
                 }
                 View.printNumberedStringArrayList(instructions);
 
@@ -472,12 +469,9 @@ public class Menu {
                 Collection.decreaseRespawnsInDeck();
                 Collection.decreaseRespawnsInDeck();
 
-
             } else if (command.toLowerCase().equals("ppg")) {
                 PlayGround.printPlayGround();
-
-            }
-            else {
+            } else {
                 if (playTypeIndex == 1) {
                     View.invalidCommand(11);
                 } else if (playTypeIndex == 2) {
@@ -588,11 +582,11 @@ public class Menu {
             } else if (plantMatcher.matches()) {
                 if (Day.selectedPlant == null) {
                     View.noPlantIsSelected();
-                    return;
+                } else {
+                    int row = Integer.parseInt(plantMatcher.group("row"));
+                    int column = Integer.parseInt(plantMatcher.group("column"));
+                    Day.plantSelectedPlant(row, column, Rail.selectedPlant.getName(), true);
                 }
-                int row = Integer.parseInt(plantMatcher.group("row"));
-                int column = Integer.parseInt(plantMatcher.group("column"));
-                Day.plantSelectedPlant(row, column, Rail.selectedPlant.getName());
 
             } else if (removeMatcher.matches()) {
                 int row = Integer.parseInt(removeMatcher.group("row"));

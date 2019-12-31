@@ -171,7 +171,7 @@ public class Day extends Play {
     }
 
 
-    public static void plantSelectedPlant(int row, int column, String plantName) {
+    public static void plantSelectedPlant(int row, int column, String plantName, boolean calledFromRail) {
         if (column % 2 != 0) {
             View.invalidCoordinates();
             return;
@@ -189,6 +189,7 @@ public class Day extends Play {
             return;
         }
 
+        Plant removableForRail = selectedPlant;
         Unit unit = PlayGround.getSpecifiedUnit(row, column);
         Plant plant = new Plant(selectedPlant);
         Plant plant_0 = unit.getPlants()[0];
@@ -198,13 +199,23 @@ public class Day extends Play {
 
         if ((!waterPlant) && (!isWater)) {
             if (plant_0 == null) {
-                plantIn0(unit, plant, row, column, plantName);
+                if (calledFromRail) {
+                    Rail.plantIn0(unit, plant, row, column, plantName);
+                    Rail.railDeck.remove(removableForRail);
+                } else {
+                    plantIn0(unit, plant, row, column, plantName);
+                }
             } else {
                 View.unitIsFilled(row, column, unit, 0);
             }
         } else if ((!waterPlant)) {
             if (plant_1 != null) {
-                plantIn0(unit, plant, row, column, plantName);
+                if (calledFromRail) {
+                    Rail.plantIn0(unit, plant, row, column, plantName);
+                    Rail.railDeck.remove(removableForRail);
+                } else {
+                    plantIn0(unit, plant, row, column, plantName);
+                }
             } else {
                 View.landPlantInWater();
             }
