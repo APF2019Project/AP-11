@@ -45,7 +45,6 @@ public class Day extends Play {
     public static void dayAndWaterTurn(int playTypeIndex) {
         setWhileDayTurn(true);
         while (whileDayTurn) {
-            checkWave();
             if (checkFinished()) {
                 return;
             }
@@ -58,6 +57,7 @@ public class Day extends Play {
                 return;
             }
             Plant.plantsTurn();
+            checkWave();
             Menu.dayMenu(playTypeIndex);
         }
     }

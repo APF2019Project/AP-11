@@ -14,7 +14,7 @@ public class Plant {
     private final int respawnCoolDown;
     private int respawnTime;
     private final int shootCoolDown;
-    private int shootTime = 100;
+    private int shootTime;
     private final boolean isCattail;
     private final boolean canBePlantedInWater;
     private String type;
@@ -59,27 +59,27 @@ public class Plant {
         Shoot frozenMelon = new Shoot(false, 3, 3, 0.5, Integer.MAX_VALUE);
 
 
-        new Plant("Peashooter", 2, 2, normalPea, 1, 0, 2, 2, false, false, "range -1 normal").setRespawnTime(2);
-        new Plant("Snow Pea", 3, 3, frozenPea, 1, 0, 3, 3, false, false, "range -1 normal").setRespawnTime(3);
-        new Plant("Cabbage-pult", 2, 2, cabbage, 1, 0, 3, 2, false, false, "range -1 normal").setRespawnTime(3);
-        new Plant("Repeater", 4, 3, normalPea, 2, 0, 4, 3, false, false, "range -1 normal").setRespawnTime(4);
-        new Plant("Threepeater", 5, 4, normalPea, 1, 0, 4, 4, false, false, "range -1 threeWay").setRespawnTime(4);
-        new Plant("Cactus", 5, 5, normalPea, 1, 1, 4, 2, false, false, "range -1 normal").setRespawnTime(4);
-        new Plant("Gatling Pea", 3, 5, normalPea, 4, 0, 4, 5, false, false, "range -1 normal").setRespawnTime(4);
-        new Plant("Scaredy-shroom", 1, 1, normalPea, 1, 0, 2, 2, false, false, "range 2 normal").setRespawnTime(2);
-        new Plant("Kernel-pult", 2, 3, kernel, 1, 0, 3, 4, false, false, "range -1 normal").setRespawnTime(3);
-        new Plant("Melon-pult", 3, 3, melon, 1, 0, 3, 4, false, false, "range -1 normal").setRespawnTime(3);
-        new Plant("Winter Melon", 3, 4, frozenMelon, 1, 0, 5, 4, false, false, "range -1 normal").setRespawnTime(5);
+        new Plant("Peashooter", 2, 2, normalPea, 1, 0, 2, 2, false, false, "range -1 normal");
+        new Plant("Snow Pea", 3, 3, frozenPea, 1, 0, 3, 3, false, false, "range -1 normal");
+        new Plant("Cabbage-pult", 2, 2, cabbage, 1, 0, 3, 2, false, false, "range -1 normal");
+        new Plant("Repeater", 4, 3, normalPea, 2, 0, 4, 3, false, false, "range -1 normal");
+        new Plant("Threepeater", 5, 4, normalPea, 1, 0, 4, 4, false, false, "range -1 threeWay");
+        new Plant("Cactus", 5, 5, normalPea, 1, 1, 4, 2, false, false, "range -1 normal");
+        new Plant("Gatling Pea", 3, 5, normalPea, 4, 0, 4, 5, false, false, "range -1 normal");
+        new Plant("Scaredy-shroom", 1, 1, normalPea, 1, 0, 2, 2, false, false, "range 2 normal");
+        new Plant("Kernel-pult", 2, 3, kernel, 1, 0, 3, 4, false, false, "range -1 normal");
+        new Plant("Melon-pult", 3, 3, melon, 1, 0, 3, 4, false, false, "range -1 normal");
+        new Plant("Winter Melon", 3, 4, frozenMelon, 1, 0, 5, 4, false, false, "range -1 normal");
 
-        new Plant("Wall-nut", 4, 2, null, 0, 0, 4, 0, false, false, "wall").setRespawnTime(4);
-        new Plant("Explode-o-nut", 3, 4, null, 0, 1, 5, 0, false, false, "wall").setRespawnTime(5);
-        new Plant("Tall-nut", 6, 4, null, 0, 0, 6, 0, false, false, "wall").setRespawnTime(6);
-        new Plant("Potato Mine", 1, 2, null, 0, 100, 3, 0, false, false, "bomb mine").setRespawnTime(3);
-        new Plant("Cherry Bomb", 0, 2, null, 0, 100, 4, 0, false, false, "bomb circle 1").setRespawnTime(4);
-        new Plant("Jalapeno", 0, 4, null, 0, 100, 5, 0, false, false, "bomb linear").setRespawnTime(5);
-        new Plant("Magnet-shroom", 2, 4, null, 0, 0, 4, 0, false, false, "magnet 1").setRespawnTime(4);
-        new Plant("Sunflower", 2, 1, null, 1, 0, 2, 1, false, false, "producer").setRespawnTime(2);
-        new Plant("Twin Sunflower", 2, 3, null, 2, 0, 5, 2, false, false, "producer").setRespawnTime(5);
+        new Plant("Wall-nut", 4, 2, null, 0, 0, 4, 0, false, false, "wall");
+        new Plant("Explode-o-nut", 3, 4, null, 0, 1, 5, 0, false, false, "wall");
+        new Plant("Tall-nut", 6, 4, null, 0, 0, 6, 0, false, false, "wall");
+        new Plant("Potato Mine", 1, 2, null, 0, 100, 3, 0, false, false, "bomb mine");
+        new Plant("Cherry Bomb", 0, 2, null, 0, 100, 4, 0, false, false, "bomb circle 1");
+        new Plant("Jalapeno", 0, 4, null, 0, 100, 5, 0, false, false, "bomb linear");
+        new Plant("Magnet-shroom", 2, 4, null, 0, 0, 4, 0, false, false, "magnet 1");
+        new Plant("Sunflower", 2, 1, null, 1, 0, 2, 1, false, false, "producer");
+        new Plant("Twin Sunflower", 2, 3, null, 2, 0, 5, 2, false, false, "producer");
 
         //  new Plant("Split Pea", 3, 4, normalPea, , 0, 4, , false, "range -1 twoWay")
         new Plant("Lily Pad", 1, 0, null, 0, 0, 1, 0, false, true, "stage");
@@ -113,7 +113,7 @@ public class Plant {
     public static void plantsTurn() {
         for (int i = 0; i < 6; i++)
             for (int j = 1; j < 20; j++) {
-                Unit unit = PlayGround.getSpecifiedUnit(i,j);
+                Unit unit = PlayGround.getSpecifiedUnit(i, j);
                 Plant plant = unit.getPlants()[0];
                 if (plant != null)
                     plant.turn(unit);
@@ -203,14 +203,13 @@ public class Plant {
     public void turn(Unit unit) {
 
         this.age++;
-        if (this.shootTime < this.shootCoolDown)
-            this.shootTime++;
+        if (this.shootTime > 0)
+            this.shootTime--;
         if (this.isCattail)
             isMelee(unit);
-        if (this.type.matches("range [-]?(\\d+) (\\w+)")){
+        if (this.type.matches("range [-]?(\\d+) (\\w+)")) {
             isRange(unit);
-        }
-        else if (this.type.matches("bomb .+"))
+        } else if (this.type.matches("bomb .+"))
             isBomb(unit);
         else if (this.type.equals("wall"))
             isWall(unit);
@@ -219,10 +218,9 @@ public class Plant {
     }
 
     private void isRange(Unit unit) {
-        System.out.println("we're in range.");
         if (unit.getZombies().size() > 0)
             damageZombie(unit, unit.getZombies().get(0));
-        if ((this.shootTime % this.shootCoolDown) == 0) {
+        if (this.shootTime == 0) {
             boolean isRangeOk = true;
             String[] rangeType = this.type.split(" ");
             int range = Integer.parseInt(rangeType[1]);
@@ -234,8 +232,7 @@ public class Plant {
             if (isRangeOk) {
                 if (rangeType[2].equals("threeWay")) {
                     threepeaterShoot(unit);
-                }
-                else if (rangeType[2].equals("normal")) {
+                } else if (rangeType[2].equals("normal")) {
                     normalShoot(unit);
                 }
             }
@@ -255,6 +252,7 @@ public class Plant {
                 bullet.setDirection("down");
                 unit.addToShoots(bullet);
             }
+            this.shootTime = this.shootCoolDown;
         }
     }
 
@@ -265,16 +263,19 @@ public class Plant {
                 bullet.setDirection("forward");
                 unit.addToShoots(bullet);
             }
+            this.shootTime = this.shootCoolDown;
         }
     }
 
     private void backShoot(Unit unit) {
-        if (checkBackForZombies(unit))
+        if (checkBackForZombies(unit)) {
             for (int i = 0; i < this.bulletNumber; i++) {
                 Shoot bullet = new Shoot(this.bullet);
                 bullet.setDirection("backward");
                 unit.addToShoots(bullet);
             }
+            this.shootTime = this.shootCoolDown;
+        }
     }
 
     private void isBomb(Unit unit) {
