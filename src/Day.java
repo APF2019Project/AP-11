@@ -1,6 +1,3 @@
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 public class Day extends Play {
 
     private static boolean whileDayTurn = true;
@@ -45,7 +42,6 @@ public class Day extends Play {
     public static void dayAndWaterTurn(int playTypeIndex) {
         setWhileDayTurn(true);
         while (whileDayTurn) {
-            checkWave();
             if (checkFinished()) {
                 return;
             }
@@ -54,6 +50,7 @@ public class Day extends Play {
                 return;
             }
             Zombie.zombiesTurn();
+            checkWave();
             if (checkFinished()) {
                 return;
             }
@@ -105,7 +102,18 @@ public class Day extends Play {
             int randomZombie = (int) (Math.random() * (zombiesNumber));
             int randomX = (int) (Math.random() * 5.68);
             Zombie zombie = Zombie.cloningZombie(Zombie.getZombies().get(randomZombie));
-            PlayGround.getSpecifiedUnit(randomX, 19).addToZombies(zombie);
+            Unit unit = PlayGround.getSpecifiedUnit(randomX, 19);
+            if (zombie.isWaterProof()) {
+                if(unit.isWater())
+                    unit.addToZombies(zombie);
+                else
+                    i--;
+            } else {
+                if (unit.isWater())
+                    i--;
+                else
+                    unit.addToZombies(zombie);
+            }
         }
     }
 
@@ -162,7 +170,7 @@ public class Day extends Play {
         Plant plant = selectedPlant;
         Plant plant_0 = unit.getPlants()[0];
         Plant plant_1 = unit.getPlants()[1];
-        boolean isWater = unit.getIsWater();
+        boolean isWater = unit.isWater();
         boolean waterPlant = plant.isCanBePlantedInWater();
 
         if ((!waterPlant) && (!isWater)) {
@@ -231,7 +239,7 @@ public class Day extends Play {
             return;
         }
         Unit unit = PlayGround.getSpecifiedUnit(row, column);
-        boolean isWater = unit.getIsWater();
+        boolean isWater = unit.isWater();
         String plantName;
         if (!isWater) {
             if (unit.getPlants()[0] != null) {

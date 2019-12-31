@@ -82,7 +82,7 @@ public class Unit {
     }
 
 
-    public boolean getIsWater() {
+    public boolean isWater() {
         return IsWater;
     }
 
@@ -136,7 +136,7 @@ public class Unit {
     public static int plantsNumbers(Unit unit) {
         Plant plant_1 = unit.getPlants()[1];
         Plant plant_0 = unit.getPlants()[0];
-        if (!unit.getIsWater()) {
+        if (!unit.isWater()) {
             if (plant_0 == null) {
                 return 0;
             } else {
