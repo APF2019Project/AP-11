@@ -5,9 +5,9 @@ public class Rail extends Play {
 
     public static ArrayList<Plant> railDeck = new ArrayList<>();
     private static int turn = 0;
-    private static boolean addPlantInNextTurn = false;
-    private static int lastAddedTurn = 1000;
+    private static int nextAddingZombieTurn = 1;
     private static int nextAddingPlantTurn = 1;
+
 
     private static boolean whileRailTurn = true;
 
@@ -16,7 +16,7 @@ public class Rail extends Play {
     }
 
     public static void railTurn() {
-        setWhileRailTurn(true);
+        startTheRailPlay();
         while(whileRailTurn) {
             turn++;
             System.out.println("$$$$ turn: " + turn);
@@ -36,8 +36,40 @@ public class Rail extends Play {
             }
             Plant.plantsTurn();
             checkAddingPlantToDeck();
+            addZombie();
             Menu.railMenu();
         }
+    }
+
+    private static void addZombie() {
+        if (turn == nextAddingZombieTurn) {
+            addRandomZombie(getRandomZombie());
+            nextAddingZombieTurn = turn + generateTwoThreeFour() + 1;
+        }
+    }
+
+    private static Zombie getRandomZombie() {
+        Zombie zombie = null;
+        int randomZombieNumber = (int) (Math.random() * 15.9);
+        zombie = Zombie.cloningZombie(Zombie.getZombies().get(randomZombieNumber));
+        if(!zombie.isWaterProof())
+            return zombie;
+        else
+            return getRandomZombie();
+    }
+
+    private static Unit getRandomUnitColumn19() {
+        int randomRow = (int) (Math.random() * 5.99);
+        return PlayGround.getSpecifiedUnit(randomRow, 19);
+    }
+
+    private static void addRandomZombie(Zombie zombie) {
+        getRandomUnitColumn19().addToZombies(getRandomZombie());
+    }
+
+    private static void startTheRailPlay() {
+        Rail.setDefaultRailDeck();
+        setWhileRailTurn(true);
     }
 
     public static boolean railCheckLoose() {
@@ -47,6 +79,8 @@ public class Rail extends Play {
         }
         return false;
     }
+
+
 
 
     public static Plant generateRandomPlant() {
