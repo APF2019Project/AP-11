@@ -63,6 +63,7 @@ public class Day extends Play {
             }
             Plant.plantsTurn();
             Menu.dayMenu(playTypeIndex);
+            Collection.decreaseRespawnsInDeck();
         }
     }
 

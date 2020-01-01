@@ -392,7 +392,6 @@ public class Menu {
                 headerPrinted = false;
 
             } else if (command.toLowerCase().equals("end turn")) {
-                Collection.decreaseRespawnsInDeck();
                 whileTrue = false;
                 return;
 
@@ -442,8 +441,7 @@ public class Menu {
 
 
 
-
-    public static void zombieMenu(boolean waterGround, boolean PvP) { // Zombie Menu index: 44
+    public static void zombieMenu(boolean waterGround, boolean pvp) { // Zombie Menu index: 44
         String command;
         boolean whileTrue = true;
         Pattern putPattern = Pattern.compile("[p,P]ut (?<zombieName>.+),(?<number>\\d+),(?<row>\\d+)");
@@ -469,37 +467,61 @@ public class Menu {
                 int row = Integer.parseInt(putMatcher.group("row"));
 
 
+
             } else if (command.toLowerCase().equals("show hand")) {
-                if (PvP) {
+                if (pvp) {
                     ZombieStyle.showHandInZombieStyle(Account.getZombiePlayingAccount());
                 } else {
                     ZombieStyle.showHandInZombieStyle(Account.getPlayingAccount());
                 }
                 headerPrinted = false;
+
             } else if (command.toLowerCase().equals("show lanes")) {
-
+                //
                 headerPrinted = false;
+
             } else if (command.toLowerCase().equals("start")) {
+                //
+                headerPrinted = false;
 
+            } else if (!pvp && command.toLowerCase().equals("end turn")) {
+                whileTrue = false;
                 headerPrinted = false;
-            } else if (command.toLowerCase().equals("end turn")) {
-                ZombieStyle.zombieStyleTurn(waterGround);
+                return;
+
+            } else if (pvp && command.toLowerCase().equals("ready")) {
+                whileTrue = false;
                 headerPrinted = false;
+                return;
 
             } else if (command.toLowerCase().equals("show lawn")) {
                 PlayGround.showLawn();
                 headerPrinted = false;
+
             } else if (command.toLowerCase().equals("help")) {
                 System.out.println("^-^-^-^ Zombie Menu ^-^-^-^");
                 View.printNumberedStringArrayList(instructions);
 
             } else if (command.toLowerCase().equals("exit")) {
-                whileTrue = false;
-                View.goingBackTo(-5);
+                boolean exit = View.areYouSureExitingPlay();
+                if (exit) {
+                    whileTrue = false;
+                    if (pvp) {
+                        PvP.setIsPvPTrue(false);
+                    } else {
+                        ZombieStyle.setWhileZombieTurn(false);
+                    }
+                    View.goingBackTo(-5);
+                    Collection.clearDecksSetCollections();
+                }
+                headerPrinted = false;
+
             } else if (command.toLowerCase().equals("ppg")) {
                 PlayGround.printPlayGround();
+
             } else {
                 View.invalidCommand(44);
+
             }
         }
     }
@@ -586,7 +608,6 @@ public class Menu {
         instructions.add("");
 
     }
-
 
 
     private static void setLoginMenuHelp(ArrayList<String> instructions) {
@@ -676,7 +697,5 @@ public class Menu {
         instructions.add("show lawn");
         instructions.add("end turn");
     }
-
-
 
 }

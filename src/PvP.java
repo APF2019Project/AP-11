@@ -1,11 +1,15 @@
 public class PvP {
 
     static int waveNumbers;
-    static boolean IsPvPTrue;
+    private static boolean IsPvPTrue = true;
     static Account account1;
     static Account account2;
     static int ZombieWinNumber = 0;
     static int PlantWinNumber = 0;
+
+    public static void setIsPvPTrue(boolean isPvPTrue) {
+        IsPvPTrue = isPvPTrue;
+    }
 
     public static void pvpTurn() {
         account1 = Account.getPlayingAccount(); // It is for plantPlayingAccount

@@ -6,15 +6,25 @@ import java.util.regex.Pattern;
 
 public class ZombieStyle extends Play {
 
-    private static int turns;
-    private static int wave;
-    private static int usedDock;
-    private static int usedLadder;
+    private static int turns = 0;
+    private static int wave = 0;
+    private static int usedDock = 0;
+    private static int usedLadder = 0;
 
     private static ArrayList<Plant> landPlants = new ArrayList<>();
     private static ArrayList<Plant> waterPlants = new ArrayList<>();
     private static ArrayList<Unit> landPlantingUnits = new ArrayList<>();
     private static ArrayList<Unit> waterUnitsIfWaterGround = new ArrayList<>();
+
+    // rows zombies ArrayLists:
+    public static ArrayList<Zombie> rowZombies_0 = new ArrayList<>();
+    public static ArrayList<Zombie> rowZombies_1 = new ArrayList<>();
+    public static ArrayList<Zombie> rowZombies_2 = new ArrayList<>();
+    public static ArrayList<Zombie> rowZombies_3 = new ArrayList<>();
+    public static ArrayList<Zombie> rowZombies_4 = new ArrayList<>();
+    public static ArrayList<Zombie> rowZombies_5 = new ArrayList<>();
+
+
 
     private static boolean whileZombieTurn = true;
     private static int playerWon = 0;
@@ -42,6 +52,7 @@ public class ZombieStyle extends Play {
     }
 
     private static void startZombiePlay(boolean waterGround) {
+        setEveryThingToDefaultStart();
         if (waterGround) {
             setWaterPlants();
         } else {
@@ -209,4 +220,29 @@ public class ZombieStyle extends Play {
         landPlants.add(new Plant(Plant.getPlant("Cattail")));
     }
 
+    public static void setEveryThingToDefaultStart() {
+        turns = 0;
+        wave = 0;
+        usedDock = 0;
+        usedLadder = 0;
+
+        landPlants.clear();
+        waterPlants.clear();
+        landPlantingUnits.clear();
+        waterUnitsIfWaterGround.clear();
+
+        rowZombies_0.clear();
+        rowZombies_1.clear();
+        rowZombies_2.clear();
+        rowZombies_3.clear();
+        rowZombies_4.clear();
+        rowZombies_5.clear();
+
+        whileZombieTurn = true;
+        playerWon = 0;
+    }
+
+    public static void setWhileZombieTurn(boolean whileZombieTurn) {
+        ZombieStyle.whileZombieTurn = whileZombieTurn;
+    }
 }
