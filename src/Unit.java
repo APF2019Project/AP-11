@@ -96,7 +96,7 @@ public class Unit {
         IsWater = water;
     }
 
-    public boolean getHaveChamanZan() {
+    public boolean getHaveLawnMover() {
         return haveLawnMover;
     }
 

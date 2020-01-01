@@ -388,7 +388,15 @@ public class View {
         }
     }
 
+    public static void alreadyTwoZombiesInRow(int row) {
+        System.out.println("You have already put two zombies in row " + row + ".");
+        System.out.println();
+    }
 
+    public static void zombiePutInRow(String zombieName, int row) {
+        System.out.println(zombieName + " added to the row " + row + ".");
+        System.out.println();
+    }
     public static void unitIsFilled(int row, int column, Unit unit, int plantIndex) {
         System.out.println("Unit " + row + "," + column + " is already filled with a " + unit.getPlants()[plantIndex].getName());
         System.out.println();
@@ -396,6 +404,7 @@ public class View {
 
     public static void alreadyALilyPadHere(int row, int column) {
         System.out.println("There is already a Lily Pad in unit " + row + "," + column);
+        System.out.println();
     }
 
     public static void waterPlantInLand() {

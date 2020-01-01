@@ -271,7 +271,7 @@
 
      public static void lawnMoverAction(int X) {
          Unit[][] playGround = PlayGround.getUnits();
-         if (!playGround[X][0].getHaveChamanZan())
+         if (!playGround[X][0].getHaveLawnMover())
              return;
          if (playGround[X][0].getZombies().size() == 0) {
              return;
