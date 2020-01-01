@@ -74,11 +74,13 @@
          zOmboni.setName("Zomboni");
          zOmboni.setCouldRevertToRegularZombie(true);
          zOmboni.setHealth(3);
+         zOmboni.setDamagePower(Integer.MAX_VALUE);
          addZombies(zOmboni);
 
          Zombie zCatapult = Zombie.initializeRegularZombie();
          zCatapult.setName("Catapult Zombie");
          zCatapult.setHealth(3);
+         zCatapult.setDamagePower(Integer.MAX_VALUE);
          addZombies(zCatapult);
 
          Zombie zBungee = Zombie.initializeRegularZombie();
@@ -177,7 +179,7 @@
          }
          for (Zombie zombie : tmpArrForDestroyedZombies) {
              if (PlayGround.getSpecifiedUnit(X, Y) != null) {
-                 PlayGround.getSpecifiedUnit(X, Y).RemoveFromZombies(zombie);
+                 PlayGround.getSpecifiedUnit(X, Y).removeFromZombies(zombie);
              }
          }
          for (ZombieByLocation zombieXY: tmpArrZombieByLocation){
@@ -327,7 +329,7 @@
      }
 
      public void turnToRegularZombie(int X, int Y) {
-         PlayGround.getSpecifiedUnit(X, Y).RemoveFromZombies(this);
+         PlayGround.getSpecifiedUnit(X, Y).removeFromZombies(this);
          Zombie zRegular = Zombie.initializeRegularZombie();
          PlayGround.getSpecifiedUnit(X, Y).addToZombies(zRegular);
      }
