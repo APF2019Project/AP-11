@@ -268,7 +268,7 @@
              for (Shoot shoot : shootsTmp) {
                  thisUnit.RemoveFromShoots(shoot);
              }
-             baseConditionToMove = couldZombieGoToNextUnit(X, Y, basedY);
+             baseConditionToMove = this.couldZombieGoToNextUnit(X, Y, basedY);
              if (!baseConditionToMove) {
                  return Y;
              }
@@ -299,7 +299,8 @@
              condition = (Y >= 1) && (Y > farestUnitDidicatedBySpeed);
              return condition;
          } else {
-             condition = (Y >= 1) && (plant == null || plant[0] == null || PlayGround.isHaveLadder()) && Y > farestUnitDidicatedBySpeed;
+             condition = (Y >= 1) && (plant == null || plant[0] == null || this.isHaveLadder() || PlayGround.isHaveLadder()) && Y > farestUnitDidicatedBySpeed;
+
              return condition;
          }
      }
