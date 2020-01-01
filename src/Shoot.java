@@ -194,9 +194,10 @@ public class Shoot {
 //                int len = unit.getZombies().size() - 1;
 //                double rand = Math.random();
 //                index = (int)(len * rand);
-                unit.getZombies().get(index).recievingShoot(shoot);
-                if (unit.getZombies().get(index).getHealth() <= 0){
-                    unit.getZombies().remove(index);
+                Zombie zombie = unit.getZombies().get(index);
+                zombie.recievingShoot(shoot);
+                if (zombie.getHealth() <= 0){
+                    unit.removeFromZombies(zombie);
                     Account.increaseKilledZombies(1);
                 }
                 break;

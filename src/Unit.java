@@ -5,7 +5,7 @@ public class Unit {
     private int X;
     private int Y;
     private boolean IsWater;
-    private boolean haveLawnMover;  //chamanZan
+    private boolean haveLawnMover;
     private ArrayList<Zombie> zombies = new ArrayList<>();
     private Plant[] plants = new Plant[2];
     private ArrayList<Shoot> shoots = new ArrayList<>();
@@ -51,8 +51,14 @@ public class Unit {
     }
 
 
-    public void RemoveFromZombies(Zombie zombie){
+    public void removeFromZombies(Zombie zombie){
+        boolean flag = false;
+        if (zombie.isCouldRevertToRegularZombie()){
+            flag = true;
+        }
         zombies.remove(zombie);
+        if (flag)
+            this.addToZombies(Zombie.initializeRegularZombie());
     }
 
     public void RemovePlant(Plant plant){
@@ -118,7 +124,18 @@ public class Unit {
     public void removeAllZombies() {
         int n = this.getZombies().size();
         Account.increaseKilledZombies(n);
+        ArrayList <Zombie> regularZombies = new ArrayList<>();
+
+        for (Zombie zombie: this.getZombies()){
+            if (zombie.isCouldRevertToRegularZombie()){
+                Zombie zombieTmp = Zombie.initializeRegularZombie();
+                regularZombies.add(zombieTmp);
+            }
+        }
         this.getZombies().clear();
+        for (Zombie zombie: regularZombies){
+            this.addToZombies(zombie);
+        }
     }
 
     public void removeAllShoots() {
