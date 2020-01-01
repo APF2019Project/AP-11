@@ -102,10 +102,6 @@ public class Unit {
         plants[index] = null;
     }
 
-    public void killZombie(Zombie zombie) {
-        this.zombies.remove(zombie);
-    }
-
     public void printUnit() {
         System.out.print(this.getX() + " " + this.getY() + " ");
         for (Zombie z: Zombie.getZombies()){
@@ -120,6 +116,8 @@ public class Unit {
     }
 
     public void removeAllZombies() {
+        int n = this.getZombies().size();
+        Account.increaseKilledZombies(n);
         this.getZombies().clear();
     }
 

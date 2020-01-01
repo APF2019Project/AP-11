@@ -123,6 +123,9 @@ public class Account {
         return playingAccount;
     }
 
+    public static void increaseKilledZombies(int n){
+        playingAccount.killedZombies += n;
+    }
 
     // Methods:
 

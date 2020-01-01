@@ -366,7 +366,7 @@ public class Plant {
     private void damageZombie(Unit unit, Zombie zombie) {
         zombie.decreaseHealth(this.meleeDamage);
         if (zombie.getHealth() <= 0)
-            unit.killZombie(zombie);
+            unit.RemoveFromZombies(zombie);
     }
 
     private boolean checkForthForZombies(Unit unit) {
