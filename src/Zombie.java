@@ -391,6 +391,7 @@
 
      public static void removeZombies(Zombie zombie) {
          zombies.remove(zombie);
+         Account.increaseKilledZombies(1);
      }
 
      public String getName() {

@@ -197,6 +197,7 @@ public class Shoot {
                 unit.getZombies().get(index).recievingShoot(shoot);
                 if (unit.getZombies().get(index).getHealth() <= 0){
                     unit.getZombies().remove(index);
+                    Account.increaseKilledZombies(1);
                 }
                 break;
             }
