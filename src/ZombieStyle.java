@@ -204,6 +204,7 @@ public class ZombieStyle extends Play {
         }
         for (Zombie zombieIterator : PlayGround.getSpecifiedUnit(row, column).getZombies()) {
             if (zombieIterator.getName().equals(zombieName)) {
+
                 zombieIterator.setHaveLadder(true);
             }
         }
@@ -256,6 +257,46 @@ public class ZombieStyle extends Play {
             System.out.print(i + ". ");
             System.out.println(zombieIterator.getName() + "    " + zombieIterator.getHealth());
             i++;
+        }
+    }
+
+
+    public static void showLanes() {
+        System.out.println("Show Lanes:");
+        System.out.print("row 0:");
+        for (Zombie zombieIterator : ZombieStyle.rowZombies_0) {
+            System.out.print(" ");
+            System.out.print(zombieIterator.getName());
+        }
+        System.out.println();
+        System.out.print("row 1:");
+        for (Zombie zombieIterator : ZombieStyle.rowZombies_1) {
+            System.out.print(" ");
+            System.out.print(zombieIterator.getName());
+        }
+        System.out.println();
+        System.out.print("row 2:");
+        for (Zombie zombieIterator : ZombieStyle.rowZombies_2) {
+            System.out.print(" ");
+            System.out.print(zombieIterator.getName());
+        }
+        System.out.println();
+        System.out.print("row 3:");
+        for (Zombie zombieIterator : ZombieStyle.rowZombies_3) {
+            System.out.print(" ");
+            System.out.print(zombieIterator.getName());
+        }
+        System.out.println();
+        System.out.print("row 4:");
+        for (Zombie zombieIterator : ZombieStyle.rowZombies_0) {
+            System.out.print(" ");
+            System.out.print(zombieIterator.getName());
+        }
+        System.out.println();
+        System.out.print("row 5:");
+        for (Zombie zombieIterator : ZombieStyle.rowZombies_5) {
+            System.out.print(" ");
+            System.out.print(zombieIterator.getName());
         }
     }
 
