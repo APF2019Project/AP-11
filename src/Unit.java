@@ -61,12 +61,6 @@ public class Unit {
             this.addToZombies(Zombie.initializeRegularZombie());
     }
 
-    public void RemovePlant(Plant plant){
-        if (plants[0] == plant)
-            plants[0] = null;
-        else if (plants[1] == plant)
-            plants[1] = null;
-    }
 
     //Getters:
 
@@ -96,7 +90,7 @@ public class Unit {
         IsWater = water;
     }
 
-    public boolean getHaveChamanZan() {
+    public boolean getHaveLawnMover() {
         return haveLawnMover;
     }
 

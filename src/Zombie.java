@@ -215,12 +215,17 @@
                  this.setTurnThief(this.getTurnThief() - 1);
          }
          tmpArrForDestroyedZombies.add(this);
-         tmpArrZombieByLocation.add(new ZombieByLocation(X, newY, this));
-//         Unit unitNew = PlayGround.getSpecifiedUnit(X, newY);
-//         unitNew.addToZombies(this);
+         Unit unit = PlayGround.getSpecifiedUnit(X, newY);
+         Plant[] plants = unit.getPlants();
+         if (!plants[0].explodeMine(PlayGround.getSpecifiedUnit(X, newY))){
+             tmpArrZombieByLocation.add(new ZombieByLocation(X, newY, this));
+         }
+         else {
+             for (Zombie zombie: PlayGround.getSpecifiedUnit(X, newY).getZombies()){
+                 tmpArrForDestroyedZombies.add(zombie);
+             }
+         }
          this.damagingPlantIfExist(PlayGround.getSpecifiedUnit(X, newY));
-
-
      }
 
      private void damagingPlantIfExist(Unit unitNew) {
@@ -242,11 +247,9 @@
              Unit thisUnit = PlayGround.getSpecifiedUnit(X, Y);
              for (Shoot shoot : thisUnit.getShoots()) {
                  if (this.getHealth() > 0) {
-
                      this.recievingShoot(shoot);
                      shootsTmp.add(shoot);
                  } else {
-
                      Y = Integer.MAX_VALUE;// zombie is dead and gone to heaven far from home
                  }
              }
@@ -268,7 +271,7 @@
 
      public static void lawnMoverAction(int X) {
          Unit[][] playGround = PlayGround.getUnits();
-         if (!playGround[X][0].getHaveChamanZan())
+         if (!playGround[X][0].getHaveLawnMover())
              return;
          if (playGround[X][0].getZombies().size() == 0) {
              return;
