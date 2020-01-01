@@ -247,7 +247,15 @@ public class ZombieStyle extends Play {
     }
 
     private static void doFinalThings(int playerWon) {
-        //
+        setEveryThingToDefaultStart();
+        if (playerWon == 1){
+            View.youWon();
+        }
+        else if (playerWon == -1){
+            View.youLost();
+        }
+        whileZombieTurn = false;
+
     }
 
     private static void increaseCoins(int plantInitializedHealth) {
@@ -265,6 +273,7 @@ public class ZombieStyle extends Play {
     private static boolean checkFinished() {
         if (coins < lowestZombieCost) {
             // you lost.
+            playerWon = -1;
             return true;
         }
         boolean thereIsNoPlantLeft = true;
@@ -276,6 +285,7 @@ public class ZombieStyle extends Play {
             }
         if (thereIsNoPlantLeft) {
             // you won.
+            playerWon = +1;
             return true;
         }
         return false;
