@@ -12,7 +12,25 @@ public class ZombieStyle extends Play {
     private static int wave;
     private static int usedDock;
     private static int usedLadder;
+
+    public static int getCoins() {
+        return coins;
+    }
+
+    public static void setCoins(int coins) {
+        ZombieStyle.coins = coins;
+    }
+
     private static int coins = 50;
+
+    public static int getLowestZombieCost() {
+        return lowestZombieCost;
+    }
+
+    public static void setLowestZombieCost(int lowestZombieCost) {
+        ZombieStyle.lowestZombieCost = lowestZombieCost;
+    }
+
     private static int lowestZombieCost;
 
     private static ArrayList<Plant> landPlants = new ArrayList<>();
@@ -124,7 +142,7 @@ public class ZombieStyle extends Play {
         for (int i = 0; i < 6; i++)
             for (int j = 1; j < 4; j++) {
                 Unit unit = PlayGround.getSpecifiedUnit(i, j);
-                if (unit.getPlants()[0] != null || unit.getPlants()[1] != null)
+                if (unit.getPlants()[0] != null)
                     thereIsNoPlantLeft = false;
             }
         if (thereIsNoPlantLeft) {

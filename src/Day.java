@@ -8,7 +8,7 @@ public class Day extends Play {
 
     private static int sun = 2;
 
-    private static int playerHealth = 1; // sajad edited this to debug
+    private static int playerHealth = 6; // sajad edited this to debug
 
     private static int playerWon = 0;
 
@@ -67,7 +67,7 @@ public class Day extends Play {
     }
 
     private static void setUpTheBeginningOfPlay() {
-        playerHealth = 1;
+        playerHealth = 1;  // Is it ok guys, Sadjad is asking
         setWhileDayTurn(true);
     }
 
@@ -76,12 +76,12 @@ public class Day extends Play {
             View.youWon();
         if (playerWon == -1)
             View.youLost();
-       Collection.clearDecksSetCollections();
+        Collection.clearDecksSetCollections();
         View.goingBackTo(-2); // Going back to Login Menu
         Menu.mainMenu();
     }
 
-    private static boolean checkFinished() {
+    private static boolean checkFinished() { // if you change this method tell me : sadjad
 
         for (int i = 0; i < 6; i++)
             if (PlayGround.getSpecifiedUnit(i, 0).getZombies().size() > 0) {
@@ -127,7 +127,7 @@ public class Day extends Play {
             Zombie zombie = Zombie.cloningZombie(Zombie.getZombies().get(randomZombie));
             Unit unit = PlayGround.getSpecifiedUnit(randomX, 19);
             if (zombie.isWaterProof()) {
-                if(unit.isWater())
+                if (unit.isWater())
                     unit.addToZombies(zombie);
                 else
                     i--;
@@ -138,14 +138,6 @@ public class Day extends Play {
                     unit.addToZombies(zombie);
             }
         }
-    }
-
-    private static boolean allZombiesAreDead() {
-        for (int i = 0; i < 6; i++)
-            for (int j = 1; j < 20; j++)
-                if (PlayGround.getSpecifiedUnit(i, j).getZombies().size() > 0)
-                    return false;
-        return true;
     }
 
     public static String getCardName(String command) {
@@ -245,7 +237,7 @@ public class Day extends Play {
     }
 
 
-    public static void cheatPlantIn0 (Unit unit, Plant plant) {
+    public static void cheatPlantIn0(Unit unit, Plant plant) {
         unit.setPlant0(plant);
     }
 

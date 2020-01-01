@@ -29,6 +29,11 @@ public class Account {
         this.killedZombies = 0;
     }
 
+    public static Account getZombiePlayingAccount() {
+        return null;
+        // kiiiiiiiiaaaaaaaanaaaaaaam code it
+    }
+
     // All setters:
     public void setUsername(String username) {this.username = username;}
 
