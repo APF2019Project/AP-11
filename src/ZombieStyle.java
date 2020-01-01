@@ -10,6 +10,8 @@ public class ZombieStyle extends Play {
     private static int wave = 0;
     private static int usedDock = 0;
     private static int usedLadder = 0;
+    private static int coins = 50;
+    private static int lowestZombieCost;
 
     private static ArrayList<Plant> landPlants = new ArrayList<>();
     private static ArrayList<Plant> waterPlants = new ArrayList<>();
@@ -71,8 +73,6 @@ public class ZombieStyle extends Play {
         ZombieStyle.coins = coins;
     }
 
-    private static int coins = 50;
-
     public static int getLowestZombieCost() {
         return lowestZombieCost;
     }
@@ -80,9 +80,6 @@ public class ZombieStyle extends Play {
     public static void setLowestZombieCost(int lowestZombieCost) {
         ZombieStyle.lowestZombieCost = lowestZombieCost;
     }
-
-    private static int lowestZombieCost;
-
 
     private static void setPlantingUnits(boolean waterGround) {
         if (!waterGround) {
@@ -132,6 +129,44 @@ public class ZombieStyle extends Play {
             }
         }
     }
+
+
+    public static void putZombieInRow(String zombieName, int number, int row) {
+        if (!Collection.zombieExistsInDeck(zombieName)) {
+            View.invalidCardName();
+            return;
+        } else if (row < 0 || row > 5) {
+            View.invalidCoordinates();
+            return;
+        }
+        ArrayList<Zombie> arrayList = getZombieArrayListByRow(row);
+        if (arrayList.size() >= 2) {
+            View.alreadyTwoZombiesInRow(row);
+        } else {
+            arrayList.add(Zombie.cloningZombie(Zombie.getZombie(zombieName)));
+            View.zombiePutInRow(zombieName, row);
+        }
+    }
+
+    private static ArrayList<Zombie> getZombieArrayListByRow (int row) {
+        switch (row) {
+            case 0:
+                return rowZombies_0;
+            case 1:
+                return rowZombies_1;
+            case 2:
+                return rowZombies_2;
+            case 3:
+                return rowZombies_3;
+            case 4:
+                return rowZombies_4;
+            case 5:
+                return rowZombies_5;
+        }
+        return null;
+    }
+
+
 
     private static void doFinalThings(int playerWon) {
         //
@@ -225,6 +260,7 @@ public class ZombieStyle extends Play {
         wave = 0;
         usedDock = 0;
         usedLadder = 0;
+        coins = 50;
 
         landPlants.clear();
         waterPlants.clear();

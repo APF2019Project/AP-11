@@ -465,8 +465,7 @@ public class Menu {
                 String zombieName = putMatcher.group("zombieName");
                 int number = Integer.parseInt(putMatcher.group("number"));
                 int row = Integer.parseInt(putMatcher.group("row"));
-
-
+                ZombieStyle.putZombieInRow(zombieName, number, row);
 
             } else if (command.toLowerCase().equals("show hand")) {
                 if (pvp) {
