@@ -81,8 +81,6 @@ public class Rail extends Play {
     }
 
 
-
-
     public static Plant generateRandomPlant() {
         Plant plant = null;
         int randomPlantIndex = (int) (Math.random() * 24);

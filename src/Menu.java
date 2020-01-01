@@ -441,7 +441,7 @@ public class Menu {
     }
 
 
-    public static void zombieMenu() { // Zombie Menu index: 44
+    public static void zombieMenu(boolean waterGround) { // Zombie Menu index: 44
         String command;
         boolean whileTrue = true;
         Pattern putPattern = Pattern.compile("[p,P]ut (?<zombieName>.+),(?<row>\\d+)");
@@ -475,7 +475,7 @@ public class Menu {
 
                 headerPrinted = false;
             } else if (command.toLowerCase().equals("end turn")) {
-                ZombieStyle.zombieStyleTurn();
+                ZombieStyle.zombieStyleTurn(waterGround);
                 headerPrinted = false;
 
             } else if (command.toLowerCase().equals("show lawn")) {

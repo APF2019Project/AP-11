@@ -32,10 +32,10 @@ public class Play {
                 int index = View.choosePlayGroundInZombieStyle();
                 if (index == 1) {
                     PlayGround.BuildDayPlayGround();
-                    ZombieStyle.zombieStyleTurn();
+                    ZombieStyle.zombieStyleTurn(false);
                 } else if (index == 2) {
                     PlayGround.BuildWaterPlayGround();
-                    ZombieStyle.zombieStyleTurn();
+                    ZombieStyle.zombieStyleTurn(true);
                 }
                 break;
             case 5:

@@ -1,4 +1,7 @@
+import javafx.print.PageLayout;
+
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -11,19 +14,17 @@ public class ZombieStyle extends Play {
     private static int usedLadder;
     private static int coins = 50;
     private static int lowestZombieCost;
-    private static ArrayList<Plant> sevenPlants = new ArrayList<>();
+
+    private static ArrayList<Plant> landPlants = new ArrayList<>();
+    private static ArrayList<Plant> waterPlants = new ArrayList<>();
+    private static ArrayList<Unit> landPlantingUnits = new ArrayList<>();
+    private static ArrayList<Unit> waterUnitsIfWaterGround = new ArrayList<>();
 
     private static boolean whileZombieTurn = true;
     private static int playerWon = 0;
 
-    private static ArrayList<Unit> plantingUnits = new ArrayList<>();
-
-    private static void setSevenPlants() {
-        sevenPlants.addAll(Account.getPlayingAccount().getPlantsCollection());
-    }
-
-    public static void zombieStyleTurn() {
-        startZombiePlay();
+    public static void zombieStyleTurn(boolean waterGround) {
+        startZombiePlay(waterGround);
         while(whileZombieTurn) {
             if (checkFinished()) {
                 doFinalThings(playerWon);
@@ -40,44 +41,66 @@ public class ZombieStyle extends Play {
                 return;
             }
             Plant.plantsTurn();
-            Menu.zombieMenu();
+            Menu.zombieMenu(waterGround);
         }
     }
 
-    private static void startZombiePlay() {
-        setSevenPlants();
-        generateRandomUnitsToPlant();
-        randomPlanting();
+    private static void startZombiePlay(boolean waterGround) {
+        if (waterGround) {
+            setWaterPlants();
+        } else {
+            setLandPlants();
+        }
+
         whileZombieTurn = true;
+    }
+
+    private static void setPlantingUnits(boolean waterGround) {
+        if (!waterGround) {
+            for (int i = 0; i <= 5; i++) {
+                for (int j = 1; j <= 3; j++) {
+                    landPlantingUnits.add(PlayGround.getSpecifiedUnit(i, j));
+                }
+            }
+            Collections.shuffle(landPlantingUnits);
+        } else {
+            for (int i = 0; i <= 1; i++) {
+                for (int j = 1; j <= 3; j++) {
+                    landPlantingUnits.add(PlayGround.getSpecifiedUnit(i, j));
+                }
+            }
+            for (int i = 4; i <= 5; i++) {
+                for (int j = 1; j <= 3; j++) {
+                    landPlantingUnits.add(PlayGround.getSpecifiedUnit(i, j));
+                }
+            }
+            for (int i = 2; i <= 3; i++) {
+                for (int j = 1; j <= 3; j++) {
+                    waterUnitsIfWaterGround.add(PlayGround.getSpecifiedUnit(i, j));
+                }
+            }
+            Collections.shuffle(landPlantingUnits);
+            Collections.shuffle(waterUnitsIfWaterGround);
+        }
+    }
+
+
+    private static void randomPlanting(boolean waterGround) {
+        if (!waterGround) {
+            for (int i = 0; i < 18; i++) {
+                landPlantingUnits.get(i).setPlant0(new Plant(landPlants.get(i)));
+            }
+        }
+        else {
+
+
+        }
+
     }
 
     private static void doFinalThings(int playerWon) {
         //
     }
-
-    private static boolean unitExistsInPlantingUnits(Unit unit) {
-        for (Unit unitIterator : plantingUnits) {
-            if (unitIterator.equals(unit))
-                return true;
-        }
-        return false;
-    }
-
-    private static void generateRandomUnitsToPlant() {
-        while (plantingUnits.size() < 7) {
-            int randomColumn = Rail.generateTwoThreeFour() - 1;
-            int randomRow = (int) (Math.random() * 5.99);
-            if (!unitExistsInPlantingUnits(PlayGround.getSpecifiedUnit(randomRow, randomColumn)))
-                plantingUnits.add(PlayGround.getSpecifiedUnit(randomRow, randomColumn));
-        }
-    }
-
-    private static void randomPlanting() {
-        for (int i = 0; i <= 6; i++) {
-            plantingUnits.get(i).setPlant0(sevenPlants.get(i));
-        }
-    }
-
 
 
     private static void increaseCoins(int plantInitializedHealth) {
@@ -111,5 +134,50 @@ public class ZombieStyle extends Play {
         return false;
     }
 
+
+
+
+
+
+    private static void setLandPlants() {
+        for (int i = 1; i <= 3; i++) {
+            landPlants.add(new Plant(Plant.getPlant("Explode-o-nut")));
+        }
+        for (int i = 1; i <= 6; i++) {
+            landPlants.add(new Plant(Plant.getPlant("Scaredy-shroom")));
+        }
+        landPlants.add(new Plant(Plant.getPlant("Snow Pea")));
+        landPlants.add(new Plant(Plant.getPlant("Snow Pea")));
+        landPlants.add(new Plant(Plant.getPlant("Cabbage-pult")));
+        landPlants.add(new Plant(Plant.getPlant("Cabbage-pult")));
+        landPlants.add(new Plant(Plant.getPlant("Threepeater")));
+        landPlants.add(new Plant(Plant.getPlant("Gatling Pea")));
+        for (int i = 1; i <= 3; i++) {
+            landPlants.add(new Plant(Plant.getPlant("Potato Mine")));
+        }
+        Collections.shuffle(landPlants);
+    }
+
+    private static void setWaterPlants() {
+        for (int i = 1; i <= 3; i++) {
+            waterPlants.add(new Plant(Plant.getPlant("Lily Pad")));
+        }
+        waterPlants.add(new Plant(Plant.getPlant("Tangle Kelp")));
+        waterPlants.add(new Plant(Plant.getPlant("Tangle Kelp")));
+        for (int i = 1; i <= 3; i++) {
+            landPlants.add(new Plant(Plant.getPlant("Explode-o-nut")));
+        }
+        for (int i = 1; i <= 6; i++) {
+            landPlants.add(new Plant(Plant.getPlant("Scaredy-shroom")));
+        }
+        landPlants.add(new Plant(Plant.getPlant("Snow Pea")));
+        landPlants.add(new Plant(Plant.getPlant("Snow Pea")));
+        landPlants.add(new Plant(Plant.getPlant("Cabbage-pult")));
+        landPlants.add(new Plant(Plant.getPlant("Cabbage-pult")));
+        landPlants.add(new Plant(Plant.getPlant("Gatling Pea")));
+        landPlants.add(new Plant(Plant.getPlant("Potato Mine")));
+        landPlants.add(new Plant(Plant.getPlant("Cattail")));
+
+    }
 
 }
