@@ -300,7 +300,10 @@
              return condition;
          } else {
              condition = (Y >= 1) && (plant == null || plant[0] == null || this.isHaveLadder() || PlayGround.isHaveLadder()) && Y > farestUnitDidicatedBySpeed;
-
+             if (this.isHaveLadder()){
+                 PlayGround.getSpecifiedUnit(X, Y).putLadder();
+                 this.setHaveLadder(false);
+             }
              return condition;
          }
      }
