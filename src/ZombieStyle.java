@@ -16,12 +16,9 @@ public class ZombieStyle extends Play {
     private static ArrayList<Unit> landPlantingUnits = new ArrayList<>();
     private static ArrayList<Unit> waterUnitsIfWaterGround = new ArrayList<>();
 
-    public static ArrayList<Zombie> zombieStyleDeck = new ArrayList<>();
-
     private static boolean whileZombieTurn = true;
     private static int playerWon = 0;
-
-
+    
     public static void zombieStyleTurn(boolean waterGround) {
         startZombiePlay(waterGround);
         while(whileZombieTurn) {
