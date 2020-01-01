@@ -26,6 +26,8 @@ public class PvP {
     }
 
     private static boolean checkFinished() {
+        return false;
+        // sadjad will code it
     }
 
 }
