@@ -204,7 +204,7 @@ public class ZombieStyle extends Play {
         }
         for (Zombie zombieIterator : PlayGround.getSpecifiedUnit(row, column).getZombies()) {
             if (zombieIterator.getName().equals(zombieName)) {
-                zombieIterator
+                zombieIterator.setHaveLadder(true);
             }
         }
 
