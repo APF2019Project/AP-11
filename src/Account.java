@@ -20,8 +20,8 @@ public class Account {
     private static ArrayList<Account> accounts = new ArrayList<>();
 
     private static Account playingAccount;
-
     private static Account zombiePlayingAccount;
+
 
     public Account(String username, String password) {
         this.username = username;

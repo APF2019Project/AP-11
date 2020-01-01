@@ -205,6 +205,7 @@ public class Menu {
                     break;
                 case "pvp":
                     collectionMenu(1, true);
+                    // last night here!
                     pvpMenu();
                     headerPrinted = false;
                     break;
@@ -295,7 +296,15 @@ public class Menu {
         while (whileTrue) {
             if (!headerPrinted) {
                 System.out.println("--- Collection Menu ---");
-                System.out.println("Your play type: " + Play.getPlayType(playTypeIndex));
+                if(!pvp)
+                    System.out.println("Your play type: " + Play.getPlayType(playTypeIndex));
+                else {
+                    System.out.println("Your play type: " + Play.getPlayType(5));
+                    if (playTypeIndex == 1)
+                        System.out.println("You are: Plant player");
+                    if (playTypeIndex == 4)
+                        System.out.println("You are: Zombie Player");
+                }
             }
             System.out.println("Enter command:");
 
@@ -314,6 +323,7 @@ public class Menu {
             if (pvp && command.toLowerCase().equals("done")) {
                 System.out.println("You chose your plants. Going to login zombie player:");
                 Account.loginForPvPZombiePlayer(Account.getZombiePlayingAccount());
+                return;
             }
             switch (command.toLowerCase()) {
                 case "show hand":
@@ -335,8 +345,18 @@ public class Menu {
                     whileTrue = false;
                     break;
                 case "help":
-                    System.out.println("--- Collection Menu ---");
-                    View.printNumberedStringArrayList(instructions);
+                    if(!pvp) {
+                        System.out.println("--- Collection Menu ---");
+                        View.printNumberedStringArrayList(instructions);
+                    } else {
+                        System.out.println("--- Collection Menu ---");
+                        if (playTypeIndex == 1)
+                            System.out.println("You are: Plant player");
+                        if (playTypeIndex == 4)
+                            System.out.println("You are: Zombie Player");
+                        collectionMenuPvPHelp(instructions);
+                        View.printNumberedStringArrayList(instructions);
+                    }
                     break;
                 default:
                     View.invalidCommand(-5);
@@ -691,6 +711,15 @@ public class Menu {
         instructions.add("play");
         instructions.add("exit");
         instructions.add("help");
+    }
+
+    private static void collectionMenuPvPHelp(ArrayList<String> instructions) {
+        instructions.clear();
+        instructions.add("select [card name]");
+        instructions.add("remove [card name]");
+        instructions.add("show collection");
+        instructions.add("show hand");
+        instructions.add("done");
     }
 
     private static void setDayMenuHelp(ArrayList<String> instructions) {
