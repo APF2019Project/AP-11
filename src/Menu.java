@@ -477,7 +477,7 @@ public class Menu {
                 headerPrinted = false;
 
             } else if (command.toLowerCase().equals("show lanes")) {
-                //
+                ZombieStyle.showLanes();
                 headerPrinted = false;
 
             } else if (command.toLowerCase().equals("start")) {
