@@ -228,6 +228,7 @@ public class Plant {
         else if (this.type.equals("producer"))
             isProducer(unit);
         else if (this.type.matches("magnet \\d+"))
+            isMagnet(unit);
 
     }
 
