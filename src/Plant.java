@@ -69,10 +69,10 @@ public class Plant {
         new Plant("Gatling Pea", 3, 5, normalPea, 4, 0, 4, 5, false, false, "range -1 normal");
         new Plant("Scaredy-shroom", 1, 1, normalPea, 1, 0, 2, 2, false, false, "range 2 normal");
         new Plant("Kernel-pult", 2, 3, kernel, 1, 0, 3, 4, false, false, "range -1 normal");
-        new Plant("Melon-pult",  3, 3, melon, 1, 0, 3, 4, false, false, "range -1 normal");
+        new Plant("Melon-pult", 3, 3, melon, 1, 0, 3, 4, false, false, "range -1 normal");
         new Plant("Winter Melon", 3, 4, frozenMelon, 1, 0, 5, 4, false, false, "range -1 normal");
 
-        new Plant("Wall-nut",  4, 2, null, 0, 0, 4, 0, false, false, "wall");
+        new Plant("Wall-nut", 4, 2, null, 0, 0, 4, 0, false, false, "wall");
         new Plant("Explode-o-nut", 3, 4, null, 0, 1, 5, 0, false, false, "wall");
         new Plant("Tall-nut", 6, 4, null, 0, 0, 6, 0, false, false, "wall");
         new Plant("Potato Mine", 1, 2, null, 0, 100, 3, 0, false, false, "bomb mine");
@@ -195,11 +195,11 @@ public class Plant {
         this.respawnTime = time;
     }
 
-    private void setSplitPea(boolean bool){
+    private void setSplitPea(boolean bool) {
         this.isSplitPea = bool;
     }
 
-    private void setShootTime(int time){
+    private void setShootTime(int time) {
         this.shootTime = time;
     }
 
@@ -298,12 +298,18 @@ public class Plant {
             isCircleBomb(unit, Integer.parseInt(bombType[2]));
     }
 
-    public void explodeMine(Unit unit) {
+    public boolean explodeMine(Unit unit) {
         if (this.type.matches("bomb mine"))
-        if (this.age > 1) {
-            damageZombie(unit, unit.getZombies().get(0));
-            unit.killPlant(0);
-        }
+            if (this.age >= 1) {
+                explodeZombie(unit.getZombies().get(0));
+                unit.killPlant(0);
+                return true;
+            }
+        return false;
+    }
+
+    private void explodeZombie(Zombie zombie) {
+        zombie.decreaseHealth(this.meleeDamage);
     }
 
     private void isLinearBomb(Unit unit) {
