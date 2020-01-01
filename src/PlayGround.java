@@ -164,4 +164,8 @@ public class PlayGround {
     public static boolean validCoordinates(int row, int column) {
         return !(row < 0) && !(column < 0) && !(row > 5) && !(column > 19);
     }
+
+    public static boolean isHaveLadder() {
+        return false;
+    }
 }

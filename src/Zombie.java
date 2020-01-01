@@ -26,15 +26,20 @@
      private int shieldStrength; //
      private int damagePower; //
      private boolean IsWaterProof; //
-     private boolean haveDuck; //
-     private boolean haveLadder; //
 
+     private boolean haveDuck; //
+
+     private boolean haveLadder; //
      public boolean isHaveLadder() {
          return haveLadder;
      }
 
      public void setHaveLadder(boolean haveLadder) {
          this.haveLadder = haveLadder;
+     }
+
+     public void setHaveDuck(boolean haveDuck) {
+         this.haveDuck = haveDuck;
      }
 
      public void recievingShoot(Shoot shoot) {
@@ -268,7 +273,7 @@
              for (Shoot shoot : shootsTmp) {
                  thisUnit.RemoveFromShoots(shoot);
              }
-             baseConditionToMove = couldZombieGoToNextUnit(X, Y, basedY);
+             baseConditionToMove = this.couldZombieGoToNextUnit(X, Y, basedY);
              if (!baseConditionToMove) {
                  return Y;
              }
@@ -299,7 +304,11 @@
              condition = (Y >= 1) && (Y > farestUnitDidicatedBySpeed);
              return condition;
          } else {
-             condition = (Y >= 1) && (plant == null || plant[0] == null && Y > farestUnitDidicatedBySpeed);
+             condition = (Y >= 1) && (plant == null || plant[0] == null || this.isHaveLadder() || PlayGround.isHaveLadder()) && Y > farestUnitDidicatedBySpeed;
+             if (this.isHaveLadder()){
+                 PlayGround.getSpecifiedUnit(X, Y).putLadder();
+                 this.setHaveLadder(false);
+             }
              return condition;
          }
      }
