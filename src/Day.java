@@ -8,7 +8,7 @@ public class Day extends Play {
 
     private static int sun = 2;
 
-    private static int playerHealth = 1; // sajad edited this to debug
+    private static int playerHealth = 6; // sajad edited this to debug
 
     private static int playerWon = 0;
 
@@ -76,7 +76,7 @@ public class Day extends Play {
             View.youWon();
         if (playerWon == -1)
             View.youLost();
-       Collection.clearDecksSetCollections();
+        Collection.clearDecksSetCollections();
         View.goingBackTo(-2); // Going back to Login Menu
         Menu.mainMenu();
     }
@@ -127,7 +127,7 @@ public class Day extends Play {
             Zombie zombie = Zombie.cloningZombie(Zombie.getZombies().get(randomZombie));
             Unit unit = PlayGround.getSpecifiedUnit(randomX, 19);
             if (zombie.isWaterProof()) {
-                if(unit.isWater())
+                if (unit.isWater())
                     unit.addToZombies(zombie);
                 else
                     i--;
@@ -237,7 +237,7 @@ public class Day extends Play {
     }
 
 
-    public static void cheatPlantIn0 (Unit unit, Plant plant) {
+    public static void cheatPlantIn0(Unit unit, Plant plant) {
         unit.setPlant0(plant);
     }
 

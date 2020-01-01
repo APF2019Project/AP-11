@@ -461,10 +461,6 @@
          return haveDuck;
      }
 
-     public void setHaveDuck(boolean haveDuck) {
-         this.haveDuck = haveDuck;
-     }
-
      public boolean isCouldJump() {
          return couldJump;
      }
