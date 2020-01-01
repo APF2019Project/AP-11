@@ -220,6 +220,11 @@
          if (!plants[0].explodeMine(PlayGround.getSpecifiedUnit(X, newY))){
              tmpArrZombieByLocation.add(new ZombieByLocation(X, newY, this));
          }
+         else {
+             for (Zombie zombie: PlayGround.getSpecifiedUnit(X, newY).getZombies()){
+                 tmpArrForDestroyedZombies.add(zombie);
+             }
+         }
          this.damagingPlantIfExist(PlayGround.getSpecifiedUnit(X, newY));
 
 
