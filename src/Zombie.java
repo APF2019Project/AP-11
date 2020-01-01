@@ -58,6 +58,8 @@
          }
      }
 
+
+
      private void decreaseShieldStrenght(int damage) {
          this.shieldStrength -= damage;
      }
@@ -369,6 +371,16 @@
                  zombie.isCouldDestroyInRow(), zombie.isWaterProof(), zombie.isPeaProof(), zombie.isRandomPosition(), zombie.isHaveDuck(), zombie.isCouldJump(), zombie.getTurnThief(),
                  zombie.getSpeed(), zombie.getHowManyTurnSpeedIsReduced(), zombie.getSpeedReductionRatio(), zombie.getHealth(), zombie.getShieldStrength(), zombie.getDamagePower(), zombie.isHaveLadder());
          return returnZom;
+     }
+
+     public static void ZombieCustomize(String name, boolean haveAntiTiq, boolean haveBucketHead, boolean couldRevertToRegularZombie,
+                   boolean couldDestroyInRow, boolean isWaterProof, boolean isPeaProof, boolean randomPosition, boolean haveDuck, boolean couldJump,
+                   int turnThief, int speed, int howManyTurnSpeedIsReduced, int speedReductionRatio, int health, int shieldStrength, int damagePower, boolean haveLadder) {
+
+         Zombie newZom = new Zombie(name, haveAntiTiq, haveBucketHead, couldRevertToRegularZombie,
+                 couldDestroyInRow, isWaterProof, isPeaProof, randomPosition, haveDuck, couldJump, turnThief,
+                 speed, howManyTurnSpeedIsReduced, speedReductionRatio, health, shieldStrength, damagePower, haveLadder);
+         zombies.add(newZom);
      }
 
      public Zombie(String name, boolean haveAntiTiq, boolean haveBucketHead, boolean couldRevertToRegularZombie,
