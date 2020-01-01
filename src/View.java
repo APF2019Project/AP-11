@@ -550,4 +550,8 @@ public class View {
         System.out.println("unavailable coordinates!");
         System.out.println();
     }
+
+    public static void printWinnerOfTheGame(Account account) {
+        System.out.println(account.getUsername() + " is the winner");
+    }
 }
