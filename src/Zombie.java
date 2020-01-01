@@ -27,6 +27,15 @@
      private int damagePower; //
      private boolean IsWaterProof; //
      private boolean haveDuck; //
+     private boolean haveLadder; //
+
+     public boolean isHaveLadder() {
+         return haveLadder;
+     }
+
+     public void setHaveLadder(boolean haveLadder) {
+         this.haveLadder = haveLadder;
+     }
 
      public void recievingShoot(Shoot shoot) {
 //         if (shoot.isPea() && this.isPeaProof()) {
@@ -169,7 +178,7 @@
 
          // not used yet
          ArrayList<Zombie> ConcurrenMEErrorArrayList = new ArrayList<>();
-         for (Zombie z: PlayGround.getSpecifiedUnit(X, Y).getZombies()){
+         for (Zombie z : PlayGround.getSpecifiedUnit(X, Y).getZombies()) {
              ConcurrenMEErrorArrayList.add(z);
          }
          // not used yet
@@ -182,7 +191,7 @@
                  PlayGround.getSpecifiedUnit(X, Y).removeFromZombies(zombie);
              }
          }
-         for (ZombieByLocation zombieXY: tmpArrZombieByLocation){
+         for (ZombieByLocation zombieXY : tmpArrZombieByLocation) {
              PlayGround.getSpecifiedUnit(zombieXY.X, zombieXY.Y).addToZombies(zombieXY.getZombie());
          }
 
@@ -217,11 +226,10 @@
          tmpArrForDestroyedZombies.add(this);
          Unit unit = PlayGround.getSpecifiedUnit(X, newY);
          Plant[] plants = unit.getPlants();
-         if (!plants[0].explodeMine(PlayGround.getSpecifiedUnit(X, newY))){
+         if (!plants[0].explodeMine(PlayGround.getSpecifiedUnit(X, newY))) {
              tmpArrZombieByLocation.add(new ZombieByLocation(X, newY, this));
-         }
-         else {
-             for (Zombie zombie: PlayGround.getSpecifiedUnit(X, newY).getZombies()){
+         } else {
+             for (Zombie zombie : PlayGround.getSpecifiedUnit(X, newY).getZombies()) {
                  tmpArrForDestroyedZombies.add(zombie);
              }
          }
@@ -323,7 +331,7 @@
          Zombie zRegular = new Zombie("Zombie", false, false,
                  false, false, false, false,
                  false, false, false, Integer.MAX_VALUE, 2, 0,
-                 1, 2, 0, 1);
+                 1, 2, 0, 1, false);
          return zRegular;
      }
 
@@ -350,14 +358,14 @@
      public static Zombie cloningZombie(Zombie zombie) {
          Zombie returnZom = new Zombie(zombie.getName(), zombie.isHaveAntiTiq(), zombie.isHaveBucketHead(), zombie.isCouldRevertToRegularZombie(),
                  zombie.isCouldDestroyInRow(), zombie.isWaterProof(), zombie.isPeaProof(), zombie.isRandomPosition(), zombie.isHaveDuck(), zombie.isCouldJump(), zombie.getTurnThief(),
-                 zombie.getSpeed(), zombie.getHowManyTurnSpeedIsReduced(), zombie.getSpeedReductionRatio(), zombie.getHealth(), zombie.getShieldStrength(), zombie.getDamagePower());
+                 zombie.getSpeed(), zombie.getHowManyTurnSpeedIsReduced(), zombie.getSpeedReductionRatio(), zombie.getHealth(), zombie.getShieldStrength(), zombie.getDamagePower(), zombie.isHaveLadder());
          return returnZom;
      }
 
      public Zombie(String name, boolean haveAntiTiq, boolean haveBucketHead, boolean couldRevertToRegularZombie,
                    boolean couldDestroyInRow, boolean isWaterProof, boolean isPeaProof, boolean randomPosition, boolean haveDuck, boolean couldJump,
-                   int turnThief, int speed, int howManyTurnSpeedIsReduced, int speedReductionRatio, int health, int shieldStrength, int damagePower) {
-
+                   int turnThief, int speed, int howManyTurnSpeedIsReduced, int speedReductionRatio, int health, int shieldStrength, int damagePower, boolean haveLadder) {
+         this.haveLadder = false;
          this.speedReductionRatio = speedReductionRatio;
          this.name = name;
          this.haveAntiTiq = haveAntiTiq;
