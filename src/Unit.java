@@ -6,6 +6,7 @@ public class Unit {
     private int Y;
     private boolean IsWater;
     private boolean haveLawnMover;
+    private boolean haveLadder;
     private ArrayList<Zombie> zombies = new ArrayList<>();
     private Plant[] plants = new Plant[2];
     private ArrayList<Shoot> shoots = new ArrayList<>();
@@ -61,6 +62,12 @@ public class Unit {
             this.addToZombies(Zombie.initializeRegularZombie());
     }
 
+    public void putLadder() {
+        if (this.plants[0] != null)
+            if (this.plants[0].getType().equals("wall"))
+                this.haveLadder = true;
+    }
+
 
     //Getters:
 
@@ -84,6 +91,10 @@ public class Unit {
 
     public boolean isWater() {
         return IsWater;
+    }
+
+    public boolean isHaveLadder() {
+        return haveLadder;
     }
 
     public void setIsWater(boolean water) {
@@ -110,9 +121,8 @@ public class Unit {
     }
 
     public void removeAllPlants() {
-        Plant[] arr = this.getPlants();
-        arr[0] = null;
-        arr[1] = null;
+        this.plants[0] = null;
+        this.plants[1] = null;
     }
 
     public void removeAllZombies() {
