@@ -81,7 +81,7 @@ public class Day extends Play {
         Menu.mainMenu();
     }
 
-    private static boolean checkFinished() {
+    private static boolean checkFinished() { // if you change this method tell me : sadjad
 
         for (int i = 0; i < 6; i++)
             if (PlayGround.getSpecifiedUnit(i, 0).getZombies().size() > 0) {
