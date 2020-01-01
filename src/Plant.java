@@ -227,6 +227,9 @@ public class Plant {
             isWall(unit);
         else if (this.type.equals("producer"))
             isProducer(unit);
+        else if (this.type.matches("magnet \\d+"))
+            isMagnet(unit);
+
     }
 
     private void isRange(Unit unit) {
@@ -321,18 +324,11 @@ public class Plant {
     }
 
     private void isCircleBomb(Unit unit, int range) {
-        int minRow = unit.getX() - range;
-        int minColumn = unit.getY() - range;
-        int maxRow = unit.getX() + range;
-        int maxColumn = unit.getY() + range;
-        if (minRow < 0)
-            minRow = 0;
-        if (minColumn < 0)
-            minColumn = 0;
-        if (maxRow > 6)
-            maxRow = 6;
-        if (maxColumn > 19)
-            maxColumn = 19;
+        int[] limits = setCircleLimits(unit.getX(), unit.getY(), range);
+        int minRow = limits[0];
+        int minColumn = limits[1];
+        int maxRow = limits[2];
+        int maxColumn = limits[3];
         for (int i = minRow; i < maxRow; i++)
             for (int j = minColumn; j < maxColumn; j++)
                 for (Zombie zombieIterator : PlayGround.getSpecifiedUnit(i, j).getZombies())
@@ -375,6 +371,26 @@ public class Plant {
         damageZombie(unit, unit.getZombies().get(0));
     }
 
+    private void isMagnet(Unit unit) {
+        String[] rangeString = this.type.split(" ");
+        int range = Integer.parseInt(rangeString[1]);
+        int[] limits = setCircleLimits(unit.getX(), unit.getY(), range);
+        int minRow = limits[0];
+        int minColumn = limits[1];
+        int maxRow = limits[2];
+        int maxColumn = limits[3];
+        for (int i = minRow; i < maxRow; i++)
+            for (int j = minColumn; j < maxColumn; j++)
+                for (Zombie zombieIterator : PlayGround.getSpecifiedUnit(i, j).getZombies()){
+                    if (zombieIterator.getName().equals("Buckethead Zombie"))
+                        zombieIterator.setHaveBucketHead(false);
+                    else if (zombieIterator.getName().equals("Screen Door Zombie"))
+                        zombieIterator.setShieldStrength(0);
+                }
+
+
+    }
+
     private void damageZombie(Unit unit, Zombie zombie) {
         zombie.decreaseHealth(this.meleeDamage);
         if (zombie.getHealth() <= 0)
@@ -399,6 +415,23 @@ public class Plant {
                 return false;
         }
         return true;
+    }
+
+    private int[] setCircleLimits(int X, int Y, int range) {
+        int[] limits = new int[4];
+        limits[0] = X - range;
+        limits[1] = Y - range;
+        limits[2] = X + range;
+        limits[3] = Y + range;
+        if (limits[0] < 0)
+            limits[0] = 0;
+        if (limits[1] < 0)
+            limits[1] = 0;
+        if (limits[2] > 6)
+            limits[2] = 6;
+        if (limits[3] > 19)
+            limits[3] = 19;
+        return limits;
     }
 
     private void handleSplitPea(Unit unit) {
