@@ -294,7 +294,7 @@ public class Plant {
     }
 
     public void explodeMine(Unit unit) {
-        if (this.age > 1) {
+        if (this.age >= 1) {
             damageZombie(unit, unit.getZombies().get(0));
             unit.killPlant(0);
         }
@@ -365,8 +365,6 @@ public class Plant {
 
     private void damageZombie(Unit unit, Zombie zombie) {
         zombie.decreaseHealth(this.meleeDamage);
-        if (zombie.getHealth() <= 0)
-            unit.removeFromZombies(zombie);
     }
 
     private boolean checkForthForZombies(Unit unit) {
