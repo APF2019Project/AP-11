@@ -18,8 +18,8 @@ public class ZombieStyle extends Play {
 
     private static boolean whileZombieTurn = true;
     private static int playerWon = 0;
-    
-    public static void zombieStyleTurn(boolean waterGround) {
+
+    public static void zombieStyleTurn(boolean waterGround, boolean PvP) {
         startZombiePlay(waterGround);
         while(whileZombieTurn) {
             if (checkFinished()) {
@@ -37,7 +37,7 @@ public class ZombieStyle extends Play {
                 return;
             }
             Plant.plantsTurn();
-            Menu.zombieMenu(waterGround);
+            Menu.zombieMenu(waterGround, PvP);
         }
     }
 
@@ -159,6 +159,15 @@ public class ZombieStyle extends Play {
     }
 
 
+    public static void showHandInZombieStyle(Account zombiePlayer) {
+        System.out.println("Your zombies deck:");
+        int i = 1;
+        for (Zombie zombieIterator : zombiePlayer.zombiesDeck) {
+            System.out.print(i + ". ");
+            System.out.println(zombieIterator.getName() + "    " + zombieIterator.getHealth());
+            i++;
+        }
+    }
 
     private static void setLandPlants() {
         for (int i = 1; i <= 3; i++) {

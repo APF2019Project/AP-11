@@ -441,7 +441,9 @@ public class Menu {
     }
 
 
-    public static void zombieMenu(boolean waterGround) { // Zombie Menu index: 44
+
+
+    public static void zombieMenu(boolean waterGround, boolean PvP) { // Zombie Menu index: 44
         String command;
         boolean whileTrue = true;
         Pattern putPattern = Pattern.compile("[p,P]ut (?<zombieName>.+),(?<number>\\d+),(?<row>\\d+)");
@@ -465,10 +467,14 @@ public class Menu {
                 String zombieName = putMatcher.group("zombieName");
                 int number = Integer.parseInt(putMatcher.group("number"));
                 int row = Integer.parseInt(putMatcher.group("row"));
-                
+
 
             } else if (command.toLowerCase().equals("show hand")) {
-
+                if (PvP) {
+                    ZombieStyle.showHandInZombieStyle(Account.getZombiePlayingAccount());
+                } else {
+                    ZombieStyle.showHandInZombieStyle(Account.getPlayingAccount());
+                }
                 headerPrinted = false;
             } else if (command.toLowerCase().equals("show lanes")) {
 
