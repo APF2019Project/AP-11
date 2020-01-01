@@ -21,6 +21,8 @@ public class Account {
 
     private static Account playingAccount;
 
+    private static Account zombiePlayingAccount;
+
     public Account(String username, String password) {
         this.username = username;
         this.password = password;
@@ -30,11 +32,15 @@ public class Account {
     }
 
     public static Account getZombiePlayingAccount() {
-        return null;
+        return zombiePlayingAccount;
         // kiiiiiiiiaaaaaaaanaaaaaaam code it
     }
 
     // All setters:
+    public static void setZombiePlayingAccount(Account zombiePlayingAccount) {
+        Account.zombiePlayingAccount = zombiePlayingAccount;
+    }
+
     public void setUsername(String username) {this.username = username;}
 
     public void setPassword(String password) {

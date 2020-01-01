@@ -35,11 +35,9 @@ public class PvP {
             }
 
             Zombie.zombiesTurn();
-            Menu.zombieMenu();
+            Menu.zombieMenu(false);
             // zombie is done
         }
-
-        Menu.pvpMenu();
     }
 
     private static void setWaveNumber(int waveNum) {
@@ -55,9 +53,29 @@ public class PvP {
         else if (whoWon.equals("Plant")){
             PlantWinNumber++;
         }
+
         if (ZombieStyle.getCoins() < ZombieStyle.getLowestZombieCost()){
             // game is finished
+            gameFinisher();
+            return;
         }
+
+
+        PlayGround.BuildDayPlayGround();
+        // wave generator kian will code it.
+        pvpTurn();
+    }
+
+    private static void gameFinisher() {
+        if (PlantWinNumber >= ZombieWinNumber){
+            View.printWinnerOfTheGame(account1);
+        }
+        else {
+            View.printWinnerOfTheGame(account2);
+        }
+
+        Account.setZombiePlayingAccount(null);
+        return;
     }
 
     private static boolean checkFinished() {
