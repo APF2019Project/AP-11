@@ -510,6 +510,7 @@ public class Menu {
                 String zombieName = duckMatcher.group("zombieName");
                 int row = Integer.parseInt(duckMatcher.group("row"));
                 int column = Integer.parseInt(duckMatcher.group("column"));
+                ZombieStyle.readyToGiveDuck(zombieName, row, column);
 
             }
             else if (command.toLowerCase().equals("help")) {

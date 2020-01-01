@@ -97,7 +97,13 @@ public class ZombieStyle extends Play {
             View.noZombieInUnit(zombieName, row, column);
             return;
         }
-
+        Zombie zombie = null;
+        Unit unit = PlayGround.getSpecifiedUnit(row, column);
+        for (Zombie zombieIterator : unit.getZombies()) {
+            if (zombieIterator.getName().equals(zombieName))
+                zombie = zombieIterator;
+        }
+        giveDuck(unit, zombie);
     }
 
     public static int getCoins() {
@@ -224,7 +230,7 @@ public class ZombieStyle extends Play {
         }
     }
 
-    public void giveDuck(Unit unit, Zombie zombie){
+    public static void giveDuck(Unit unit, Zombie zombie){
         zombie.setHaveDuck(true);
         int dest = -1;
         if (unit.getX() == 1){
