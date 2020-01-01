@@ -13,33 +13,16 @@ public class ZombieStyle extends Play {
     private static int usedDock;
     private static int usedLadder;
 
-    public static int getCoins() {
-        return coins;
-    }
-
-    public static void setCoins(int coins) {
-        ZombieStyle.coins = coins;
-    }
-
-    private static int coins = 50;
-
-    public static int getLowestZombieCost() {
-        return lowestZombieCost;
-    }
-
-    public static void setLowestZombieCost(int lowestZombieCost) {
-        ZombieStyle.lowestZombieCost = lowestZombieCost;
-    }
-
-    private static int lowestZombieCost;
-
     private static ArrayList<Plant> landPlants = new ArrayList<>();
     private static ArrayList<Plant> waterPlants = new ArrayList<>();
     private static ArrayList<Unit> landPlantingUnits = new ArrayList<>();
     private static ArrayList<Unit> waterUnitsIfWaterGround = new ArrayList<>();
 
+    public static ArrayList<Zombie> zombieStyleDeck = new ArrayList<>();
+
     private static boolean whileZombieTurn = true;
     private static int playerWon = 0;
+
 
     public static void zombieStyleTurn(boolean waterGround) {
         startZombiePlay(waterGround);
@@ -69,9 +52,31 @@ public class ZombieStyle extends Play {
         } else {
             setLandPlants();
         }
-
+        setPlantingUnits(waterGround);
+        randomPlanting(waterGround);
         whileZombieTurn = true;
     }
+
+    public static int getCoins() {
+        return coins;
+    }
+
+    public static void setCoins(int coins) {
+        ZombieStyle.coins = coins;
+    }
+
+    private static int coins = 50;
+
+    public static int getLowestZombieCost() {
+        return lowestZombieCost;
+    }
+
+    public static void setLowestZombieCost(int lowestZombieCost) {
+        ZombieStyle.lowestZombieCost = lowestZombieCost;
+    }
+
+    private static int lowestZombieCost;
+
 
     private static void setPlantingUnits(boolean waterGround) {
         if (!waterGround) {
@@ -109,11 +114,17 @@ public class ZombieStyle extends Play {
                 landPlantingUnits.get(i).setPlant0(new Plant(landPlants.get(i)));
             }
         }
-        else {
-
-
+        else { // water ground:
+            for (int i = 0; i <= 2; i++) { // planting Lily Pads and three land plants on them:
+                waterUnitsIfWaterGround.get(i).setPlant1(new Plant(waterPlants.get(i)));
+                waterUnitsIfWaterGround.get(i).setPlant0(new Plant(landPlants.get(i)));
+            }
+            waterUnitsIfWaterGround.get(3).setPlant0(new Plant(waterPlants.get(3)));
+            waterUnitsIfWaterGround.get(4).setPlant0(new Plant(waterPlants.get(4)));
+            for (int i = 0; i < 12; i++) {
+                landPlantingUnits.get(i).setPlant0(landPlants.get(i + 3));
+            }
         }
-
     }
 
     private static void doFinalThings(int playerWon) {
@@ -151,9 +162,6 @@ public class ZombieStyle extends Play {
         }
         return false;
     }
-
-
-
 
 
 
@@ -195,7 +203,6 @@ public class ZombieStyle extends Play {
         landPlants.add(new Plant(Plant.getPlant("Gatling Pea")));
         landPlants.add(new Plant(Plant.getPlant("Potato Mine")));
         landPlants.add(new Plant(Plant.getPlant("Cattail")));
-
     }
 
 }

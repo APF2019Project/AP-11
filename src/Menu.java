@@ -444,7 +444,7 @@ public class Menu {
     public static void zombieMenu(boolean waterGround) { // Zombie Menu index: 44
         String command;
         boolean whileTrue = true;
-        Pattern putPattern = Pattern.compile("[p,P]ut (?<zombieName>.+),(?<row>\\d+)");
+        Pattern putPattern = Pattern.compile("[p,P]ut (?<zombieName>.+),(?<number>\\d+),(?<row>\\d+)");
 
         ArrayList<String> instructions = new ArrayList<>();
         setZombieMenuHelp(instructions);
@@ -463,7 +463,9 @@ public class Menu {
 
             if (putMatcher.matches()) {
                 String zombieName = putMatcher.group("zombieName");
+                int number = Integer.parseInt(putMatcher.group("number"));
                 int row = Integer.parseInt(putMatcher.group("row"));
+                
 
             } else if (command.toLowerCase().equals("show hand")) {
 

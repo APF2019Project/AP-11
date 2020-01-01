@@ -35,7 +35,7 @@ public class PvP {
             }
 
             Zombie.zombiesTurn();
-            Menu.zombieMenu();
+            Menu.zombieMenu(false);
             // zombie is done
         }
 
