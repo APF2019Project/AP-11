@@ -573,7 +573,7 @@ public class Menu {
     public static void pvpMenu() {
         String command;
         boolean whileTrue = true;
-        System.out.println("^-^-^-^ Rail Menu ^-^-^-^");
+        System.out.println("^-^-^-^ PvP Menu ^-^-^-^");
         ArrayList<String> instructions = new ArrayList<>();
         instructions.add("");
 

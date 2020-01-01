@@ -67,7 +67,7 @@ public class Day extends Play {
     }
 
     private static void setUpTheBeginningOfPlay() {
-        playerHealth = 1;
+        playerHealth = 1;  // Is it ok guys, Sadjad is asking
         setWhileDayTurn(true);
     }
 
