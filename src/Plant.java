@@ -5,7 +5,6 @@ public class Plant {
     private static ArrayList<Plant> plants = new ArrayList<>();
 
     private String name;
-    private final int initializedHealth;
     private int health;
     private int age = 0;
     private final int sunCost;
@@ -16,13 +15,13 @@ public class Plant {
     private int respawnTime;
     private final int shootCoolDown;
     private int shootTime;
+    private boolean isSplitPea = false;
     private final boolean isCattail;
     private final boolean canBePlantedInWater;
     private String type;
 
-    public Plant(String name, int initializedHealth, int health, int sunCost, Shoot bullet, int bulletNumber, int meleeDamage, int respawnCoolDown, int shootCoolDown, Boolean isCattail, boolean canBePlantedInWater, String type) {
+    public Plant(String name, int health, int sunCost, Shoot bullet, int bulletNumber, int meleeDamage, int respawnCoolDown, int shootCoolDown, Boolean isCattail, boolean canBePlantedInWater, String type) {
         this.name = name;
-        this.initializedHealth = initializedHealth;
         this.health = health;
         this.sunCost = sunCost;
         this.bullet = bullet;
@@ -38,7 +37,6 @@ public class Plant {
 
     public Plant(Plant plant) {
         this.name = plant.name;
-        this.initializedHealth = plant.initializedHealth;
         this.health = plant.health;
         this.sunCost = plant.sunCost;
         this.bullet = plant.bullet;
@@ -62,32 +60,33 @@ public class Plant {
         Shoot frozenMelon = new Shoot(false, 3, 3, 0.5, Integer.MAX_VALUE);
 
 
-        new Plant("Peashooter", 2, 2, 2, normalPea, 1, 0, 2, 2, false, false, "range -1 normal");
-        new Plant("Snow Pea", 3, 3, 3, frozenPea, 1, 0, 3, 3, false, false, "range -1 normal");
-        new Plant("Cabbage-pult", 2, 2, 2, cabbage, 1, 0, 3, 2, false, false, "range -1 normal");
-        new Plant("Repeater", 4, 4, 3, normalPea, 2, 0, 4, 3, false, false, "range -1 normal");
-        new Plant("Threepeater", 5, 5, 4, normalPea, 1, 0, 4, 4, false, false, "range -1 threeWay");
-        new Plant("Cactus", 5, 5, 5, normalPea, 1, 1, 4, 2, false, false, "range -1 normal");
-        new Plant("Gatling Pea", 3, 3, 5, normalPea, 4, 0, 4, 5, false, false, "range -1 normal");
-        new Plant("Scaredy-shroom", 1, 1, 1, normalPea, 1, 0, 2, 2, false, false, "range 2 normal");
-        new Plant("Kernel-pult", 2, 2, 3, kernel, 1, 0, 3, 4, false, false, "range -1 normal");
-        new Plant("Melon-pult", 3, 3, 3, melon, 1, 0, 3, 4, false, false, "range -1 normal");
-        new Plant("Winter Melon", 3, 3, 4, frozenMelon, 1, 0, 5, 4, false, false, "range -1 normal");
+        new Plant("Peashooter", 2, 2, normalPea, 1, 0, 2, 2, false, false, "range -1 normal");
+        new Plant("Snow Pea", 3, 3, frozenPea, 1, 0, 3, 3, false, false, "range -1 normal");
+        new Plant("Cabbage-pult", 2, 2, cabbage, 1, 0, 3, 2, false, false, "range -1 normal");
+        new Plant("Repeater", 4, 3, normalPea, 2, 0, 4, 3, false, false, "range -1 normal");
+        new Plant("Threepeater", 5, 4, normalPea, 1, 0, 4, 4, false, false, "range -1 threeWay");
+        new Plant("Cactus", 5, 5, normalPea, 1, 1, 4, 2, false, false, "range -1 normal");
+        new Plant("Gatling Pea", 3, 5, normalPea, 4, 0, 4, 5, false, false, "range -1 normal");
+        new Plant("Scaredy-shroom", 1, 1, normalPea, 1, 0, 2, 2, false, false, "range 2 normal");
+        new Plant("Kernel-pult", 2, 3, kernel, 1, 0, 3, 4, false, false, "range -1 normal");
+        new Plant("Melon-pult",  3, 3, melon, 1, 0, 3, 4, false, false, "range -1 normal");
+        new Plant("Winter Melon", 3, 4, frozenMelon, 1, 0, 5, 4, false, false, "range -1 normal");
 
-        new Plant("Wall-nut", 4, 4, 2, null, 0, 0, 4, 0, false, false, "wall");
-        new Plant("Explode-o-nut", 3, 3, 4, null, 0, 1, 5, 0, false, false, "wall");
-        new Plant("Tall-nut", 6, 6, 4, null, 0, 0, 6, 0, false, false, "wall");
-        new Plant("Potato Mine", 1, 1, 2, null, 0, 100, 3, 0, false, false, "bomb mine");
-        new Plant("Cherry Bomb", 0, 0, 2, null, 0, 100, 4, 0, false, false, "bomb circle 1");
-        new Plant("Jalapeno", 0, 0, 4, null, 0, 100, 5, 0, false, false, "bomb linear");
-        new Plant("Magnet-shroom", 2, 2, 4, null, 0, 0, 4, 0, false, false, "magnet 1");
-        new Plant("Sunflower", 2, 2, 1, null, 1, 0, 2, 1, false, false, "producer");
-        new Plant("Twin Sunflower", 2, 2, 3, null, 2, 0, 5, 2, false, false, "producer");
+        new Plant("Wall-nut",  4, 2, null, 0, 0, 4, 0, false, false, "wall");
+        new Plant("Explode-o-nut", 3, 4, null, 0, 1, 5, 0, false, false, "wall");
+        new Plant("Tall-nut", 6, 4, null, 0, 0, 6, 0, false, false, "wall");
+        new Plant("Potato Mine", 1, 2, null, 0, 100, 3, 0, false, false, "bomb mine");
+        new Plant("Cherry Bomb", 0, 2, null, 0, 100, 4, 0, false, false, "bomb circle 1");
+        new Plant("Jalapeno", 0, 4, null, 0, 100, 5, 0, false, false, "bomb linear");
+        new Plant("Magnet-shroom", 2, 4, null, 0, 0, 4, 0, false, false, "magnet 1");
+        new Plant("Sunflower", 2, 1, null, 1, 0, 2, 1, false, false, "producer");
+        new Plant("Twin Sunflower", 2, 3, null, 2, 0, 5, 2, false, false, "producer");
 
         //  new Plant("Split Pea", 3, 4, normalPea, , 0, 4, , false, "range -1 twoWay")
-        new Plant("Lily Pad", 1, 1, 0, null, 0, 0, 1, 0, false, true, "stage");
-        new Plant("Tangle Kelp", 0, 0, 3, null, 0, 100, 3, 0, false, true, "bomb mine");
-        new Plant("Cattail", 3, 3, 5, null, 0, 100, 5, 0, true, false, "melee");
+        new Plant("Lily Pad", 1, 0, null, 0, 0, 1, 0, false, true, "stage");
+        new Plant("Tangle Kelp", 0, 3, null, 0, 100, 3, 0, false, true, "bomb mine");
+        new Plant("Cattail", 3, 5, null, 0, 100, 5, 0, true, false, "melee");
+        new Plant("Split Pea", 3, 4, null, 0, 0, 4, 0, false, false, "fuck").setSplitPea(true);
 
     }
 
@@ -127,10 +126,6 @@ public class Plant {
 
     public String getName() {
         return name;
-    }
-
-    public int getInitializedHealth() {
-        return initializedHealth;
     }
 
     public int getHealth() {
@@ -200,6 +195,14 @@ public class Plant {
         this.respawnTime = time;
     }
 
+    private void setSplitPea(boolean bool){
+        this.isSplitPea = bool;
+    }
+
+    private void setShootTime(int time){
+        this.shootTime = time;
+    }
+
     public int getPrice() {
         return (this.sunCost * this.health * this.respawnCoolDown + 1);
     }
@@ -208,6 +211,8 @@ public class Plant {
     //Turn:
 
     public void turn(Unit unit) {
+        if (isSplitPea)
+            handleSplitPea(unit);
 
         this.age++;
         if (this.shootTime > 0)
@@ -387,5 +392,20 @@ public class Plant {
                 return false;
         }
         return true;
+    }
+
+    private void handleSplitPea(Unit unit) {
+        if (this.age == 0) {
+            Plant forwardPlant = new Plant(Plant.getPlant("Peashooter"));
+            forwardPlant.normalShoot(unit);
+            this.age = forwardPlant.shootTime;
+        } else
+            this.age--;
+        if (this.shootTime == 0) {
+            Plant backwardPlant = new Plant(Plant.getPlant("Repeater"));
+            backwardPlant.backShoot(unit);
+            this.shootTime = backwardPlant.shootTime;
+        } else
+            this.shootTime--;
     }
 }
