@@ -208,7 +208,6 @@ public class ZombieStyle extends Play {
                 zombieIterator.setHaveLadder(true);
             }
         }
-
     }
 
     public void giveDuck(Unit unit, Zombie zombie){
@@ -217,21 +216,19 @@ public class ZombieStyle extends Play {
         if (unit.getX() == 1){
             dest = 2;
         }
-        if (unit.getX() == 4){
+        if (unit.getX() == 4) {
             dest = 3;
         }
-        //
-        //
         if (dest == -1){
             return;
         }
-
+        unit.getZombies().remove(zombie);
+        PlayGround.getSpecifiedUnit(dest, unit.getY()).getZombies().add(zombie);
     }
 
     private static void doFinalThings(int playerWon) {
         //
     }
-
 
     private static void increaseCoins(int plantInitializedHealth) {
         coins += 10 * plantInitializedHealth;
