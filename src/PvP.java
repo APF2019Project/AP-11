@@ -40,6 +40,7 @@ public class PvP {
 
             Zombie.zombiesTurn();
             Menu.zombieMenu(false, true);
+            ZombieStyle.popZombiesToPlayground();
             // zombie is done
         }
     }
@@ -64,10 +65,8 @@ public class PvP {
             return;
         }
 
-
         PlayGround.BuildDayPlayGround();
-        // wave generator kian will code it.
-        pvpTurn();
+        PvP.pvpTurn();
     }
 
     private static void gameFinisher() {

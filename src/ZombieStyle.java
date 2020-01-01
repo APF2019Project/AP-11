@@ -57,7 +57,7 @@ public class ZombieStyle extends Play {
         }
     }
 
-    private static void popZombiesToPlayground() {
+    public static void popZombiesToPlayground() {
         popFromZombieArr(rowZombies_0, 0);
         popFromZombieArr(rowZombies_1, 1);
         popFromZombieArr(rowZombies_2, 2);
