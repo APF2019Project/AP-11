@@ -299,6 +299,7 @@ public class Plant {
     }
 
     public void explodeMine(Unit unit) {
+        if (this.type.matches("bomb mine"))
         if (this.age > 1) {
             damageZombie(unit, unit.getZombies().get(0));
             unit.killPlant(0);
