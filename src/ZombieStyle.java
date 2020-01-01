@@ -19,7 +19,7 @@ public class ZombieStyle extends Play {
     private static boolean whileZombieTurn = true;
     private static int playerWon = 0;
 
-    public static void zombieStyleTurn(boolean waterGround, boolean PvP) {
+    public static void zombieStyleTurn(boolean waterGround) {
         startZombiePlay(waterGround);
         while(whileZombieTurn) {
             if (checkFinished()) {
@@ -37,7 +37,7 @@ public class ZombieStyle extends Play {
                 return;
             }
             Plant.plantsTurn();
-            Menu.zombieMenu(waterGround, PvP);
+            Menu.zombieMenu(waterGround, false);
         }
     }
 

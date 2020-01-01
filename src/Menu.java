@@ -483,7 +483,7 @@ public class Menu {
 
                 headerPrinted = false;
             } else if (command.toLowerCase().equals("end turn")) {
-                ZombieStyle.zombieStyleTurn(waterGround, PvP);
+                ZombieStyle.zombieStyleTurn(waterGround);
                 headerPrinted = false;
 
             } else if (command.toLowerCase().equals("show lawn")) {
