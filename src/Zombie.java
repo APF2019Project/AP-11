@@ -299,7 +299,7 @@
              condition = (Y >= 1) && (Y > farestUnitDidicatedBySpeed);
              return condition;
          } else {
-             condition = (Y >= 1) && (plant == null || plant[0] == null && Y > farestUnitDidicatedBySpeed);
+             condition = (Y >= 1) && (plant == null || plant[0] == null || PlayGround.isHaveLadder()) && Y > farestUnitDidicatedBySpeed;
              return condition;
          }
      }
