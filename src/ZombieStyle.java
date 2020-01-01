@@ -211,7 +211,22 @@ public class ZombieStyle extends Play {
 
     }
 
+    public void giveDuck(Unit unit, Zombie zombie){
+        zombie.setHaveDuck(true);
+        int dest = -1;
+        if (unit.getX() == 1){
+            dest = 2;
+        }
+        if (unit.getX() == 4){
+            dest = 3;
+        }
+        //
+        //
+        if (dest == -1){
+            return;
+        }
 
+    }
 
     private static void doFinalThings(int playerWon) {
         //

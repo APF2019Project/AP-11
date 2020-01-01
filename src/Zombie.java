@@ -26,15 +26,20 @@
      private int shieldStrength; //
      private int damagePower; //
      private boolean IsWaterProof; //
-     private boolean haveDuck; //
-     private boolean haveLadder; //
 
+     private boolean haveDuck; //
+
+     private boolean haveLadder; //
      public boolean isHaveLadder() {
          return haveLadder;
      }
 
      public void setHaveLadder(boolean haveLadder) {
          this.haveLadder = haveLadder;
+     }
+
+     public void setHaveDuck(boolean haveDuck) {
+         this.haveDuck = haveDuck;
      }
 
      public void recievingShoot(Shoot shoot) {
