@@ -197,7 +197,8 @@ public class Account {
             password = View.input();
             if (getAccountByUsername(username).getPassword().equals(password)) {
                 account = getAccountByUsername(username);
-                PvP.pvpTurn();
+                System.out.println("Logged in, going to --> Collection Menu:");
+
             } else {
                 System.out.println("Wrong password. Try again:");
             }

@@ -188,11 +188,11 @@ public class Menu {
             String playType = View.input();
             switch (playType.toLowerCase()) {
                 case "day":
-                    collectionMenu(1);
+                    collectionMenu(1, false);
                     headerPrinted = false;
                     break;
                 case "water":
-                    collectionMenu(2);
+                    collectionMenu(2, false);
                     headerPrinted = false;
                     break;
                 case "rail":
@@ -200,10 +200,11 @@ public class Menu {
                     headerPrinted = false;
                     break;
                 case "zombie":
-                    collectionMenu(4);
+                    collectionMenu(4, false);
                     headerPrinted = false;
                     break;
                 case "pvp":
+                    collectionMenu(1, true);
                     pvpMenu();
                     headerPrinted = false;
                     break;
@@ -280,7 +281,7 @@ public class Menu {
     }
 
 
-    static void collectionMenu(int playTypeIndex) { // Collection Menu index: -5
+    static void collectionMenu(int playTypeIndex, boolean pvp) { // Collection Menu index: -5
         String command;
         boolean whileTrue = true;
 
@@ -306,6 +307,14 @@ public class Menu {
                 Collection.readyToRemove(command, playTypeIndex);
                 continue;
             }
+            if (pvp && command.toLowerCase().equals("play")) {
+                View.invalidCommand(-5);
+                continue;
+            }
+            if (pvp && command.toLowerCase().equals("done")) {
+                System.out.println("You chose your plants. Going to login zombie player:");
+                Account.loginForPvPZombiePlayer(Account.getZombiePlayingAccount());
+            }
             switch (command.toLowerCase()) {
                 case "show hand":
                     Collection.showHand(playTypeIndex);
@@ -322,13 +331,12 @@ public class Menu {
                 case "exit": // Going back to Play Menu
                     Collection.clearZombiesDeck();
                     Collection.clearPlantsDeck();
-                    View.goingBackTo(-4);
+                    View.goingBackTo(-4); // Going back to Play Menu
                     whileTrue = false;
                     break;
                 case "help":
                     System.out.println("--- Collection Menu ---");
                     View.printNumberedStringArrayList(instructions);
-//                    View.showHelp(-5);
                     break;
                 default:
                     View.invalidCommand(-5);
