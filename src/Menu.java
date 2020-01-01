@@ -440,11 +440,11 @@ public class Menu {
     }
 
 
-
     public static void zombieMenu(boolean waterGround, boolean pvp) { // Zombie Menu index: 44
         String command;
         boolean whileTrue = true;
         Pattern putPattern = Pattern.compile("[p,P]ut (?<zombieName>.+),(?<number>\\d+),(?<row>\\d+)");
+        Pattern giveLadderPattern = Pattern.compile("[g,G]ive ladder to (?<zombieName>.+) in unit (?<row>\\d+),(?<column>\\d+) ");
 
         ArrayList<String> instructions = new ArrayList<>();
         setZombieMenuHelp(instructions);
@@ -460,6 +460,7 @@ public class Menu {
 
             command = View.input();
             Matcher putMatcher = putPattern.matcher(command);
+            Matcher ladderMatcher = giveLadderPattern.matcher(command);
 
             if (putMatcher.matches()) {
                 String zombieName = putMatcher.group("zombieName");
@@ -496,6 +497,12 @@ public class Menu {
             } else if (command.toLowerCase().equals("show lawn")) {
                 PlayGround.showLawn();
                 headerPrinted = false;
+
+            } else if (ladderMatcher.matches()) {
+                String zombieName = ladderMatcher.group("zombieName");
+                int row = Integer.parseInt(ladderMatcher.group("row"));
+                int column = Integer.parseInt(ladderMatcher.group("column"));
+                ZombieStyle.giveLadder(zombieName, row, column);
 
             } else if (command.toLowerCase().equals("help")) {
                 System.out.println("^-^-^-^ Zombie Menu ^-^-^-^");

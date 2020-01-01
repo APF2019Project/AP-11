@@ -167,4 +167,15 @@ public class Unit {
             }
         }
     }
+
+
+    public static boolean zombieExistsInUnit(int row, int column, String zombieName) {
+        for (Zombie zombieIterator : PlayGround.getSpecifiedUnit(row, column).getZombies()) {
+            if (zombieIterator.getName().equals(zombieName))
+                return true;
+        }
+        return false;
+    }
+
+
 }

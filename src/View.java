@@ -488,6 +488,17 @@ public class View {
             return 3;
         }
     }
+
+    public static void noLaddersLeft() {
+        System.out.println("No ladders left!");
+        System.out.println();
+    }
+
+    public static void noZombieInUnit(String zombieName,int row, int column) {
+        System.out.println("There is no " + zombieName + " in unit " + row + "," + column);
+        System.out.println();
+    }
+
     private static void loginMenuHelp() {
         System.out.println("-- Login Menu Help --");
         System.out.println("Login Menu commands are:");

@@ -12,6 +12,8 @@ public class ZombieStyle extends Play {
     private static int usedLadder = 0;
     private static int coins = 50;
     private static int lowestZombieCost;
+    private static int numberOfLadders = 3;
+    private static int numberOfDucks = 3;
 
     private static ArrayList<Plant> landPlants = new ArrayList<>();
     private static ArrayList<Plant> waterPlants = new ArrayList<>();
@@ -44,12 +46,31 @@ public class ZombieStyle extends Play {
                 return;
             }
             Zombie.zombiesTurn();
+
             if (checkFinished()) {
                 doFinalThings(playerWon);
                 return;
             }
             Plant.plantsTurn();
+            popZombiesToPlayground();
             Menu.zombieMenu(waterGround, false);
+        }
+    }
+
+    private static void popZombiesToPlayground() {
+        popFromZombieArr(rowZombies_0, 0);
+        popFromZombieArr(rowZombies_1, 1);
+        popFromZombieArr(rowZombies_2, 2);
+        popFromZombieArr(rowZombies_3, 3);
+        popFromZombieArr(rowZombies_4, 4);
+        popFromZombieArr(rowZombies_5, 5);
+    }
+
+    private static void popFromZombieArr(ArrayList<Zombie> zombies, int x){
+        if (zombies.size() != 0){
+            Zombie poppedZ = zombies.get(0);
+            zombies.remove(poppedZ);
+            PlayGround.getSpecifiedUnit(x, 19).addToZombies(poppedZ);
         }
     }
 
@@ -138,12 +159,16 @@ public class ZombieStyle extends Play {
         } else if (row < 0 || row > 5) {
             View.invalidCoordinates();
             return;
+        } else if (coins < Zombie.getZombie(zombieName).getHealth()) {
+            View.notEnoughMoney();
+            return;
         }
         ArrayList<Zombie> arrayList = getZombieArrayListByRow(row);
         if (arrayList.size() >= 2) {
             View.alreadyTwoZombiesInRow(row);
         } else {
             arrayList.add(Zombie.cloningZombie(Zombie.getZombie(zombieName)));
+            coins -= Zombie.getZombie(zombieName).getHealth();
             View.zombiePutInRow(zombieName, row);
         }
     }
@@ -164,6 +189,25 @@ public class ZombieStyle extends Play {
                 return rowZombies_5;
         }
         return null;
+    }
+
+    public static void giveLadder(String zombieName, int row, int column) {
+        if (numberOfLadders <= 0) {
+            View.noLaddersLeft();
+            return;
+        } else if (!PlayGround.validCoordinates(row, column)) {
+            View.invalidCoordinates();
+            return;
+        } else if (!Unit.zombieExistsInUnit(row, column, zombieName)) {
+            View.noZombieInUnit(zombieName, row, column);
+            return;
+        }
+        for (Zombie zombieIterator : PlayGround.getSpecifiedUnit(row, column).getZombies()) {
+            if (zombieIterator.getName().equals(zombieName)) {
+                zombieIterator.setHaveLadder(true);
+            }
+        }
+
     }
 
 
@@ -261,6 +305,8 @@ public class ZombieStyle extends Play {
         usedDock = 0;
         usedLadder = 0;
         coins = 50;
+        numberOfLadders = 3;
+        numberOfDucks = 3;
 
         landPlants.clear();
         waterPlants.clear();
