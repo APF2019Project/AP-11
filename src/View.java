@@ -499,6 +499,11 @@ public class View {
         System.out.println();
     }
 
+    public static void noDuckLeft() {
+        System.out.println("No duck left!");
+        System.out.println();
+    }
+
     private static void loginMenuHelp() {
         System.out.println("-- Login Menu Help --");
         System.out.println("Login Menu commands are:");

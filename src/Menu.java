@@ -31,7 +31,7 @@ public class Menu {
                     headerPrinted = false;
                     break;
                 case "login":
-                    Account.login(true);
+                    Account.login(true, Account.getPlayingAccount());
                     headerPrinted = false;
                     break;
                 case "leaderboard":
@@ -129,7 +129,7 @@ public class Menu {
             switch (command.toLowerCase()) {
                 case "change account":
                     System.out.println("Logging in with another account:");
-                    Account.login(false);
+                    Account.login(false, Account.getPlayingAccount());
                     break;
                 case "change password":
                     Account.changePassword();
@@ -204,7 +204,7 @@ public class Menu {
                     headerPrinted = false;
                     break;
                 case "pvp":
-                    //
+                    pvpMenu();
                     headerPrinted = false;
                     break;
                 case "exit":
@@ -444,7 +444,8 @@ public class Menu {
         String command;
         boolean whileTrue = true;
         Pattern putPattern = Pattern.compile("[p,P]ut (?<zombieName>.+),(?<number>\\d+),(?<row>\\d+)");
-        Pattern giveLadderPattern = Pattern.compile("[g,G]ive ladder to (?<zombieName>.+) in unit (?<row>\\d+),(?<column>\\d+) ");
+        Pattern giveLadderPattern = Pattern.compile("[g,G]ive ladder to (?<zombieName>.+) in unit (?<row>\\d+),(?<column>\\d+)");
+        Pattern giveDuckPattern = Pattern.compile("[G,g]ive duck to (?<zombieName>.+) in unit (?<row>\\d+),(?<column>\\d+)");
 
         ArrayList<String> instructions = new ArrayList<>();
         setZombieMenuHelp(instructions);
@@ -461,6 +462,7 @@ public class Menu {
             command = View.input();
             Matcher putMatcher = putPattern.matcher(command);
             Matcher ladderMatcher = giveLadderPattern.matcher(command);
+            Matcher duckMatcher = giveDuckPattern.matcher(command);
 
             if (putMatcher.matches()) {
                 String zombieName = putMatcher.group("zombieName");
@@ -498,13 +500,19 @@ public class Menu {
                 PlayGround.showLawn();
                 headerPrinted = false;
 
-            } else if (ladderMatcher.matches()) {
+            } else if (waterGround && ladderMatcher.matches()) {
                 String zombieName = ladderMatcher.group("zombieName");
                 int row = Integer.parseInt(ladderMatcher.group("row"));
                 int column = Integer.parseInt(ladderMatcher.group("column"));
                 ZombieStyle.giveLadder(zombieName, row, column);
 
-            } else if (command.toLowerCase().equals("help")) {
+            } else if (waterGround && duckMatcher.matches()) {
+                String zombieName = duckMatcher.group("zombieName");
+                int row = Integer.parseInt(duckMatcher.group("row"));
+                int column = Integer.parseInt(duckMatcher.group("column"));
+
+            }
+            else if (command.toLowerCase().equals("help")) {
                 System.out.println("^-^-^-^ Zombie Menu ^-^-^-^");
                 View.printNumberedStringArrayList(instructions);
 
@@ -611,7 +619,11 @@ public class Menu {
         boolean whileTrue = true;
         System.out.println("^-^-^-^ PvP Menu ^-^-^-^");
         ArrayList<String> instructions = new ArrayList<>();
-        instructions.add("");
+        // temporary:
+        while(whileTrue) {
+            Account.loginForPvPZombiePlayer(Account.getZombiePlayingAccount());
+        }
+
 
     }
 

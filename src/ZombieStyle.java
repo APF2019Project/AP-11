@@ -86,6 +86,20 @@ public class ZombieStyle extends Play {
         whileZombieTurn = true;
     }
 
+    public static void readyToGiveDuck(String zombieName, int row, int column) {
+        if (numberOfDucks <= 0) {
+            View.noDuckLeft();
+            return;
+        } else if (!PlayGround.validCoordinates(row, column)) {
+            View.invalidCoordinates();
+            return;
+        } else if (!Unit.zombieExistsInUnit(row, column, zombieName)) {
+            View.noZombieInUnit(zombieName, row, column);
+            return;
+        }
+
+    }
+
     public static int getCoins() {
         return coins;
     }

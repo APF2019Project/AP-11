@@ -155,18 +155,17 @@ public class Account {
     }
 
 
-    static void login(boolean calledFromLoginMenu) {
+    static void login(boolean calledFromLoginMenu, Account account) {
         System.out.println("--- LOGIN ---");
         String username;
         String password;
         System.out.println("Enter username:");
-        Scanner scanner = new Scanner(System.in);
-        username = scanner.nextLine();
+        username = View.input();
         if (accountExists(username)) {
             System.out.println("Enter password:");
-            password = scanner.nextLine();
+            password = View.input();
             if (getAccountByUsername(username).getPassword().equals(password)) {
-                playingAccount = getAccountByUsername(username);
+                account = getAccountByUsername(username);
                 if (calledFromLoginMenu) {
                     System.out.println("Logged in, going to --> Main Menu:");
                     Collection.setDefaultPlantsCollection();
@@ -179,11 +178,31 @@ public class Account {
                 }
             } else {
                 System.out.println("Wrong password. Try again:");
-                login(calledFromLoginMenu);
+                login(calledFromLoginMenu, account);
             }
         } else {
             System.out.println("Username doesn't exist!\nTry again:");
-            login(calledFromLoginMenu);
+            login(calledFromLoginMenu, account);
+        }
+    }
+
+    public static void loginForPvPZombiePlayer(Account account) {
+        System.out.println("--- LOGIN Zombie player ---");
+        String username;
+        String password;
+        System.out.println("Enter username:");
+        username = View.input();
+        if (accountExists(username)) {
+            System.out.println("Enter password:");
+            password = View.input();
+            if (getAccountByUsername(username).getPassword().equals(password)) {
+                account = getAccountByUsername(username);
+                PvP.pvpTurn();
+            } else {
+                System.out.println("Wrong password. Try again:");
+            }
+        } else {
+            System.out.println("Username doesn't exist!\nTry again:");
         }
     }
 
