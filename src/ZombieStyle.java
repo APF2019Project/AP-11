@@ -44,12 +44,31 @@ public class ZombieStyle extends Play {
                 return;
             }
             Zombie.zombiesTurn();
+
             if (checkFinished()) {
                 doFinalThings(playerWon);
                 return;
             }
             Plant.plantsTurn();
+            popZombiesToPlayground();
             Menu.zombieMenu(waterGround, false);
+        }
+    }
+
+    private static void popZombiesToPlayground() {
+        popFromZombieArr(rowZombies_0, 0);
+        popFromZombieArr(rowZombies_1, 1);
+        popFromZombieArr(rowZombies_2, 2);
+        popFromZombieArr(rowZombies_3, 3);
+        popFromZombieArr(rowZombies_4, 4);
+        popFromZombieArr(rowZombies_5, 5);
+    }
+
+    private static void popFromZombieArr(ArrayList<Zombie> zombies, int x){
+        if (zombies.size() != 0){
+            Zombie poppedZ = zombies.get(0);
+            zombies.remove(poppedZ);
+            PlayGround.getSpecifiedUnit(x, 19).addToZombies(poppedZ);
         }
     }
 

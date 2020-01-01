@@ -226,8 +226,6 @@
              }
          }
          this.damagingPlantIfExist(PlayGround.getSpecifiedUnit(X, newY));
-
-
      }
 
      private void damagingPlantIfExist(Unit unitNew) {
