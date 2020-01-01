@@ -157,6 +157,11 @@ public class PlayGround {
             System.out.println();
             System.out.println();
         }
+    }
 
+
+
+    public static boolean validCoordinates(int row, int column) {
+        return !(row < 0) && !(column < 0) && !(row > 5) && !(column > 19);
     }
 }
