@@ -1,9 +1,10 @@
+import java.beans.beancontext.BeanContextServiceRevokedEvent;
 import java.util.ArrayList;
+import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Menu {
-
 
     static void loginMenu() { // Login Menu index = -1
 
@@ -187,11 +188,11 @@ public class Menu {
             String playType = View.input();
             switch (playType.toLowerCase()) {
                 case "day":
-                    collectionMenu(1);
+                    collectionMenu(1, false);
                     headerPrinted = false;
                     break;
                 case "water":
-                    collectionMenu(2);
+                    collectionMenu(2, false);
                     headerPrinted = false;
                     break;
                 case "rail":
@@ -199,10 +200,12 @@ public class Menu {
                     headerPrinted = false;
                     break;
                 case "zombie":
-                    collectionMenu(4);
+                    collectionMenu(4, false);
                     headerPrinted = false;
                     break;
                 case "pvp":
+                    collectionMenu(1, true);
+                    // last night here!
                     pvpMenu();
                     headerPrinted = false;
                     break;
@@ -279,7 +282,7 @@ public class Menu {
     }
 
 
-    static void collectionMenu(int playTypeIndex) { // Collection Menu index: -5
+    static void collectionMenu(int playTypeIndex, boolean pvp) { // Collection Menu index: -5
         String command;
         boolean whileTrue = true;
 
@@ -293,7 +296,15 @@ public class Menu {
         while (whileTrue) {
             if (!headerPrinted) {
                 System.out.println("--- Collection Menu ---");
-                System.out.println("Your play type: " + Play.getPlayType(playTypeIndex));
+                if(!pvp)
+                    System.out.println("Your play type: " + Play.getPlayType(playTypeIndex));
+                else {
+                    System.out.println("Your play type: " + Play.getPlayType(5));
+                    if (playTypeIndex == 1)
+                        System.out.println("You are: Plant player");
+                    if (playTypeIndex == 4)
+                        System.out.println("You are: Zombie Player");
+                }
             }
             System.out.println("Enter command:");
 
@@ -304,6 +315,15 @@ public class Menu {
             } else if (command.toLowerCase().matches("remove (.+)")) {
                 Collection.readyToRemove(command, playTypeIndex);
                 continue;
+            }
+            if (pvp && command.toLowerCase().equals("play")) {
+                View.invalidCommand(-5);
+                continue;
+            }
+            if (pvp && command.toLowerCase().equals("done")) {
+                System.out.println("You chose your plants. Going to login zombie player:");
+                Account.loginForPvPZombiePlayer(Account.getSecondPlayingAccount());
+                return;
             }
             switch (command.toLowerCase()) {
                 case "show hand":
@@ -321,13 +341,22 @@ public class Menu {
                 case "exit": // Going back to Play Menu
                     Collection.clearZombiesDeck();
                     Collection.clearPlantsDeck();
-                    View.goingBackTo(-4);
+                    View.goingBackTo(-4); // Going back to Play Menu
                     whileTrue = false;
                     break;
                 case "help":
-                    System.out.println("--- Collection Menu ---");
-                    View.printNumberedStringArrayList(instructions);
-//                    View.showHelp(-5);
+                    if(!pvp) {
+                        System.out.println("--- Collection Menu ---");
+                        View.printNumberedStringArrayList(instructions);
+                    } else {
+                        System.out.println("--- Collection Menu ---");
+                        if (playTypeIndex == 1)
+                            System.out.println("You are: Plant player");
+                        if (playTypeIndex == 4)
+                            System.out.println("You are: Zombie Player");
+                        collectionMenuPvPHelp(instructions);
+                        View.printNumberedStringArrayList(instructions);
+                    }
                     break;
                 default:
                     View.invalidCommand(-5);
@@ -682,6 +711,15 @@ public class Menu {
         instructions.add("play");
         instructions.add("exit");
         instructions.add("help");
+    }
+
+    private static void collectionMenuPvPHelp(ArrayList<String> instructions) {
+        instructions.clear();
+        instructions.add("select [card name]");
+        instructions.add("remove [card name]");
+        instructions.add("show collection");
+        instructions.add("show hand");
+        instructions.add("done");
     }
 
     private static void setDayMenuHelp(ArrayList<String> instructions) {

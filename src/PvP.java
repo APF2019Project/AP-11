@@ -39,7 +39,9 @@ public class PvP {
             }
 
             Zombie.zombiesTurn();
+            ////
             Menu.zombieMenu(false, true);
+            ///
             ZombieStyle.popZombiesToPlayground();
             // zombie is done
         }
