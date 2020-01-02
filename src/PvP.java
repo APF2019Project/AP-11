@@ -37,26 +37,23 @@ public class PvP {
             Menu.dayMenu(1);
 
             // probably need playingAccount
-
-            Account.switchAccount();
-            // in this line: main account = plant player
-
+            //*** switch
             Menu.dayMenu(1); // probably need playingAccount
-            // in this line: main account = plant player
+            // plant is done
 
             if (checkFinished()) {
                 doFinalThings("Plant");
                 return;
             }
-
-            Account.switchAccount();
-            // in this line: main account = zombie player
-
+            //*** switch
             Zombie.zombiesTurn();
             Menu.zombieMenu(false, true, ZombieStyle.waveFinished());
-            // in this line: main account = zombie player
-
+            ///
+            ////
+            Menu.zombieMenu(false, true, ZombieStyle.waveFinished());
+            /////
             ZombieStyle.popZombiesToPlayground();
+            // zombie is done
         }
     }
 
@@ -77,10 +74,12 @@ public class PvP {
         if (ZombieStyle.getCoins() < ZombieStyle.getLowestZombieCost()){
             // game is finished
             gameFinisher();
+            IsPvPTrue = false;
             return;
         }
 
         PlayGround.BuildDayPlayGround();
+        IsPvPTrue = true;
     }
 
     private static void gameFinisher() {
@@ -109,6 +108,7 @@ public class PvP {
         if (ZombieStyle.allZombiesAreDead()) {
             return true;
         }
+
         return false;
     }
 
