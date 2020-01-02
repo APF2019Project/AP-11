@@ -197,7 +197,6 @@ public class Collection {
     }
 
     public static void clearZombiesDeck() {
-        System.out.println("$$$$$" + Account.getMainPlayingAccount());
         Account.getMainPlayingAccount().zombiesDeck.clear();
     }
 

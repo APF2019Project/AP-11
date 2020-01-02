@@ -42,6 +42,7 @@ public class Account {
                 return secondPlayingAccount;
         return null;
     }
+
     public static void switchAccount(){
         temp = mainPlayingAccount;
         mainPlayingAccount = secondPlayingAccount;

@@ -11,7 +11,7 @@ public class PvP {
         IsPvPTrue = isPvPTrue;
     }
 
-    //        account1 = Account.getMainPlayingAccount(); // It is for plantPlayingAccount
+//        account1 = Account.getMainPlayingAccount(); // It is for plantPlayingAccount
 //        account2 = Account.getSecondPlayingAccount();
 
     public static void pvpTurn() {

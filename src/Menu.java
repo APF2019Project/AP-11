@@ -194,6 +194,7 @@ public class Menu {
         setGoPlayMenuHelp(instructions);
         System.out.println("--- Play Menu ---");
         System.out.println("You are logged in as: " + Account.getMainPlayingAccount().getUsername());
+        System.out.println("Choose your play type:");
         View.printNumberedStringArrayList(instructions);
         boolean headerPrinted = true;
 
@@ -227,12 +228,21 @@ public class Menu {
                 case "pvp":
                     // in this line: main account = plant player
                     collectionMenu(1, true);
+                    if (exitFromPVPcollection1 == 1) {
+                        headerPrinted = false;
+                        break;
+                    }
+
 
                     // switch accounts: main <-- second
                     Account.switchAccount();
 
                     // in this line, main account = zombie player
                     collectionMenu(4, true);
+                    if (exitFromPVPcollection2 == 1) {
+                        headerPrinted = false;
+                        break;
+                    }
 
                     Play.goToPlayByPlayType(5);
                     headerPrinted = false;
@@ -315,6 +325,8 @@ public class Menu {
 
 
     static void collectionMenu(int playTypeIndex, boolean pvp) { // Collection Menu index: -5
+        exitFromPVPcollection1 = 0;
+        exitFromPVPcollection2 = 0;
         if (aGameHasFinished == 1) {
             return;
         }
@@ -401,13 +413,21 @@ public class Menu {
                             Collection.clearZombiesDeck();
                             Collection.clearPlantsDeck();
                             View.goingBackTo(-4); // Going back to Play Menu
+                            return;
                         }
                         if (playTypeIndex == 4) {
+                            // I wanted to make these two different, but I didn't.
                             exitFromPVPcollection2 = 1;
                             Collection.clearZombiesDeck();
                             Collection.clearPlantsDeck();
+
                             Account.switchAccount();
+                            // in this line: main playing account = plant player
+
+                            Collection.clearZombiesDeck();
+                            Collection.clearPlantsDeck();
                             View.goingBackTo(-4); // Going back to Play Menu
+                            return;
                         }
                     }
                     if (!pvp) {
