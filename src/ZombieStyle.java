@@ -230,6 +230,10 @@ public class ZombieStyle extends Play {
         }
     }
 
+    public static void increaseCoin(int n){
+        coins += n;
+    }
+
     public static void giveDuck(Unit unit, Zombie zombie){
         zombie.setHaveDuck(true);
         int dest = -1;

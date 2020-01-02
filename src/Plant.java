@@ -395,7 +395,7 @@ public class Plant {
         zombie.decreaseHealth(this.meleeDamage);
         if (zombie.getHealth() <= 0) {
             unit.removeFromZombies(zombie);
-            Account.increaseKilledZombiesTmp(1);
+            Unit.increaseRecordKilledZombies(1);
         }
     }
 
