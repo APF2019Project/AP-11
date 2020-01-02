@@ -27,14 +27,18 @@ public class PvP {
             Menu.dayMenu(1);
 
             // probably need playingAccount
+            //*** switch
+            Menu.dayMenu(1); // probably need playingAccount
             // plant is done
 
             if (checkFinished()) {
                 doFinalThings("Plant");
                 return;
             }
-
+            //*** switch
             Zombie.zombiesTurn();
+            Menu.zombieMenu(false, true, ZombieStyle.waveFinished());
+            ///
             ////
             Menu.zombieMenu(false, true);
             /////

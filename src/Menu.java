@@ -296,7 +296,7 @@ public class Menu {
         while (whileTrue) {
             if (!headerPrinted) {
                 System.out.println("--- Collection Menu ---");
-                if(!pvp)
+                if (!pvp)
                     System.out.println("Your play type: " + Play.getPlayType(playTypeIndex));
                 else {
                     System.out.println("Your play type: " + Play.getPlayType(5));
@@ -345,7 +345,7 @@ public class Menu {
                     whileTrue = false;
                     break;
                 case "help":
-                    if(!pvp) {
+                    if (!pvp) {
                         System.out.println("--- Collection Menu ---");
                         View.printNumberedStringArrayList(instructions);
                     } else {
@@ -468,7 +468,7 @@ public class Menu {
     }
 
 
-    public static void zombieMenu(boolean waterGround, boolean pvp) { // Zombie Menu index: 44
+    public static void zombieMenu(boolean waterGround, boolean pvp, boolean canPut) { // Zombie Menu index: 44
         String command;
         boolean whileTrue = true;
         Pattern putPattern = Pattern.compile("[p,P]ut (?<zombieName>.+),(?<number>\\d+),(?<row>\\d+)");
@@ -492,12 +492,14 @@ public class Menu {
             Matcher ladderMatcher = giveLadderPattern.matcher(command);
             Matcher duckMatcher = giveDuckPattern.matcher(command);
 
-            if (putMatcher.matches()) {
+            if (canPut && putMatcher.matches()) {
                 String zombieName = putMatcher.group("zombieName");
                 int number = Integer.parseInt(putMatcher.group("number"));
                 int row = Integer.parseInt(putMatcher.group("row"));
                 ZombieStyle.putZombieInRow(zombieName, number, row);
 
+            } else if (!canPut && putMatcher.matches()) {
+                System.out.println("You cant generate new wave until all your zombies die.");
             } else if (command.toLowerCase().equals("show hand")) {
                 if (pvp) {
                     ZombieStyle.showHandInZombieStyle(Account.getSecondPlayingAccount());
@@ -540,8 +542,7 @@ public class Menu {
                 int column = Integer.parseInt(duckMatcher.group("column"));
                 ZombieStyle.readyToGiveDuck(zombieName, row, column);
 
-            }
-            else if (command.toLowerCase().equals("help")) {
+            } else if (command.toLowerCase().equals("help")) {
                 System.out.println("^-^-^-^ Zombie Menu ^-^-^-^");
                 View.printNumberedStringArrayList(instructions);
 
@@ -649,7 +650,7 @@ public class Menu {
         System.out.println("^-^-^-^ PvP Menu ^-^-^-^");
         ArrayList<String> instructions = new ArrayList<>();
         // temporary:
-        while(whileTrue) {
+        while (whileTrue) {
             Account.loginForPvPZombiePlayer(Account.getSecondPlayingAccount());
         }
 

@@ -53,7 +53,7 @@ public class ZombieStyle extends Play {
             }
             Plant.plantsTurn();
             popZombiesToPlayground();
-            Menu.zombieMenu(waterGround,false);
+            Menu.zombieMenu(waterGround,false, waveFinished());
         }
     }
 
@@ -416,4 +416,57 @@ public class ZombieStyle extends Play {
     public static void setWhileZombieTurn(boolean whileZombieTurn) {
         ZombieStyle.whileZombieTurn = whileZombieTurn;
     }
+
+
+    public static boolean waveFinished() {
+        return !haveZombieInPlayGround();
+    }
+
+    public static boolean gameFinished() {
+        if (haveZombieInColumn0()) {
+            playerWon = 1;
+            return true;
+        }
+        if (!havePlantInPlayGround()) {
+            playerWon = 1;
+            return true;
+        }
+        if (!haveZombieInPlayGround()) {
+            if (coins < lowestZombieCost) {
+                playerWon = -1;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static boolean havePlantInPlayGround() {
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 20; j++) {
+                if (PlayGround.getSpecifiedUnit(i, j).getPlants()[0] != null)
+                    return true;
+            }
+        }
+        return false;
+    }
+
+    private static boolean haveZombieInPlayGround() {
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 20; j++) {
+                if (PlayGround.getSpecifiedUnit(i, j).getZombies().size() > 0)
+                    return true;
+            }
+        }
+        return false;
+    }
+
+    private static boolean haveZombieInColumn0() {
+        for (int i = 0; i <= 5; i++) {
+            if (PlayGround.getSpecifiedUnit(i,0).getZombies().size() > 0)
+                return true;
+        }
+        return false;
+    }
+
+
 }
