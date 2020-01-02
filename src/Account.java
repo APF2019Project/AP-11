@@ -25,6 +25,24 @@ public class Account {
 
     private static Account secondPlayingAccount;
 
+    public static Account getPlantPlayer() {
+        if (mainPlayingAccount.plantsDeck.size() > 0)
+            return mainPlayingAccount;
+        else if (secondPlayingAccount != null)
+            if (secondPlayingAccount.plantsDeck.size() > 0)
+                return secondPlayingAccount;
+        return null;
+    }
+
+    public static Account getZombiePlayer() {
+        if (mainPlayingAccount.zombiesDeck.size() > 0)
+            return mainPlayingAccount;
+        else if (secondPlayingAccount != null)
+            if (secondPlayingAccount.zombiesDeck.size() > 0)
+                return secondPlayingAccount;
+        return null;
+    }
+
     public Account(String username, String password) {
         this.username = username;
         this.password = password;
