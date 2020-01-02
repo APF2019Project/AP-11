@@ -12,8 +12,8 @@ public class PvP {
     }
 
     public static void pvpTurn() {
-//        account1 = Account.getMainPlayingAccount(); // It is for plantPlayingAccount
-//        account2 = Account.getSecondPlayingAccount();
+        account1 = Account.getMainPlayingAccount(); // It is for plantPlayingAccount
+        account2 = Account.getSecondPlayingAccount();
         IsPvPTrue = true;
         setWaveNumber(Integer.MAX_VALUE); // could be any number
         while (IsPvPTrue) {
@@ -39,8 +39,8 @@ public class PvP {
             }
 
             Zombie.zombiesTurn();
-            ////
             Menu.zombieMenu(false, true);
+            ///
             /////
             ZombieStyle.popZombiesToPlayground();
             // zombie is done
