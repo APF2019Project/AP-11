@@ -18,5 +18,3 @@ public class ZombieByLocation {
     }
 }
 
-
-// could be inherited
