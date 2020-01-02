@@ -6,6 +6,8 @@ import java.util.regex.Pattern;
 
 public class Menu {
 
+    public static int aGameHasFinished = 0;
+
     static void loginMenu() { // Login Menu index = -1
 
         String command;
@@ -27,10 +29,12 @@ public class Menu {
             command = View.input();
             switch (command.toLowerCase()) {
                 case "create account":
+                case "caa":
                     Account.createAccount(true);
                     headerPrinted = false;
                     break;
                 case "login":
+                    aGameHasFinished = 0;
                     Account.login(true, Account.getMainPlayingAccount());
                     headerPrinted = false;
                     break;
@@ -65,6 +69,10 @@ public class Menu {
 
 
     static void mainMenu() { // Main Menu index = -2
+        if (aGameHasFinished == 1) {
+            return;
+        }
+
         String command;
         ArrayList<String> instructions = new ArrayList<>();
         setMainMenuHelp(instructions);
@@ -110,6 +118,10 @@ public class Menu {
 
 
     static void profileMenu() { // Profile Menu index = -3
+        if (aGameHasFinished == 1) {
+            return;
+        }
+
         boolean whileTrue = true;
 
         ArrayList<String> instructions = new ArrayList<>();
@@ -169,11 +181,19 @@ public class Menu {
     }
 
 
+
+    private static int exitFromPVPcollection1 = 0;
+    private static int exitFromPVPcollection2 = 0;
+
     static void goPlay() { // Play Menu index: -4
+        if (aGameHasFinished == 1) {
+            return;
+        }
 
         ArrayList<String> instructions = new ArrayList<>();
         setGoPlayMenuHelp(instructions);
         System.out.println("--- Play Menu ---");
+        System.out.println("You are logged in as: " + Account.getMainPlayingAccount().getUsername());
         View.printNumberedStringArrayList(instructions);
         boolean headerPrinted = true;
 
@@ -181,6 +201,7 @@ public class Menu {
         while (whileTrue) {
             if (!headerPrinted) {
                 System.out.println("--- Play Menu ---");
+                System.out.println("You are logged in as: " + Account.getMainPlayingAccount().getUsername());
                 System.out.println("Choose your play type:");
             }
             System.out.println("Enter command:");
@@ -204,9 +225,16 @@ public class Menu {
                     headerPrinted = false;
                     break;
                 case "pvp":
+                    // in this line: main account = plant player
                     collectionMenu(1, true);
-                    // last night here!
-                    pvpMenu();
+
+                    // switch accounts: main <-- second
+                    Account.switchAccount();
+
+                    // in this line, main account = zombie player
+                    collectionMenu(4, true);
+
+                    Play.goToPlayByPlayType(5);
                     headerPrinted = false;
                     break;
                 case "exit":
@@ -227,6 +255,10 @@ public class Menu {
 
 
     public static void shopMenu() { // Shop Menu index: -10
+        if (aGameHasFinished == 1) {
+            return;
+        }
+
         String command;
         boolean exitShop = false;
 
@@ -283,15 +315,32 @@ public class Menu {
 
 
     static void collectionMenu(int playTypeIndex, boolean pvp) { // Collection Menu index: -5
+        if (aGameHasFinished == 1) {
+            return;
+        }
+
         String command;
         boolean whileTrue = true;
-
         ArrayList<String> instructions = new ArrayList<>();
-        setCollectionMenuHelp(instructions);
-        System.out.println("--- Collection Menu ---");
-        System.out.println("Your play type: " + Play.getPlayType(playTypeIndex));
-        View.printNumberedStringArrayList(instructions);
-        boolean headerPrinted = true;
+        boolean headerPrinted = false;
+        if (!pvp) {
+            System.out.println("--- Collection Menu ---");
+            System.out.println("Your play type: " + Play.getPlayType(playTypeIndex));
+            setCollectionMenuHelp(instructions);
+            View.printNumberedStringArrayList(instructions);
+            headerPrinted = true;
+        } else {
+            System.out.println("--- Collection Menu ---");
+            System.out.println("Your play type: " + Play.getPlayType(5));
+            System.out.println("You are logged in as: " + Account.getMainPlayingAccount().getUsername());
+            if (playTypeIndex == 1)
+                System.out.println("You are: Plant player");
+            if (playTypeIndex == 4)
+                System.out.println("You are: Zombie Player");
+            collectionMenuPvPHelp(instructions);
+            View.printNumberedStringArrayList(instructions);
+            headerPrinted = true;
+        }
 
         while (whileTrue) {
             if (!headerPrinted) {
@@ -311,37 +360,61 @@ public class Menu {
             command = View.input();
             if (command.toLowerCase().matches("select (.+)")) {
                 Collection.readyToSelect(command, playTypeIndex);
+                headerPrinted = true;
                 continue;
             } else if (command.toLowerCase().matches("remove (.+)")) {
                 Collection.readyToRemove(command, playTypeIndex);
+                headerPrinted = true;
                 continue;
             }
             if (pvp && command.toLowerCase().equals("play")) {
                 View.invalidCommand(-5);
+                headerPrinted = true;
                 continue;
             }
-            if (pvp && command.toLowerCase().equals("done")) {
+            if (pvp && command.toLowerCase().equals("done") && playTypeIndex == 1) {
                 System.out.println("You chose your plants. Going to login zombie player:");
                 Account.loginForPvPZombiePlayer(Account.getSecondPlayingAccount());
+                return;
+            }
+            if (pvp && command.toLowerCase().equals("done") && playTypeIndex == 4) {
+                System.out.println("You chose your zombies. going to play:");
                 return;
             }
             switch (command.toLowerCase()) {
                 case "show hand":
                     Collection.showHand(playTypeIndex);
-                    headerPrinted = false;
+                    headerPrinted = true;
                     break;
                 case "show collection":
                     Collection.showCollection(playTypeIndex);
-                    headerPrinted = false;
+                    headerPrinted = true;
                     break;
                 case "play":
                     Play.goToPlayByPlayType(playTypeIndex);
                     headerPrinted = false;
                     break;
-                case "exit": // Going back to Play Menu
-                    Collection.clearZombiesDeck();
-                    Collection.clearPlantsDeck();
-                    View.goingBackTo(-4); // Going back to Play Menu
+                case "exit":
+                    if (pvp) {
+                        if (playTypeIndex == 1) {
+                            exitFromPVPcollection1 = 1;
+                            Collection.clearZombiesDeck();
+                            Collection.clearPlantsDeck();
+                            View.goingBackTo(-4); // Going back to Play Menu
+                        }
+                        if (playTypeIndex == 4) {
+                            exitFromPVPcollection2 = 1;
+                            Collection.clearZombiesDeck();
+                            Collection.clearPlantsDeck();
+                            Account.switchAccount();
+                            View.goingBackTo(-4); // Going back to Play Menu
+                        }
+                    }
+                    if (!pvp) {
+                        View.goingBackTo(-4); // Going back to Play Menu
+                        Collection.clearZombiesDeck();
+                        Collection.clearPlantsDeck();
+                    }
                     whileTrue = false;
                     break;
                 case "help":
@@ -356,6 +429,7 @@ public class Menu {
                             System.out.println("You are: Zombie Player");
                         collectionMenuPvPHelp(instructions);
                         View.printNumberedStringArrayList(instructions);
+                        headerPrinted = true;
                     }
                     break;
                 default:
@@ -367,6 +441,10 @@ public class Menu {
 
 
     public static void dayMenu(int playTypeIndex) {  // DayAndWater Menu index : 11
+        if (aGameHasFinished == 1) {
+            return;
+        }
+
         boolean whileTrue = true;
         String command;
         Pattern plantingPattern = Pattern.compile("[p,P]lant (?<row>\\d+),(?<column>\\d+)");
@@ -469,6 +547,11 @@ public class Menu {
 
 
     public static void zombieMenu(boolean waterGround, boolean pvp, boolean canPut) { // Zombie Menu index: 44
+        if (aGameHasFinished == 1) {
+            return;
+        }
+
+
         String command;
         boolean whileTrue = true;
         Pattern putPattern = Pattern.compile("[p,P]ut (?<zombieName>.+),(?<number>\\d+),(?<row>\\d+)");
@@ -499,13 +582,9 @@ public class Menu {
                 ZombieStyle.putZombieInRow(zombieName, number, row);
 
             } else if (!canPut && putMatcher.matches()) {
-                System.out.println("You cant generate new wave until all your zombies die.");
+                System.out.println("You cant generate new wave until all of your play ground zombies die.");
             } else if (command.toLowerCase().equals("show hand")) {
-                if (pvp) {
-                    ZombieStyle.showHandInZombieStyle(Account.getSecondPlayingAccount());
-                } else {
                     ZombieStyle.showHandInZombieStyle(Account.getMainPlayingAccount());
-                }
                 headerPrinted = false;
 
             } else if (command.toLowerCase().equals("show lanes")) {
@@ -572,6 +651,10 @@ public class Menu {
 
 
     public static void railMenu() {
+        if (aGameHasFinished == 1) {
+            return;
+        }
+
         String command;
         boolean whileTrue = true;
         Pattern plantingPattern = Pattern.compile("[p,P]lant (?<row>\\d+),(?<column>\\d+)");
@@ -645,6 +728,10 @@ public class Menu {
 
 
     public static void pvpMenu() {
+        if (aGameHasFinished == 1) {
+            return;
+        }
+
         String command;
         boolean whileTrue = true;
         System.out.println("^-^-^-^ PvP Menu ^-^-^-^");

@@ -36,20 +36,26 @@ public class ZombieStyle extends Play {
     public static void zombieStyleTurn(boolean waterGround) {
         startZombiePlay(waterGround);
         while(whileZombieTurn) {
-            if (checkFinished()) {
-                doFinalThings(playerWon);
-                return;
+            if (waveFinished()) {
+                if (gameFinished()) {
+                    doFinalThings(playerWon);
+                    return;
+                }
             }
             Shoot.shootTurn();
-            if (checkFinished()) {
-                doFinalThings(playerWon);
-                return;
+            if (waveFinished()) {
+                if (gameFinished()) {
+                    doFinalThings(playerWon);
+                    return;
+                }
             }
             Zombie.zombiesTurn();
 
-            if (checkFinished()) {
-                doFinalThings(playerWon);
-                return;
+            if (waveFinished()) {
+                if (gameFinished()) {
+                    doFinalThings(playerWon);
+                    return;
+                }
             }
             Plant.plantsTurn();
             popZombiesToPlayground();
@@ -423,10 +429,10 @@ public class ZombieStyle extends Play {
     }
 
     public static boolean gameFinished() {
-        if (haveZombieInColumn0()) {
-            playerWon = 1;
-            return true;
-        }
+//        if (haveZombieInColumn0()) {
+//            playerWon = 1;
+//            return true;
+//        }
         if (!havePlantInPlayGround()) {
             playerWon = 1;
             return true;

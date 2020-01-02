@@ -39,6 +39,8 @@ public class Play {
                 }
                 break;
             case 5:
+                // in this line: main account = zombie player
+                PlayGround.BuildDayPlayGround();
                 PvP.pvpTurn();
                 break;
             default:

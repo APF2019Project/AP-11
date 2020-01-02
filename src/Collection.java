@@ -197,6 +197,7 @@ public class Collection {
     }
 
     public static void clearZombiesDeck() {
+        System.out.println("$$$$$" + Account.getMainPlayingAccount());
         Account.getMainPlayingAccount().zombiesDeck.clear();
     }
 
@@ -306,6 +307,58 @@ public class Collection {
         }
     }
 
+
+    public static void setDefaultZombieCollectionForSecondPlayer() {
+        boolean ZombieBoolean = false;
+        boolean Football_Zombie = false;
+        boolean Screen_Door_Zombie = false;
+        boolean Zomboni = false;
+        boolean Balloon_Zombie = false;
+        boolean Bungee_Zombie = false;
+        boolean Conehead_Zombie = false;
+
+        String zombieIteratorName;
+        for (Zombie zombieIterator : Account.getSecondPlayingAccount().getZombiesCollection()) {
+            zombieIteratorName = zombieIterator.getName();
+            if (zombieIteratorName.equals("Zombie")) {
+                ZombieBoolean = true;
+            } else if (zombieIteratorName.equals("Football Zombie")) {
+                Football_Zombie = true;
+            } else if (zombieIteratorName.equals("Screen Door Zombie")) {
+                Screen_Door_Zombie = true;
+            } else if (zombieIteratorName.equals("Zomboni")) {
+                Zomboni = true;
+            } else if (zombieIteratorName.equals("Balloon Zombie")) {
+                Balloon_Zombie = true;
+            } else if (zombieIteratorName.equals("Bungee Zombie")) {
+                Bungee_Zombie = true;
+            } else if (zombieIteratorName.equals("Conehead Zombie")) {
+                Conehead_Zombie = true;
+            }
+        }
+
+        if (!ZombieBoolean) {
+            Account.getSecondPlayingAccount().getZombiesCollection().add(Zombie.getZombie("Zombie"));
+        }
+        if (!Football_Zombie) {
+            Account.getSecondPlayingAccount().getZombiesCollection().add(Zombie.getZombie("Football Zombie"));
+        }
+        if (!Screen_Door_Zombie) {
+            Account.getSecondPlayingAccount().getZombiesCollection().add(Zombie.getZombie("Screen Door Zombie"));
+        }
+        if (!Zomboni) {
+            Account.getSecondPlayingAccount().getZombiesCollection().add(Zombie.getZombie("Zomboni"));
+        }
+        if (!Balloon_Zombie) {
+            Account.getSecondPlayingAccount().getZombiesCollection().add(Zombie.getZombie("Balloon Zombie"));
+        }
+        if (!Bungee_Zombie) {
+            Account.getSecondPlayingAccount().getZombiesCollection().add(Zombie.getZombie("Bungee Zombie"));
+        }
+        if (!Conehead_Zombie) {
+            Account.getSecondPlayingAccount().getZombiesCollection().add(Zombie.getZombie("Conehead Zombie"));
+        }
+    }
 
     public static void clearDecksSetCollections() {
         Collection.clearPlantsDeck();

@@ -45,7 +45,7 @@ public class Account {
     public static void switchAccount(){
         temp = mainPlayingAccount;
         mainPlayingAccount = secondPlayingAccount;
-        secondPlayingAccount = mainPlayingAccount;
+        secondPlayingAccount = temp;
     }
 
     public Account(String username, String password) {
@@ -218,7 +218,7 @@ public class Account {
             System.out.println("Enter password:");
             password = View.input();
             if (getAccountByUsername(username).getPassword().equals(password)) {
-                account = getAccountByUsername(username);
+                Account.setMainPlayingAccount(getAccountByUsername(username));
                 if (calledFromLoginMenu) {
                     System.out.println("Logged in, going to --> Main Menu:");
                     Collection.setDefaultPlantsCollection();
@@ -250,13 +250,15 @@ public class Account {
             System.out.println("Enter password:");
             password = View.input();
             if (getAccountByUsername(username).getPassword().equals(password)) {
-                account = getAccountByUsername(username);
-                PvP.pvpTurn();
+                Account.setSecondPlayingAccount(getAccountByUsername(username));
+                Collection.setDefaultZombieCollectionForSecondPlayer();
             } else {
                 System.out.println("Wrong password. Try again:");
+                loginForPvPZombiePlayer(account);
             }
         } else {
             System.out.println("Username doesn't exist!\nTry again:");
+            loginForPvPZombiePlayer(account);
         }
     }
 

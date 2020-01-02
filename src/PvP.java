@@ -11,12 +11,16 @@ public class PvP {
         IsPvPTrue = isPvPTrue;
     }
 
-    public static void pvpTurn() {
-//        account1 = Account.getMainPlayingAccount(); // It is for plantPlayingAccount
+    //        account1 = Account.getMainPlayingAccount(); // It is for plantPlayingAccount
 //        account2 = Account.getSecondPlayingAccount();
+
+    public static void pvpTurn() {
+        // in this line: main account = zombie player
+
         IsPvPTrue = true;
         setWaveNumber(Integer.MAX_VALUE); // could be any number
         while (IsPvPTrue) {
+            // in this line: main account = zombie player
             if (checkFinished()) {
                 doFinalThings("Zombie");
                 return;
@@ -33,23 +37,26 @@ public class PvP {
             Menu.dayMenu(1);
 
             // probably need playingAccount
-            //*** switch
+
+            Account.switchAccount();
+            // in this line: main account = plant player
+
             Menu.dayMenu(1); // probably need playingAccount
-            // plant is done
+            // in this line: main account = plant player
 
             if (checkFinished()) {
                 doFinalThings("Plant");
                 return;
             }
-            //*** switch
+
+            Account.switchAccount();
+            // in this line: main account = zombie player
+
             Zombie.zombiesTurn();
             Menu.zombieMenu(false, true, ZombieStyle.waveFinished());
-            ///
-            ////
-            Menu.zombieMenu(false, true, ZombieStyle.waveFinished());
-            /////
+            // in this line: main account = zombie player
+
             ZombieStyle.popZombiesToPlayground();
-            // zombie is done
         }
     }
 
@@ -57,7 +64,7 @@ public class PvP {
         waveNumbers = waveNum;
     }
 
-    private static void doFinalThings(String whoWon) { // sadjad should add Account.numOfKilledZombiesHandlingInAccount(false);
+    private static void doFinalThings(String whoWon) { // sajad should add Account.numOfKilledZombiesHandlingInAccount(false);
         if (whoWon.equals("Zombie")){
             ZombieWinNumber++;
             ZombieStyle.setCoins(ZombieStyle.getCoins() + 200);
@@ -74,7 +81,6 @@ public class PvP {
         }
 
         PlayGround.BuildDayPlayGround();
-        PvP.pvpTurn();
     }
 
     private static void gameFinisher() {
@@ -86,6 +92,7 @@ public class PvP {
         }
 
         Account.setSecondPlayingAccount(null);
+        Menu.aGameHasFinished = 1;
         return;
     }
 
@@ -102,7 +109,6 @@ public class PvP {
         if (ZombieStyle.allZombiesAreDead()) {
             return true;
         }
-
         return false;
     }
 
