@@ -1,9 +1,6 @@
 public class PvP {
 
-    static int waveNumbers;
     private static boolean IsPvPTrue = true;
-    static Account account1;
-    static Account account2;
     static int ZombieWinNumber = 0;
     static int PlantWinNumber = 0;
 
@@ -12,10 +9,7 @@ public class PvP {
     }
 
     public static void pvpTurn() {
-//        account1 = Account.getMainPlayingAccount(); // It is for plantPlayingAccount
-//        account2 = Account.getSecondPlayingAccount();
         IsPvPTrue = true;
-        setWaveNumber(Integer.MAX_VALUE); // could be any number
         while (IsPvPTrue) {
             if (checkFinished()) {
                 doFinalThings("Zombie");
@@ -49,10 +43,6 @@ public class PvP {
         }
     }
 
-    private static void setWaveNumber(int waveNum) {
-        waveNumbers = waveNum;
-    }
-
     private static void doFinalThings(String whoWon) { // sadjad should add Account.numOfKilledZombiesHandlingInAccount(false);
         if (whoWon.equals("Zombie")){
             ZombieWinNumber++;
@@ -66,22 +56,23 @@ public class PvP {
         if (ZombieStyle.getCoins() < ZombieStyle.getLowestZombieCost()){
             // game is finished
             gameFinisher();
+            IsPvPTrue = false;
             return;
         }
 
         PlayGround.BuildDayPlayGround();
-        PvP.pvpTurn();
+        IsPvPTrue = true;
     }
 
     private static void gameFinisher() {
         if (PlantWinNumber >= ZombieWinNumber){
-            View.printWinnerOfTheGame(account1);
+            View.printWinnerOfTheGame(Account.getPlantPlayer());
         }
         else {
-            View.printWinnerOfTheGame(account2);
+            View.printWinnerOfTheGame(Account.getZombiePlayer());
         }
 
-        Account.setSecondPlayingAccount(null);
+        Account.setSecondPlayingAccount(null); // not sure
         return;
     }
 
