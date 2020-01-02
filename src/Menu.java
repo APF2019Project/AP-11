@@ -4,6 +4,7 @@ import java.util.regex.Pattern;
 
 public class Menu {
 
+
     static void loginMenu() { // Login Menu index = -1
 
         String command;
