@@ -22,7 +22,7 @@ public class Account {
     private static ArrayList<Account> accounts = new ArrayList<>();
 
     private static Account mainPlayingAccount;
-
+    private static Account temp;
     private static Account secondPlayingAccount;
 
     public static Account getPlantPlayer() {
@@ -41,6 +41,11 @@ public class Account {
             if (secondPlayingAccount.zombiesDeck.size() > 0)
                 return secondPlayingAccount;
         return null;
+    }
+    public static void switchAccount(){
+        temp = mainPlayingAccount;
+        mainPlayingAccount = secondPlayingAccount;
+        secondPlayingAccount = mainPlayingAccount;
     }
 
     public Account(String username, String password) {
