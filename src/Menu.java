@@ -1,3 +1,4 @@
+import java.awt.event.WindowStateListener;
 import java.beans.beancontext.BeanContextServiceRevokedEvent;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -179,7 +180,6 @@ public class Menu {
             }
         }
     }
-
 
 
     private static int exitFromPVPcollection1 = 0;
@@ -440,7 +440,7 @@ public class Menu {
     }
 
 
-    public static void dayMenu(int playTypeIndex) {  // DayAndWater Menu index : 11
+    public static void dayMenu(int playTypeIndex, boolean pvp) {  // DayAndWater Menu index : 11
         if (aGameHasFinished == 1) {
             return;
         }
@@ -451,7 +451,11 @@ public class Menu {
         Pattern removePattern = Pattern.compile("[r,R]emove (?<row>\\d+),(?<column>\\d+)");
 
         ArrayList<String> instructions = new ArrayList<>();
-        setDayMenuHelp(instructions);
+        if (pvp) {
+            dayMenuPvPHelp(instructions);
+        } else {
+            setDayMenuHelp(instructions);
+        }
         if (playTypeIndex == 1) {
             System.out.println("^-^-^-^- Day Menu -^-^-^-^");
         } else if (playTypeIndex == 2) {
@@ -461,6 +465,9 @@ public class Menu {
         boolean headerPrinted = true;
 
         while (whileTrue) {
+            if (pvp) {
+                System.out.println("You are logged in as: " + Account.getMainPlayingAccount().getUsername());
+            }
             if (!headerPrinted) {
                 if (playTypeIndex == 1) {
                     System.out.println("^-^-^-^- Day Menu -^-^-^-^");
@@ -497,24 +504,44 @@ public class Menu {
                 Day.showHandInDay();
                 headerPrinted = false;
 
-            } else if (command.toLowerCase().equals("end turn")) {
+            } else if (!pvp && command.toLowerCase().equals("end turn")) {
                 whileTrue = false;
+                headerPrinted = false;
+                return;
+
+            } else if (pvp && command.toLowerCase().equals("ready")) {
+                whileTrue = false;
+                headerPrinted = false;
                 return;
 
             } else if (command.toLowerCase().equals("show lawn")) {
                 PlayGround.showLawn();
                 headerPrinted = false;
 
-
             } else if (command.toLowerCase().equals("exit")) {
-                boolean exit = View.areYouSureExitingPlay();
-                if (exit) {
-                    whileTrue = false;
-                    Day.setWhileDayTurn(false);
-                    View.goingBackTo(-5);
-                    Collection.clearDecksSetCollections();
+                boolean exit = false;
+                if (!pvp) {
+                    exit = View.areYouSureExitingPlay();
+                } else {
+                    System.out.println("Exiting at this moment will delete this game history.\nAre you sure you want to exit?");
+                    exit = View.yesOrNo();
+                }
+                if (!pvp) {
+                    if (exit) {
+                        whileTrue = false;
+                        Day.setWhileDayTurn(false);
+                        View.goingBackTo(-5);
+                        Collection.clearDecksSetCollections();
+                    }
+                } else {
+                    if (exit) {
+                        View.goingBackTo(1); // Going to login Menu
+                        aGameHasFinished = 1;
+                        return;
+                    }
                 }
                 headerPrinted = false;
+
             } else if (command.toLowerCase().equals("help")) {
                 if (playTypeIndex == 1) {
                     System.out.println("^-^-^-^- Day Menu -^-^-^-^");
@@ -535,6 +562,7 @@ public class Menu {
 
             } else if (command.toLowerCase().equals("ppg")) {
                 PlayGround.printPlayGround();
+
             } else {
                 if (playTypeIndex == 1) {
                     View.invalidCommand(11);
@@ -551,7 +579,6 @@ public class Menu {
             return;
         }
 
-
         String command;
         boolean whileTrue = true;
         Pattern putPattern = Pattern.compile("[p,P]ut (?<zombieName>.+),(?<number>\\d+),(?<row>\\d+)");
@@ -559,12 +586,20 @@ public class Menu {
         Pattern giveDuckPattern = Pattern.compile("[G,g]ive duck to (?<zombieName>.+) in unit (?<row>\\d+),(?<column>\\d+)");
 
         ArrayList<String> instructions = new ArrayList<>();
-        setZombieMenuHelp(instructions);
+        if (pvp) {
+            zombieMenuPvPHelp(instructions);
+        } else {
+            setZombieMenuHelp(instructions);
+        }
         System.out.println("^-^-^-^ Zombie Menu ^-^-^-^");
         View.printNumberedStringArrayList(instructions);
+
         boolean headerPrinted = true;
 
         while (whileTrue) {
+            if (pvp) {
+                System.out.println("You are logged in as: " + Account.getMainPlayingAccount().getUsername());
+            }
             if (!headerPrinted) {
                 System.out.println("^-^-^-^ Zombie Menu ^-^-^-^");
             }
@@ -584,7 +619,7 @@ public class Menu {
             } else if (!canPut && putMatcher.matches()) {
                 System.out.println("You cant generate new wave until all of your play ground zombies die.");
             } else if (command.toLowerCase().equals("show hand")) {
-                    ZombieStyle.showHandInZombieStyle(Account.getMainPlayingAccount());
+                ZombieStyle.showHandInZombieStyle(Account.getMainPlayingAccount());
                 headerPrinted = false;
 
             } else if (command.toLowerCase().equals("show lanes")) {
@@ -592,8 +627,7 @@ public class Menu {
                 headerPrinted = false;
 
             } else if (command.toLowerCase().equals("start")) {
-                //
-                headerPrinted = false;
+                ZombieStyle.popZombiesToPlayground();
 
             } else if (!pvp && command.toLowerCase().equals("end turn")) {
                 whileTrue = false;
@@ -822,6 +856,30 @@ public class Menu {
     }
 
     private static void setZombieMenuHelp(ArrayList<String> instructions) {
+        instructions.add("put [zombie name],[row]");
+        instructions.add("start");
+        instructions.add("show hand");
+        instructions.add("show lanes");
+        instructions.add("show lawn");
+        instructions.add("end turn");
+        instructions.add("help");
+        instructions.add("exit");
+    }
+
+    private static void dayMenuPvPHelp(ArrayList<String> instructions) {
+        instructions.clear();
+        instructions.add("select [card name]");
+        instructions.add("plant [row],[column]");
+        instructions.add("remove [row],[column]");
+        instructions.add("show hand");
+        instructions.add("show lawn");
+        instructions.add("ready");
+        instructions.add("help");
+        instructions.add("exit");
+    }
+
+    private static void zombieMenuPvPHelp(ArrayList<String> instructions) {
+        instructions.clear();
         instructions.add("put [zombie name],[row]");
         instructions.add("start");
         instructions.add("show hand");

@@ -60,7 +60,7 @@ public class Day extends Play {
                 return;
             }
             Plant.plantsTurn();
-            Menu.dayMenu(playTypeIndex);
+            Menu.dayMenu(playTypeIndex, false);
             Collection.decreaseRespawnsInDeck();
         }
     }

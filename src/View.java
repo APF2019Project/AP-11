@@ -69,6 +69,7 @@ public class View {
                 break;
             case 44:
                 System.out.println("Invalid command in Zombie Menu, Try again:\n");
+                break;
             default:
                 indexError();
                 break;
@@ -241,6 +242,18 @@ public class View {
     public static void cardNotInDeck(String deckType, String cardName) {
         System.out.println(cardName + " is not in your " + deckType + " deck.");
         System.out.println();
+    }
+
+    public static boolean yesOrNo() {
+        String answer = scanner.nextLine();
+        if (answer.toLowerCase().equals("yes")) {
+            return true;
+        } else if (answer.toLowerCase().equals("no")) {
+            return false;
+        } else {
+            System.out.println("Invalid answer. Try exiting again.");
+            return false;
+        }
     }
 
     public static void cardSelected(String cardName) {
