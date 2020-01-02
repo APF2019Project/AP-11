@@ -34,26 +34,25 @@ public class PvP {
             }
             Day.increaseSun();
             Plant.plantsTurn();
+
+            Account.switchAccount();
+            // in this line: main account = plant player
+
             Menu.dayMenu(1);
 
-            // probably need playingAccount
-            //*** switch
-            Menu.dayMenu(1); // probably need playingAccount
-            // plant is done
 
             if (checkFinished()) {
                 doFinalThings("Plant");
                 return;
             }
-            //*** switch
             Zombie.zombiesTurn();
+
+            Account.switchAccount();
+            // in this line: main account = zombie player player
+
             Menu.zombieMenu(false, true, ZombieStyle.waveFinished());
-            ///
-            ////
-            Menu.zombieMenu(false, true, ZombieStyle.waveFinished());
-            /////
             ZombieStyle.popZombiesToPlayground();
-            // zombie is done
+            // in this line: main account = zombie player
         }
     }
 
