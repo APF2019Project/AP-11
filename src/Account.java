@@ -234,6 +234,7 @@ public class Account {
         }
     }
 
+
     public static void loginForPvPZombiePlayer(Account account) {
         System.out.println("--- LOGIN Zombie player ---");
         String username;
