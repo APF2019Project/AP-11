@@ -53,7 +53,7 @@ public class Unit {
 
 
     public void removeFromZombies(Zombie zombie){
-        Account.increaseKilledZombiesTmp(1);
+        increaseRecordKilledZombies(1);
         boolean flag = false;
         if (zombie.isCouldRevertToRegularZombie()){
             flag = true;
@@ -61,6 +61,21 @@ public class Unit {
         zombies.remove(zombie);
         if (flag)
             this.addToZombies(Zombie.initializeRegularZombie());
+    }
+
+    public static void increaseRecordKilledZombies(int n) {
+        if (Account.getMainPlayingAccount() != Account.getPlantPlayer()){
+            Account.switchAccount();
+            if (Account.getMainPlayingAccount() != null){
+                Account.increaseKilledZombies(n);
+            }
+            Account.switchAccount();
+        }
+        if (Account.getMainPlayingAccount() == Account.getPlantPlayer()){
+            if (Account.getMainPlayingAccount() != null){
+                Account.increaseKilledZombies(n);
+            }
+        }
     }
 
     public void putLadder() {
@@ -128,7 +143,7 @@ public class Unit {
 
     public void removeAllZombies() {
         int n = this.getZombies().size();
-        Account.increaseKilledZombiesTmp(n);
+        increaseRecordKilledZombies(n);
         ArrayList <Zombie> regularZombies = new ArrayList<>();
 
         for (Zombie zombie: this.getZombies()){
@@ -137,6 +152,7 @@ public class Unit {
                 regularZombies.add(zombieTmp);
             }
         }
+
         this.getZombies().clear();
         for (Zombie zombie: regularZombies){
             this.addToZombies(zombie);

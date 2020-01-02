@@ -62,6 +62,10 @@ public class Account {
         Account.secondPlayingAccount = secondPlayingAccount;
     }
 
+    public static void switchAccount() {
+        // mohammad
+    }
+
     public void setUsername(String username) {
         this.username = username;
     }

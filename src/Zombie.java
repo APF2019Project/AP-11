@@ -201,7 +201,6 @@
          for (ZombieByLocation zombieXY : tmpArrZombieByLocation) {
              PlayGround.getSpecifiedUnit(zombieXY.X, zombieXY.Y).addToZombies(zombieXY.getZombie());
          }
-
      }
 
      public void zombieAction(int X, int Y, ArrayList<Zombie> tmpArrForDestroyedZombies, ArrayList<ZombieByLocation> tmpArrZombieByLocation) {
@@ -247,10 +246,18 @@
          Plant[] plants = unitNew.getPlants();
          if (plants[0] == null) return;
          plants[0].decreaseHealth(this.getDamagePower());
+         killPlantIfNeeded(plants);
+         return;
+     }
+
+     private void killPlantIfNeeded(Plant[] plants) {
          if (plants[0].getHealth() <= 0) {
+             Account accountZ = Account.getZombiePlayer();
+             if (accountZ != null){
+                 ZombieStyle.increaseCoin(Plant.getPlant(plants[0].getName()).getHealth() * 10);
+             }
              plants[0] = null;
          }
-         return;
      }
 
      //  this can find the distination
