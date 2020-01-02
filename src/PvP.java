@@ -46,7 +46,7 @@ public class PvP {
             Menu.zombieMenu(false, true, ZombieStyle.waveFinished());
             ///
             ////
-            Menu.zombieMenu(false, true);
+            Menu.zombieMenu(false, true, ZombieStyle.waveFinished());
             /////
             ZombieStyle.popZombiesToPlayground();
             // zombie is done
