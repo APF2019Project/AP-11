@@ -104,11 +104,7 @@ public class PvP {
 
         if (flag)
             return true;
-        if (ZombieStyle.allZombiesAreDead()) {
-            return true;
-        }
-
-        return false;
+        return ZombieStyle.allZombiesAreDead();
     }
 
 }
