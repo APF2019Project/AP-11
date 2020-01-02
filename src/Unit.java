@@ -53,6 +53,7 @@ public class Unit {
 
 
     public void removeFromZombies(Zombie zombie){
+        Account.increaseKilledZombiesTmp(1);
         boolean flag = false;
         if (zombie.isCouldRevertToRegularZombie()){
             flag = true;
@@ -127,7 +128,7 @@ public class Unit {
 
     public void removeAllZombies() {
         int n = this.getZombies().size();
-        Account.increaseKilledZombies(n);
+        Account.increaseKilledZombiesTmp(n);
         ArrayList <Zombie> regularZombies = new ArrayList<>();
 
         for (Zombie zombie: this.getZombies()){

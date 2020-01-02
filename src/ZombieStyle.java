@@ -247,6 +247,7 @@ public class ZombieStyle extends Play {
     }
 
     private static void doFinalThings(int playerWon) {
+        Account.numOfKilledZombiesHandlingInAccount(true);
         setEveryThingToDefaultStart();
         if (playerWon == 1){
             View.youWon();
@@ -256,6 +257,7 @@ public class ZombieStyle extends Play {
         }
         whileZombieTurn = false;
 
+        // kian jan code it please
     }
 
     private static void increaseCoins(int plantInitializedHealth) {

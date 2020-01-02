@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.regex.Matcher;
 
 public class Rail extends Play {
 
@@ -122,7 +121,7 @@ public class Rail extends Play {
 
 
     public static void setDefaultRailDeck() {
-        railDeck.addAll(Account.getPlayingAccount().getPlantsCollection());
+        railDeck.addAll(Account.getMainPlayingAccount().getPlantsCollection());
     }
 
     public static int getCardNumber(String command) {
@@ -153,6 +152,7 @@ public class Rail extends Play {
     }
 
     public static void doFinalThingsRail() {
+        Account.numOfKilledZombiesHandlingInAccount(false);
         System.out.println("You Lost..!!");
         System.out.println("Zombies are EATING you.....");
         Collection.clearDecksSetCollections();
@@ -160,5 +160,4 @@ public class Rail extends Play {
         View.goingBackTo(-2); // Going back to Login Menu
         Menu.mainMenu();
     }
-
 }

@@ -1,5 +1,3 @@
-import java.util.regex.Matcher;
-
 public class Day extends Play {
 
     private static boolean whileDayTurn = true;
@@ -73,6 +71,7 @@ public class Day extends Play {
     }
 
     public static void doFinalThings(int playerWon) {
+        Account.numOfKilledZombiesHandlingInAccount(false);
         if (playerWon == 1)
             View.youWon();
         if (playerWon == -1)
@@ -298,7 +297,7 @@ public class Day extends Play {
     public static void showHandInDay() {
         System.out.println("Your deck:");
         int i = 1;
-        for (Plant plantIterator : Account.getPlayingAccount().plantsDeck) {
+        for (Plant plantIterator : Account.getMainPlayingAccount().plantsDeck) {
             System.out.print(i + ". ");
             System.out.println(plantIterator.getName() + "  sun: " + plantIterator.getSunCost() + "  respawnTime: " +
                     plantIterator.getRespawnTime());

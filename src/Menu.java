@@ -1,6 +1,4 @@
-import java.beans.beancontext.BeanContextServiceRevokedEvent;
 import java.util.ArrayList;
-import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -31,7 +29,7 @@ public class Menu {
                     headerPrinted = false;
                     break;
                 case "login":
-                    Account.login(true, Account.getPlayingAccount());
+                    Account.login(true, Account.getMainPlayingAccount());
                     headerPrinted = false;
                     break;
                 case "leaderboard":
@@ -121,7 +119,7 @@ public class Menu {
         while (whileTrue) {
             if (!headerPrinted) {
                 System.out.println("--- PROFILE MENU ---");
-                System.out.println("You are logged in as: " + Account.getPlayingAccount().getUsername());
+                System.out.println("You are logged in as: " + Account.getMainPlayingAccount().getUsername());
             }
             System.out.println("Enter command:");
 
@@ -129,7 +127,7 @@ public class Menu {
             switch (command.toLowerCase()) {
                 case "change account":
                     System.out.println("Logging in with another account:");
-                    Account.login(false, Account.getPlayingAccount());
+                    Account.login(false, Account.getMainPlayingAccount());
                     break;
                 case "change password":
                     Account.changePassword();
@@ -157,7 +155,7 @@ public class Menu {
                     break;
                 case "help":
                     System.out.println("--- PROFILE MENU ---");
-                    System.out.println("You are logged in as: " + Account.getPlayingAccount().getUsername());
+                    System.out.println("You are logged in as: " + Account.getMainPlayingAccount().getUsername());
                     View.printNumberedStringArrayList(instructions);
 //                    View.showHelp(-3);
                     break;
@@ -252,19 +250,19 @@ public class Menu {
                     exitShop = true;
                     break;
                 case "show shop":
-                    Shop.showShop(Account.getPlayingAccount());
+                    Shop.showShop(Account.getMainPlayingAccount());
                     headerPrinted = false;
                     break;
                 case "show collection":
-                    Shop.showCollection(Account.getPlayingAccount());
+                    Shop.showCollection(Account.getMainPlayingAccount());
                     headerPrinted = false;
                     break;
                 case "show money":
-                    Shop.showMoney(Account.getPlayingAccount());
+                    Shop.showMoney(Account.getMainPlayingAccount());
                     headerPrinted = false;
                     break;
                 case "pooool mikhaaaam":
-                    Account.getPlayingAccount().setMoney(Account.getPlayingAccount().getMoney() + 1000);
+                    Account.getMainPlayingAccount().setMoney(Account.getMainPlayingAccount().getMoney() + 1000);
                     headerPrinted = false;
                     break;
                 case "help":
@@ -472,9 +470,9 @@ public class Menu {
 
             } else if (command.toLowerCase().equals("show hand")) {
                 if (pvp) {
-                    ZombieStyle.showHandInZombieStyle(Account.getZombiePlayingAccount());
+                    ZombieStyle.showHandInZombieStyle(Account.getSecondPlayingAccount());
                 } else {
-                    ZombieStyle.showHandInZombieStyle(Account.getPlayingAccount());
+                    ZombieStyle.showHandInZombieStyle(Account.getMainPlayingAccount());
                 }
                 headerPrinted = false;
 
@@ -622,7 +620,7 @@ public class Menu {
         ArrayList<String> instructions = new ArrayList<>();
         // temporary:
         while(whileTrue) {
-            Account.loginForPvPZombiePlayer(Account.getZombiePlayingAccount());
+            Account.loginForPvPZombiePlayer(Account.getSecondPlayingAccount());
         }
 
 

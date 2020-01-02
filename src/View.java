@@ -1,4 +1,3 @@
-import javax.swing.event.InternalFrameEvent;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -189,14 +188,14 @@ public class View {
 
 
     public static void showPlantsDeck() {
-        if(Account.getPlayingAccount().plantsDeck.size() == 0) {
+        if(Account.getMainPlayingAccount().plantsDeck.size() == 0) {
             System.out.println("Your plants deck is empty, select plants from your collection.");
             System.out.println();
             return;
         }
         System.out.println("Your plants deck:");
         int i = 1;
-        for (Plant plantIterator : Account.getPlayingAccount().plantsDeck) {
+        for (Plant plantIterator : Account.getMainPlayingAccount().plantsDeck) {
             System.out.print(i + ". ");
             System.out.println(plantIterator.getName());
             i++;
@@ -207,7 +206,7 @@ public class View {
     public static void showZombiesDeck() {
         System.out.println("Your zombies deck:");
         int i = 1;
-        for (Zombie zombieIterator : Account.getPlayingAccount().zombiesDeck) {
+        for (Zombie zombieIterator : Account.getMainPlayingAccount().zombiesDeck) {
             System.out.print(i + ". ");
             System.out.println(zombieIterator.getName());
             i++;

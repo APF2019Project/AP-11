@@ -198,7 +198,6 @@ public class Shoot {
                 zombie.recievingShoot(shoot);
                 if (zombie.getHealth() <= 0){
                     unit.removeFromZombies(zombie);
-                    Account.increaseKilledZombies(1);
                 }
                 break;
             }

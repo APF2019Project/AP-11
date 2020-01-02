@@ -29,7 +29,7 @@ public class Shop {
     public static void readyToBuy(String command) {
         command = command.replaceFirst("[b,B]uy", "");
         command = command.trim();
-        buy(Account.getPlayingAccount(), command);
+        buy(Account.getMainPlayingAccount(), command);
     }
 
 

@@ -12,8 +12,8 @@ public class PvP {
     }
 
     public static void pvpTurn() {
-        account1 = Account.getPlayingAccount(); // It is for plantPlayingAccount
-        account2 = Account.getZombiePlayingAccount();
+        account1 = Account.getMainPlayingAccount(); // It is for plantPlayingAccount
+        account2 = Account.getSecondPlayingAccount();
         IsPvPTrue = true;
         setWaveNumber(Integer.MAX_VALUE); // could be any number
         while (IsPvPTrue) {
@@ -49,7 +49,7 @@ public class PvP {
         waveNumbers = waveNum;
     }
 
-    private static void doFinalThings(String whoWon) {
+    private static void doFinalThings(String whoWon) { // sadjad should add Account.numOfKilledZombiesHandlingInAccount(false);
         if (whoWon.equals("Zombie")){
             ZombieWinNumber++;
             ZombieStyle.setCoins(ZombieStyle.getCoins() + 200);
@@ -77,7 +77,7 @@ public class PvP {
             View.printWinnerOfTheGame(account2);
         }
 
-        Account.setZombiePlayingAccount(null);
+        Account.setSecondPlayingAccount(null);
         return;
     }
 
@@ -96,7 +96,6 @@ public class PvP {
         }
 
         return false;
-        // sadjad will code it
     }
 
 }

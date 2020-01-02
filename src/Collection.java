@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Collection {
 
@@ -27,15 +26,15 @@ public class Collection {
     public static void putPlantInDeck(String cardName) {
         if (!Plant.plantExist(cardName)) {
             View.invalidCardName();
-        } else if (Account.getPlayingAccount().plantsDeck.size() >= 7) {
+        } else if (Account.getMainPlayingAccount().plantsDeck.size() >= 7) {
             View.notEnoughSpacePlantDeck();
         } else if (plantExistsInDeck(cardName)) {
             View.cardAlreadyExistsInDeck("plants", cardName);
         } else if (!plantExistsInCollection(cardName)) {
             View.cardNotInCollection("plants", cardName);
         } else {
-            Account.getPlayingAccount().plantsDeck.add(new Plant(Plant.getPlant(cardName)));
-            Account.getPlayingAccount().getPlantsCollection().remove(Plant.getPlant(cardName));
+            Account.getMainPlayingAccount().plantsDeck.add(new Plant(Plant.getPlant(cardName)));
+            Account.getMainPlayingAccount().getPlantsCollection().remove(Plant.getPlant(cardName));
             View.cardAddedToDeck("plants", cardName);
         }
     }
@@ -48,8 +47,8 @@ public class Collection {
         } else if (!zombieExistsInCollection(cardName)) {
             View.cardNotInCollection("zombies", cardName);
         } else {
-            Account.getPlayingAccount().zombiesDeck.add(Zombie.getZombie(cardName));
-            Account.getPlayingAccount().getZombiesCollection().remove(Zombie.getZombie(cardName));
+            Account.getMainPlayingAccount().zombiesDeck.add(Zombie.getZombie(cardName));
+            Account.getMainPlayingAccount().getZombiesCollection().remove(Zombie.getZombie(cardName));
             View.cardAddedToDeck("zombies", cardName);
         }
     }
@@ -67,14 +66,14 @@ public class Collection {
             View.invalidCardName();
         } else {
             Plant plantSample = null;
-            for (Plant plantIterator : Account.getPlayingAccount().plantsDeck) {
+            for (Plant plantIterator : Account.getMainPlayingAccount().plantsDeck) {
                 if (plantIterator.getName().equals(cardName)) {
                     plantSample = plantIterator;
                     break;
                 }
             }
-            Account.getPlayingAccount().plantsDeck.remove(plantSample);
-            Account.getPlayingAccount().getPlantsCollection().add(plantSample);
+            Account.getMainPlayingAccount().plantsDeck.remove(plantSample);
+            Account.getMainPlayingAccount().getPlantsCollection().add(plantSample);
             View.cardRemovedFromDeck(cardName);
         }
     }
@@ -85,14 +84,14 @@ public class Collection {
         }
         else {
             Zombie zombieSample = null;
-            for (Zombie zombieIterator : Account.getPlayingAccount().zombiesDeck) {
+            for (Zombie zombieIterator : Account.getMainPlayingAccount().zombiesDeck) {
                 if (zombieIterator.getName().equals(cardName)) {
                     zombieSample = zombieIterator;
                     break;
                 }
             }
-            Account.getPlayingAccount().zombiesDeck.remove(zombieSample);
-            Account.getPlayingAccount().getZombiesCollection().add(zombieSample);
+            Account.getMainPlayingAccount().zombiesDeck.remove(zombieSample);
+            Account.getMainPlayingAccount().getZombiesCollection().add(zombieSample);
             View.cardRemovedFromDeck(cardName);
         }
     }
@@ -106,7 +105,7 @@ public class Collection {
     }
 
     public static Plant getPlantInDeck(String plantName) {
-        for (Plant plantIterator : Account.getPlayingAccount().plantsDeck) {
+        for (Plant plantIterator : Account.getMainPlayingAccount().plantsDeck) {
             if (plantIterator.getName().equals(plantName)) {
                 return plantIterator;
             }
@@ -115,7 +114,7 @@ public class Collection {
     }
 
     public static Zombie getZombieInDeck(String zombieName) {
-        for (Zombie zombieIterator : Account.getPlayingAccount().zombiesDeck) {
+        for (Zombie zombieIterator : Account.getMainPlayingAccount().zombiesDeck) {
             if (zombieIterator.getName().equals(zombieName)) {
                 return zombieIterator;
             }
@@ -125,7 +124,7 @@ public class Collection {
 
 
     public static boolean plantExistsInCollection(String plantName) {
-        for (Plant plantIterator : Account.getPlayingAccount().getPlantsCollection()) {
+        for (Plant plantIterator : Account.getMainPlayingAccount().getPlantsCollection()) {
             if (plantIterator.getName().equals(plantName)) {
                 return true;
             }
@@ -134,7 +133,7 @@ public class Collection {
     }
 
     public static boolean zombieExistsInCollection(String zombieName) {
-        for (Zombie zombieIterator : Account.getPlayingAccount().getZombiesCollection()) {
+        for (Zombie zombieIterator : Account.getMainPlayingAccount().getZombiesCollection()) {
             if (zombieIterator.getName().equals(zombieName)) {
                 return true;
             }
@@ -143,7 +142,7 @@ public class Collection {
     }
 
     public static boolean plantExistsInDeck(String plantName) {
-        for (Plant plantIterator : Account.getPlayingAccount().plantsDeck) {
+        for (Plant plantIterator : Account.getMainPlayingAccount().plantsDeck) {
             if (plantIterator.getName().equals(plantName)) {
                 return true;
             }
@@ -152,7 +151,7 @@ public class Collection {
     }
 
     public static boolean zombieExistsInDeck(String zombieName) {
-        for (Zombie zombieIterator : Account.getPlayingAccount().zombiesDeck) {
+        for (Zombie zombieIterator : Account.getMainPlayingAccount().zombiesDeck) {
             if (zombieIterator.getName().equals(zombieName)) {
                 return true;
             }
@@ -163,7 +162,7 @@ public class Collection {
     public static void showCollection(int playTypeIndex) {
         if (playTypeIndex == 1 || playTypeIndex == 2) {
             ArrayList<Plant> collectionMinusDeck = new ArrayList<>();
-            for (Plant plantIterator : Account.getPlayingAccount().getPlantsCollection()) {
+            for (Plant plantIterator : Account.getMainPlayingAccount().getPlantsCollection()) {
                 if (plantExistsInDeck(plantIterator.getName())) {
                     continue;
                 }
@@ -173,7 +172,7 @@ public class Collection {
             View.printNumberedPlantArrayList(collectionMinusDeck);
         } else if (playTypeIndex == 4) {
             ArrayList<Zombie> collectionMinusDeck = new ArrayList<>();
-            for (Zombie zombieIterator : Account.getPlayingAccount().getZombiesCollection()) {
+            for (Zombie zombieIterator : Account.getMainPlayingAccount().getZombiesCollection()) {
                 if (zombieExistsInDeck(zombieIterator.getName())) {
                     continue;
                 }
@@ -186,7 +185,7 @@ public class Collection {
 
 
     public static void decreaseRespawnsInDeck() {
-        for (Plant plantIterator : Account.getPlayingAccount().plantsDeck) {
+        for (Plant plantIterator : Account.getMainPlayingAccount().plantsDeck) {
             if (plantIterator.getRespawnTime() >= 1) {
                 plantIterator.setRespawnTime(plantIterator.getRespawnTime() - 1);
             }
@@ -194,11 +193,11 @@ public class Collection {
     }
 
     public static void clearPlantsDeck() {
-        Account.getPlayingAccount().plantsDeck.clear();
+        Account.getMainPlayingAccount().plantsDeck.clear();
     }
 
     public static void clearZombiesDeck() {
-        Account.getPlayingAccount().zombiesDeck.clear();
+        Account.getMainPlayingAccount().zombiesDeck.clear();
     }
 
 
@@ -212,7 +211,7 @@ public class Collection {
         boolean Sunflower = false;
 
         String plantIteratorName;
-        for (Plant plantIterator : Account.getPlayingAccount().getPlantsCollection()) {
+        for (Plant plantIterator : Account.getMainPlayingAccount().getPlantsCollection()) {
             plantIteratorName = plantIterator.getName();
             if (plantIteratorName.equals("Peashooter")) {
                 Peashooter = true;
@@ -232,25 +231,25 @@ public class Collection {
         }
 
         if (!Peashooter) {
-            Account.getPlayingAccount().getPlantsCollection().add((Plant.getPlant("Peashooter")));
+            Account.getMainPlayingAccount().getPlantsCollection().add((Plant.getPlant("Peashooter")));
         }
         if (!SnowPea) {
-            Account.getPlayingAccount().getPlantsCollection().add((Plant.getPlant("Snow Pea")));
+            Account.getMainPlayingAccount().getPlantsCollection().add((Plant.getPlant("Snow Pea")));
         }
         if (!Explode_o_nut) {
-            Account.getPlayingAccount().getPlantsCollection().add((Plant.getPlant("Explode-o-nut")));
+            Account.getMainPlayingAccount().getPlantsCollection().add((Plant.getPlant("Explode-o-nut")));
         }
         if (!Scaredy_Shroom) {
-            Account.getPlayingAccount().getPlantsCollection().add((Plant.getPlant("Scaredy-shroom")));
+            Account.getMainPlayingAccount().getPlantsCollection().add((Plant.getPlant("Scaredy-shroom")));
         }
         if (!Cherry_Bomb) {
-            Account.getPlayingAccount().getPlantsCollection().add((Plant.getPlant("Cherry Bomb")));
+            Account.getMainPlayingAccount().getPlantsCollection().add((Plant.getPlant("Cherry Bomb")));
         }
         if (!Kernel_Pult) {
-            Account.getPlayingAccount().getPlantsCollection().add((Plant.getPlant("Kernel-pult")));
+            Account.getMainPlayingAccount().getPlantsCollection().add((Plant.getPlant("Kernel-pult")));
         }
         if (!Sunflower) {
-            Account.getPlayingAccount().getPlantsCollection().add((Plant.getPlant("Sunflower")));
+            Account.getMainPlayingAccount().getPlantsCollection().add((Plant.getPlant("Sunflower")));
         }
     }
 
@@ -265,7 +264,7 @@ public class Collection {
         boolean Conehead_Zombie = false;
 
         String zombieIteratorName;
-        for (Zombie zombieIterator : Account.getPlayingAccount().getZombiesCollection()) {
+        for (Zombie zombieIterator : Account.getMainPlayingAccount().getZombiesCollection()) {
             zombieIteratorName = zombieIterator.getName();
             if (zombieIteratorName.equals("Zombie")) {
                 ZombieBoolean = true;
@@ -285,25 +284,25 @@ public class Collection {
         }
 
         if (!ZombieBoolean) {
-            Account.getPlayingAccount().getZombiesCollection().add(Zombie.getZombie("Zombie"));
+            Account.getMainPlayingAccount().getZombiesCollection().add(Zombie.getZombie("Zombie"));
         }
         if (!Football_Zombie) {
-            Account.getPlayingAccount().getZombiesCollection().add(Zombie.getZombie("Football Zombie"));
+            Account.getMainPlayingAccount().getZombiesCollection().add(Zombie.getZombie("Football Zombie"));
         }
         if (!Screen_Door_Zombie) {
-            Account.getPlayingAccount().getZombiesCollection().add(Zombie.getZombie("Screen Door Zombie"));
+            Account.getMainPlayingAccount().getZombiesCollection().add(Zombie.getZombie("Screen Door Zombie"));
         }
         if (!Zomboni) {
-            Account.getPlayingAccount().getZombiesCollection().add(Zombie.getZombie("Zomboni"));
+            Account.getMainPlayingAccount().getZombiesCollection().add(Zombie.getZombie("Zomboni"));
         }
         if (!Balloon_Zombie) {
-            Account.getPlayingAccount().getZombiesCollection().add(Zombie.getZombie("Balloon Zombie"));
+            Account.getMainPlayingAccount().getZombiesCollection().add(Zombie.getZombie("Balloon Zombie"));
         }
         if (!Bungee_Zombie) {
-            Account.getPlayingAccount().getZombiesCollection().add(Zombie.getZombie("Bungee Zombie"));
+            Account.getMainPlayingAccount().getZombiesCollection().add(Zombie.getZombie("Bungee Zombie"));
         }
         if (!Conehead_Zombie) {
-            Account.getPlayingAccount().getZombiesCollection().add(Zombie.getZombie("Conehead Zombie"));
+            Account.getMainPlayingAccount().getZombiesCollection().add(Zombie.getZombie("Conehead Zombie"));
         }
     }
 
