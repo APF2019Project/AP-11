@@ -38,7 +38,7 @@ public class PvP {
             Account.switchAccount();
             // in this line: main account = plant player
 
-            Menu.dayMenu(1);
+            Menu.dayMenu(1, true);
 
 
             if (checkFinished()) {
@@ -107,9 +107,4 @@ public class PvP {
         return ZombieStyle.allZombiesAreDead();
     }
 
-
-
-
-
-    
 }
