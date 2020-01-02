@@ -168,4 +168,9 @@ public class PlayGround {
     public static boolean isHaveLadder() {
         return false;
     }
+
+    public static void removeLawnMover(){
+        for (int i =0; i<6; i++)
+            playGround[i][0].setHaveLawnMover(false);
+    }
 }
