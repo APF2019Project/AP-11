@@ -11,7 +11,7 @@ public class PvP {
         IsPvPTrue = isPvPTrue;
     }
 
-//        account1 = Account.getMainPlayingAccount(); // It is for plantPlayingAccount
+    //        account1 = Account.getMainPlayingAccount(); // It is for plantPlayingAccount
 //        account2 = Account.getSecondPlayingAccount();
 
     public static void pvpTurn() {
@@ -38,7 +38,7 @@ public class PvP {
             Account.switchAccount();
             // in this line: main account = plant player
 
-            Menu.dayMenu(1, true);
+            Menu.dayMenu(1);
 
 
             if (checkFinished()) {
@@ -61,15 +61,16 @@ public class PvP {
     }
 
     private static void doFinalThings(String whoWon) { // sajad should add Account.numOfKilledZombiesHandlingInAccount(false);
-        if (whoWon.equals("Zombie")) {
+        if (whoWon.equals("Zombie")){
             ZombieWinNumber++;
             ZombieStyle.setCoins(ZombieStyle.getCoins() + 200);
 
-        } else if (whoWon.equals("Plant")) {
+        }
+        else if (whoWon.equals("Plant")){
             PlantWinNumber++;
         }
 
-        if (ZombieStyle.getCoins() < ZombieStyle.getLowestZombieCost()) {
+        if (ZombieStyle.getCoins() < ZombieStyle.getLowestZombieCost()){
             // game is finished
             gameFinisher();
             IsPvPTrue = false;
@@ -81,9 +82,10 @@ public class PvP {
     }
 
     private static void gameFinisher() {
-        if (PlantWinNumber >= ZombieWinNumber) {
+        if (PlantWinNumber >= ZombieWinNumber){
             View.printWinnerOfTheGame(account1);
-        } else {
+        }
+        else {
             View.printWinnerOfTheGame(account2);
         }
 
@@ -92,24 +94,17 @@ public class PvP {
         return;
     }
 
-
-    private static boolean zombiesWon() {
+    private static boolean checkFinished() {
         boolean flag = false;
         for (int i = 0; i < 6; i++)
             if (PlayGround.getSpecifiedUnit(i, 0).getZombies().size() > 0) {
                 PlayGround.getSpecifiedUnit(i, 0).getZombies().clear();
                 flag = true;
             }
-        return flag;
-    }
 
-    private static boolean plantsWon() {
+        if (flag)
+            return true;
         return ZombieStyle.allZombiesAreDead();
     }
-
-    public static boolean checkFinished() {
-        return false;
-    }
-
 
 }
