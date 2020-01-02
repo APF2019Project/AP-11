@@ -30,6 +30,7 @@ public class PvP {
             }
 
             Plant.plantsTurn();
+            //*** switch
             Menu.dayMenu(1); // probably need playingAccount
             // plant is done
 
@@ -37,9 +38,9 @@ public class PvP {
                 doFinalThings("Plant");
                 return;
             }
-
+            //*** switch
             Zombie.zombiesTurn();
-            Menu.zombieMenu(false, true);
+            Menu.zombieMenu(false, true, ZombieStyle.waveFinished());
             ///
             /////
             ZombieStyle.popZombiesToPlayground();
