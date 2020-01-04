@@ -205,44 +205,6 @@
      }
 
      public void zombieAction(int X, int Y, ArrayList<Zombie> tmpArrForDestroyedZombies, ArrayList<ZombieByLocation> tmpArrZombieByLocation) {
-//         this.currentSpeed = this.curSpeedCalculationByAffectingPreviousShoots();
-////        positioning
-//         if (Y == 19 && this.isRandomPosition()) {
-//             int newX = PlayGround.randomPositionX();
-//             int newY = PlayGround.randomPositiomY();
-//             PlayGround.getSpecifiedUnit(newX, newY).addToZombies(this);
-//             tmpArrForDestroyedZombies.add(this);
-//             return;
-//             // remove az 19
-//         }
-//
-//         int newY = this.distinationFinderAndDestroyedShootRemover(X, Y);
-//         if (newY == Integer.MAX_VALUE) {
-//             tmpArrForDestroyedZombies.add(this);
-//             return;
-//         }
-//
-//         if (this.getTurnThief() != Integer.MAX_VALUE) {
-//             if (this.getTurnThief() == 0) {
-//                 this.TurnToThief(X, Y);
-//                 tmpArrForDestroyedZombies.add(this);
-//                 return;
-//             } else
-//                 this.setTurnThief(this.getTurnThief() - 1);
-//         }
-//         tmpArrForDestroyedZombies.add(this);
-//         Unit unit = PlayGround.getSpecifiedUnit(X, newY);
-//         Plant[] plants = unit.getPlants();
-//         if (plants[0] != null && !plants[0].explodeMine(unit)) {
-//             tmpArrZombieByLocation.add(new ZombieByLocation(X, newY, this));
-//         }
-//         else {
-//             for (Zombie zombie : PlayGround.getSpecifiedUnit(X, newY).getZombies()) {
-//                 tmpArrForDestroyedZombies.add(zombie);
-//             }
-//         }
-//         this.damagingPlantIfExist(PlayGround.getSpecifiedUnit(X, newY));
-
          this.currentSpeed = this.curSpeedCalculationByAffectingPreviousShoots();
 //        positioning
          if (Y == 19 && this.isRandomPosition()) {
