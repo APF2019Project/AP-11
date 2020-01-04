@@ -21,17 +21,17 @@ public class PvP {
         setWaveNumber(Integer.MAX_VALUE); // could be any number
         while (IsPvPTrue) {
             // in this line: main account = zombie player
-            if (checkFinished()) {
-                doFinalThings("Zombie");
-                return;
-            }
+//            if (checkFinished()) {
+//                doFinalThings("Zombie");
+//                return;
+//            }
             Shoot.shootTurn();
             // shoot turn is done
 
-            if (checkFinished()) {
-                doFinalThings("Plant");
-                return;
-            }
+//            if (checkFinished()) {
+//                doFinalThings("Plant");
+//                return;
+//            }
             Day.increaseSun();
             Plant.plantsTurn();
 
@@ -41,10 +41,10 @@ public class PvP {
             Menu.dayMenu(1, true);
 
 
-            if (checkFinished()) {
-                doFinalThings("Plant");
-                return;
-            }
+//            if (checkFinished()) {
+//                doFinalThings("Plant");
+//                return;
+//            }
             Zombie.zombiesTurn();
 
             Account.switchAccount();

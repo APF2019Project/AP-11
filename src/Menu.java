@@ -501,6 +501,11 @@ public class Menu {
         } else if (playTypeIndex == 2) {
             System.out.println("^-^-^-^- Water Menu ^-^-^-^-");
         }
+        boolean accountPrinted = true;
+        if (pvp) {
+            System.out.println("You are logged in as: " + Account.getMainPlayingAccount().getUsername());
+            System.out.println("You are: Plant Player");
+        }
         View.printNumberedStringArrayList(instructions);
         boolean headerPrinted = true;
 
@@ -508,16 +513,16 @@ public class Menu {
             if (aGameHasFinished == 1) {
                 return;
             }
-
-            if (pvp) {
-                System.out.println("You are logged in as: " + Account.getMainPlayingAccount().getUsername());
-            }
             if (!headerPrinted) {
                 if (playTypeIndex == 1) {
                     System.out.println("^-^-^-^- Day Menu -^-^-^-^");
                 } else if (playTypeIndex == 2) {
                     System.out.println("^-^-^-^- Water Menu ^-^-^-^-");
                 }
+            }
+            if (pvp && !accountPrinted) {
+                System.out.println("You are logged in as: " + Account.getMainPlayingAccount().getUsername());
+                System.out.println("You are: Plant Player");
             }
             System.out.println("Enter command:");
 
@@ -547,20 +552,24 @@ public class Menu {
             } else if (command.toLowerCase().equals("show hand")) {
                 Day.showHandInDay();
                 headerPrinted = false;
+                accountPrinted = false;
 
             } else if (!pvp && command.toLowerCase().equals("end turn")) {
                 whileTrue = false;
                 headerPrinted = false;
+                accountPrinted = false;
                 return;
 
             } else if (pvp && command.toLowerCase().equals("ready")) {
                 whileTrue = false;
                 headerPrinted = false;
+                accountPrinted = false;
                 return;
 
             } else if (command.toLowerCase().equals("show lawn")) {
                 PlayGround.showLawn();
                 headerPrinted = false;
+                accountPrinted = false;
 
             } else if (command.toLowerCase().equals("exit")) {
                 boolean exit = false;
@@ -585,6 +594,7 @@ public class Menu {
                     }
                 }
                 headerPrinted = false;
+                accountPrinted = false;
 
             } else if (command.toLowerCase().equals("help")) {
                 if (playTypeIndex == 1) {
@@ -636,6 +646,11 @@ public class Menu {
             setZombieMenuHelp(instructions);
         }
         System.out.println("^-^-^-^ Zombie Menu ^-^-^-^");
+        boolean accountPrinted = true;
+        if (pvp) {
+            System.out.println("You are logged in as: " + Account.getMainPlayingAccount().getUsername());
+            System.out.println("You are: Zombie player");
+        }
         View.printNumberedStringArrayList(instructions);
 
         boolean headerPrinted = true;
@@ -645,11 +660,12 @@ public class Menu {
                 return;
             }
 
-            if (pvp) {
-                System.out.println("You are logged in as: " + Account.getMainPlayingAccount().getUsername());
-            }
             if (!headerPrinted) {
                 System.out.println("^-^-^-^ Zombie Menu ^-^-^-^");
+            }
+            if (pvp && !accountPrinted) {
+                System.out.println("You are logged in as: " + Account.getMainPlayingAccount().getUsername());
+                System.out.println("You are: Zombie player");
             }
             System.out.println("Enter command:");
 
@@ -666,13 +682,16 @@ public class Menu {
 
             } else if (!canPut && putMatcher.matches()) {
                 System.out.println("You cant generate new wave until all of your play ground zombies die.");
+
             } else if (command.toLowerCase().equals("show hand")) {
                 ZombieStyle.showHandInZombieStyle(Account.getMainPlayingAccount());
                 headerPrinted = false;
+                accountPrinted = false;
 
             } else if (command.toLowerCase().equals("show lanes")) {
                 ZombieStyle.showLanes();
                 headerPrinted = false;
+                accountPrinted = false;
 
             } else if (command.toLowerCase().equals("start")) {
                 ZombieStyle.popZombiesToPlayground();
@@ -680,16 +699,19 @@ public class Menu {
             } else if (!pvp && command.toLowerCase().equals("end turn")) {
                 whileTrue = false;
                 headerPrinted = false;
+                accountPrinted = false;
                 return;
 
             } else if (pvp && command.toLowerCase().equals("ready")) {
                 whileTrue = false;
                 headerPrinted = false;
+                accountPrinted = false;
                 return;
 
             } else if (command.toLowerCase().equals("show lawn")) {
                 PlayGround.showLawn();
                 headerPrinted = false;
+                accountPrinted = false;
 
             } else if (waterGround && ladderMatcher.matches()) {
                 String zombieName = ladderMatcher.group("zombieName");
