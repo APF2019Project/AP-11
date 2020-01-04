@@ -304,11 +304,11 @@ public class Plant {
     public boolean explodeMine(Unit unit) {
         if (this.type.matches("bomb mine"))
             if (this.age >= 1) {
-                explodeZombie(unit.getZombies().get(0));
                 unit.killPlant(0);
                 return true;
             }
         return false;
+
     }
 
     private void explodeZombie(Zombie zombie) {
