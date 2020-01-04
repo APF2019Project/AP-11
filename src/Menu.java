@@ -113,6 +113,7 @@ public class Menu {
                 case "help":
                     System.out.println("______ MAIN MENU ______");
                     View.printNumberedStringArrayList(instructions);
+                    headerPrinted = true;
                     break;
                 default:
                     View.invalidCommand(-2);
@@ -266,6 +267,7 @@ public class Menu {
                 case "help":
                     System.out.println("--- Play Menu ---");
                     View.printNumberedStringArrayList(instructions);
+                    headerPrinted = true;
 //                    View.showHelp(-4);
                     break;
                 default:
