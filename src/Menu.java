@@ -501,7 +501,7 @@ public class Menu {
         if (playTypeIndex == 1) {
             System.out.println("^-^-^-^- Day Menu -^-^-^-^");
         } else if (playTypeIndex == 2) {
-            System.out.println("^-^-^-^- Water Menu ^-^-^-^-");
+            System.out.println("-^-^-^-^ Water Menu ^-^-^-^-");
         }
         boolean accountPrinted = true;
         if (pvp) {
