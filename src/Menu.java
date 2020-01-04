@@ -83,6 +83,10 @@ public class Menu {
 
         boolean whileTrue = true;
         while (whileTrue) {
+            if (aGameHasFinished == 1) {
+                return;
+            }
+
             if (!headerPrinted) {
                 System.out.println("______ MAIN MENU ______");
             }
@@ -132,6 +136,10 @@ public class Menu {
 
         boolean headerPrinted = true;
         while (whileTrue) {
+            if (aGameHasFinished == 1) {
+                return;
+            }
+
             if (!headerPrinted) {
                 System.out.println("--- PROFILE MENU ---");
                 System.out.println("You are logged in as: " + Account.getMainPlayingAccount().getUsername());
@@ -200,6 +208,10 @@ public class Menu {
 
         boolean whileTrue = true;
         while (whileTrue) {
+            if (aGameHasFinished == 1) {
+                return;
+            }
+
             if (!headerPrinted) {
                 System.out.println("--- Play Menu ---");
                 System.out.println("You are logged in as: " + Account.getMainPlayingAccount().getUsername());
@@ -279,6 +291,10 @@ public class Menu {
         boolean headerPrinted = true;
 
         while (!exitShop) {
+            if (aGameHasFinished == 1) {
+                return;
+            }
+
             if (!headerPrinted) {
                 System.out.println("--- Shop Menu ---");
                 View.printNumberedStringArrayList(instructions);
@@ -355,6 +371,10 @@ public class Menu {
         }
 
         while (whileTrue) {
+            if (aGameHasFinished == 1) {
+                return;
+            }
+
             if (!headerPrinted) {
                 System.out.println("--- Collection Menu ---");
                 if (!pvp)
@@ -485,6 +505,10 @@ public class Menu {
         boolean headerPrinted = true;
 
         while (whileTrue) {
+            if (aGameHasFinished == 1) {
+                return;
+            }
+
             if (pvp) {
                 System.out.println("You are logged in as: " + Account.getMainPlayingAccount().getUsername());
             }
@@ -617,6 +641,10 @@ public class Menu {
         boolean headerPrinted = true;
 
         while (whileTrue) {
+            if (aGameHasFinished == 1) {
+                return;
+            }
+
             if (pvp) {
                 System.out.println("You are logged in as: " + Account.getMainPlayingAccount().getUsername());
             }
@@ -721,6 +749,10 @@ public class Menu {
         boolean headerPrinted = true;
 
         while (whileTrue) {
+            if (aGameHasFinished == 1) {
+                return;
+            }
+
             if (!headerPrinted) {
                 System.out.println("^-^-^-^ Rail Menu ^-^-^-^");
             }

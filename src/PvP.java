@@ -64,10 +64,14 @@ public class PvP {
         if (whoWon.equals("Zombie")){
             ZombieWinNumber++;
             ZombieStyle.setCoins(ZombieStyle.getCoins() + 200);
+            System.out.println("Zombies Won!!!!!!");
+            Menu.aGameHasFinished = 1;
 
         }
         else if (whoWon.equals("Plant")){
             PlantWinNumber++;
+            System.out.println("Plants Won!!!!!!");
+            Menu.aGameHasFinished = 1;
         }
 
         if (ZombieStyle.getCoins() < ZombieStyle.getLowestZombieCost()){

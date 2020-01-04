@@ -193,6 +193,11 @@ public class Account {
         if (!accountExists(username)) {
             System.out.println("Enter password:");
             password = scanner.nextLine();
+            if (password.length() < 4) {
+                System.out.println("Your password should at least contain 4 characters.\nTry again:");
+                createAccount(calledFromLoginMenu);
+                return;
+            }
             accounts.add(new Account(username, password));
             System.out.println("Account created.");
             if (calledFromLoginMenu) {
