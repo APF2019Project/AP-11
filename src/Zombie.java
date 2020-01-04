@@ -30,6 +30,7 @@
      private boolean haveDuck; //
 
      private boolean haveLadder; //
+
      public boolean isHaveLadder() {
          return haveLadder;
      }
@@ -57,7 +58,6 @@
              this.decreaseHealth(shoot.getDamage());
          }
      }
-
 
 
      private void decreaseShieldStrenght(int damage) {
@@ -193,13 +193,14 @@
          for (Zombie zombie : PlayGround.getSpecifiedUnit(X, Y).getZombies()) {
              zombie.zombieAction(X, Y, tmpArrForDestroyedZombies, tmpArrZombieByLocation);
          }
+
+         for (ZombieByLocation zombieXY : tmpArrZombieByLocation) {
+             PlayGround.getSpecifiedUnit(zombieXY.X, zombieXY.Y).addToZombies(zombieXY.getZombie());
+         }
          for (Zombie zombie : tmpArrForDestroyedZombies) {
              if (PlayGround.getSpecifiedUnit(X, Y) != null) {
                  PlayGround.getSpecifiedUnit(X, Y).removeFromZombies(zombie);
              }
-         }
-         for (ZombieByLocation zombieXY : tmpArrZombieByLocation) {
-             PlayGround.getSpecifiedUnit(zombieXY.X, zombieXY.Y).addToZombies(zombieXY.getZombie());
          }
      }
 
@@ -230,11 +231,15 @@
                  this.setTurnThief(this.getTurnThief() - 1);
          }
          tmpArrForDestroyedZombies.add(this);
+         tmpArrZombieByLocation.add(new ZombieByLocation(X, newY, this));
          Unit unit = PlayGround.getSpecifiedUnit(X, newY);
+         //
          Plant[] plants = unit.getPlants();
-         if (!plants[0].explodeMine(PlayGround.getSpecifiedUnit(X, newY))) {
+
+         if (plants == null || plants[0] != null && !plants[0].explodeMine(unit)) {
              tmpArrZombieByLocation.add(new ZombieByLocation(X, newY, this));
-         } else {
+         }
+         else {
              for (Zombie zombie : PlayGround.getSpecifiedUnit(X, newY).getZombies()) {
                  tmpArrForDestroyedZombies.add(zombie);
              }
@@ -253,7 +258,7 @@
      private void killPlantIfNeeded(Plant[] plants) {
          if (plants[0].getHealth() <= 0) {
              Account accountZ = Account.getZombiePlayer();
-             if (accountZ != null){
+             if (accountZ != null) {
                  ZombieStyle.increaseCoin(Plant.getPlant(plants[0].getName()).getHealth() * 10);
              }
              plants[0] = null;
@@ -314,7 +319,7 @@
              return condition;
          } else {
              condition = (Y >= 1) && (plant == null || plant[0] == null || this.isHaveLadder() || PlayGround.isHaveLadder()) && Y > farestUnitDidicatedBySpeed;
-             if (this.isHaveLadder()){
+             if (this.isHaveLadder()) {
                  PlayGround.getSpecifiedUnit(X, Y).putLadder();
                  this.setHaveLadder(false);
              }
@@ -381,8 +386,8 @@
      }
 
      public static void ZombieCustomize(String name, boolean haveAntiTiq, boolean haveBucketHead, boolean couldRevertToRegularZombie,
-                   boolean couldDestroyInRow, boolean isWaterProof, boolean isPeaProof, boolean randomPosition, boolean haveDuck, boolean couldJump,
-                   int turnThief, int speed, int howManyTurnSpeedIsReduced, int speedReductionRatio, int health, int shieldStrength, int damagePower, boolean haveLadder) {
+                                        boolean couldDestroyInRow, boolean isWaterProof, boolean isPeaProof, boolean randomPosition, boolean haveDuck, boolean couldJump,
+                                        int turnThief, int speed, int howManyTurnSpeedIsReduced, int speedReductionRatio, int health, int shieldStrength, int damagePower, boolean haveLadder) {
 
          Zombie newZom = new Zombie(name, haveAntiTiq, haveBucketHead, couldRevertToRegularZombie,
                  couldDestroyInRow, isWaterProof, isPeaProof, randomPosition, haveDuck, couldJump, turnThief,
