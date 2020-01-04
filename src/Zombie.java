@@ -195,7 +195,6 @@
          }
 
          for (ZombieByLocation zombieXY : tmpArrZombieByLocation) {
-             System.out.println("hahahahah");
              PlayGround.getSpecifiedUnit(zombieXY.X, zombieXY.Y).addToZombies(zombieXY.getZombie());
          }
          for (Zombie zombie : tmpArrForDestroyedZombies) {
@@ -271,8 +270,18 @@
          }
          tmpArrForDestroyedZombies.add(this);
          tmpArrZombieByLocation.add(new ZombieByLocation(X, newY, this));
-//         Unit unitNew = PlayGround.getSpecifiedUnit(X, newY);
-//         unitNew.addToZombies(this);
+         Unit unit = PlayGround.getSpecifiedUnit(X, newY);
+         //
+         Plant[] plants = unit.getPlants();
+
+         if (plants == null || plants[0] != null && !plants[0].explodeMine(unit)) {
+             tmpArrZombieByLocation.add(new ZombieByLocation(X, newY, this));
+         }
+         else {
+             for (Zombie zombie : PlayGround.getSpecifiedUnit(X, newY).getZombies()) {
+                 tmpArrForDestroyedZombies.add(zombie);
+             }
+         }
          this.damagingPlantIfExist(PlayGround.getSpecifiedUnit(X, newY));
      }
 
