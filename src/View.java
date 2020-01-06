@@ -32,6 +32,20 @@ public class View {
         System.out.println();
     }
 
+
+    public static void printLoginMenuHeader() {
+        System.out.println("_____________ LOGIN MENU _____________");
+    }
+
+    public static void printMainMenuHeader() {
+        System.out.println("______ MAIN MENU ______");
+    }
+
+
+    public static void enterCommand() {
+        System.out.println("Enter command:");
+    }
+
     public static void printNumberedStringArrayList(ArrayList<String> arrayList) {
         int i = 1;
         for (String string : arrayList) {

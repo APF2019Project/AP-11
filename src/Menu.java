@@ -14,7 +14,7 @@ public class Menu {
         String command;
         ArrayList<String> instructions = new ArrayList<>();
         setLoginMenuHelp(instructions);
-        System.out.println("_____________ LOGIN MENU _____________");
+        View.printLoginMenuHeader();
         View.printNumberedStringArrayList(instructions);
         boolean headerPrinted = true;
 
@@ -22,15 +22,16 @@ public class Menu {
         while (whileTrue) {
 
             if (!headerPrinted) {
-                System.out.println("_____________ LOGIN MENU _____________");
+                View.printLoginMenuHeader();
                 headerPrinted = true;
             }
-            System.out.println("Enter command:");
 
+            View.enterCommand();
             command = View.input();
+
             switch (command.toLowerCase()) {
                 case "create account":
-                case "caa":
+                case "caa": // shortcut
                     Account.createAccount(true);
                     headerPrinted = false;
                     break;
@@ -48,9 +49,9 @@ public class Menu {
                     whileTrue = false;
                     break;
                 case "help":
-//                    View.showHelp(-1);
-                    System.out.println("_____________ LOGIN MENU _____________");
+                    View.printLoginMenuHeader();
                     View.printNumberedStringArrayList(instructions);
+                    headerPrinted = true;
                     break;
                 case "ca":
                     Account.cheatAccount();
@@ -77,7 +78,7 @@ public class Menu {
         String command;
         ArrayList<String> instructions = new ArrayList<>();
         setMainMenuHelp(instructions);
-        System.out.println("______ MAIN MENU ______");
+        View.printLoginMenuHeader();
         View.printNumberedStringArrayList(instructions);
         boolean headerPrinted = true;
 
@@ -88,9 +89,9 @@ public class Menu {
             }
 
             if (!headerPrinted) {
-                System.out.println("______ MAIN MENU ______");
+                View.printLoginMenuHeader();
             }
-            System.out.println("Enter command:");
+            View.enterCommand();
 
             command = View.input();
             switch (command.toLowerCase()) {

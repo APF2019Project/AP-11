@@ -184,15 +184,15 @@ public class Account {
     }
 
     static void createAccount(boolean calledFromLoginMenu) {
-        Scanner scanner = new Scanner(System.in);
+
         System.out.println("--- Create account ---");
         String username;
         String password;
         System.out.println("Enter username");
-        username = scanner.nextLine();
+        username = View.input();
         if (!accountExists(username)) {
             System.out.println("Enter password:");
-            password = scanner.nextLine();
+            password = View.input();
             if (password.length() < 4) {
                 System.out.println("Your password should at least contain 4 characters.\nTry again:");
                 createAccount(calledFromLoginMenu);

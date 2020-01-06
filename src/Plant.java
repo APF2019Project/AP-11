@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class Plant {
 
-    private static ArrayList<Plant> plants = new ArrayList<>();
+    public static ArrayList<Plant> plants = new ArrayList<>();
 
     private String name;
     private int health;
