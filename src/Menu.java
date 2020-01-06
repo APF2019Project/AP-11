@@ -544,7 +544,7 @@ public class Menu {
                 } else {
                     int row = Integer.parseInt(plantMatcher.group("row"));
                     int column = Integer.parseInt(plantMatcher.group("column"));
-                    Day.plantSelectedPlant(row, column, Day.selectedPlant.getName(), false);
+                    Day.plantSelectedPlant(row, column, Day.selectedPlant.getName(), false, pvp);
                 }
 
             } else if (removeMatcher.matches()) {
@@ -796,7 +796,7 @@ public class Menu {
                 } else {
                     int row = Integer.parseInt(plantMatcher.group("row"));
                     int column = Integer.parseInt(plantMatcher.group("column"));
-                    Day.plantSelectedPlant(row, column, Rail.selectedPlant.getName(), true);
+                    Day.plantSelectedPlant(row, column, Rail.selectedPlant.getName(), true, false);
                 }
 
             } else if (removeMatcher.matches()) {

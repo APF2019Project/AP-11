@@ -163,10 +163,13 @@ public class Day extends Play {
     }
 
 
-    public static void plantSelectedPlant(int row, int column, String plantName, boolean calledFromRail) {
+    public static void plantSelectedPlant(int row, int column, String plantName, boolean calledFromRail, boolean pvp) {
         if (column % 2 != 0) {
             View.invalidCoordinates();
             return;
+        }
+        if (pvp && column > 3) {
+            View.invalidCoordinates();
         }
         if (selectedPlant == null) {
             View.noPlantIsSelected();

@@ -82,6 +82,16 @@ public class PlayGround {
             }
         }
         View.showLawnShoots();
+
+        System.out.println("Ladders:");
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 20; j++) {
+                if (getSpecifiedUnit(i, j).isHaveLadder()) {
+                    System.out.println("Ladder in unit: " + i + "," + j);
+                }
+            }
+        }
+
     }
 
     public static void printPlayGround() {
