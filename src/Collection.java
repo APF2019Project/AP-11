@@ -34,7 +34,7 @@ public class Collection {
             View.cardNotInCollection("plants", cardName);
         } else {
             Account.getMainPlayingAccount().plantsDeck.add(new Plant(Plant.getPlant(cardName)));
-            Account.getMainPlayingAccount().getPlantsCollection().remove(Plant.getPlant(cardName));
+//            Account.getMainPlayingAccount().getPlantsCollection().remove(Plant.getPlant(cardName));
             View.cardAddedToDeck("plants", cardName);
         }
     }

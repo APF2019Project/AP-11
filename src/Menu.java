@@ -78,7 +78,7 @@ public class Menu {
         String command;
         ArrayList<String> instructions = new ArrayList<>();
         setMainMenuHelp(instructions);
-        View.printLoginMenuHeader();
+        View.printMainMenuHeader();
         View.printNumberedStringArrayList(instructions);
         boolean headerPrinted = true;
 
@@ -89,7 +89,7 @@ public class Menu {
             }
 
             if (!headerPrinted) {
-                View.printLoginMenuHeader();
+                View.printMainMenuHeader();
             }
             View.enterCommand();
 
@@ -112,7 +112,7 @@ public class Menu {
                     whileTrue = false;
                     break;
                 case "help":
-                    System.out.println("______ MAIN MENU ______");
+                    View.printMainMenuHeader();
                     View.printNumberedStringArrayList(instructions);
                     headerPrinted = true;
                     break;
@@ -125,6 +125,7 @@ public class Menu {
 
 
     static void profileMenu() { // Profile Menu index = -3
+        System.out.println();
         if (aGameHasFinished == 1) {
             return;
         }

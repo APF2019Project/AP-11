@@ -32,6 +32,32 @@ public class View {
         System.out.println();
     }
 
+    public static void startHeader_2() {
+        System.out.println("                                        ");
+        System.out.println("     *********                 ");
+        System.out.println("     **************                       ");
+        System.out.println("     ***          ******                        ");
+        System.out.println("     ***             *****                                                        ");
+        System.out.println("     ***              *****                    ^^  ^^  ^^  ^^  ^^  ^^  ^^                ");
+        System.out.println("     ***               ****                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^          ");
+        System.out.println("     ***               ****                      ^^  ^^  ^^  ^^  ^^  ^^  ^^                ");
+        System.out.println("     ***             ****                                          ^^  ^^                      ");
+        System.out.println("     ***          ****                                           ^^  ^^                   ");
+        System.out.println("     *** ****  *****                                           ^^  ^^            ");
+        System.out.println("     ***********                                             ^^  ^^               ");
+        System.out.println("     ****                                                  ^^  ^^                   ");
+        System.out.println("     ****          ***          ***                      ^^  ^^                              ");
+        System.out.println("     ****           **         **      ****            ^^  ^^                                ");
+        System.out.println("     ****            **       **     **    **        ^^  ^^                                ");
+        System.out.println("     ****             **     **     **             ^^  ^^                                 ");
+        System.out.println("     ****              **   **        ****        ^^  ^^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^   ");
+        System.out.println("     ****               ** **             **     ^^  ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^   ");
+        System.out.println("     ****                **          *****       Z  O  M  B  I  E  S                                   ");
+        System.out.println("     P  L  A  N  T  S                               ");
+        System.out.println();
+        System.out.println();
+    }
+
 
     public static void printLoginMenuHeader() {
         System.out.println("_____________ LOGIN MENU _____________");
@@ -281,6 +307,7 @@ public class View {
     }
 
     public static void printShopWithPrices(ArrayList<Plant> plantsShop, ArrayList<Zombie> zombiesShop) {
+        System.out.println();
         System.out.println("Plants:" + "            " + "Price:" + "        " + "Zombies:" + "                " + "Price:");
         int i = 0;
         int j = 0;
@@ -328,6 +355,8 @@ public class View {
 
 
     public static void printCollections(ArrayList<Plant> plantsShop, ArrayList<Zombie> zombiesShop) {
+        System.out.println();
+        System.out.println("-- Your collections --");
         System.out.println("Plants:" + "                " + "Zombies:");
         int i = 0;
         int j = 0;

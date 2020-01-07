@@ -190,6 +190,11 @@ public class Account {
         String password;
         System.out.println("Enter username");
         username = View.input();
+        if (username.length() < 3) {
+            System.out.println("Your username should at least contain 3 characters.\nTry again:");
+            createAccount(calledFromLoginMenu);
+            return;
+        }
         if (!accountExists(username)) {
             System.out.println("Enter password:");
             password = View.input();
@@ -350,19 +355,24 @@ public class Account {
 
 
     static void renameAccount() {
-        Scanner scanner = new Scanner(System.in);
+
         System.out.println("--- Rename account ---");
         System.out.println("Enter your password:");
-        String input = scanner.nextLine();
+        String input = View.input();
         if (mainPlayingAccount.getPassword().equals(input)) {
             System.out.println("Enter your new username");
-            String newUsername = scanner.nextLine();
+            String newUsername = View.input();
+            if (newUsername.length() < 3) {
+                System.out.println("Your username should at least contain 3 characters.\nTry again:");
+                renameAccount();
+                return;
+            }
             if (accountExists(newUsername)) {
                 System.out.println("This username is already taken.\nTry again:");
                 renameAccount();
             } else {
                 System.out.println("Are you sure you want to change your username?");
-                String isSure = scanner.nextLine();
+                String isSure = View.input();
                 if (isSure.equals("yes")) {
                     mainPlayingAccount.setUsername(newUsername);
                     System.out.println("Your username changed. Going back to --> Profile Menu:");
@@ -389,13 +399,17 @@ public class Account {
 
 
     static void changePassword() {
-        Scanner scanner = new Scanner(System.in);
         System.out.println("--- change password ---");
         System.out.println("Enter you old password:");
-        String oldPass = scanner.nextLine();
+        String oldPass = View.input();
         if (mainPlayingAccount.getPassword().equals(oldPass)) {
             System.out.println("Enter your new password:");
-            String newPass = scanner.nextLine();
+            String newPass = View.input();
+            if (newPass.length() < 4) {
+                System.out.println("Your password should at least contain 4 characters.\nTry again:");
+                changePassword();
+                return;
+            }
             mainPlayingAccount.setPassword(newPass);
             System.out.println("Your password changed. Going back to --> Profile Menu:");
         } else {
