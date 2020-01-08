@@ -32,10 +32,5 @@ public class Main {
         }
         return lines;
     }
-
-    public static void printArrayList(ArrayList<String> arrayList) {
-        for (Object object : arrayList) {
-            System.out.println(object);
-        }
-    }
+    
 }
