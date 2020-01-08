@@ -279,7 +279,6 @@ public class Plant {
                 return true;
             }
         return false;
-
     }
 
     private void explodeZombie(Zombie zombie) {
