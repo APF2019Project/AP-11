@@ -101,7 +101,7 @@ public class View {
             case -5:  // Collection Menu
                 System.out.println("Invalid command in Collection Menu, Try again:\n");
                 break;
-            case 11:  // DayAndWater Menu
+            case 11:  // Day Menu
                 System.out.println("Invalid command in Day Menu, Try again:\n");
                 break;
             case 22:
@@ -109,6 +109,9 @@ public class View {
                 break;
             case 44:
                 System.out.println("Invalid command in Zombie Menu, Try again:\n");
+                break;
+            case 33:
+                System.out.println("Invalid command in Rail Menu, Try again:\n");
                 break;
             default:
                 indexError();

@@ -12,15 +12,11 @@ public class SavingObjects {
     public static YaGsonBuilder yaGsonBuilder = new YaGsonBuilder();
     public static YaGson yaGson = yaGsonBuilder.create();
 
-
-    public static ArrayList<Plant> addingPlantsToPlantsArrayList(String fileName, Scanner scanner) {
-        ArrayList<Plant> tempPlants = new ArrayList<>();
+    public static void addingPlantsToPlantsArrayList(String fileName) {
         ArrayList<String> jsonPlants = readFileLineByLine(scanner, "plants.txt");
         for (int i = 0; i < jsonPlants.size(); i++) {
-            System.out.println(i);
-            tempPlants.add(yaGson.fromJson(jsonPlants.get(i), Plant.class));
+            Plant.plants.add(yaGson.fromJson(jsonPlants.get(i), Plant.class));
         }
-        return tempPlants;
     }
 
 

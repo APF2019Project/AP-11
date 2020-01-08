@@ -18,7 +18,6 @@ public class Rail extends Play {
         startTheRailPlay();
         while(whileRailTurn) {
             turn++;
-            System.out.println("$$$$ turn: " + turn);
             if (railCheckLoose()) {
                 doFinalThingsRail();
                 break;

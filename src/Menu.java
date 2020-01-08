@@ -621,6 +621,9 @@ public class Menu {
             } else if (command.toLowerCase().equals("ppg")) {
                 PlayGround.printPlayGround();
 
+            } else if (command.toLowerCase().equals("show sun")) {
+                System.out.println(Day.getSun());
+
             } else {
                 if (playTypeIndex == 1) {
                     View.invalidCommand(11);
@@ -758,7 +761,7 @@ public class Menu {
     }
 
 
-    public static void railMenu() {
+    public static void railMenu() { // Rain Menu index: 33
         if (aGameHasFinished == 1) {
             return;
         }
@@ -829,8 +832,14 @@ public class Menu {
                 }
                 headerPrinted = false;
 
+            } else if (command.toLowerCase().equals("help")) {
+                System.out.println("^-^-^-^ Rail Menu ^-^-^-^");
+                View.printNumberedStringArrayList(instructions);
+                headerPrinted = true;
             } else if (command.toLowerCase().equals("ppg")) {
                 PlayGround.printPlayGround();
+            } else {
+                View.invalidCommand(33);
             }
 
         }
