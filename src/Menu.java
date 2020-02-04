@@ -812,7 +812,8 @@ public class Menu {
                 View.printNumberedPlantArrayList(Rail.railDeck);
 
             } else if (command.toLowerCase().equals("record")) {
-
+                System.out.print("Killed zombies:");
+                System.out.println(Account.getMainPlayingAccount().getKilledZombies());
 
             } else if (command.toLowerCase().equals("show lawn")) {
                 PlayGround.showLawn();

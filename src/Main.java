@@ -4,8 +4,6 @@ import java.util.Scanner;
 import com.gilecode.yagson.YaGson;
 import com.gilecode.yagson.YaGsonBuilder;
 
-
-
 public class Main {
 
     public static Scanner scanner;
@@ -15,7 +13,11 @@ public class Main {
 
         SavingObjects.addingPlantsToPlantsArrayList("plants.txt");
         View.startHeader_2();
-        Menu.loginMenu();
+        try {
+            Menu.loginMenu();
+        } catch (Exception e) {
+            e.getMessage();
+        }
     }
 
     public static ArrayList<String> readFileLineByLine(Scanner scanner, String fileName) {
@@ -32,5 +34,5 @@ public class Main {
         }
         return lines;
     }
-    
+
 }
