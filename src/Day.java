@@ -53,12 +53,12 @@ public class Day extends Play {
                 doFinalThings(playerWon);
                 return;
             }
-            Zombie.zombiesTurn();
+            Plant.plantsTurn();
             if (checkFinished()) {
                 doFinalThings(playerWon);
                 return;
             }
-            Plant.plantsTurn();
+            Zombie.zombiesTurn();
             checkWave();
             Menu.dayMenu(playTypeIndex, false);
             Collection.decreaseRespawnsInDeck();
@@ -106,7 +106,7 @@ public class Day extends Play {
     private static void checkWave() {
         if (allZombiesAreDead()) {
             wavelessTurns++;
-            if (wave == 0 && wavelessTurns == 8) {
+            if (wave == 0 && wavelessTurns == 4) {
                 waveGenerator();
                 wavelessTurns = 0;
                 wave++;

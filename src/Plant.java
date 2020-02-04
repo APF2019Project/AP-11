@@ -58,6 +58,35 @@ public class Plant {
         Shoot kernel = new Shoot(false, 0, 3, 0, 2);
         Shoot melon = new Shoot(false, 3, 3, 1, 0);
         Shoot frozenMelon = new Shoot(false, 3, 3, 0.5, Integer.MAX_VALUE);
+
+
+        new Plant("Peashooter", 2, 2, normalPea, 1, 0, 2, 2, false, false, "range -1 normal");
+        new Plant("Snow Pea", 3, 3, frozenPea, 1, 0, 3, 3, false, false, "range -1 normal");
+        new Plant("Cabbage-pult", 2, 2, cabbage, 1, 0, 3, 2, false, false, "range -1 normal");
+        new Plant("Repeater", 4, 3, normalPea, 2, 0, 4, 3, false, false, "range -1 normal");
+        new Plant("Threepeater", 5, 4, normalPea, 1, 0, 4, 4, false, false, "range -1 threeWay");
+        new Plant("Cactus", 5, 5, normalPea, 1, 1, 4, 2, false, false, "range -1 normal");
+        new Plant("Gatling Pea", 3, 5, normalPea, 4, 0, 4, 5, false, false, "range -1 normal");
+        new Plant("Scaredy-shroom", 1, 1, normalPea, 1, 0, 2, 2, false, false, "range 2 normal");
+        new Plant("Kernel-pult", 2, 3, kernel, 1, 0, 3, 4, false, false, "range -1 normal");
+        new Plant("Melon-pult", 3, 3, melon, 1, 0, 3, 4, false, false, "range -1 normal");
+        new Plant("Winter Melon", 3, 4, frozenMelon, 1, 0, 5, 4, false, false, "range -1 normal");
+
+        new Plant("Wall-nut", 4, 2, null, 0, 0, 4, 0, false, false, "wall");
+        new Plant("Explode-o-nut", 3, 4, null, 0, 1, 5, 0, false, false, "wall");
+        new Plant("Tall-nut", 6, 4, null, 0, 0, 6, 0, false, false, "wall");
+        new Plant("Potato Mine", 1, 2, null, 0, 100, 3, 0, false, false, "bomb mine");
+        new Plant("Cherry Bomb", 0, 2, null, 0, 100, 4, 0, false, false, "bomb circle 1");
+        new Plant("Jalapeno", 0, 4, null, 0, 100, 5, 0, false, false, "bomb linear");
+        new Plant("Magnet-shroom", 2, 4, null, 0, 0, 4, 0, false, false, "magnet 1");
+        new Plant("Sunflower", 2, 1, null, 1, 0, 2, 1, false, false, "producer");
+        new Plant("Twin Sunflower", 2, 3, null, 2, 0, 5, 2, false, false, "producer");
+
+        //  new Plant("Split Pea", 3, 4, normalPea, , 0, 4, , false, "range -1 twoWay")
+        new Plant("Lily Pad", 1, 0, null, 0, 0, 1, 0, false, true, "stage");
+        new Plant("Tangle Kelp", 0, 3, null, 0, 100, 3, 0, false, true, "bomb mine");
+        new Plant("Cattail", 3, 5, null, 0, 100, 5, 0, true, false, "melee");
+        new Plant("Split Pea", 3, 4, null, 0, 0, 4, 0, false, false, "fuck").setSplitPea(true);
     }
 
 
@@ -279,7 +308,6 @@ public class Plant {
                 return true;
             }
         return false;
-
     }
 
     private void explodeZombie(Zombie zombie) {

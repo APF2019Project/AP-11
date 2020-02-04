@@ -7,3 +7,4 @@ PvZ.iml/*
 *.DS_Store
 target
 *.iml
+src/Plant.java
