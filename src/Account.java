@@ -19,7 +19,8 @@ public class Account {
     public ArrayList<Zombie> zombiesDeck = new ArrayList<>();
     public ArrayList<Plant> plantsCollection = new ArrayList<>();
     public ArrayList<Zombie> zombiesCollection = new ArrayList<>();
-    private static ArrayList<Account> accounts = new ArrayList<>();
+    public static ArrayList<Account> accounts = new ArrayList<>();
+    public static ArrayList<Account> onlineAccounts = new ArrayList<>();
 
     private static Account mainPlayingAccount;
     private static Account temp;
@@ -232,12 +233,12 @@ public class Account {
                 Account.setMainPlayingAccount(getAccountByUsername(username));
                 if (calledFromLoginMenu) {
                     System.out.println("Logged in, going to --> Main Menu:");
-                    Collection.setDefaultPlantsCollection();
-                    Collection.setDefaultZombiesCollection();
+                    Collection.setDefaultPlantsCollection(Account.getMainPlayingAccount());
+                    Collection.setDefaultZombiesCollection(Account.getMainPlayingAccount());
                     Menu.mainMenu();
                 } else {
-                    Collection.setDefaultPlantsCollection();
-                    Collection.setDefaultZombiesCollection();
+                    Collection.setDefaultPlantsCollection(Account.getMainPlayingAccount());
+                    Collection.setDefaultZombiesCollection(Account.getMainPlayingAccount());
                     System.out.println("Logged in, going back to --> Profile Menu:");
                 }
             } else {
@@ -422,8 +423,8 @@ public class Account {
     public static void cheatAccount() {
         Account cheatAccount = new Account("sajad", "mohamad");
         mainPlayingAccount = cheatAccount;
-        Collection.setDefaultZombiesCollection();
-        Collection.setDefaultPlantsCollection();
+        Collection.setDefaultZombiesCollection(Account.getMainPlayingAccount());
+        Collection.setDefaultPlantsCollection(Account.getMainPlayingAccount());
         for (Plant plant : mainPlayingAccount.plantsCollection) {
             Account.getMainPlayingAccount().plantsDeck.add(new Plant(Plant.getPlant(plant.getName())));
         }
@@ -433,8 +434,8 @@ public class Account {
     public static void cheatAccount2() {
         Account cheatAccount = new Account("sajad", "mohamad");
         mainPlayingAccount = cheatAccount;
-        Collection.setDefaultZombiesCollection();
-        Collection.setDefaultPlantsCollection();
+        Collection.setDefaultZombiesCollection(Account.getMainPlayingAccount());
+        Collection.setDefaultPlantsCollection(Account.getMainPlayingAccount());
         for (Plant plant : mainPlayingAccount.plantsCollection) {
             if (plant.getName().equals("Sunflower"))
                 continue;
@@ -450,8 +451,8 @@ public class Account {
     public static void cheatAccount3() {
         Account cheatAccount = new Account("sajad", "mohamad");
         mainPlayingAccount = cheatAccount;
-        Collection.setDefaultZombiesCollection();
-        Collection.setDefaultPlantsCollection();
+        Collection.setDefaultZombiesCollection(Account.getMainPlayingAccount());
+        Collection.setDefaultPlantsCollection(Account.getMainPlayingAccount());
         for (Plant plant : mainPlayingAccount.plantsCollection) {
             Account.getMainPlayingAccount().plantsDeck.add(new Plant(Plant.getPlant(plant.getName())));
         }
@@ -464,6 +465,15 @@ public class Account {
         Day.cheatPlantIn0(PlayGround.getSpecifiedUnit(5, 2), new Plant(Plant.getPlant("Peashooter")));
         Day.dayAndWaterTurn(1);
 
+    }
+
+    public static boolean userAndPassMatch(String username, String password) {
+        for (Account accountIterator : accounts) {
+            if (accountIterator.getUsername().equals(username) && accountIterator.getPassword().equals(password)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
 

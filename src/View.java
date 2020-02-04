@@ -665,4 +665,28 @@ public class View {
                 "to Play Menu)");
         System.out.println();
     }
+
+    public static void usernameIsAlreadyTaken() {
+        System.out.println("This username is already taken.\nTry again.");
+    }
+
+    public static void passwordLengthError() {
+        System.out.println("Your password should at least contain 4 characters.\nTry again.");
+    }
+
+    public static void accountCreated() {
+        System.out.println("Account created.");
+    }
+
+    public static void usernameLengthError() {
+        System.out.println("Your username should at least contain 3 characters.\nTry again.");
+    }
+
+    public static void youAreLoggedIn() {
+        System.out.println("You are logged in.");
+    }
+
+    public static void loginFailed() {
+        System.out.println("Username and password doesn't match.\nTry again.");
+    }
 }
