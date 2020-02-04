@@ -13,7 +13,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        SavingObjects.addingPlantsToPlantsArrayList("plants.txt");
+//        SavingObjects.addingPlantsToPlantsArrayList("plants.txt");
         View.startHeader_2();
         Menu.loginMenu();
     }
