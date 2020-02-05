@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -14,7 +15,7 @@ public class Play {
 
     public static Plant selectedPlant = null;
 
-    public static void goToPlayByPlayType(int playTypeIndex) {
+    public static void goToPlayByPlayType(int playTypeIndex) throws IOException {
         switch (playTypeIndex) {
             case 1:
                 PlayGround.BuildDayPlayGround();

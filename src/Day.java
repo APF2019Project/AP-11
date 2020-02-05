@@ -1,3 +1,5 @@
+import java.io.IOException;
+
 public class Day extends Play {
 
     private static boolean whileDayTurn = true;
@@ -78,7 +80,11 @@ public class Day extends Play {
             View.youLost();
         Collection.clearDecksSetCollections();
         View.goingBackTo(-2); // Going back to Login Menu
-        Menu.mainMenu();
+        try {
+            Menu.mainMenu();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private static boolean checkFinished() { // if you change this method tell me : sadjad

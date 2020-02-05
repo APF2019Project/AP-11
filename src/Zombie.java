@@ -6,6 +6,8 @@
 
 
  public class Zombie {
+     // added in network phase:
+     public int quantityInShop = 5;
      private static ArrayList<Zombie> zombies = new ArrayList<>();
      private ArrayList<Shoot> shootsRecieved = new ArrayList<>();
 
@@ -59,6 +61,13 @@
          }
      }
 
+     public int getQuantityInShop() {
+         return quantityInShop;
+     }
+
+     public void setQuantityInShop(int quantityInShop) {
+         this.quantityInShop = quantityInShop;
+     }
 
      private void decreaseShieldStrenght(int damage) {
          this.shieldStrength -= damage;

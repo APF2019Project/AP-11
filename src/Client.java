@@ -1,3 +1,5 @@
+import Requests.AccountRequests;
+import Requests.ShopRequest;
 import com.gilecode.yagson.YaGson;
 import com.gilecode.yagson.com.google.gson.internal.bind.util.ISO8601Utils;
 
@@ -17,7 +19,7 @@ public class Client {
 }
 
 
-class clientTestAccount {
+class clientTestAccount { // Login menu, Main menu, and Profile menu parts
 
     public static String clientUsername;
 
@@ -102,7 +104,7 @@ class clientTestAccount {
         }
     }
 
-    // Main Menu functions:
+    // Profile Menu functions:
     public static void renameAccount() throws IOException {
         Socket clientSocket = new Socket("localhost", 6000);
         try (PrintStream printer = new PrintStream(clientSocket.getOutputStream());
@@ -192,5 +194,34 @@ class clientTestAccount {
             }
         }
     }
+}
+
+class clientShopFunctions {
+
+    public static void showShop() throws IOException {
+        Socket clientSocket = new Socket("localhost", 6000);
+        try (PrintStream printer = new PrintStream(clientSocket.getOutputStream());
+             Scanner socketScanner = new Scanner(clientSocket.getInputStream())) {
+            ShopRequest request = new ShopRequest(clientTestAccount.clientUsername, ShopRequest.RequestType.showShop);
+            printer.println("shop");
+            YaGson yaGson = new YaGson();
+            String requestJson = yaGson.toJson(request);
+            printer.println(requestJson);
+            String twoArrayListsJson = socketScanner.nextLine();
+            TwoArrayLists twoArrayLists = yaGson.fromJson(twoArrayListsJson, TwoArrayLists.class);
+            View.printShopWithPrices(twoArrayLists.plants, twoArrayLists.zombies);
+        }
+    }
+
+    public static void buy(String cardName, String username) throws IOException {
+        Socket clientSocket = new Socket("localhost", 6000);
+        try (PrintStream printer = new PrintStream(clientSocket.getOutputStream());
+             Scanner socketScanner = new Scanner(clientSocket.getInputStream())) {
+            printer.println("shop");
+
+        }
+    }
+
+
 
 }

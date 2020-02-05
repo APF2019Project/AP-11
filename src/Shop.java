@@ -1,3 +1,6 @@
+import com.gilecode.yagson.YaGson;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -6,30 +9,38 @@ public class Shop {
     public static Scanner scanner = new Scanner(System.in);
 
 
-    public static void showShop(Account account) {
+    public static String showShop(Account account) {
         ArrayList<Plant> plantsShop = (ArrayList<Plant>) Plant.getPlants().clone();
         ArrayList<Zombie> zombiesShop = (ArrayList<Zombie>) Zombie.getZombies().clone();
 
-        for (Plant plant : Plant.getPlants())
+        for (Plant plant : Plant.getPlants()) {
             for (Plant myPlant : account.getPlantsCollection())
                 if (myPlant.equals(plant)) {
                     plantsShop.remove(plant);
                     break;
                 }
-        for (Zombie zombie : Zombie.getZombies())
+        }
+        for (Zombie zombie : Zombie.getZombies()) {
             for (Zombie myZombie : account.getZombiesCollection())
                 if (myZombie == zombie) {
                     zombiesShop.remove(zombie);
                     break;
                 }
-        View.printShopWithPrices(plantsShop, zombiesShop);
+        }
+        // before network part:
+        // View.printShopWithPrices(plantsShop, zombiesShop);
+        YaGson yaGson = new YaGson();
+        TwoArrayLists twoArrayLists = new TwoArrayLists(plantsShop, zombiesShop);
+        String twoArrayListsJson = yaGson.toJson(twoArrayLists);
+        return twoArrayListsJson;
     }
 
 
-    public static void readyToBuy(String command) {
+    public static void readyToBuy(String command) throws IOException {
         command = command.replaceFirst("[b,B]uy", "");
         command = command.trim();
-        buy(Account.getMainPlayingAccount(), command);
+        clientShopFunctions.buy(command, clientTestAccount.clientUsername);
+//        buy(Account.getMainPlayingAccount(), command);
     }
 
 
@@ -98,4 +109,14 @@ public class Shop {
         View.printCollections(plants, zombies);
     }
 
+}
+
+class TwoArrayLists {
+    public ArrayList<Plant> plants;
+    public ArrayList<Zombie> zombies;
+
+    public TwoArrayLists(ArrayList<Plant> plants, ArrayList<Zombie> zombies) {
+        this.plants = plants;
+        this.zombies = zombies;
+    }
 }

@@ -1,3 +1,4 @@
+import Requests.ShopRequest;
 import com.gilecode.yagson.YaGson;
 
 import java.io.IOException;
@@ -15,6 +16,10 @@ public class Server {
 
         while (!serverSocket.isClosed()) {
             Socket clientSocket = serverSocket.accept();
+
+//            OnlineAccount newClient = new OnlineAccount(clientSocket);
+//            Thread newClientThread = new Thread(newClient);
+//            newClientThread.start();
 
             new Thread(() -> {
                 try (PrintStream printer = new PrintStream(clientSocket.getOutputStream());
@@ -39,6 +44,9 @@ public class Server {
 
                     } else if (mode.equals("delete account")) {
                         clientDeleteAccount(printer, reader);
+
+                    } else if (mode.equals("shop")) {
+                        ShopServerSide.handleRequest(reader, printer);
 
                     }
 
@@ -77,7 +85,6 @@ public class Server {
         }
         Account thisAccount = Account.getAccountByUsername(username);
         Account.onlineAccounts.add(thisAccount);
-        notifyOthers(thisAccount);
         Collection.setDefaultPlantsCollection(thisAccount);
         Collection.setDefaultZombiesCollection(thisAccount);
 
@@ -138,18 +145,35 @@ public class Server {
             printer.println("matches");
             String isUserSure = reader.nextLine();
             if (isUserSure.equals("delete this account")) {
-              Account tempAccount = Account.getAccountByUsername(username);
-              Account.accounts.remove(tempAccount);
+                Account tempAccount = Account.getAccountByUsername(username);
+                Account.accounts.remove(tempAccount);
             }
         } else {
             printer.println("not match");
         }
     }
 
-    public static void notifyOthers(Account account) {
-        for (Account accountIterator : Account.onlineAccounts) {
+}
+
+class ShopServerSide {
+
+    public static void handleRequest(Scanner reader, PrintStream printer) {
+        String requestJson = reader.nextLine();
+        YaGson yaGson = new YaGson();
+        ShopRequest request = yaGson.fromJson(requestJson, ShopRequest.class);
+        ShopRequest.RequestType requestType = request.getRequestType();
+
+        if (requestType.equals(ShopRequest.RequestType.showShop)) {
+            String username = request.getUsername();
+            Account account = Account.getAccountByUsername(username);
+            String twoArrayListsJson = Shop.showShop(account);
+            printer.println(twoArrayListsJson);
+
+        } else if (requestType.equals(ShopRequest.RequestType.showCollection)) {
+            String username = request.getUsername();
 
         }
+
     }
 }
 

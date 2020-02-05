@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Rail extends Play {
@@ -14,7 +15,7 @@ public class Rail extends Play {
         Rail.whileRailTurn = whileRailTurn;
     }
 
-    public static void railTurn() {
+    public static void railTurn() throws IOException {
         startTheRailPlay();
         while(whileRailTurn) {
             turn++;
@@ -150,7 +151,7 @@ public class Rail extends Play {
         railDeck.clear();
     }
 
-    public static void doFinalThingsRail() {
+    public static void doFinalThingsRail() throws IOException {
         Account.numOfKilledZombiesHandlingInAccount(false);
         System.out.println("You Lost..!!");
         System.out.println("Zombies are EATING you.....");

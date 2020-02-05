@@ -199,7 +199,7 @@ public class ClientMenus {
     private static int exitFromPVPcollection1 = 0;
     private static int exitFromPVPcollection2 = 0;
 
-    static void goPlay() { // Play Menu index: -4
+    static void goPlay() throws IOException { // Play Menu index: -4
         if (aGameHasFinished == 1) {
             return;
         }
@@ -283,7 +283,7 @@ public class ClientMenus {
     }
 
 
-    public static void shopMenu() { // Shop Menu index: -10
+    public static void shopMenu() throws IOException { // Shop Menu index: -10
         if (aGameHasFinished == 1) {
             return;
         }
@@ -319,7 +319,8 @@ public class ClientMenus {
                     exitShop = true;
                     break;
                 case "show shop":
-                    Shop.showShop(Account.getMainPlayingAccount());
+//                    Shop.showShop(Account.getMainPlayingAccount());
+                    clientShopFunctions.showShop();
                     headerPrinted = false;
                     break;
                 case "show collection":
@@ -347,7 +348,7 @@ public class ClientMenus {
     }
 
 
-    static void collectionMenu(int playTypeIndex, boolean pvp) { // Collection Menu index: -5
+    static void collectionMenu(int playTypeIndex, boolean pvp) throws IOException { // Collection Menu index: -5
         exitFromPVPcollection1 = 0;
         exitFromPVPcollection2 = 0;
         if (aGameHasFinished == 1) {

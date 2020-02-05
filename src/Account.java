@@ -1,4 +1,5 @@
 
+import java.io.IOException;
 import java.util.*;
 
 // All of the outputs that are starting with $$$ are being told to the programmer
@@ -220,7 +221,7 @@ public class Account {
     }
 
 
-    static void login(boolean calledFromLoginMenu, Account account) {
+    static void login(boolean calledFromLoginMenu, Account account) throws IOException {
         System.out.println("--- LOGIN ---");
         String username;
         String password;
@@ -329,7 +330,7 @@ public class Account {
     }
 
 
-    static void deleteAccount() {
+    static void deleteAccount() throws IOException {
         Scanner scanner = new Scanner(System.in);
         System.out.println("--- DELETE ACCOUNT ---");
         System.out.println("Enter your password:");

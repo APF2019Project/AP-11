@@ -2,6 +2,9 @@ import java.util.ArrayList;
 
 public class Plant {
 
+    // added in network phase:
+    public int QuantityInShop = 5;
+
     public static ArrayList<Plant> plants = new ArrayList<>();
 
     private String name;
@@ -123,6 +126,15 @@ public class Plant {
     }
 
     //Getters:
+
+
+    public int getQuantityInShop() {
+        return QuantityInShop;
+    }
+
+    public void setQuantityInShop(int quantityInShop) {
+        QuantityInShop = quantityInShop;
+    }
 
     public String getName() {
         return name;

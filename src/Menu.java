@@ -1,5 +1,6 @@
 import java.awt.event.WindowStateListener;
 import java.beans.beancontext.BeanContextServiceRevokedEvent;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -9,7 +10,7 @@ public class Menu {
 
     public static int aGameHasFinished = 0;
 
-    static void loginMenu() { // Login Menu index = -1
+    static void loginMenu() throws IOException { // Login Menu index = -1
 
         String command;
         ArrayList<String> instructions = new ArrayList<>();
@@ -70,7 +71,7 @@ public class Menu {
     }
 
 
-    static void mainMenu() { // Main Menu index = -2
+    static void mainMenu() throws IOException { // Main Menu index = -2
         if (aGameHasFinished == 1) {
             return;
         }
@@ -124,7 +125,7 @@ public class Menu {
     }
 
 
-    static void profileMenu() { // Profile Menu index = -3
+    static void profileMenu() throws IOException { // Profile Menu index = -3
         System.out.println();
         if (aGameHasFinished == 1) {
             return;
@@ -233,7 +234,11 @@ public class Menu {
                     headerPrinted = false;
                     break;
                 case "rail":
-                    Play.goToPlayByPlayType(3);
+                    try {
+                        Play.goToPlayByPlayType(3);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     headerPrinted = false;
                     break;
                 case "zombie":
@@ -259,7 +264,11 @@ public class Menu {
                         break;
                     }
 
-                    Play.goToPlayByPlayType(5);
+                    try {
+                        Play.goToPlayByPlayType(5);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     headerPrinted = false;
                     break;
                 case "exit":
@@ -280,7 +289,7 @@ public class Menu {
     }
 
 
-    public static void shopMenu() { // Shop Menu index: -10
+    public static void shopMenu() throws IOException { // Shop Menu index: -10
         if (aGameHasFinished == 1) {
             return;
         }
@@ -427,7 +436,11 @@ public class Menu {
                     headerPrinted = true;
                     break;
                 case "play":
-                    Play.goToPlayByPlayType(playTypeIndex);
+                    try {
+                        Play.goToPlayByPlayType(playTypeIndex);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     headerPrinted = false;
                     break;
                 case "exit":

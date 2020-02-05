@@ -328,7 +328,7 @@ public class View {
                 for (int k = 1; k <= spacesNumber; k++) {
                     System.out.print(" ");
                 }
-                System.out.print(plantsShop.get(i).getPrice());
+                System.out.print(plantsShop.get(i).getPrice() + " " + plantsShop.get(i).getQuantityInShop());
                 spaceNumbers2 = 10 - Integer.toString(plantsShop.get(i).getPrice()).length();
                 for (int m = 1; m <= spaceNumbers2; m++) {
                     System.out.print(" ");
@@ -345,7 +345,7 @@ public class View {
                 for (int k = 1; k <= spacesNumber; k++) {
                     System.out.print(" ");
                 }
-                System.out.println(zombiesShop.get(i).getPrice());
+                System.out.println(zombiesShop.get(i).getPrice() + " " + zombiesShop.get(i).getQuantityInShop());
 
             } else
                 System.out.println();
