@@ -16,6 +16,8 @@ public class ShopRequest {
     public enum RequestType {
         showShop,
         showCollection,
+        showMoney,
+        moneyCheat,
 
     }
 

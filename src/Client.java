@@ -57,6 +57,44 @@ class clientTestAccount { // Login menu, Main menu, and Profile menu parts
     }
 
     public static void login(boolean calledFromLoginMenu) throws IOException {
+
+        Thread checkMessageThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                while (true) {
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    Socket clientSocket_2 = null;
+                    try {
+                        clientSocket_2 = new Socket("localhost", 6000);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    try (PrintStream printer = new PrintStream(clientSocket_2.getOutputStream());
+                         Scanner socketScanner = new Scanner(clientSocket_2.getInputStream())) {
+                        Thread.sleep(500);
+                        printer.println("check messages");
+                        printer.println(clientTestAccount.clientUsername);
+                        String serverAns = socketScanner.nextLine();
+                        if (serverAns.equals("new message")) {
+                            String messageJson = socketScanner.nextLine();
+                            YaGson yaGson = new YaGson();
+                            Message2 message = yaGson.fromJson(messageJson, Message2.class);
+                            System.out.println("NEW Message from: " + message.getSender());
+                            System.out.println(message.getContent());
+                        }
+
+                    } catch (IOException | InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                 }
+            }
+        });
+
         System.out.println("--- LOGIN ---");
         String username;
         String password;
@@ -76,14 +114,47 @@ class clientTestAccount { // Login menu, Main menu, and Profile menu parts
                 clientUsername = username;
                 if (calledFromLoginMenu) {
                     System.out.println("Logged in, going to --> Main Menu:");
+                    checkMessageThread.start();
                     ClientMenus.mainMenu();
                 } else {
                     System.out.println("Logged in, going back to --> Profile Menu:");
                 }
+
+
+//                new Thread(() -> {
+//                    Socket clientSocket2 = null;
+//                    try {
+//                        clientSocket2 = new Socket("localhost", 6000);
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                    try (PrintStream printer2 = new PrintStream(clientSocket2.getOutputStream());
+//                         Scanner socketScanner2 = new Scanner(clientSocket2.getInputStream())) {
+//
+//                        while (!clientSocket2.isClosed()) {
+//                            printer2.println("check messages");
+//                            printer2.println(clientTestAccount.clientUsername);
+//                            String serverAns = socketScanner2.nextLine();
+//                            if (serverAns.equals("new message")) {
+//                                System.out.println("new message!!!");
+//                            }
+//                            try {
+//                                Thread.sleep(500);
+//                            } catch (InterruptedException e) {
+//                                e.printStackTrace();
+//                            }
+//                        }
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                }).start();
+
             } else {
                 View.loginFailed();
             }
-        }
+
+        } // try ends
+
     }
 
     public static void leaderboard() throws IOException {
@@ -213,6 +284,21 @@ class clientShopFunctions {
         }
     }
 
+    public static void showCollection() throws IOException {
+        Socket clientSocket = new Socket("localhost", 6000);
+        try (PrintStream printer = new PrintStream(clientSocket.getOutputStream());
+             Scanner socketScanner = new Scanner(clientSocket.getInputStream())) {
+            printer.println("shop");
+            //
+            //
+            //
+            //
+            //
+            //
+            //
+        }
+    }
+
     public static void buy(String cardName, String username) throws IOException {
         Socket clientSocket = new Socket("localhost", 6000);
         try (PrintStream printer = new PrintStream(clientSocket.getOutputStream());
@@ -222,6 +308,55 @@ class clientShopFunctions {
         }
     }
 
+    public static void showMoney() throws IOException {
+        Socket clientSocket = new Socket("localhost", 6000);
+        try (PrintStream printer = new PrintStream(clientSocket.getOutputStream());
+             Scanner socketScanner = new Scanner(clientSocket.getInputStream())) {
+            printer.println("shop");
+            ShopRequest request = new ShopRequest(clientTestAccount.clientUsername, ShopRequest.RequestType.showMoney);
+            YaGson yaGson = new YaGson();
+            String requestJson = yaGson.toJson(request);
+            printer.println(requestJson);
+            String money = socketScanner.nextLine();
+            System.out.println("Your money is: " + money);
+        }
+    }
+
+    public static void moneyCheatCode() throws IOException {
+        Socket clientSocket = new Socket("localhost", 6000);
+        try (PrintStream printer = new PrintStream(clientSocket.getOutputStream());
+             Scanner socketScanner = new Scanner(clientSocket.getInputStream())) {
+            printer.println("shop");
+            ShopRequest request = new ShopRequest(clientTestAccount.clientUsername, ShopRequest.RequestType.moneyCheat);
+            YaGson yaGson = new YaGson();
+            String requestJson = yaGson.toJson(request);
+            printer.println(requestJson);
+        }
+    }
+
+
+
+}
+
+class ClientChat {
+
+    public static void sendMessage() throws IOException {
+
+        Socket clientSocket = new Socket("localhost", 6000);
+        try (PrintStream printer = new PrintStream(clientSocket.getOutputStream());
+             Scanner socketScanner = new Scanner(clientSocket.getInputStream())) {
+            printer.println("chat");
+            System.out.println("Enter receiver:");
+            String receiver = View.input();
+            System.out.println("Enter content:");
+            String content = View.input();
+            Message2 message = new Message2(receiver, clientTestAccount.clientUsername, content);
+            YaGson yaGson = new YaGson();
+            String messageJson = yaGson.toJson(message);
+            printer.println(messageJson);
+
+        }
+    }
 
 
 }

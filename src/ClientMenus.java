@@ -119,6 +119,9 @@ public class ClientMenus {
                     View.printNumberedStringArrayList(instructions);
                     headerPrinted = true;
                     break;
+                case "chat":
+                    ClientChat.sendMessage();
+                    break;
                 default:
                     View.invalidCommand(-2);
                     break;
@@ -324,15 +327,18 @@ public class ClientMenus {
                     headerPrinted = false;
                     break;
                 case "show collection":
-                    Shop.showCollection(Account.getMainPlayingAccount());
+//                    Shop.showCollection(Account.getMainPlayingAccount());
+                    clientShopFunctions.showCollection();
                     headerPrinted = false;
                     break;
                 case "show money":
-                    Shop.showMoney(Account.getMainPlayingAccount());
+ //                   Shop.showMoney(Account.getMainPlayingAccount());
+                    clientShopFunctions.showMoney();
                     headerPrinted = false;
                     break;
                 case "pooool mikhaaaam":
-                    Account.getMainPlayingAccount().setMoney(Account.getMainPlayingAccount().getMoney() + 1000);
+//                    Account.getMainPlayingAccount().setMoney(Account.getMainPlayingAccount().getMoney() + 1000);
+                    clientShopFunctions.moneyCheatCode();
                     headerPrinted = false;
                     break;
                 case "help":

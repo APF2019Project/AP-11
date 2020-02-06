@@ -17,10 +17,6 @@ public class Server {
         while (!serverSocket.isClosed()) {
             Socket clientSocket = serverSocket.accept();
 
-//            OnlineAccount newClient = new OnlineAccount(clientSocket);
-//            Thread newClientThread = new Thread(newClient);
-//            newClientThread.start();
-
             new Thread(() -> {
                 try (PrintStream printer = new PrintStream(clientSocket.getOutputStream());
                      Scanner reader = new Scanner(clientSocket.getInputStream())) {
@@ -31,7 +27,7 @@ public class Server {
                         clientCreateAccount(printer, reader);
 
                     } else if (mode.equals("login")) {
-                        clientLogin(printer, reader);
+                        clientLogin(printer, reader, clientSocket);
 
                     } else if (mode.equals("leaderboard")) {
                         clientLeaderboard(printer, reader);
@@ -48,12 +44,34 @@ public class Server {
                     } else if (mode.equals("shop")) {
                         ShopServerSide.handleRequest(reader, printer);
 
-                    }
+                    } else if (mode.equals("chat")) {
+                        String messageJson = reader.nextLine();
+                        YaGson yaGson = new YaGson();
+                        Message2 message = yaGson.fromJson(messageJson, Message2.class);
+                        OnlineAccount receiver = OnlineAccount.getOnlineAccount(message.receiver);
+                        receiver.message2s.add(message);
 
+                    } else if (mode.equals("check messages")) {
+
+                        String username = reader.nextLine();
+
+
+                        if (OnlineAccount.getOnlineAccount(username).message2s.size() > 0) {
+                            printer.println("new message");
+                            YaGson yaGson = new YaGson();
+                            String messageJson = yaGson.toJson(OnlineAccount.getOnlineAccount(username).message2s.get(0));
+                            printer.println(messageJson);
+                            OnlineAccount.getOnlineAccount(username).message2s.clear();
+                        } else {
+                            printer.println("no message");
+                        }
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }).start();
+
+
         }
     }
 
@@ -73,21 +91,20 @@ public class Server {
         }
     }
 
-    public static void clientLogin(PrintStream printer, Scanner reader) {
+    public static void clientLogin(PrintStream printer, Scanner reader, Socket clientSocket) {
         String username = reader.nextLine();
         String password = reader.nextLine();
         boolean canLogin = Account.userAndPassMatch(username, password);
         if (canLogin) {
+            Account thisAccount = Account.getAccountByUsername(username);
+            Collection.setDefaultPlantsCollection(thisAccount);
+            Collection.setDefaultZombiesCollection(thisAccount);
+            OnlineAccount newOnlineAccount = new OnlineAccount(clientSocket, thisAccount);
             printer.println("matches");
         } else {
             printer.println("not match");
             return;
         }
-        Account thisAccount = Account.getAccountByUsername(username);
-        Account.onlineAccounts.add(thisAccount);
-        Collection.setDefaultPlantsCollection(thisAccount);
-        Collection.setDefaultZombiesCollection(thisAccount);
-
     }
 
     public static void clientLeaderboard(PrintStream printer, Scanner reader) {
@@ -162,15 +179,24 @@ class ShopServerSide {
         YaGson yaGson = new YaGson();
         ShopRequest request = yaGson.fromJson(requestJson, ShopRequest.class);
         ShopRequest.RequestType requestType = request.getRequestType();
+        String username = request.getUsername();
 
         if (requestType.equals(ShopRequest.RequestType.showShop)) {
-            String username = request.getUsername();
+            // Show Shop
             Account account = Account.getAccountByUsername(username);
             String twoArrayListsJson = Shop.showShop(account);
             printer.println(twoArrayListsJson);
 
         } else if (requestType.equals(ShopRequest.RequestType.showCollection)) {
-            String username = request.getUsername();
+            // Show Collection
+
+        } else if (requestType.equals(ShopRequest.RequestType.showMoney)) {
+            // Show Money
+            printer.println(Integer.toString(Account.getAccountByUsername(username).getMoney()));
+
+        } else if (requestType.equals(ShopRequest.RequestType.moneyCheat)) {
+            // Money Cheat code
+            Account.getAccountByUsername(username).setMoney(Account.getAccountByUsername(username).getMoney() + 1000);
 
         }
 
