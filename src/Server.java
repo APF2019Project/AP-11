@@ -1,4 +1,4 @@
-import Requests.ChatRequest;
+
 import Requests.ShopRequest;
 import com.gilecode.yagson.YaGson;
 import com.sun.tools.classfile.ConstantPool;
@@ -50,20 +50,11 @@ public class Server {
                         ChatServerSide.handleRequest(printer, reader);
 
                     } else if (mode.equals("check messages")) {
-
                         String username = reader.nextLine();
+                        ChatServerSide.checkMessages(printer, reader, username);
 
-
-                        if (OnlineAccount.getOnlineAccount(username).message2s.size() > 0) {
-                            printer.println("new message");
-                            YaGson yaGson = new YaGson();
-                            String messageJson = yaGson.toJson(OnlineAccount.getOnlineAccount(username).message2s.get(0));
-                            printer.println(messageJson);
-                            OnlineAccount.getOnlineAccount(username).message2s.clear();
-                        } else {
-                            printer.println("no message");
-                        }
                     }
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -214,7 +205,7 @@ class ChatServerSide {
             showOnlineUsers(printer, reader);
 
         } else if (requestType.equals(ChatRequest.RequestType.sendMessage)) {
-            sendMessage(printer, reader);
+            sendMessage(printer, reader, request);
 
         }
 
@@ -222,12 +213,10 @@ class ChatServerSide {
     }
 
 
-    public static void sendMessage(PrintStream printer, Scanner reader) {
-        String messageJson = reader.nextLine();
-        YaGson yaGson = new YaGson();
-        Message2 message = yaGson.fromJson(messageJson, Message2.class);
-        OnlineAccount receiver = OnlineAccount.getOnlineAccount(message.receiver);
-        receiver.message2s.add(message);
+    public static void sendMessage(PrintStream printer, Scanner reader, ChatRequest request) {
+        String receiverUsername = request.message.receiver;
+        Message2 message = request.message;
+        OnlineAccount.getOnlineAccount(receiverUsername).message2s.add(message);
     }
 
     public static void showOnlineUsers(PrintStream printer, Scanner reader) {
@@ -236,5 +225,21 @@ class ChatServerSide {
         String onlineUsernamesJson = yaGson.toJson(onlineUsernames);
         printer.println(onlineUsernamesJson);
     }
+
+
+    // not user reachable function:
+    public static void checkMessages(PrintStream printer, Scanner reader, String username) {
+        if (OnlineAccount.getOnlineAccount(username).message2s.size() > 0) {
+            printer.println("new message");
+            YaGson yaGson = new YaGson();
+            String messageJson = yaGson.toJson(OnlineAccount.getOnlineAccount(username).message2s.get(0));
+            printer.println(messageJson);
+            OnlineAccount.getOnlineAccount(username).message2s.clear();
+        } else {
+            printer.println("no message");
+        }
+    }
+
+
 }
 

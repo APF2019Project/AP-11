@@ -1,5 +1,3 @@
-import Requests.AccountRequests;
-import Requests.ChatRequest;
 import Requests.ShopRequest;
 import com.gilecode.yagson.YaGson;
 import com.gilecode.yagson.com.google.gson.internal.bind.util.ISO8601Utils;
@@ -325,10 +323,11 @@ class ClientChat {
             printer.println("chat");
 
             Message2 message = new Message2(receiver, clientTestAccount.clientUsername, content);
+            ChatRequest request = new ChatRequest(clientTestAccount.clientUsername, receiver, content,
+                    ChatRequest.RequestType.sendMessage, message);
             YaGson yaGson = new YaGson();
-            String messageJson = yaGson.toJson(message);
-            printer.println(messageJson);
-
+            String requestJson = yaGson.toJson(request);
+            printer.println(requestJson);
         }
     }
 
@@ -338,7 +337,7 @@ class ClientChat {
              Scanner socketScanner = new Scanner(clientSocket.getInputStream())) {
             printer.println("chat");
             ChatRequest request = new ChatRequest(clientTestAccount.clientUsername, null, null,
-                    ChatRequest.RequestType.showOnlineUsers);
+                    ChatRequest.RequestType.showOnlineUsers, null);
             YaGson yaGson = new YaGson();
             String requestJson = yaGson.toJson(request);
             printer.println(requestJson);

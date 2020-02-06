@@ -10,13 +10,14 @@ public class ChatRequest {
     String receiver;
     String content;
     RequestType requestType;
-    
+    Message2 message;
 
-    public ChatRequest(String sender, String receiver, String content, RequestType requestType) {
+    public ChatRequest(String sender, String receiver, String content, RequestType requestType, Message2 message) {
         this.sender = sender;
         this.receiver = receiver;
         this.content = content;
         this.requestType = requestType;
+        this.message = message;
     }
 
     public String getSender() {
