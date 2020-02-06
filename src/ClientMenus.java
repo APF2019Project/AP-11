@@ -122,6 +122,9 @@ public class ClientMenus {
                 case "chat":
                     ClientChat.sendMessage();
                     break;
+                case "show online users":
+                    ClientChat.showOnlineUsers();
+                    break;
                 default:
                     View.invalidCommand(-2);
                     break;
@@ -889,6 +892,8 @@ public class ClientMenus {
         instructions.add("play");
         instructions.add("profile");
         instructions.add("shop");
+        instructions.add("show online users");
+        instructions.add("chat");
         instructions.add("exit");
         instructions.add("help");
     }

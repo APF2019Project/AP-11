@@ -1,5 +1,3 @@
-package Requests;
-
 public class AccountRequests {
     private String userName;
     private String pass;

@@ -1,5 +1,7 @@
+import Requests.ChatRequest;
 import Requests.ShopRequest;
 import com.gilecode.yagson.YaGson;
+import com.sun.tools.classfile.ConstantPool;
 
 import java.io.IOException;
 import java.io.PrintStream;
@@ -45,11 +47,7 @@ public class Server {
                         ShopServerSide.handleRequest(reader, printer);
 
                     } else if (mode.equals("chat")) {
-                        String messageJson = reader.nextLine();
-                        YaGson yaGson = new YaGson();
-                        Message2 message = yaGson.fromJson(messageJson, Message2.class);
-                        OnlineAccount receiver = OnlineAccount.getOnlineAccount(message.receiver);
-                        receiver.message2s.add(message);
+                        ChatServerSide.handleRequest(printer, reader);
 
                     } else if (mode.equals("check messages")) {
 
@@ -200,6 +198,43 @@ class ShopServerSide {
 
         }
 
+    }
+
+}
+
+class ChatServerSide {
+
+    public static void handleRequest(PrintStream printer, Scanner reader) {
+        String requestJson = reader.nextLine();
+        YaGson yaGson = new YaGson();
+        ChatRequest request = yaGson.fromJson(requestJson, ChatRequest.class);
+        ChatRequest.RequestType requestType = request.getRequestType();
+
+        if (requestType.equals(ChatRequest.RequestType.showOnlineUsers)) {
+            showOnlineUsers(printer, reader);
+
+        } else if (requestType.equals(ChatRequest.RequestType.sendMessage)) {
+            sendMessage(printer, reader);
+
+        }
+
+
+    }
+
+
+    public static void sendMessage(PrintStream printer, Scanner reader) {
+        String messageJson = reader.nextLine();
+        YaGson yaGson = new YaGson();
+        Message2 message = yaGson.fromJson(messageJson, Message2.class);
+        OnlineAccount receiver = OnlineAccount.getOnlineAccount(message.receiver);
+        receiver.message2s.add(message);
+    }
+
+    public static void showOnlineUsers(PrintStream printer, Scanner reader) {
+        ArrayList<String> onlineUsernames = OnlineAccount.getOnlineUsernames();
+        YaGson yaGson = new YaGson();
+        String onlineUsernamesJson = yaGson.toJson(onlineUsernames);
+        printer.println(onlineUsernamesJson);
     }
 }
 

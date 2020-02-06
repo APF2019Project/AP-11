@@ -34,5 +34,13 @@ public class OnlineAccount {
         return null;
     }
 
+    public static ArrayList<String> getOnlineUsernames() {
+        ArrayList<String> onlineUsernames = new ArrayList<>();
+        for (OnlineAccount onlineAccountIterator : onlineAccounts) {
+            onlineUsernames.add(onlineAccountIterator.account.getUsername());
+        }
+        return onlineUsernames;
+    }
+
 
 }

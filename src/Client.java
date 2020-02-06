@@ -1,4 +1,5 @@
 import Requests.AccountRequests;
+import Requests.ChatRequest;
 import Requests.ShopRequest;
 import com.gilecode.yagson.YaGson;
 import com.gilecode.yagson.com.google.gson.internal.bind.util.ISO8601Utils;
@@ -119,35 +120,6 @@ class clientTestAccount { // Login menu, Main menu, and Profile menu parts
                 } else {
                     System.out.println("Logged in, going back to --> Profile Menu:");
                 }
-
-
-//                new Thread(() -> {
-//                    Socket clientSocket2 = null;
-//                    try {
-//                        clientSocket2 = new Socket("localhost", 6000);
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                    }
-//                    try (PrintStream printer2 = new PrintStream(clientSocket2.getOutputStream());
-//                         Scanner socketScanner2 = new Scanner(clientSocket2.getInputStream())) {
-//
-//                        while (!clientSocket2.isClosed()) {
-//                            printer2.println("check messages");
-//                            printer2.println(clientTestAccount.clientUsername);
-//                            String serverAns = socketScanner2.nextLine();
-//                            if (serverAns.equals("new message")) {
-//                                System.out.println("new message!!!");
-//                            }
-//                            try {
-//                                Thread.sleep(500);
-//                            } catch (InterruptedException e) {
-//                                e.printStackTrace();
-//                            }
-//                        }
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                    }
-//                }).start();
 
             } else {
                 View.loginFailed();
@@ -341,20 +313,38 @@ class clientShopFunctions {
 class ClientChat {
 
     public static void sendMessage() throws IOException {
-
         Socket clientSocket = new Socket("localhost", 6000);
         try (PrintStream printer = new PrintStream(clientSocket.getOutputStream());
              Scanner socketScanner = new Scanner(clientSocket.getInputStream())) {
-            printer.println("chat");
-            System.out.println("Enter receiver:");
+            System.out.println("___Select an online username:");
             String receiver = View.input();
-            System.out.println("Enter content:");
+            System.out.println("___Enter content in one line:");
             String content = View.input();
+            System.out.println("___Message sent.");
+
+            printer.println("chat");
+
             Message2 message = new Message2(receiver, clientTestAccount.clientUsername, content);
             YaGson yaGson = new YaGson();
             String messageJson = yaGson.toJson(message);
             printer.println(messageJson);
 
+        }
+    }
+
+    public static void showOnlineUsers() throws IOException {
+        Socket clientSocket = new Socket("localhost", 6000);
+        try (PrintStream printer = new PrintStream(clientSocket.getOutputStream());
+             Scanner socketScanner = new Scanner(clientSocket.getInputStream())) {
+            printer.println("chat");
+            ChatRequest request = new ChatRequest(clientTestAccount.clientUsername, null, null,
+                    ChatRequest.RequestType.showOnlineUsers);
+            YaGson yaGson = new YaGson();
+            String requestJson = yaGson.toJson(request);
+            printer.println(requestJson);
+            String onlineUsersJson = socketScanner.nextLine();
+            ArrayList<String> onlineUsers = yaGson.fromJson(onlineUsersJson, ArrayList.class);
+            View.printNumberedStringArrayList(onlineUsers);
         }
     }
 
