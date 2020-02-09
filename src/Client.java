@@ -288,7 +288,7 @@ class clientShopFunctions {
         Socket clientSocket = new Socket("localhost", 6000);
         try (PrintStream printer = new PrintStream(clientSocket.getOutputStream());
              Scanner socketScanner = new Scanner(clientSocket.getInputStream())) {
-            printer.println("shop");
+            printer.println("shop2");
             printer.println("buy");
             printer.println(clientTestAccount.clientUsername);
             printer.println(cardName);
