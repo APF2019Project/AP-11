@@ -42,5 +42,13 @@ public class OnlineAccount {
         return onlineUsernames;
     }
 
+    public static boolean isOnline(String username) {
+        for (OnlineAccount onlineAccountIterator : onlineAccounts) {
+            if (onlineAccountIterator.account.getUsername().equals(username))
+                return true;
+        }
+        return false;
+    }
+
 
 }

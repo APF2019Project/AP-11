@@ -2,6 +2,7 @@ import Requests.ShopRequest;
 import com.gilecode.yagson.YaGson;
 import com.gilecode.yagson.com.google.gson.internal.bind.util.ISO8601Utils;
 
+import javax.crypto.spec.PSource;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.Socket;
@@ -83,8 +84,7 @@ class clientTestAccount { // Login menu, Main menu, and Profile menu parts
                             String messageJson = socketScanner.nextLine();
                             YaGson yaGson = new YaGson();
                             Message2 message = yaGson.fromJson(messageJson, Message2.class);
-                            System.out.println("NEW Message from: " + message.getSender());
-                            System.out.println(message.getContent());
+                            ClientChat.showNotif(message);
                         }
 
                     } catch (IOException | InterruptedException e) {
@@ -310,25 +310,88 @@ class clientShopFunctions {
 
 class ClientChat {
 
-    public static void sendMessage() throws IOException {
+    static ArrayList<Message2> unreadMessages = new ArrayList<>();
+
+    public static void showNotif(Message2 message) throws IOException {
+        Scanner scanner = new Scanner(System.in);
+        if (message.isNew) {
+            System.out.println();
+            System.out.println("    " + "* New message from " + message.sender);
+            String preview;
+            if (message.content.length() > 7) {
+                preview = message.content.substring(0, 7);
+                System.out.println("    " + "preview: " + preview + "...");
+            } else {
+                preview = message.content;
+                System.out.println("    " + "preview: " + preview);
+            }
+            unreadMessages.add(message);
+
+//            System.out.println("wanna reply?");
+//            String ans = View.input();
+//            String ans = scanner.next();
+//            if (ans.toLowerCase().equals("yes")) {
+//                sendMessage(true, message);
+//            } else {
+//                System.out.println("    " + "Ok, continue.");
+//                System.out.println();
+//                unreadMessages.add(message);
+//            }
+
+        } else {
+//            System.out.println("    " + message.sender + ":");
+//            System.out.println("    " + message.content);
+//            sendMessage(true, message);
+        }
+    }
+
+    public static void sendMessage(boolean isReply, Message2 otherMessage) throws IOException {
         Socket clientSocket = new Socket("localhost", 6000);
         try (PrintStream printer = new PrintStream(clientSocket.getOutputStream());
              Scanner socketScanner = new Scanner(clientSocket.getInputStream())) {
-            System.out.println("___Select an online username:");
-            String receiver = View.input();
-            System.out.println("___Enter content in one line:");
-            String content = View.input();
-            System.out.println("___Message sent.");
+            String receiver = null;
+            String content = null;
+            if (isReply) {
+                while (true) {
+                    receiver = otherMessage.sender;
+                    System.out.println("    " + "Reply:");
+                    Scanner scanner = new Scanner(System.in);
+                    content = scanner.nextLine();
+                    if (content.toLowerCase().equals("end chat")) {
+                        break;
+                    }
+                    Message2 message = new Message2(receiver, clientTestAccount.clientUsername, content, false);
+                    ChatRequest request = new ChatRequest(clientTestAccount.clientUsername, receiver, content,
+                            ChatRequest.RequestType.sendMessage, message);
+                    YaGson yaGson = new YaGson();
+                    String requestJson = yaGson.toJson(request);
+                    printer.println("chat");
+                    printer.println(requestJson);
+                }
 
-            printer.println("chat");
+            } else {
+                System.out.println("___Select an online username:");
+                receiver = View.input();
+                System.out.println("___Enter content in one line:");
+                content = View.input();
+                System.out.println("___Message sent.");
 
-            Message2 message = new Message2(receiver, clientTestAccount.clientUsername, content);
-            ChatRequest request = new ChatRequest(clientTestAccount.clientUsername, receiver, content,
-                    ChatRequest.RequestType.sendMessage, message);
-            YaGson yaGson = new YaGson();
-            String requestJson = yaGson.toJson(request);
-            printer.println(requestJson);
+                printer.println("chat");
+
+                Message2 message = new Message2(receiver, clientTestAccount.clientUsername, content, true);
+                ChatRequest request = new ChatRequest(clientTestAccount.clientUsername, receiver, content,
+                        ChatRequest.RequestType.sendMessage, message);
+                YaGson yaGson = new YaGson();
+                String requestJson = yaGson.toJson(request);
+                printer.println(requestJson);
+            }
+
+
         }
+    }
+
+    public static void startChat(Message2 message) {
+
     }
 
     public static void showOnlineUsers() throws IOException {
@@ -342,9 +405,48 @@ class ClientChat {
             String requestJson = yaGson.toJson(request);
             printer.println(requestJson);
             String onlineUsersJson = socketScanner.nextLine();
+            String offlineUsernamesJson = socketScanner.nextLine();
             ArrayList<String> onlineUsers = yaGson.fromJson(onlineUsersJson, ArrayList.class);
+            ArrayList<String> offlineUsers = yaGson.fromJson(offlineUsernamesJson, ArrayList.class);
+            System.out.println("Online users:");
             View.printNumberedStringArrayList(onlineUsers);
+            System.out.println("Offline users:");
+            View.printNumberedStringArrayList(offlineUsers);
+            System.out.println();
         }
+    }
+
+    public static void showNewMessages() throws IOException {
+        System.out.println("-- New Messages --");
+        System.out.println("You have " + unreadMessages.size() + " new messages");
+        if (unreadMessages.size() > 0) {
+            View.printNewMessages(unreadMessages);
+            System.out.println("");
+            System.out.println("Select message number to reply, or 0 to exit:");
+            String number = View.input();
+            if (Integer.parseInt(number) == 0) {
+                return;
+            }
+            System.out.println("reply in one line:");
+            String content = View.input();
+            String receiver = unreadMessages.get(Integer.parseInt(number) - 1).sender;
+            String sender = clientTestAccount.clientUsername;
+            Message2 message = new Message2(receiver, sender, content, true);
+            Socket clientSocket = new Socket("localhost", 6000);
+            try (PrintStream printer = new PrintStream(clientSocket.getOutputStream());
+                 Scanner socketScanner = new Scanner(clientSocket.getInputStream())) {
+                printer.println("chat");
+                ChatRequest request = new ChatRequest(sender, receiver, content, ChatRequest.RequestType.sendMessage,
+                        message);
+                YaGson yaGson = new YaGson();
+                String requestJson = yaGson.toJson(request);
+                printer.println(requestJson);
+            }
+
+
+
+        }
+
     }
 
 

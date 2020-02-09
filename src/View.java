@@ -89,6 +89,9 @@ public class View {
             case -2:  // Main Menu
                 System.out.println("Invalid command in Main Menu, Try again:\n");
                 break;
+            case -7:  // Chat Menu
+                System.out.println("Invalid command in Chat Menu");
+                break;
             case -10:  // Shop Menu
                 System.out.println("Invalid command in Shop Menu, Try again:\n");
                 break;
@@ -688,5 +691,17 @@ public class View {
 
     public static void loginFailed() {
         System.out.println("Username and password doesn't match.\nTry again.");
+    }
+
+    public static void printNewMessages(ArrayList<Message2> messages) {
+        int i = 1;
+        for (Message2 messageIterator : messages) {
+            if (messageIterator.content.length() > 7)
+                System.out.println(i + "." + "from " + messageIterator.getSender() + ", prev: " +
+                        messageIterator.content.substring(0, 7) + "...");
+            else
+                System.out.println(i + "." + "from " + messageIterator.getSender() + ", prev: " + messageIterator.content);
+            i++;
+        }
     }
 }

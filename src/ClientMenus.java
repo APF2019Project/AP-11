@@ -120,14 +120,74 @@ public class ClientMenus {
                     headerPrinted = true;
                     break;
                 case "chat":
-                    ClientChat.sendMessage();
+                    ClientMenus.chatMenu();
                     break;
                 case "show online users":
                     ClientChat.showOnlineUsers();
                     break;
+                case "yes":
+
+                    break;
                 default:
                     View.invalidCommand(-2);
                     break;
+            }
+        }
+    }
+
+
+    static void chatMenu() throws IOException {
+        if (aGameHasFinished == 1) {
+            return;
+        }
+
+        String command;
+        ArrayList<String> instructions = new ArrayList<>();
+        setChatMenuHelp(instructions);
+        System.out.println("-- Chat Menu --");
+        View.printNumberedStringArrayList(instructions);
+        boolean headerPrinted = true;
+
+        boolean whileTrue = true;
+        while (whileTrue) {
+            if (aGameHasFinished == 1) {
+                return;
+            }
+
+            if (!headerPrinted) {
+                View.printMainMenuHeader();
+            }
+            View.enterCommand();
+
+            command = View.input();
+
+            switch (command.toLowerCase()) {
+                case "show online users":
+                case "1":
+                    ClientChat.showOnlineUsers();
+                    break;
+                case "show new messages":
+                case "2":
+                    ClientChat.showNewMessages();
+                    break;
+                case "start chat":
+                case "3":
+                    ClientChat.sendMessage(false, null);
+                    break;
+                case "help":
+                    System.out.println("--- Chat Menu ---");
+                    System.out.println("You are logged in as: " + clientTestAccount.clientUsername);
+                    View.printNumberedStringArrayList(instructions);
+                    break;
+                case "exit":
+                    View.goingBackTo(-2); // Going back to Main Menu
+                    whileTrue = false;
+                    break;
+                default:
+                    View.invalidCommand(-7);
+                    break;
+
+
             }
         }
     }
@@ -1001,6 +1061,12 @@ public class ClientMenus {
         instructions.add("remove [row],[column]");
         instructions.add("show lawn");
         instructions.add("end turn");
+    }
+
+    private static void setChatMenuHelp(ArrayList<String> instructions) {
+        instructions.add("start chat");
+        instructions.add("show online users");
+        instructions.add("show new messages");
     }
 
 }

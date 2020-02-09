@@ -476,6 +476,15 @@ public class Account {
         }
         return false;
     }
+
+    public static ArrayList<String> getOfflineUsernames() {
+        ArrayList<String> offlineUsernames = new ArrayList<>();
+        for (Account accountIterator : accounts) {
+            if (!OnlineAccount.isOnline(accountIterator.username))
+                offlineUsernames.add(accountIterator.getUsername());
+        }
+        return offlineUsernames;
+    }
 }
 
 // This class is used for sorting Accounts by their killed zombies for Leaderboard:

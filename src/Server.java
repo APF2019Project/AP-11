@@ -221,9 +221,12 @@ class ChatServerSide {
 
     public static void showOnlineUsers(PrintStream printer, Scanner reader) {
         ArrayList<String> onlineUsernames = OnlineAccount.getOnlineUsernames();
+        ArrayList<String> offlineUsernames = Account.getOfflineUsernames();
         YaGson yaGson = new YaGson();
         String onlineUsernamesJson = yaGson.toJson(onlineUsernames);
+        String offlineUsernamesJson = yaGson.toJson(offlineUsernames);
         printer.println(onlineUsernamesJson);
+        printer.println(offlineUsernamesJson);
     }
 
 

@@ -3,11 +3,13 @@ public class Message2 {
     String receiver;
     String sender;
     String content;
+    boolean isNew;
 
-    public Message2(String receiver, String sender, String content) {
+    public Message2(String receiver, String sender, String content, boolean isNew) {
         this.receiver = receiver;
         this.sender = sender;
         this.content = content;
+        this.isNew = isNew;
     }
 
     public String getReceiver() {
@@ -33,7 +35,21 @@ public class Message2 {
     public void setContent(String content) {
         this.content = content;
     }
+
+    public boolean isNew() {
+        return isNew;
+    }
+
+    public void setNew(boolean aNew) {
+        isNew = aNew;
+    }
 }
+
+
+
+
+
+
 
 
 class Message {
