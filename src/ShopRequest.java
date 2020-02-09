@@ -1,5 +1,3 @@
-package Requests;
-
 public class ShopRequest {
 
     private String username;

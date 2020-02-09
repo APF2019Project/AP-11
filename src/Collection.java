@@ -132,8 +132,26 @@ public class Collection {
         return false;
     }
 
+    public static boolean plantExistsInCollection_2(String plantName, Account account) {
+        for (Plant plantIterator : account.getPlantsCollection()) {
+            if (plantIterator.getName().equals(plantName)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public static boolean zombieExistsInCollection(String zombieName) {
         for (Zombie zombieIterator : Account.getMainPlayingAccount().getZombiesCollection()) {
+            if (zombieIterator.getName().equals(zombieName)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean zombieExistsInCollection_2(String zombieName, Account account) {
+        for (Zombie zombieIterator : account.getZombiesCollection()) {
             if (zombieIterator.getName().equals(zombieName)) {
                 return true;
             }

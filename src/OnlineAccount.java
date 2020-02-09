@@ -34,9 +34,11 @@ public class OnlineAccount {
         return null;
     }
 
-    public static ArrayList<String> getOnlineUsernames() {
+    public static ArrayList<String> getOnlineUsernames(String username) {
         ArrayList<String> onlineUsernames = new ArrayList<>();
         for (OnlineAccount onlineAccountIterator : onlineAccounts) {
+            if (onlineAccountIterator.account.getUsername().equals(username))
+                continue;
             onlineUsernames.add(onlineAccountIterator.account.getUsername());
         }
         return onlineUsernames;
@@ -50,5 +52,13 @@ public class OnlineAccount {
         return false;
     }
 
+    public static void logout(String username) {
+        OnlineAccount tempOnlineAccount = null;
+        for (OnlineAccount onlineAccountIterator : onlineAccounts) {
+            if (onlineAccountIterator.account.getUsername().equals(username))
+                tempOnlineAccount = onlineAccountIterator;
+        }
+        onlineAccounts.remove(tempOnlineAccount);
+    }
 
 }

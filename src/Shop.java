@@ -40,7 +40,7 @@ public class Shop {
         command = command.replaceFirst("[b,B]uy", "");
         command = command.trim();
         clientShopFunctions.buy(command, clientTestAccount.clientUsername);
-//        buy(Account.getMainPlayingAccount(), command);
+       buy(Account.getMainPlayingAccount(), command);
     }
 
 

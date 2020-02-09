@@ -1,5 +1,4 @@
 
-import Requests.ShopRequest;
 import com.gilecode.yagson.YaGson;
 import com.sun.tools.classfile.ConstantPool;
 
@@ -45,6 +44,12 @@ public class Server {
 
                     } else if (mode.equals("shop")) {
                         ShopServerSide.handleRequest(reader, printer);
+
+                    } else if (mode.equals("shop2")) {
+                        ShopServerSide.handleRequest_2(reader, printer);
+
+                    } else if (mode.equals("logout")) {
+                        clientLogout(printer, reader);
 
                     } else if (mode.equals("chat")) {
                         ChatServerSide.handleRequest(printer, reader);
@@ -159,6 +164,11 @@ public class Server {
         }
     }
 
+    public static void clientLogout(PrintStream printer, Scanner reader) {
+        String username = reader.nextLine();
+        OnlineAccount.logout(username);
+    }
+
 }
 
 class ShopServerSide {
@@ -186,10 +196,91 @@ class ShopServerSide {
         } else if (requestType.equals(ShopRequest.RequestType.moneyCheat)) {
             // Money Cheat code
             Account.getAccountByUsername(username).setMoney(Account.getAccountByUsername(username).getMoney() + 1000);
-
         }
 
     }
+
+    public static void handleRequest_2(Scanner reader, PrintStream printer) {
+        String request = reader.nextLine();
+        if (request.equals("buy")) {
+            buy(reader, printer);
+        }
+    }
+
+    public static void buy(Scanner reader, PrintStream printer) {
+        String username = reader.nextLine();
+        String cardName = reader.nextLine();
+
+        Account account = Account.getAccountByUsername(username);
+
+        boolean cardIsPlant = Plant.plantExist(cardName);
+        boolean cardIsZombie = Zombie.zombieExists(cardName);
+        if (!(cardIsPlant || cardIsZombie)) {
+            printer.println("-1"); // invalid card name
+            return;
+        }
+        if (cardIsPlant) {
+            buyPlant(cardName, account, printer);
+        } else if (cardIsZombie) {
+            buyZombie(cardName, account, printer);
+        }
+    }
+
+    public static void buyZombie(String cardName, Account account, PrintStream printer) {
+        if (Collection.zombieExistsInCollection_2(cardName, account)) {
+            //  View.cardAlreadyExistsInCollection("zombies", cardName);
+            printer.println("-2"); // card already exists in collection
+        } else {
+            for (Zombie zombie : Zombie.getZombies()) {
+                if (cardName.equals(zombie.getName())) {
+                    if (account.getMoney() >= zombie.getPrice()) {
+                        if (zombie.getQuantityInShop() > 0) {
+                            account.setMoney(account.getMoney() - zombie.getPrice());
+                            account.getZombiesCollection().add(zombie);
+                            zombie.setQuantityInShop(zombie.getQuantityInShop() - 1);
+                            //    View.zombiePurchased(cardName);
+                            printer.println("done");
+                            return;
+                        } else {
+                            printer.println("-4"); // sold out.
+                        }
+                    } else {
+                        //  View.notEnoughMoney();
+                        printer.println("-3");
+                    }
+                }
+            }
+        }
+    }
+
+    public static void buyPlant(String cardName, Account account, PrintStream printer) {
+        if (Collection.plantExistsInCollection_2(cardName, account)) {
+            printer.println("-2"); // card already exists in collection
+        } else {
+            for (Plant plant : Plant.getPlants()) {
+                if (cardName.equals(plant.getName())) {
+                    if (account.getMoney() >= plant.getPrice()) {
+                        if (plant.getQuantityInShop() > 0) {
+
+                            account.setMoney(account.getMoney() - plant.getPrice());
+                            account.getPlantsCollection().add(plant);
+                            plant.setQuantityInShop(plant.getQuantityInShop() - 1);
+                            //View.plantPurchased(cardName);
+                            printer.println("done");
+                            return;
+
+                        } else {
+                            printer.println("-4"); // sold out.
+                        }
+                    } else {
+                        //View.notEnoughMoney();
+                        printer.println("-3");
+                    }
+                }
+            }
+        }
+    }
+
 
 }
 
@@ -200,9 +291,10 @@ class ChatServerSide {
         YaGson yaGson = new YaGson();
         ChatRequest request = yaGson.fromJson(requestJson, ChatRequest.class);
         ChatRequest.RequestType requestType = request.getRequestType();
+        String username = request.sender;
 
         if (requestType.equals(ChatRequest.RequestType.showOnlineUsers)) {
-            showOnlineUsers(printer, reader);
+            showOnlineUsers(printer, reader, username);
 
         } else if (requestType.equals(ChatRequest.RequestType.sendMessage)) {
             sendMessage(printer, reader, request);
@@ -219,8 +311,8 @@ class ChatServerSide {
         OnlineAccount.getOnlineAccount(receiverUsername).message2s.add(message);
     }
 
-    public static void showOnlineUsers(PrintStream printer, Scanner reader) {
-        ArrayList<String> onlineUsernames = OnlineAccount.getOnlineUsernames();
+    public static void showOnlineUsers(PrintStream printer, Scanner reader, String username) {
+        ArrayList<String> onlineUsernames = OnlineAccount.getOnlineUsernames(username);
         ArrayList<String> offlineUsernames = Account.getOfflineUsernames();
         YaGson yaGson = new YaGson();
         String onlineUsernamesJson = yaGson.toJson(onlineUsernames);

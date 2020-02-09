@@ -111,6 +111,7 @@ public class ClientMenus {
                     headerPrinted = false;
                     break;
                 case "exit":
+                    clientTestAccount.logout();
                     View.goingBackTo(-1);
                     whileTrue = false;
                     break;
@@ -124,9 +125,6 @@ public class ClientMenus {
                     break;
                 case "show online users":
                     ClientChat.showOnlineUsers();
-                    break;
-                case "yes":
-
                     break;
                 default:
                     View.invalidCommand(-2);
@@ -170,7 +168,7 @@ public class ClientMenus {
                 case "2":
                     ClientChat.showNewMessages();
                     break;
-                case "start chat":
+                case "send message":
                 case "3":
                     ClientChat.sendMessage(false, null);
                     break;
@@ -1064,9 +1062,11 @@ public class ClientMenus {
     }
 
     private static void setChatMenuHelp(ArrayList<String> instructions) {
-        instructions.add("start chat");
+        instructions.add("send message");
         instructions.add("show online users");
         instructions.add("show new messages");
+        instructions.add("help");
+        instructions.add("exit");
     }
 
 }

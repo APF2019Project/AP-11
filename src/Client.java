@@ -1,5 +1,5 @@
-import Requests.ShopRequest;
 import com.gilecode.yagson.YaGson;
+import com.gilecode.yagson.com.google.gson.internal.$Gson$Preconditions;
 import com.gilecode.yagson.com.google.gson.internal.bind.util.ISO8601Utils;
 
 import javax.crypto.spec.PSource;
@@ -62,7 +62,7 @@ class clientTestAccount { // Login menu, Main menu, and Profile menu parts
             @Override
             public void run() {
 
-                while (true) {
+                while (clientTestAccount.clientUsername != null) {
                     try {
                         Thread.sleep(500);
                     } catch (InterruptedException e) {
@@ -79,7 +79,12 @@ class clientTestAccount { // Login menu, Main menu, and Profile menu parts
                         Thread.sleep(500);
                         printer.println("check messages");
                         printer.println(clientTestAccount.clientUsername);
-                        String serverAns = socketScanner.nextLine();
+                        String serverAns = null;
+                        try {
+                            serverAns = socketScanner.nextLine();
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
                         if (serverAns.equals("new message")) {
                             String messageJson = socketScanner.nextLine();
                             YaGson yaGson = new YaGson();
@@ -90,7 +95,7 @@ class clientTestAccount { // Login menu, Main menu, and Profile menu parts
                     } catch (IOException | InterruptedException e) {
                         e.printStackTrace();
                     }
-                 }
+                }
             }
         });
 
@@ -207,15 +212,15 @@ class clientTestAccount { // Login menu, Main menu, and Profile menu parts
         Socket clientSocket = new Socket("localhost", 6000);
         try (PrintStream printer = new PrintStream(clientSocket.getOutputStream());
              Scanner socketScanner = new Scanner(clientSocket.getInputStream())) {
-                printer.println("delete account");
+            printer.println("delete account");
             System.out.println("Enter your username");
             String username = View.input();
             System.out.println("Enter your password:");
             String password = View.input();
-                printer.println(username);
-                printer.println(password);
-                String matches = socketScanner.nextLine();
-                System.out.println(matches);
+            printer.println(username);
+            printer.println(password);
+            String matches = socketScanner.nextLine();
+            System.out.println(matches);
             if (matches.equals("matches")) {
                 System.out.println("Are you sure you want to delete your account?");
                 String answer = View.input();
@@ -234,6 +239,16 @@ class clientTestAccount { // Login menu, Main menu, and Profile menu parts
                 View.loginFailed();
             }
         }
+    }
+
+    public static void logout() throws IOException {
+        Socket clientSocket = new Socket("localhost", 6000);
+        try (PrintStream printer = new PrintStream(clientSocket.getOutputStream());
+             Scanner socketScanner = new Scanner(clientSocket.getInputStream())) {
+            printer.println("logout");
+            printer.println(clientUsername);
+        }
+        clientTestAccount.clientUsername = null;
     }
 }
 
@@ -274,6 +289,27 @@ class clientShopFunctions {
         try (PrintStream printer = new PrintStream(clientSocket.getOutputStream());
              Scanner socketScanner = new Scanner(clientSocket.getInputStream())) {
             printer.println("shop");
+            printer.println("buy");
+            printer.println(clientTestAccount.clientUsername);
+            printer.println(cardName);
+
+            String serverAnswer = socketScanner.nextLine();
+            if (serverAnswer.equals("-1")) {
+                System.out.println("Invalid card name.");
+
+            } else if (serverAnswer.equals("-2")) {
+                System.out.println("This card is already in your collection.");
+
+            } else if (serverAnswer.equals("-3")) {
+                System.out.println("Not enough money.");
+
+            } else if (serverAnswer.equals("done")) {
+                System.out.println(cardName + " added to your plants collection");
+
+            } else if (serverAnswer.equals("-4")) {
+                System.out.println("This card is sold out.");
+            }
+
 
         }
     }
@@ -303,7 +339,6 @@ class clientShopFunctions {
             printer.println(requestJson);
         }
     }
-
 
 
 }
@@ -357,16 +392,20 @@ class ClientChat {
                     System.out.println("    " + "Reply:");
                     Scanner scanner = new Scanner(System.in);
                     content = scanner.nextLine();
-                    if (content.toLowerCase().equals("end chat")) {
-                        break;
+                    if (content.equals("send picture")) {
+                        sendPicture();
+                    } else {
+                        if (content.toLowerCase().equals("end chat")) {
+                            break;
+                        }
+                        Message2 message = new Message2(receiver, clientTestAccount.clientUsername, content, false);
+                        ChatRequest request = new ChatRequest(clientTestAccount.clientUsername, receiver, content,
+                                ChatRequest.RequestType.sendMessage, message);
+                        YaGson yaGson = new YaGson();
+                        String requestJson = yaGson.toJson(request);
+                        printer.println("chat");
+                        printer.println(requestJson);
                     }
-                    Message2 message = new Message2(receiver, clientTestAccount.clientUsername, content, false);
-                    ChatRequest request = new ChatRequest(clientTestAccount.clientUsername, receiver, content,
-                            ChatRequest.RequestType.sendMessage, message);
-                    YaGson yaGson = new YaGson();
-                    String requestJson = yaGson.toJson(request);
-                    printer.println("chat");
-                    printer.println(requestJson);
                 }
 
             } else {
@@ -374,16 +413,20 @@ class ClientChat {
                 receiver = View.input();
                 System.out.println("___Enter content in one line:");
                 content = View.input();
-                System.out.println("___Message sent.");
+                if (content.equals("send picture")) {
+                    sendPicture();
+                } else {
+                    System.out.println("___Message sent.");
 
-                printer.println("chat");
+                    printer.println("chat");
 
-                Message2 message = new Message2(receiver, clientTestAccount.clientUsername, content, true);
-                ChatRequest request = new ChatRequest(clientTestAccount.clientUsername, receiver, content,
-                        ChatRequest.RequestType.sendMessage, message);
-                YaGson yaGson = new YaGson();
-                String requestJson = yaGson.toJson(request);
-                printer.println(requestJson);
+                    Message2 message = new Message2(receiver, clientTestAccount.clientUsername, content, true);
+                    ChatRequest request = new ChatRequest(clientTestAccount.clientUsername, receiver, content,
+                            ChatRequest.RequestType.sendMessage, message);
+                    YaGson yaGson = new YaGson();
+                    String requestJson = yaGson.toJson(request);
+                    printer.println(requestJson);
+                }
             }
 
 
@@ -424,29 +467,36 @@ class ClientChat {
             System.out.println("");
             System.out.println("Select message number to reply, or 0 to exit:");
             String number = View.input();
+            System.out.print(unreadMessages.get(Integer.parseInt(number) - 1).sender + ": ");
+            System.out.println(unreadMessages.get(Integer.parseInt(number) - 1).content);
             if (Integer.parseInt(number) == 0) {
                 return;
             }
             System.out.println("reply in one line:");
             String content = View.input();
-            String receiver = unreadMessages.get(Integer.parseInt(number) - 1).sender;
-            String sender = clientTestAccount.clientUsername;
-            Message2 message = new Message2(receiver, sender, content, true);
-            Socket clientSocket = new Socket("localhost", 6000);
-            try (PrintStream printer = new PrintStream(clientSocket.getOutputStream());
-                 Scanner socketScanner = new Scanner(clientSocket.getInputStream())) {
-                printer.println("chat");
-                ChatRequest request = new ChatRequest(sender, receiver, content, ChatRequest.RequestType.sendMessage,
-                        message);
-                YaGson yaGson = new YaGson();
-                String requestJson = yaGson.toJson(request);
-                printer.println(requestJson);
+            if (content.equals("send picture")) {
+                sendPicture();
+            } else {
+                System.out.println("message sent.");
+                String receiver = unreadMessages.get(Integer.parseInt(number) - 1).sender;
+                String sender = clientTestAccount.clientUsername;
+                Message2 message = new Message2(receiver, sender, content, true);
+                Socket clientSocket = new Socket("localhost", 6000);
+                try (PrintStream printer = new PrintStream(clientSocket.getOutputStream());
+                     Scanner socketScanner = new Scanner(clientSocket.getInputStream())) {
+                    printer.println("chat");
+                    ChatRequest request = new ChatRequest(sender, receiver, content, ChatRequest.RequestType.sendMessage,
+                            message);
+                    YaGson yaGson = new YaGson();
+                    String requestJson = yaGson.toJson(request);
+                    printer.println(requestJson);
+                }
             }
-
-
-
         }
+    }
 
+    public static void sendPicture() {
+        System.out.println("Sadly not implemented :((");
     }
 
 
