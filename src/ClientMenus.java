@@ -407,6 +407,9 @@ public class ClientMenus {
                     View.printNumberedStringArrayList(instructions);
 //                    View.showHelp(-10);
                     break;
+                case "create card":
+                    clientShopFunctions.createCard();
+                    break;
                 default:
                     View.invalidCommand(-10);
                     break;
@@ -982,6 +985,7 @@ public class ClientMenus {
         instructions.add("show collection");
         instructions.add("show money");
         instructions.add("buy [card name]");
+        instructions.add("create card");
         instructions.add("help");
         instructions.add("exit");
     }

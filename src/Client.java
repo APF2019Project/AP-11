@@ -273,14 +273,15 @@ class clientShopFunctions {
         Socket clientSocket = new Socket("localhost", 6000);
         try (PrintStream printer = new PrintStream(clientSocket.getOutputStream());
              Scanner socketScanner = new Scanner(clientSocket.getInputStream())) {
-            printer.println("shop");
-            //
-            //
-            //
-            //
-            //
-            //
-            //
+            printer.println("shop2");
+            printer.println("show collection");
+            printer.println(clientTestAccount.clientUsername);
+            String plantsJson = socketScanner.nextLine();
+            String zombiesJson = socketScanner.nextLine();
+            YaGson yaGson = new YaGson();
+            ArrayList<Plant> plants = yaGson.fromJson(plantsJson, ArrayList.class);
+            ArrayList<Zombie> zombie = yaGson.fromJson(zombiesJson, ArrayList.class);
+            View.printCollections(plants, zombie);
         }
     }
 
@@ -340,6 +341,103 @@ class clientShopFunctions {
         }
     }
 
+    public static void createCard() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Create new plant or zombie?");
+        String plantOrZombie = scanner.nextLine();
+        if (plantOrZombie.equals("plant")) {
+            createPlant();
+        } else if (plantOrZombie.equals("zombie")) {
+            createZombie();
+        }
+    }
+
+
+    public static void createPlant() {
+        Scanner scanner = new Scanner(System.in);
+        try {
+
+            Shoot normalPea = new Shoot(true, 1, 3, 1, 0);
+            Shoot frozenPea = new Shoot(true, 1, 3, 0.5, 1);
+            Shoot cabbage = new Shoot(false, 2, 3, 1, 0);
+            Shoot kernel = new Shoot(false, 0, 3, 0, 2);
+            Shoot melon = new Shoot(false, 3, 3, 1, 0);
+            Shoot frozenMelon = new Shoot(false, 3, 3, 0.5, Integer.MAX_VALUE);
+
+            System.out.println("Enter card name:");
+            String name = scanner.nextLine();
+            System.out.println("Enter health:");
+            int health = scanner.nextInt();
+            int age = 0;
+            System.out.println("Enter sun prince:");
+            final int sunCost = scanner.nextInt();
+            System.out.println("Select bullet type:");
+            System.out.println("normalPea, frozenPea, cabbage, kernel, melon, frozenMelon");
+            String bulletType = scanner.nextLine();
+            Shoot bullet = null;
+            switch (bulletType) {
+                case "normalPea":
+                    bullet = normalPea;
+                    break;
+                case "frozenPea":
+                    bullet = frozenPea;
+                    break;
+                case "cabbage":
+                    bullet = cabbage;
+                    break;
+                case "kernel":
+                    bullet = kernel;
+                    break;
+                case "melon":
+                    bullet = melon;
+                    break;
+                case "frosenMelon":
+                    bullet = frozenMelon;
+                    break;
+            }
+            System.out.println("Enter bullet number:");
+            final int bulletNumber = scanner.nextInt();
+            System.out.println("Enter melee damage:");
+            final int meleeDamage = scanner.nextInt();
+            System.out.println("Enter respawn time:");
+            final int respawnCoolDown = scanner.nextInt();
+            int respawnTime;
+            System.out.println("Enter shoot cool down:");
+            final int shootCoolDown = scanner.nextInt();
+            System.out.println("Enter shoot time:");
+            int shootTime = scanner.nextInt();
+            System.out.println("Is split pea? (boolean)");
+            boolean isSplitPea = scanner.nextBoolean();
+            System.out.println("Is cattail? (boolean)");
+            final boolean isCattail = scanner.nextBoolean();
+            System.out.println("Is this a water plant? (boolean)");
+            final boolean canBePlantedInWater = scanner.nextBoolean();
+            String type = "range -1 normal";
+            System.out.println("Done! Your plant is created and is available on PvZ shop!");
+
+            Plant plant = new Plant(name, health, sunCost, bullet, bulletNumber, meleeDamage, respawnCoolDown,
+                    shootCoolDown, isCattail, canBePlantedInWater, type);
+            YaGson yaGson = new YaGson();
+            String plantJson = yaGson.toJson(plant);
+
+            Socket clientSocket = new Socket("localhost", 6000);
+            try (PrintStream printer = new PrintStream(clientSocket.getOutputStream());
+                 Scanner socketScanner = new Scanner(clientSocket.getInputStream())) {
+                printer.println("shop2");
+                printer.println("new plant");
+                printer.println(plantJson);
+            }
+        } catch (Exception ex) {
+            ex.getMessage();
+            ex.printStackTrace();
+            System.out.println("probably wrong input type.");
+        }
+    }
+
+    public static void createZombie() {
+        Scanner scanner = new Scanner(System.in);
+
+    }
 
 }
 

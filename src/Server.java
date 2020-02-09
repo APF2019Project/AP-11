@@ -204,7 +204,32 @@ class ShopServerSide {
         String request = reader.nextLine();
         if (request.equals("buy")) {
             buy(reader, printer);
+
+        } else if (request.equals("show collection")) {
+            showCollection(printer, reader);
+
+        } else if (request.equals("new plant")) {
+            newPlant(printer, reader);
         }
+    }
+
+    public  static void newPlant(PrintStream printer, Scanner reader) {
+        String plantJson = reader.nextLine();
+        YaGson yaGson = new YaGson();
+        Plant plant = yaGson.fromJson(plantJson, Plant.class);
+        Plant.plants.add(plant);
+    }
+
+    public static void showCollection(PrintStream printer, Scanner reader) {
+        String username = reader.nextLine();
+        Account account = Account.getAccountByUsername(username);
+        ArrayList<Plant> plants = (ArrayList<Plant>) account.getPlantsCollection().clone();
+        ArrayList<Zombie> zombies = (ArrayList<Zombie>) account.getZombiesCollection().clone();
+        YaGson yaGson = new YaGson();
+        String plantsJson = yaGson.toJson(plants);
+        String zombiesJson = yaGson.toJson(zombies);
+        printer.println(plantsJson);
+        printer.println(zombiesJson);
     }
 
     public static void buy(Scanner reader, PrintStream printer) {
