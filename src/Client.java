@@ -453,7 +453,7 @@ class clientShopFunctions {
             System.out.println("Does it have random position? (boolean)");
             boolean RandomPosition = scanner.nextBoolean();
             System.out.println("Could jump? (boolean)");
-            boolean couldJump  = scanner.nextBoolean();
+            boolean couldJump = scanner.nextBoolean();
             System.out.println("Turn thief? (int)");
             int turnThief = scanner.nextInt();
             System.out.println("Speed?");
@@ -502,8 +502,35 @@ class clientShopFunctions {
 
     }
 
-    public static void buyFromAnotherClient() {
-        
+    public static void buyFromAnotherClient() throws IOException {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Who do you wanna buy from?");
+        String seller = scanner.nextLine();
+        System.out.println("What card are you looking for?");
+        String cardName = scanner.nextLine();
+
+        Socket clientSocket = new Socket("localhost", 6000);
+        try (PrintStream printer = new PrintStream(clientSocket.getOutputStream());
+             Scanner socketScanner = new Scanner(clientSocket.getInputStream())) {
+
+            printer.println("shop2");
+            printer.println("buy from client");
+            printer.println(seller);
+            printer.println(clientTestAccount.clientUsername);
+            printer.println(cardName);
+
+            String serverAns = socketScanner.nextLine();
+            if (serverAns.equals("wrong seller")) {
+                System.out.println("This user is not available.");
+            } else if (serverAns.equals("wrong card name")) {
+                System.out.println("This card doesn't exist.");
+            } else if (serverAns.equals("not in collection")) {
+                System.out.println("It seems like this user doesn't have this card!");
+            } else if (serverAns.equals("request sent")) {
+                System.out.println("Your buy request has been sent.");
+            }
+
+        }
 
     }
 }
@@ -515,34 +542,31 @@ class ClientChat {
     public static void showNotif(Message2 message) throws IOException {
         Scanner scanner = new Scanner(System.in);
         if (message.isNew) {
-            System.out.println();
-            System.out.println("    " + "* New message from " + message.sender);
-            String preview;
-            if (message.content.length() > 7) {
-                preview = message.content.substring(0, 7);
-                System.out.println("    " + "preview: " + preview + "...");
+
+            if (message.content.toLowerCase().contains("sellreq")) {
+                System.out.println();
+                System.out.println("    " + "* New Sell Request!");
+                System.out.println("    " + "From: " + message.sender);
+                unreadMessages.add(message);
+
             } else {
-                preview = message.content;
-                System.out.println("    " + "preview: " + preview);
+                System.out.println();
+                System.out.println("    " + "* New message from " + message.sender);
+                String preview;
+                if (message.content.length() > 7) {
+                    preview = message.content.substring(0, 7);
+                    System.out.println("    " + "preview: " + preview + "...");
+                } else {
+                    preview = message.content;
+                    System.out.println("    " + "preview: " + preview);
+                }
+                unreadMessages.add(message);
             }
-            unreadMessages.add(message);
-
-//            System.out.println("wanna reply?");
-//            String ans = View.input();
-//            String ans = scanner.next();
-//            if (ans.toLowerCase().equals("yes")) {
-//                sendMessage(true, message);
-//            } else {
-//                System.out.println("    " + "Ok, continue.");
-//                System.out.println();
-//                unreadMessages.add(message);
-//            }
-
         } else {
-//            System.out.println("    " + message.sender + ":");
-//            System.out.println("    " + message.content);
-//            sendMessage(true, message);
+
         }
+
+
     }
 
     public static void sendMessage(boolean isReply, Message2 otherMessage) throws IOException {
@@ -632,30 +656,83 @@ class ClientChat {
             System.out.println("");
             System.out.println("Select message number to reply, or 0 to exit:");
             String number = View.input();
+            Message2 message = unreadMessages.get(Integer.parseInt(number) - 1);
             System.out.print(unreadMessages.get(Integer.parseInt(number) - 1).sender + ": ");
             System.out.println(unreadMessages.get(Integer.parseInt(number) - 1).content);
-            if (Integer.parseInt(number) == 0) {
-                return;
-            }
-            System.out.println("reply in one line:");
-            String content = View.input();
-            if (content.equals("send picture")) {
-                sendPicture();
-            } else {
-                System.out.println("message sent.");
-                String receiver = unreadMessages.get(Integer.parseInt(number) - 1).sender;
-                String sender = clientTestAccount.clientUsername;
-                Message2 message = new Message2(receiver, sender, content, true);
-                Socket clientSocket = new Socket("localhost", 6000);
-                try (PrintStream printer = new PrintStream(clientSocket.getOutputStream());
-                     Scanner socketScanner = new Scanner(clientSocket.getInputStream())) {
-                    printer.println("chat");
-                    ChatRequest request = new ChatRequest(sender, receiver, content, ChatRequest.RequestType.sendMessage,
-                            message);
-                    YaGson yaGson = new YaGson();
-                    String requestJson = yaGson.toJson(request);
-                    printer.println(requestJson);
+
+            if (unreadMessages.get(Integer.parseInt(number) - 1).content.toLowerCase().contains("sellreq")) {
+                String cardName = message.getCardName();
+                Scanner scanner = new Scanner(System.in);
+                System.out.println("Do you sell?");
+                String answer = scanner.nextLine();
+                if (answer.toLowerCase().equals("yes")) {
+                    exchangeCard(message.receiver, message.sender, cardName);
+                    NotifyBuyer(message.sender, message.receiver);
+                    unreadMessages.remove(unreadMessages.get(Integer.parseInt(number) - 1));
+
+                } else if (answer.toLowerCase().equals("no")) {
+                    System.out.println("Ok, request denied.");
+                    unreadMessages.remove(unreadMessages.get(Integer.parseInt(number) - 1));
                 }
+
+            } else {
+                // Regular message:
+                if (Integer.parseInt(number) == 0) {
+                    return;
+                }
+                System.out.println("reply in one line:");
+                String content = View.input();
+                if (content.equals("send picture")) {
+                    sendPicture();
+                } else {
+                    System.out.println("message sent.");
+                    String receiver = unreadMessages.get(Integer.parseInt(number) - 1).sender;
+                    String sender = clientTestAccount.clientUsername;
+                    Message2 message2 = new Message2(receiver, sender, content, true);
+                    Socket clientSocket = new Socket("localhost", 6000);
+                    try (PrintStream printer = new PrintStream(clientSocket.getOutputStream());
+                         Scanner socketScanner = new Scanner(clientSocket.getInputStream())) {
+                        printer.println("chat");
+                        ChatRequest request = new ChatRequest(sender, receiver, content, ChatRequest.RequestType.sendMessage,
+                                message2);
+                        YaGson yaGson = new YaGson();
+                        String requestJson = yaGson.toJson(request);
+                        printer.println(requestJson);
+                    }
+                    unreadMessages.remove(unreadMessages.get(Integer.parseInt(number) - 1));
+                }
+            }
+        }
+    }
+
+    private static void NotifyBuyer(String buyer, String seller) throws IOException {
+        Socket clientSocket = new Socket("localhost", 6000);
+        try (PrintStream printer = new PrintStream(clientSocket.getOutputStream());
+             Scanner socketScanner = new Scanner(clientSocket.getInputStream())) {
+            printer.println("shop2");
+            printer.println("sellReq accepted");
+            printer.println(buyer);
+            printer.println(seller);
+
+        }
+
+    }
+
+
+    public static void exchangeCard(String sellerUsername, String buyerUsername, String cardName) throws IOException {
+        Socket clientSocket = new Socket("localhost", 6000);
+        try (PrintStream printer = new PrintStream(clientSocket.getOutputStream());
+             Scanner socketScanner = new Scanner(clientSocket.getInputStream())) {
+            printer.println("shop2");
+            printer.println("exchange card");
+            printer.println(sellerUsername);
+            printer.println(buyerUsername);
+            printer.println(cardName);
+            String serverAns = socketScanner.nextLine();
+            if (serverAns.equals("not enough money")) {
+                System.out.println("Not enough money!");
+            } else if (serverAns.equals("done")) {
+                System.out.println("Done!");
             }
         }
     }

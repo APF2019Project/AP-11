@@ -213,7 +213,74 @@ class ShopServerSide {
 
         } else if (request.equals("new zombie")) {
             newZombie(printer, reader);
+
+        } else if (request.equals("buy from client")) {
+            buyFromClient(printer, reader);
+
+        } else if (request.equals("exchange card")) {
+            exchangeCard(printer, reader);
+
+        } else if (request.equals("sellReq accepted")) {
+            notifyBuyer(printer, reader);
+
         }
+    }
+
+    private static void notifyBuyer(PrintStream printer, Scanner reader) {
+        String buyerUsername = reader.nextLine();
+        String sellerUsername = reader.nextLine();
+        String content = "Your sell request to " + sellerUsername + " has been accepted and card is yours";
+        Message2 message = new Message2(buyerUsername, sellerUsername, content, true);
+        OnlineAccount.getOnlineAccount(buyerUsername).message2s.add(message);
+    }
+
+    private static void exchangeCard(PrintStream printer, Scanner reader) {
+        String sellerUsername = reader.nextLine();
+        String buyerUsername = reader.nextLine();
+        String cardName = reader.nextLine();
+
+        Account seller = Account.getAccountByUsername(sellerUsername);
+        Account buyer = Account.getAccountByUsername(buyerUsername);
+        boolean isPlant = Plant.plantExist(cardName);
+        boolean isZombie = Zombie.zombieExists(cardName);
+
+        if (isPlant) {
+            Plant plant = Collection.getPlantInCollection(seller, cardName);
+            if (buyer.getMoney() < plant.getPrice()) {
+                printer.println("not enough money");
+                return;
+            }
+            buyer.plantsCollection.add(plant);
+            buyer.setMoney(seller.getMoney() - plant.getPrice());
+            seller.plantsCollection.remove(plant);
+            seller.setMoney(seller.getMoney() + plant.getPrice());
+            printer.println("done");
+        }
+
+    }
+
+    private static void buyFromClient(PrintStream printer, Scanner reader) {
+        String sellerUsername = reader.nextLine();
+        String buyerUsername = reader.nextLine();
+        String cardName = reader.nextLine();
+        if (!OnlineAccount.isOnline(sellerUsername)) {
+            printer.println("wrong seller");
+            return;
+        }
+        if (!Plant.plantExist(cardName) && !Zombie.zombieExists(cardName)) {
+            printer.println("wrong card name");
+            return;
+        }
+        OnlineAccount seller = OnlineAccount.getOnlineAccount(sellerUsername);
+        if (!Collection.isInCollections(cardName, Account.getAccountByUsername(sellerUsername))) {
+            printer.println("not in collection");
+            return;
+        }
+        String sellReq = "SellReq!\nDo you sell your " + cardName + "to " + buyerUsername + "?";
+        Message2 buyRequestMessage = new Message2(sellerUsername, buyerUsername, sellReq, true);
+        buyRequestMessage.setCardName(cardName);
+        seller.message2s.add(buyRequestMessage);
+        printer.println("request sent");
     }
 
     private static void newZombie(PrintStream printer, Scanner reader) {

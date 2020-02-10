@@ -4,6 +4,15 @@ public class Message2 {
     String sender;
     String content;
     boolean isNew;
+    String cardName;
+
+    public void setCardName(String cardName) {
+        this.cardName = cardName;
+    }
+
+    public String getCardName() {
+        return cardName;
+    }
 
     public Message2(String receiver, String sender, String content, boolean isNew) {
         this.receiver = receiver;

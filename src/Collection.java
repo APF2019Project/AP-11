@@ -122,6 +122,33 @@ public class Collection {
         return null;
     }
 
+    public static boolean isInCollections(String cardName, Account account) {
+        for (Plant plantIterator : account.plantsCollection) {
+            if (plantIterator.getName().equals(cardName))
+                return true;
+        }
+        for (Zombie zombieIterator : account.zombiesCollection) {
+            if (zombieIterator.getName().equals(cardName))
+                return true;
+        }
+        return false;
+    }
+
+    public static Plant getPlantInCollection(Account account, String cardName) {
+        for (Plant plantIterator : account.plantsCollection) {
+            if (plantIterator.getName().equals(cardName))
+                return plantIterator;
+        }
+        return null;
+    }
+
+    public static Zombie getZombieInCollection(Account account, String cardName) {
+        for (Zombie zombieIterator : account.zombiesCollection) {
+            if (zombieIterator.getName().equals(cardName))
+                return zombieIterator;
+        }
+        return null;
+    }
 
     public static boolean plantExistsInCollection(String plantName) {
         for (Plant plantIterator : Account.getMainPlayingAccount().getPlantsCollection()) {

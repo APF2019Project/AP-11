@@ -184,8 +184,6 @@ public class ClientMenus {
                 default:
                     View.invalidCommand(-7);
                     break;
-
-
             }
         }
     }
@@ -410,7 +408,7 @@ public class ClientMenus {
                 case "create card":
                     clientShopFunctions.createCard();
                     break;
-                case "buy from another user":
+                case "get card from another user":
                     clientShopFunctions.buyFromAnotherClient();
                     break;
                 default:
@@ -422,6 +420,7 @@ public class ClientMenus {
 
 
     static void collectionMenu(int playTypeIndex, boolean pvp) throws IOException { // Collection Menu index: -5
+
         exitFromPVPcollection1 = 0;
         exitFromPVPcollection2 = 0;
         if (aGameHasFinished == 1) {
@@ -988,7 +987,7 @@ public class ClientMenus {
         instructions.add("show collection");
         instructions.add("show money");
         instructions.add("buy [card name]");
-        instructions.add("buy from another user");
+        instructions.add("get card from another user");
         instructions.add("create card");
         instructions.add("help");
         instructions.add("exit");
