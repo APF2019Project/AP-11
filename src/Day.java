@@ -74,9 +74,21 @@ public class Day extends Play {
 
     public static void doFinalThings(int playerWon) {
         Account.numOfKilledZombiesHandlingInAccount(false);
-        if (playerWon == 1)
+        if (playerWon == 1) {
+            try {
+                ClientPlay.saveAfterGame();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
             View.youWon();
-        if (playerWon == -1)
+        if (playerWon == -1) {
+            try {
+                ClientPlay.saveAfterGame();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
             View.youLost();
         Collection.clearDecksSetCollections();
         View.goingBackTo(-2); // Going back to Login Menu

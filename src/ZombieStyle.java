@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
@@ -260,9 +261,19 @@ public class ZombieStyle extends Play {
         Account.numOfKilledZombiesHandlingInAccount(true);
         setEveryThingToDefaultStart();
         if (playerWon == 1){
+            try {
+                ClientPlay.saveAfterGame();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             View.youWon();
         }
         else if (playerWon == -1){
+            try {
+                ClientPlay.saveAfterGame();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             View.youLost();
         }
         whileZombieTurn = false;

@@ -58,6 +58,12 @@ public class Server {
                         String username = reader.nextLine();
                         ChatServerSide.checkMessages(printer, reader, username);
 
+                    } else if (mode.equals("collection")) {
+                        CollectionServerSide.handleRequest(printer, reader);
+
+                    } else if (mode.equals("play")) {
+                        PlayServerSide.handleRequest(printer, reader);
+
                     }
 
                 } catch (IOException e) {
@@ -171,6 +177,60 @@ public class Server {
 
 }
 
+class PlayServerSide {
+
+
+    public static void handleRequest(PrintStream printer, Scanner reader) {
+        String request = reader.nextLine();
+        if (request.equals("save after game")) {
+            saveAfterGame(printer, reader);
+
+        } else if (request.equals("play request")) {
+            setPlayRequest(printer, reader);
+        }
+    }
+
+    private static void setPlayRequest(PrintStream printer, Scanner reader) {
+        String messageJson = reader.nextLine();
+        YaGson yaGson = new YaGson();
+        Message2 message = yaGson.fromJson(messageJson, Message2.class);
+        String receiver = message.receiver;
+        OnlineAccount.getOnlineAccount(receiver).message2s.add(message);
+    }
+
+    private static void saveAfterGame(PrintStream printer, Scanner reader) {
+        String accountJson = reader.nextLine();
+        YaGson yaGson = new YaGson();
+        Account account = yaGson.fromJson(accountJson, Account.class);
+        String username = account.getUsername();
+        Account oldAccount = Account.getAccountByUsername(username);
+        oldAccount = account;
+    }
+
+
+}
+
+class CollectionServerSide {
+
+    public static void handleRequest(PrintStream printer, Scanner reader) {
+        String request = reader.nextLine();
+        if (request.equals("set collections")) {
+            setCollections(printer, reader);
+        }
+
+    }
+
+    private static void setCollections(PrintStream printer, Scanner reader) {
+        String username = reader.nextLine();
+        Account account = Account.getAccountByUsername(username);
+        YaGson yaGson = new YaGson();
+        String accountJson = yaGson.toJson(account);
+        printer.println(accountJson);
+
+
+    }
+
+}
 class ShopServerSide {
 
     public static void handleRequest(Scanner reader, PrintStream printer) {

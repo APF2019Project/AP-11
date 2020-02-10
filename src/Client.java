@@ -549,6 +549,13 @@ class ClientChat {
                 System.out.println("    " + "From: " + message.sender);
                 unreadMessages.add(message);
 
+            } else if (message.content.toLowerCase().equals("play request")) {
+
+                System.out.println();
+                System.out.println("    " + "* New Play Request!");
+                System.out.println("    " + "From: " + message.sender);
+                unreadMessages.add(message);
+
             } else {
                 System.out.println();
                 System.out.println("    " + "* New message from " + message.sender);
@@ -675,6 +682,26 @@ class ClientChat {
                     unreadMessages.remove(unreadMessages.get(Integer.parseInt(number) - 1));
                 }
 
+            } else if (unreadMessages.get(Integer.parseInt(number) - 1).content.toLowerCase().contains("play request")) {
+
+                Scanner scanner = new Scanner(System.in);
+                System.out.println("Do accept this play request?");
+                String answer = scanner.nextLine();
+                if (answer.toLowerCase().equals("yes")) {
+                    //
+                    ///
+                    //
+                    //
+                    //
+                    //
+                    //
+                    //
+
+                } else if (answer.toLowerCase().equals("no")) {
+                    System.out.println("Ok, request denied.");
+                    unreadMessages.remove(unreadMessages.get(Integer.parseInt(number) - 1));
+                }
+
             } else {
                 // Regular message:
                 if (Integer.parseInt(number) == 0) {
@@ -742,4 +769,71 @@ class ClientChat {
     }
 
 
+}
+
+class ClientCollection {
+
+    public static void setAccount() throws IOException {
+        Socket clientSocket = new Socket("localhost", 6000);
+        try (PrintStream printer = new PrintStream(clientSocket.getOutputStream());
+             Scanner socketScanner = new Scanner(clientSocket.getInputStream())) {
+            printer.println("collection");
+            printer.println("set collections");
+            printer.println(clientTestAccount.clientUsername);
+            String accountJson = socketScanner.nextLine();
+            YaGson yaGson = new YaGson();
+            Account account = yaGson.fromJson(accountJson, Account.class);
+            Account.setMainPlayingAccount(account);
+        }
+    }
+
+}
+
+class ClientPlay {
+
+    public static void saveAfterGame() throws IOException {
+        Socket clientSocket = new Socket("localhost", 6000);
+        try (PrintStream printer = new PrintStream(clientSocket.getOutputStream());
+             Scanner socketScanner = new Scanner(clientSocket.getInputStream())) {
+            printer.println("play");
+            printer.println("save after game");
+            Account account = Account.getMainPlayingAccount();
+            YaGson yaGson = new YaGson();
+            String accountJson = yaGson.toJson(account);
+            printer.println(accountJson);
+        }
+    }
+
+    public static void sendPlayRequest() {
+        Scanner scanner = new Scanner(System.in);
+        try {
+            ClientChat.showOnlineUsers();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println();
+        System.out.println("Which player are you sending request to?");
+        String player = scanner.nextLine();
+        String content = "play request from " + clientTestAccount.clientUsername;
+        Message2 message = new Message2(player, clientTestAccount.clientUsername, content, true);
+        YaGson yaGson = new YaGson();
+        String messageJson = yaGson.toJson(message);
+
+        Socket clientSocket = null;
+        try {
+            clientSocket = new Socket("localhost", 6000);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        try (PrintStream printer = new PrintStream(clientSocket.getOutputStream());
+             Scanner socketScanner = new Scanner(clientSocket.getInputStream())) {
+            printer.println("play");
+            printer.println("play request");
+            printer.println(messageJson);
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+    }
 }

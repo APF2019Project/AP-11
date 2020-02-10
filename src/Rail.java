@@ -157,6 +157,11 @@ public class Rail extends Play {
         System.out.println("Zombies are EATING you.....");
         Collection.clearDecksSetCollections();
         clearRailDeck();
+        try {
+            ClientPlay.saveAfterGame();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         View.goingBackTo(-2); // Going back to Login Menu
         Menu.mainMenu();
     }
