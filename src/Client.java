@@ -123,13 +123,10 @@ class clientTestAccount { // Login menu, Main menu, and Profile menu parts
                 } else {
                     System.out.println("Logged in, going back to --> Profile Menu:");
                 }
-
             } else {
                 View.loginFailed();
             }
-
         } // try ends
-
     }
 
     public static void leaderboard() throws IOException {
@@ -688,20 +685,22 @@ class ClientChat {
                 System.out.println("Do accept this play request?");
                 String answer = scanner.nextLine();
                 if (answer.toLowerCase().equals("yes")) {
-                    //
-                    ///
-                    //
-                    //
-                    //
-                    //
-                    //
-                    //
+                    ClientCollection.setAccount();
+                    ClientMenus.collectionMenu(4, true);
+                    ClientPlay.notifyPlay(message.sender);
 
                 } else if (answer.toLowerCase().equals("no")) {
                     System.out.println("Ok, request denied.");
                     unreadMessages.remove(unreadMessages.get(Integer.parseInt(number) - 1));
                 }
 
+            } else if (unreadMessages.get(Integer.parseInt(number) - 1).content.toLowerCase().contains("your play request has been")) {
+                Scanner scanner = new Scanner(System.in);
+                System.out.println("Start the game?");
+                String answer = scanner.nextLine();
+                if (answer.equals("yes")) {
+                    ClientMenus.dayMenu(1, true);
+                }
             } else {
                 // Regular message:
                 if (Integer.parseInt(number) == 0) {
@@ -835,5 +834,27 @@ class ClientPlay {
             ex.printStackTrace();
         }
 
+    }
+
+    public static void notifyPlay(String user) {
+        Socket clientSocket = null;
+        try {
+            clientSocket = new Socket("localhost", 6000);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        try (PrintStream printer = new PrintStream(clientSocket.getOutputStream());
+             Scanner socketScanner = new Scanner(clientSocket.getInputStream())) {
+            String content = "Your play request has been accepted";
+            Message2 message = new Message2(user, clientTestAccount.clientUsername, content, true);
+            YaGson yaGson = new YaGson();
+            String messageJson = yaGson.toJson(message);
+            printer.println("play");
+            printer.println("play accepted");
+            printer.println(messageJson);
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 }

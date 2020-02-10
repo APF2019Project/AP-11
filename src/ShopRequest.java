@@ -16,7 +16,6 @@ public class ShopRequest {
         showCollection,
         showMoney,
         moneyCheat,
-
     }
 
     public ShopRequest(String username, RequestType requestType) {

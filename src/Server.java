@@ -187,7 +187,19 @@ class PlayServerSide {
 
         } else if (request.equals("play request")) {
             setPlayRequest(printer, reader);
+
+        } else if (request.equals("play accepted")) {
+            notifyPlay(printer, reader);
+
         }
+    }
+
+    private static void notifyPlay(PrintStream printer, Scanner reader) {
+        String messageJson = reader.nextLine();
+        YaGson yaGson = new YaGson();
+        Message2 message = yaGson.fromJson(messageJson, Message2.class);
+        String receiver = message.receiver;
+        OnlineAccount.getOnlineAccount(receiver).message2s.add(message);
     }
 
     private static void setPlayRequest(PrintStream printer, Scanner reader) {

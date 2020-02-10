@@ -262,6 +262,7 @@ public class ClientMenus {
     private static int exitFromPVPcollection2 = 0;
 
     static void goPlay() throws IOException { // Play Menu index: -4
+        ClientCollection.setAccount();
         if (aGameHasFinished == 1) {
             return;
         }
@@ -421,8 +422,6 @@ public class ClientMenus {
 
     static void collectionMenu(int playTypeIndex, boolean pvp) throws IOException { // Collection Menu index: -5
 
-        ClientCollection.setAccount();
-
         exitFromPVPcollection1 = 0;
         exitFromPVPcollection2 = 0;
         if (aGameHasFinished == 1) {
@@ -489,9 +488,13 @@ public class ClientMenus {
             if (pvp && command.toLowerCase().equals("done") && playTypeIndex == 1) {
 //                System.out.println("You chose your plants. Going to login zombie player:");
 //                Account.loginForPvPZombiePlayer(Account.getSecondPlayingAccount());
-                System.out.println("You chose your plants. send a play request to an online user:");
-                ClientPlay.sendPlayRequest();
-                return;
+                try {
+                    System.out.println("You chose your plants. send a play request to an online user:");
+                    ClientPlay.sendPlayRequest();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+//                return;
             }
             if (pvp && command.toLowerCase().equals("done") && playTypeIndex == 4) {
                 System.out.println("You chose your zombies. going to play:");
