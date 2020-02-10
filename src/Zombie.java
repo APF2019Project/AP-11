@@ -8,7 +8,7 @@
  public class Zombie {
      // added in network phase:
      public int quantityInShop = 5;
-     private static ArrayList<Zombie> zombies = new ArrayList<>();
+     public static ArrayList<Zombie> zombies = new ArrayList<>();
      private ArrayList<Shoot> shootsRecieved = new ArrayList<>();
 
      private String name;

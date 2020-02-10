@@ -210,7 +210,18 @@ class ShopServerSide {
 
         } else if (request.equals("new plant")) {
             newPlant(printer, reader);
+
+        } else if (request.equals("new zombie")) {
+            newZombie(printer, reader);
         }
+    }
+
+    private static void newZombie(PrintStream printer, Scanner reader) {
+        String zombieJson = reader.nextLine();
+        YaGson yaGson = new YaGson();
+        Zombie zombie = yaGson.fromJson(zombieJson, Zombie.class);
+        Zombie.zombies.add(zombie);
+                                 View.printNumberedZombieArrayList(Zombie.zombies);
     }
 
     public  static void newPlant(PrintStream printer, Scanner reader) {

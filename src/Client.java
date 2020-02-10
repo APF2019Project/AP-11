@@ -373,7 +373,9 @@ class clientShopFunctions {
             final int sunCost = scanner.nextInt();
             System.out.println("Select bullet type:");
             System.out.println("normalPea, frozenPea, cabbage, kernel, melon, frozenMelon");
-            String bulletType = scanner.nextLine();
+            Scanner scanner1 = new Scanner(System.in);
+            String bulletType;
+            bulletType = scanner1.nextLine();
             Shoot bullet = null;
             switch (bulletType) {
                 case "normalPea":
@@ -391,8 +393,11 @@ class clientShopFunctions {
                 case "melon":
                     bullet = melon;
                     break;
-                case "frosenMelon":
+                case "frozenMelon":
                     bullet = frozenMelon;
+                    break;
+                default:
+                    System.out.println("wrong bullet type");
                     break;
             }
             System.out.println("Enter bullet number:");
@@ -435,10 +440,72 @@ class clientShopFunctions {
     }
 
     public static void createZombie() {
-        Scanner scanner = new Scanner(System.in);
+        try {
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Enter zombie name:");
+            String name = scanner.nextLine();
+            System.out.println("Have bucket head? (boolean)");
+            boolean haveBucketHead = scanner.nextBoolean();
+            System.out.println("Could revert to regular zombie? (boolean)");
+            boolean couldRevertToRegularZombie = scanner.nextBoolean();
+            System.out.println("Could destroy in row? (boolean)");
+            boolean couldDestroyInRow = scanner.nextBoolean();
+            System.out.println("Does it have random position? (boolean)");
+            boolean RandomPosition = scanner.nextBoolean();
+            System.out.println("Could jump? (boolean)");
+            boolean couldJump  = scanner.nextBoolean();
+            System.out.println("Turn thief? (int)");
+            int turnThief = scanner.nextInt();
+            System.out.println("Speed?");
+            int speed = scanner.nextInt();
+            int currentSpeed;
+            System.out.println("How many turn speed is reduced?");
+            int howManyTurnSpeedIsReduced = scanner.nextInt();
+            System.out.println("Speed reduction ratio?");
+            int speedReductionRatio = scanner.nextInt();
+            System.out.println("Health?");
+            int health = scanner.nextInt();
+            System.out.println("Have anti tiq? (boolean)");
+            boolean haveAntiTiq = scanner.nextBoolean();
+            System.out.println("Is pea proof? (boolean)");
+            boolean IsPeaProof = scanner.nextBoolean();
+            System.out.println("Shield strength?");
+            int shieldStrength = scanner.nextInt();
+            System.out.println("Damage power? (int)");
+            int damagePower = scanner.nextInt();
+            System.out.println("Is water proof? (boolean)");
+            boolean IsWaterProof = scanner.nextBoolean();
+            System.out.println("Have duck? (boolean)");
+            boolean haveDuck = scanner.nextBoolean();
+            System.out.println("Have ladder? (boolean)");
+            boolean haveLadder = scanner.nextBoolean();
+            System.out.println("Done! Your zombie is created and is available on PvZ shop!");
+
+            Zombie zombie = new Zombie(name, haveAntiTiq, haveBucketHead, couldRevertToRegularZombie, couldDestroyInRow,
+                    IsWaterProof, IsPeaProof, RandomPosition, haveDuck, couldJump, turnThief, speed,
+                    howManyTurnSpeedIsReduced, speedReductionRatio, health, shieldStrength, damagePower, haveLadder);
+            YaGson yaGson = new YaGson();
+            String zombieJson = yaGson.toJson(zombie);
+
+            Socket clientSocket = new Socket("localhost", 6000);
+            try (PrintStream printer = new PrintStream(clientSocket.getOutputStream());
+                 Scanner socketScanner = new Scanner(clientSocket.getInputStream())) {
+                printer.println("shop2");
+                printer.println("new zombie");
+                printer.println(zombieJson);
+            }
+
+        } catch (Exception ex) {
+            System.out.println("probably wrong input type.");
+            ex.printStackTrace();
+        }
 
     }
 
+    public static void buyFromAnotherClient() {
+        
+
+    }
 }
 
 class ClientChat {

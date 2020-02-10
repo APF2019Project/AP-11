@@ -410,6 +410,9 @@ public class ClientMenus {
                 case "create card":
                     clientShopFunctions.createCard();
                     break;
+                case "buy from another user":
+                    clientShopFunctions.buyFromAnotherClient();
+                    break;
                 default:
                     View.invalidCommand(-10);
                     break;
@@ -985,6 +988,7 @@ public class ClientMenus {
         instructions.add("show collection");
         instructions.add("show money");
         instructions.add("buy [card name]");
+        instructions.add("buy from another user");
         instructions.add("create card");
         instructions.add("help");
         instructions.add("exit");
